@@ -15,7 +15,10 @@ Transactions on Dusk follow a specific lifecycle. Here's a basic overview:
 2. **Broadcasting**: The transaction is sent out to the Dusk network and broadcast within it.
 3. **Validation**: Each node receiving the transaction verifies its validity before adding it to the Mempool.
 4. **Inclusion in Mempool**: The transaction is added to the Mempool (*transaction included* event).
+   - If the transaction expires before being added to a block, it is removed from the Mempool (*transaction removed* event).
+   - If the transaction is replaced by another transaction with higher gas price, it is removed from the Mempool (*transaction removed* event)
 5. **Inclusion in candidate block**: A block generator includes the transaction from the Mempool into a candidate block.
+   - If the transaction is discarded during the block generation, it is removed from the Mempool (this event is currently not emitted[^1])
 6. **Acceptance**: The block containing the transaction is accepted into the blockchain (*block accepted* event).
    1. **Execution**: When accepting the block, the transaction is executed (*transaction executed* event).
       - **Successful Transaction**: No errors available
@@ -77,3 +80,4 @@ Such invalid transactions are also caught by pre-verifications on multiple steps
 
 To achieve this, one must actively use a modified or incorrectly implemented wallet software or SDK. Such transactions can be compared to invalid data packets on a port that are simply ignored because the listening application has no use for them.
 
+[^1]: The emission of this event is planned to be implemented soon.
