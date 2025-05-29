@@ -11,16 +11,23 @@ Transactions become immutable and are ultimately permanently recorded on the blo
 
 Transactions on Dusk follow a specific lifecycle. Here's a basic overview:
 
-1. **Transaction creation**: The process begins when a wallet or similar software generates a new transaction.
-2. **Transaction broadcasting**: The transaction is sent out to the Dusk network and broadcast within it.
-3. **Transaction reaches Mempool**: The transaction enters the mempool, awaiting validation (transaction included event).
-4. **Transaction validation**: The transaction is removed from the mempool and executed (transaction removed event).
-5. **Transaction execution**: The transaction is executed (transaction executed event).
-   - **Successful Transaction**: No errors available
-   - **Reverted or Failed Transaction**: Errors available (transaction executed event with error field available). This is contract-specific and indicates a revert (panic) or other error that was returned.
-6. **Block acceptance**: The block containing the transaction is accepted into the blockchain (block accepted event).
-7. **Block confirmation**: The block is confirmed when another block is accepted (block state-change event with state changed to `confirmed`).
-8. **Block finalization**: The block reaches finality, there is nothing more to do and the transaction is completed & finalized. (block state-change event with state changed to `finalized`).
+1. **Creation**: The process begins when a wallet or similar software generates a new transaction.
+2. **Broadcasting**: The transaction is sent out to the Dusk network and broadcast within it.
+3. **Validation**: Each node receiving the transaction verifies its validity before adding it to the Mempool.
+4. **Inclusion in Mempool**: The transaction is added to the Mempool (*transaction included* event).
+   - If the transaction expires before being added to a block, it is removed from the Mempool (*transaction removed* event).
+   - If the transaction is replaced by another transaction with higher gas price, it is removed from the Mempool (*transaction removed* event)
+5. **Inclusion in candidate block**: A block generator includes the transaction from the Mempool into a candidate block.
+   - If the transaction is discarded during the block generation, it is removed from the Mempool (this event is currently not emitted[^1])
+6. **Acceptance**: The block containing the transaction is accepted into the blockchain (*block accepted* event).
+   1. **Execution**: When accepting the block, the transaction is executed (*transaction executed* event).
+      - **Successful Transaction**: No errors available
+      - **Reverted or Failed Transaction**: Errors available (*transaction executed* event with error field available). This is contract-specific and indicates a revert (panic) or other error that was returned.
+   2. **Removal from Mempool**: The transaction is removed from the mempool (*transaction removed* event).
+7. **Confirmation**: The block is confirmed, making the transaction unlikely to be reverted (*block state-change* event with state changed to `confirmed`).
+8. **Finalization**: The block reaches finality, making the transaction immutable and irreversible. (*block state-change* event with state changed to `finalized`).
+
+For more details about *confirmation* and *finalization*, see the [finality rules](https://docs.dusk.network/learn/deep-dive/succinct-attestation/#finality) of the Succinct Attestation page.
 
 :::note[Failed Transactions]
 Failed transactions are defined here as a concept at the contract level. We assume that each contract, just like the transfer contract or other genesis contracts, makes use of proper error handling and panics:
@@ -73,3 +80,4 @@ Such invalid transactions are also caught by pre-verifications on multiple steps
 
 To achieve this, one must actively use a modified or incorrectly implemented wallet software or SDK. Such transactions can be compared to invalid data packets on a port that are simply ignored because the listening application has no use for them.
 
+[^1]: The emission of this event is planned to be implemented soon.
