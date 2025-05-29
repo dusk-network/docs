@@ -1,6 +1,6 @@
 ---
-title: BEP-20/ER-C20 Migration
-description:  Detailed instructions for migrating your ERC-20/BEP-20 DUSK tokens to Dusk mainnet.
+title: BEP20/ERC20 Migration
+description:  Detailed instructions for migrating your ERC20/BEP20 DUSK tokens to Dusk mainnet.
 ---
 
 This guide provides instructions on how to migrate your BEP20/ERC20 DUSK tokens to native DUSK on the Dusk network. The migration process is facilitated through our [Web Wallet](https://apps.dusk.network/wallet/), allowing you to convert your tokens using WalletConnect-compatible Web3 wallets.
