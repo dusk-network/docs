@@ -46,7 +46,7 @@ Yes, you can run a node to just propagate transactions. But your node won't be a
 **1000** (1 thousand) Dusk.
 
 #### How long until rewards starts accruing, and how are they determined?
-Stake becomes active after the maturity period, which is 4320 blocks and corresponds to approximately 12 hours. More information regarding staking rewards can be found [here](/learn/guides/staking-basics#how-are-rewards-determined).
+Staking becomes active after the 4320 block maturity period, which corresponds to approximately 12 hours. More information regarding staking rewards can be found [here](/learn/guides/staking-basics#how-are-rewards-determined).
 
 #### Increase your stake & compounding Rewards
 Details about increasing your stake and compounding your rewards can be found [here](/learn/guides/staking-basics#re-stake-rewards--increase-stake).
