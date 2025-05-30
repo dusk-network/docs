@@ -84,8 +84,12 @@ As there's also a password on the file when you export, you need to set it on th
 
 As long as you have your mnemonic phrase stored safely, you can recover everything else.
 
-#### What should I do if I lose my SSH-key file?
-Spin up a fresh instance, [install Rusk](/operator/installation) using the same wallet mnemonic, and let it fully sync. Once it's synced, stake from that node. and delete the old instance.
+#### What should I do if I lose my SSH key file?
+1) Spin up a fresh instance and [install Rusk](/operator/installation)
+2) Restore your wallet using the previous mnemonic. 
+3) [Export the consensus key](/operator/guides/node-wallet-setup/#export-consensus-key) from the restored wallet.
+4) Once the new node is fully synced, it will start participating in consensus. There is no need to stake again. You can then safely delete the old instance.
+
 
 ## How To's
 
