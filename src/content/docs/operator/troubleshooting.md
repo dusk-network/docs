@@ -85,7 +85,7 @@ cargo install --path rusk/rusk-wallet
 
 
 #### "PersistenceError" caused by "InvalidData" or "pointer out of bounds"
-These are errors that indicate that your node's state is corrupted. To fix this, reload from a snapshot by running:
+These errors indicate that your node's state is corrupted. To fix this, reload from a snapshot by running:
 
 ```bash
 download_state
