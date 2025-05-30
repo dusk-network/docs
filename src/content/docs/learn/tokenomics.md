@@ -5,7 +5,7 @@ description: Overview of Dusk’s tokenomics, allocation, vesting schedules, and
 
 ---
 
-The Dusk protocol utilizes the DUSK token both as an incentive for consensus participation and as its primary native currency. DUSK is currently represented as an ERC-20 or BEP-20 token. Since mainnet is now live, users are able to [migrate tokens to native DUSK](/learn/guides/mainnet-migration) via a burner contract.
+The Dusk protocol utilizes the DUSK token both as an incentive for consensus participation and as its primary native currency. DUSK is currently represented as an ERC20 or BEP20 token. Since mainnet is now live, users are able to [migrate tokens to native DUSK](/learn/guides/mainnet-migration) via a burner contract.
 
 This page provides an in-depth overview of the DUSK token’s metrics, utility, allocation, emission schedule, rewards, as well as insights from the <a href="https://github.com/dusk-network/audits/blob/main/core-audits/2024-09_protocol-security-review_oak-security.pdf">Economic Protocol Design</a> report.
 
@@ -13,7 +13,7 @@ This page provides an in-depth overview of the DUSK token’s metrics, utility, 
 
 - **Token Name**: Dusk
 - **Token Symbol**: DUSK
-- **Initial Supply**: 500,000,000 DUSK, comprising both ERC-20, BEP-20. These are migrated to native DUSK tokens using a burner contract.
+- **Initial Supply**: 500,000,000 DUSK, comprising both ERC20, BEP20. These are migrated to native DUSK tokens using a burner contract.
 - **Total Emitted Supply**: 500,000,000 DUSK will be emitted over 36 years to reward stakers on the mainnet, following the [Token Emission Schedule](#token-emission-schedule).
 - **Maximum Supply**: 1,000,000,000 DUSK, combining the 500M initial supply and 500M emitted over time.
 - **Circulating Supply**: Available on [this page](https://supply.dusk.network/). The circulating supply reflects the initial supply minus the DUSK held by the [Dusk deployer](https://etherscan.io/token/0x940a2db1b7008b6c776d4faaca729d6d4a4aa551?a=0x618bb3b255928ae6b2046df5c828fa1dc7e3c5f0). 

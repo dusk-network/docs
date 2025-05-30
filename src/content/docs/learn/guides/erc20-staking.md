@@ -1,13 +1,13 @@
 ---
-title: Withdraw staked ERC-20 DUSK
-description: Guide to reclaiming your DUSK from the ERC-20 staking contract used in ITN2.
+title: Withdraw staked ERC20 DUSK
+description: Guide to reclaiming your DUSK from the ERC20 staking contract used in ITN2.
 ---
 
 
-If you participated in the DUSK ERC-20 staking incentive program (ITN2), your DUSK remains safely stored in the ERC-20 staking smart contract. This guide walks you through the steps required to withdraw it manually using Etherscan.
+If you participated in the DUSK ERC20 staking incentive program (ITN2), your DUSK remains safely stored in the ERC20 staking smart contract. This guide walks you through the steps required to withdraw it manually using Etherscan.
 
 :::note[Note]
-This **only** applies to users who staked their DUSK using the ERC-20 staking portal for the ITN2 incentive program (which happened before Dusk mainnet launch).
+This **only** applies to users who staked their DUSK using the ERC20 staking portal for the ITN2 incentive program (which happened before Dusk mainnet launch).
 ::: 
 
 ---
@@ -62,7 +62,7 @@ You can then enter your Ethereum address and click **Query**, as this returns th
 
 ### Contract details
 
-- **ERC-20 Token Address:**  
+- **ERC20 Token Address:**  
   [0x940a2db1b7008b6c776d4faaca729d6d4a4aa551](https://etherscan.io/token/0x940a2db1b7008b6c776d4faaca729d6d4a4aa551)
 
 - **Staking Contract Address:**  
