@@ -32,55 +32,60 @@ In extreme cases, in which a large amount of provisioners is failing to particip
 
 ## Deterministic Sortition
 
-The *Deterministic Sortition* procedure allows to deterministically select the *block generator* and the *voting committees* for each consensus iteration. 
+The *Deterministic Sortition* procedure allows to select the participating provisioners in each consensus step: the *block generator* in the Proposal step, and the *voting committees* in the Validation and Ratification steps. 
 
-Specifically, this procedure is run for each consensus step to assign a number of *credits* (1 in the Proposal step, and 64 in the Validation and Ratificaiton steps) to eligible provisioner[^1] extracted in a pseudo-random way.
+The procedure assigns a number of *credits* (1 in Proposal, and 64 in Validation and Ratificaiton) to eligible provisioner[^1] extracted in a pseudo-random way. The extraction is based on a hash function and a unique cryptographic *seed* that is inserted in the block by the generator and computed by digitally signing the seed in the previous block.
 
-Pseudo-randomness is based on a hash function and a unique cryptographic *seed* that is inserted in the block by the block generator and computed by digitally signing the seed in the previous block. This seed-generation method is designed to prevent malicious actors from predicting future-round generators and voters[^2].
+The algorithm follows a weighted distribution such that the probability of being extracted is directly proportional to the stake amount (the bigger the stake, the higher the probability of extraction).
+Provisioners can be extracted multiple times in a single sortition (except for the Proposal step), thus being assigned multiple credits. This translates into a bigger weight in the voting committee, where votes count proportionally to the credits of the voter. For instance, a vote from a provisioner with 3 credits, will count as 3 votes in the computation of the quorum.
 
-In a sortition, each provisioner can be assigned one or more credits, depending on their stake. In particular, the algorithm follows a weighted distribution where the probability of extraction is directly proportional to the stake amount (the bigger the stake, the higher the probability of being extracted).
-
-Therefore, on average, eligible provisioners will participate in committees with a frequency and power proportional to their stakes.
-
-With respect to Validation and Ratification, votes from provisioners will count proportionally to the number of credits assigned to the voter by the sortition. In other words, provisioners with more credits will have more weight in reaching a Quorum (and earning rewards).
+On average, eligible provisioners will then participate in committees with a frequency and power proportional to their stakes.
 
 ### Extraction
 
-Each credit is assigned by running an extraction procedure. This procedure is based on the provisioners' stakes and a *score* value computed at each extraction.
+The extraction procedure, used to assign each credit in a sortition, is based on the provisioners' stakes and a *score* value computed at each extraction.
 
-Stakes are used to assign a weight to each provisioner participating in the extraction. Specifically, at the beginning of the sortition procedure, provisioners are assigned a weight equal to their stake value.
+Stakes are used to assign a weight to each eligible provisioner. In particular, each provisioner is assigned an initial weight equal to their stake value.
 
-Instead, the score is obtained by hashing the round, iteration, and step numbers with the current seed and the number of the credit to assign.
+On the other hand, the score value is obtained by hashing a concatenation of round, iteration, and step numbers, the current seed, and the number of the credit to assign.
 
-The extraction then proceed by iterating over provisioners and subrtracting weights from the score until a provisioner with weight higher than the current score is found. This provisioner will be extracted and assigned the credit.
+The extraction works by iterating over provisioners and subtracting each weight from the score until a provisioner with weight higher than the (current) score is found. This provisioner will be extracted and assigned the credit.
 
-To balance out probabilities for the sortition, each time a provisioner is assigned a credit, its weight is reduced by 1 DUSK (thus diminishing its probability of extraction).
+To balance out probabilities throughout the sortition, each time a provisioner is extracted, its weight is reduced by 1 DUSK (thus diminishing its probability of extraction).
 
 
 ## Proposal
 
-*Proposal* is the first step in an SA iteration. In this step, a randomly-extracted provisioner is appointed to generate a new *candidate* block to add to the ledger. In the same step, other provisioners wait for the candidate block produced by the generator.
+In this step, a single provisioner is extracted by the Deterministic Sortition as the *block generator* for this iteration.
 
-In the proposal step, each provisioner node first executes the [*deterministic sortition*](#deterministic-sortition) algorithm to extract the *block generator*. If the node is selected, it creates a new *candidate block*, it signs it and broadcasts it using a $\mathsf{Candidate}$ message.
+If the generator is online, it creates a new *candidate block*, digitally signs it, and broadcasts it to the network.
 
-In this step, all other nodes wait to receive the candidate block until a timeout expires. If it was generated or received from the network, the step outputs the candidate block; otherwise, it outputs a void value. The step output will then serve as the input for the [*validation*](#validation) step, where a committee of provisioners will verify its validity and vote accordingly.
+The other provisioners wait to receive this candidate from the network (candidates produced by a different provisioner are discarded) for a certain timeout. 
+
+If the message is received before the timeout expires, the step outputs the candidate block.
+Contrarily, if the timeout expires, the step ends with an empty value.
+
+The step result will be used as the input for the [*Validation*](#validation) step.
 
 ## Validation
 
-*Validation* is the second step in an SA iteration. In this step, the *candidate* block, produced or received in the [proposal](#proposal) step, is validated by a committee of randomly chosen provisioners. Members of the extracted committee verify the candidate's validity and then cast their vote accordingly. At the same time, all provisioners, including committee members, collect votes from the network until a target quorum is reached, or the step timeout expires.
-The main purpose of the validation step is to agree on whether a candidate block has bee produced and if it is a valid new tip of the blockchain.
+In this step, a 64-credit *voting committee* is extracted by the Deterministic Sortition procedure.
+The main purpose of the Validation committee is to agree on whether the candidate block was generated and if it is a valid successor of the current chain tip.
 
-In the validation step, each provisioner first executes the [*deterministic sortition*](#deterministic-sortition) algorithm to extract the committee for the step. The validation committee is generated by assigning 64 credits among all provisioners, except the block generator (which can thus not vote for its own block).
+:::
+Note that the extracted block generator is excluded from the extractions of the Validation and Ratification steps, to avoid voting on its own block.
+:::
 
-If the provisioner is part of the committee, it validates the output from the [proposal](#proposal) step. If the output is void, it votes $NoCandidate$. Otherwise, it verifies the candidate block's validity against its previous block: if the candidate is valid, the node votes $Valid$, otherwise, it votes $Invalid$.
-Non-valid votes are used to prove an iteration failed (i.e., it can't reach a quorum of $Valid$ votes), which is functional to [block finality](#finality). The vote is signed and broadcast using a $\mathsf{Validation}$ message.
+Each committee member votes on the result of the Proposal step on its node: if it received the candidate block, it verifies its validity as a successor of the current tip and votes accordingly: *Valid*, if the verification succeeded, *Invalid* otherwise. If the proposal step ended with no candidate, it casts a *NoCandidate* vote.
 
-Then, all provisioners, including the committee members, collect votes from the network until a *supermajority* ($\frac{2}{3}$ of the committee credits) of $Valid$ votes is reached, a *majority* ($\frac{1}{2}{+}1$) of $\text{non-}Valid$ votes is reached, or the step timeout expires.
-Specifically, if a supermajority of $Valid$ votes is received, the step outputs $Valid$; if a majority of $Invalid$ or $NoCandidate$ votes is received, the step outputs $Invalid$ or $NoCandidate$, respectively.
+At the same time, all provisioners, including the Validation committee members, collect votes from the network until a quorum of votes is reached or the step timeout expires. In this step, a quorum of votes can either be a *supermajority* ($\frac{2}{3}$ of the committee credits) of $Valid$ votes, or a *majority* ($\frac{1}{2}{+}1$) of non-Valid votes (*Invalid* or *NoCandidate*).
 
-If the step timeout expires, the step outputs $NoQuorum$, which represents an unknown result: it is possible that casted votes reached a quorum but the provisioner did not see it.
+If a a quorum is reached, the step outputs the winning vote ($Valid$, $Invalid$, $NoCandidate$). Contrarily, if the step timeout expires, the step outputs $NoQuorum$. Note that $NoQuorum$ represents an unknown result: it is possible that casted votes reached a quorum but the provisioner did not see it.
 
-In all cases, except $NoQuorum$, the step output includes the aggregated votes that determined the result. The step output will be used as the input for the [ratification](#ratification) step.
+In all cases, except $NoQuorum$, the step output includes the aggregated votes that determined the result. The step output will be used as the input for the [Ratification](#ratification) step.
+
+<!-- TODO: move to ratification? -->
+Note that a quorum non-Valid votes are used to prove an iteration failed (i.e., it can't reach a quorum of $Valid$ votes), which is functional to [block finality](#finality).
 
 ## Ratification
 
@@ -133,5 +138,3 @@ In particular, blocks in the local chain can be in three states:
 | Maximum Step Timeout      | 60               |
 
 [^1]: a provisioner is *eligible* if it has a stake of at least 1000 DUSK and at least two *epochs* have ended since the stake was created. A new epoch is started every 2160 blocks, counting from the genisis block.
-
-[^2]: this information is considered a security risk, as knowing the identities of the provisioners participating in future rounds (most notably the block generator) could foster collusion or even enable target DoS attacks.
