@@ -53,51 +53,60 @@ The extraction works by iterating over provisioners and subtracting each weight 
 
 To balance out probabilities throughout the sortition, each time a provisioner is extracted, its weight is reduced by 1 DUSK (thus diminishing its probability of extraction).
 
+## Consensus Steps
 
-## Proposal
+### Proposal
 
-In this step, a single provisioner is extracted by the Deterministic Sortition as the *block generator* for this iteration.
+In this step, a unique provisioner is appointed as the *block generator* for the iteration.
+This is done by assigning a single credit with Deterministic Sortition.
 
-If the generator is online, it creates a new *candidate block*, digitally signs it, and broadcasts it to the network.
+The block generator, if online, creates a new *candidate block*, digitally signs it, and broadcasts it to the network.
 
-The other provisioners wait to receive this candidate from the network (candidates produced by a different provisioner are discarded) for a certain timeout. 
+The other provisioners wait to receive the block from the network for a certain timeout. If the message is received before the timeout expires, the step outputs the candidate block. Otherwise, if the timeout expires, the step outputs an empty value, to indicate no candidate was received.
 
-If the message is received before the timeout expires, the step outputs the candidate block.
-Contrarily, if the timeout expires, the step ends with an empty value.
+The step output will be used as the input for the Validation step.
 
-The step result will be used as the input for the [*Validation*](#validation) step.
+### Validation
 
-## Validation
+In this step, a *committee* of provisioners is appointed to decide whether the candidate block was generated and if it is a valid successor of the current chain tip.
+The committee is formed by assigning 64 credits with Deterministic Sortition. Such a committee will then have at most 64 members.
 
-In this step, a 64-credit *voting committee* is extracted by the Deterministic Sortition procedure.
-The main purpose of the Validation committee is to agree on whether the candidate block was generated and if it is a valid successor of the current chain tip.
-
+::: Note
+The extracted block generator is excluded from the extractions of the Validation and Ratification steps, to avoid voting on its own block.
 :::
-Note that the extracted block generator is excluded from the extractions of the Validation and Ratification steps, to avoid voting on its own block.
+
+Each member of the committee votes on the result of the Proposal step: if the candidate block was received, the provisioner verifies its validity as a successor of the current tip, and then votes accordingly: $Valid$, if the verification succeeded, or $Invalid$ otherwise; if no candidate was received, the provisioner casts a $NoCandidate$ vote.
+
+At the same time, all provisioners, including the committee members, collect the votes received from the network until a quorum is reached or the step timeout expires. Vote count is based on the credits of each voter. 
+
+A Validation quorum is reached with either a *supermajority* ($\frac{2}{3}$ of the committee credits) of $Valid$ votes, or a *majority* ($\frac{1}{2}{+}1$) of non-Valid votes ($Invalid$ or $NoCandidate$).
+
+If a quorum is reached, the step outputs the winning vote ($Valid$, $Invalid$, $NoCandidate$) along with the aggregated signatures of all collected votes. 
+Otherwise, if the timeout expires, the step outputs $NoQuorum$. 
+
+::: Note
+A $NoQuorum$ output represents an unknown result: it is possible that votes reached a quorum but the provisioner did not received them in time. This notion is important to understand [finality](#finality).
 :::
 
-Each committee member votes on the result of the Proposal step on its node: if it received the candidate block, it verifies its validity as a successor of the current tip and votes accordingly: *Valid*, if the verification succeeded, *Invalid* otherwise. If the proposal step ended with no candidate, it casts a *NoCandidate* vote.
+The step output will be used as the input for the Ratification step.
 
-At the same time, all provisioners, including the Validation committee members, collect votes from the network until a quorum of votes is reached or the step timeout expires. In this step, a quorum of votes can either be a *supermajority* ($\frac{2}{3}$ of the committee credits) of $Valid$ votes, or a *majority* ($\frac{1}{2}{+}1$) of non-Valid votes (*Invalid* or *NoCandidate*).
+### Ratification
 
-If a a quorum is reached, the step outputs the winning vote ($Valid$, $Invalid$, $NoCandidate$). Contrarily, if the step timeout expires, the step outputs $NoQuorum$. Note that $NoQuorum$ represents an unknown result: it is possible that casted votes reached a quorum but the provisioner did not see it.
+In this step, a new *committee* of provisioners, different from the Validation one, is appointed to confirm the result of the Validation step (i.e., whether the Validation committee reached a quorum).
+As for Validation, this committee is formed by assigning 64 credits with Deterministic Sortition.
 
-In all cases, except $NoQuorum$, the step output includes the aggregated votes that determined the result. The step output will be used as the input for the [Ratification](#ratification) step.
+Members of the committee cast a vote with the output of the Validation step. At the same time, all provisioners, including committee members, collect Ratification votes from the network until a quorum is reached or the step timeout expires. 
+<!--  -->
+In this step, a quorum can either be 
 
-<!-- TODO: move to ratification? -->
-Note that a quorum non-Valid votes are used to prove an iteration failed (i.e., it can't reach a quorum of $Valid$ votes), which is functional to [block finality](#finality).
+If a quorum is reached for any result, a $\mathsf{Quorum}$ message is generated with an *attestation* of the iteration, which contains the aggregated signatures of both validation and ratification votes.
 
-## Ratification
-
-*Ratification* is the third step in an SA iteration. In this step, the result of the [validation](#validation) step is agreed upon by another committee of randomly chosen provisioners. 
-Members of the extracted committee cast a vote with the output of the validation step. At the same time, all provisioners, including committee members, collect Ratification votes from the network until a target quorum is reached or the step timeout expires.
-
-If a quorum is reached for any result, a $\mathsf{Quorum}$ message is generated with the aggregated signatures of both validation and ratification steps.
-Since the certificate proves a candidate reached a quorum, receiving this message is sufficient to accept the candidate into the local chain.
+<!-- Since the attestation proves a candidate reached a quorum, receiving this message is sufficient to accept the candidate into the local chain. -->
 
 The main purpose of the Ratification step is to ensure provisioners are "aligned" with respect to the validation result: if validation result was $Valid$, it ensures a supermajority of provisioners accept the block. Similarly, in case of non-Valid result, it ensures a majority of provisioners will attest this iteration as failed, which, in turn, is used in determining the block [*finality*](#finality).
 
-In the ratification step, each provisioner first executes the [*deterministic sortition*](#deterministic-sortition) algorithm to extract the committee for the step. The ratification committee is also generated by assigning 64 credits among provisioners.
+
+
 If the provisioner is part of the committee, it casts a vote with the winning validation vote ($Valid$, $Invalid$, $NoCandidate$, $NoQuorum$). 
 The vote is signed and broadcast using a $\mathsf{Ratification}$ message, which also include the validation votes that determined the result.
 
@@ -107,6 +116,10 @@ If any quorum is reached, the step outputs the winning vote ($Valid$, $Invalid$,
 In all cases, except $NoQuorum$, the output of the step includes the aggregated votes that determined the result.
 
 The output, together with the validation output, will be used to determine the outcome of the iteration.
+
+<!-- TODO: move to ratification? -->
+Note that a quorum non-Valid votes are used to prove an iteration failed (i.e., it can't reach a quorum of $Valid$ votes), which is functional to [block finality](#finality).
+
 
 ## Finality
 
@@ -128,13 +141,13 @@ In particular, blocks in the local chain can be in three states:
 
 ## Global Parameters
 
-| Name                      | Value            |
-|:-------------------------:|:----------------:|
-| Minimum Stake             | 1000 Dusk        |
-| Epoch Duration            | 2160 Blocks      |
-| Committee Credits         | 64               |
-| Maximum Iterations        | 255              |
-| Rolling Finality Blocks   | 5                |
-| Maximum Step Timeout      | 60               |
+|          Name           |    Value    |
+| :---------------------: | :---------: |
+|      Minimum Stake      |  1000 Dusk  |
+|     Epoch Duration      | 2160 Blocks |
+|    Committee Credits    |     64      |
+|   Maximum Iterations    |     255     |
+| Rolling Finality Blocks |      5      |
+|  Maximum Step Timeout   |     60      |
 
 [^1]: a provisioner is *eligible* if it has a stake of at least 1000 DUSK and at least two *epochs* have ended since the stake was created. A new epoch is started every 2160 blocks, counting from the genisis block.
