@@ -84,8 +84,8 @@ cargo install --path rusk/rusk-wallet
 ```
 
 
-#### "PersistenceError" caused by "InvalidData"
-This error indicates that your node's state is corrupted. To fix this, reload from a snapshot by running:
+#### "PersistenceError" caused by "InvalidData" or "pointer out of bounds"
+These errors indicate that your node's state is corrupted. To fix this, reload from a snapshot by running:
 
 ```bash
 download_state
@@ -95,3 +95,7 @@ download_state
 ```bash
 service rusk start
 ```
+
+
+#### Compilation errors on libraries when building rusk-wallet
+Check if you are launching `make` from the root of the **rusk** directory (instead of another directory, such as **rusk-wallet**). The binary will be found in `./rusk/target/release/rusk-wallet`.
