@@ -56,7 +56,7 @@ This can happen during steps **6** and **7**, (block reverted event). In such ca
   - `block reverted` event and re-evaluate the transaction status.
 
 :::tip[Info]
-For information about events you can look at the [Rusk Universal Event System (RUES)](/developer/integrations/rues) page
+For information about events you can look at the [Rusk Universal Event System (RUES)](/developer/integrations/http-api) page
 :::
 
 ### Practical considerations for listening to transactions

@@ -16,7 +16,7 @@ The **moonlightHistory** endpoint allows for advanced filtering, enabling querie
 
 You can also checkout the [transaction models](/learn/tx-models#transaction-models-on-dusk) page, to get familiar with the terminology of `moonlight` & `phoenix`.
 
-Refer to [GraphQL queries](/developer/integrations/rues/#graphql-queries) for additional information on the GraphQL endpoint.
+Refer to [GraphQL queries](/developer/integrations/http-api/#graphql-queries) for additional information on the GraphQL endpoint.
 
 ## Endpoints
 

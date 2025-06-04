@@ -56,7 +56,7 @@ export default function sidebar(currentPath) {
             { label: "Wallet Core Library", href: '/developer/integrations/wallet-core' },
             { label: "Transaction Lifecycle", href: '/developer/integrations/tx-lifecycle' },
             { label: "W3sper SDK", href: '/developer/integrations/w3sper' },
-            { label: "RUES", href: '/developer/integrations/rues' },
+            { label: "HTTP API", href: '/developer/integrations/http-api' },
             { label: "Integrate with Exchanges", href: '/developer/integrations/exchanges' },
             { label: "Hashing Algorithms", href: '/developer/integrations/hashing-algorithms' },
             { label: "Address Format", href: '/developer/integrations/addresses' },

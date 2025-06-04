@@ -9,4 +9,4 @@ This section outlines the libraries that developers can use to integrate with Du
 - [wallet-core](/developer/integrations/wallet-core)
 
 In addition to the above, developers can leverage:
--  [RUES](/developer/integrations/rues)
+-  [HTTP API](/developer/integrations/http-api)
