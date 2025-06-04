@@ -24,7 +24,7 @@ Requirements vary depending on whether you are configuring a [Provisioner](/oper
 
 ### Use Dusk APIs
 
-Dusk offers a streamlined event system through the [Rusk Universal Event System (RUES)](/developer/integrations/rues), as data can be fetched from the following endpoints:
+Dusk offers a streamlined event system through the [Rusk Universal Event System (RUES)](/developer/integrations/http-api), as data can be fetched from the following endpoints:
 
 - **Mainnet**: https://nodes.dusk.network/
 - **Testnet**: https://nodes.testnet.dusk.network/
@@ -38,7 +38,7 @@ You can rely on the RPC infrastructure hosted by the community, or run an [archi
 
 ## Token deposits and withdrawals
 
-To monitor deposit and withdrawal events, you can utilize [RUES](/developer/integrations/rues#event-subscriptions) by subscribing via a websocket.
+To monitor deposit and withdrawal events, you can utilize [RUES](/developer/integrations/http-api#event-subscriptions) by subscribing via a websocket.
 
 In most cases, 1 block confirmation is sufficient for finality. The only exception to the 1 block finality is when the network is in a rolling finality state, in which up to 5 additional blocks may be required to achieve finality.
 
