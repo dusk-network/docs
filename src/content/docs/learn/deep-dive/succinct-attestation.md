@@ -5,30 +5,8 @@ description: Understand the innovative consensus mechanism that secures Dusk.
 
 The Dusk consensus protocol, called **Succinct Attestation** (**SA**), is a permission-less, committee-based proof-of-stake consensus protocol.
 
-The protocol is run by all stakers, known as ***provisioners***, which are responsible for generating, validating, and ratifying new blocks. Participation goes in turns, with provisioners being pseudo-randomly selected for each phase of the consensus. The selection is done through the [*Deterministic Sortition*](#deterministic-sortition) algorithm, which extracts provisioners in a non-interactive way based on their stakes: the higher the stake, the more the provisioner gets extracted.
-
-
-## Consensus Algorithm
-
-The SA protocol is run in ***rounds***, with each round adding a new block to the blockchain. In turn, each round proceeds per ***iterations***, with each iteration aiming at generating a new *candidate* block and reaching agreement on the validity and the acceptance of such a block.
-
-An iteration is composed of three ***steps***:
-  1. [***Proposal***](#proposal), where an extracted provisioner is appointed to generate a new block and broadcast it to the network.
-  2. [***Validation***](#validation), where a committee of extracted provisioners verifies the new block and vote on the result.
-  3. [***Ratification***](#ratification), where another committee of provisioners try to agree on the result of the Validation step.
-
-If a candidate is produced in the Proposal step, and a supermajority of votes is reached in favor of the block, the candidate is added to the blockchain. The result of the iteration is certified with an ***attestation*** containing all the (digitally-signed) votes of the committee members that reached agreement on the block.
-
-When an iteration fails to produce and reach consensus on a block, a new one is executed with a new block generator (which means a different candidate block) and a new set of voters. To mitigate the risk of forks, when a provisioner starts a new iteration, it stop participating on previous ones. A maximum of 50 iterations is run in a single round.
-
-### Emergency Mode
-After 16 failed iterations, the consensus enters the *Emergency Mode*, in which iterations are kept active until either they reach a result (i.e., either a *success* or a *fail* quorum) or a block is accepted. Extracted provisioners are allowed to participate to all emergency-mode iterations at the same time, increasing the risk of forks but maximizing the probability of producing a block.
-
-### Open Mode
-If a node reaches the end of the last iteration without an accepted block, it enters the *Open Mode*, in which all currently-active emergency-mode iterations are kept running, but no new ones are started. In other words, in Open Mode, nodes wait for missing nodes to rejoin the network and reach consensus on one of the iterations.
-
-### Emergency Block
-In extreme cases, in which a large amount of provisioners is failing to participate and no block is produced, an *Emergency Block* can be produced by one of the nodes run by Dusk. This block needs no validation nor consensus and is automatically accepted by all nodes. Consensus will then start from the following round following the standard rules. Note that the Emergency Block can be replaced by a proper block if produced before reaching Rolling Finality (see the *Finality* section below).
+The protocol is run by all stakers, known as ***provisioners***, which are responsible for generating, validating, and ratifying new blocks. 
+Provisioners are pseudo-randomly selected to participate at each [consensus step](#consensus-algorithm). The selection is done through the [*Deterministic Sortition*](#deterministic-sortition) algorithm, which extracts provisioners in a non-interactive way based on their stakes: the higher the stake, the more the provisioner gets extracted.
 
 ## Deterministic Sortition
 
@@ -53,101 +31,151 @@ The extraction works by iterating over provisioners and subtracting each weight 
 
 To balance out probabilities throughout the sortition, each time a provisioner is extracted, its weight is reduced by 1 DUSK (thus diminishing its probability of extraction).
 
-## Consensus Steps
+## Succinct Attestation (SA) Protocol
+
+The SA protocol is run in ***rounds***, with each round adding a new block to the blockchain. In turn, each round proceeds per ***iterations***, with each iteration aiming at generating a new *candidate* block and reaching agreement on the validity and the acceptance of such a block.
+
+An iteration is composed of three ***steps***:
+  1. [***Proposal***](#proposal), where an extracted provisioner is appointed to generate a new block and broadcast it to the network.
+  2. [***Validation***](#validation), where a committee of extracted provisioners vote on the validity of the new block.
+  3. [***Ratification***](#ratification), where another committee of provisioners vote on the result of the Validation step.
+
+If a candidate is produced in the Proposal step, and a supermajority of favorable votes is reached in both Validation and Ratification, the candidate is added to the blockchain. The result of an iteration is certified with an [***attestation***](#attestation) containing the (digitally-signed) votes of all the committee members that reached consensus on the block.
+
+When an iteration fails to produce and reach consensus on a block, a new one is executed with a new block generator (and hence a new candidate block) and a new set of voters. To mitigate the risk of forks, when a provisioner starts a new iteration, it stops participating on previous ones (except in [Emergency Mode](#emergency-mode)). A maximum of 50 iterations is run in a single round. If no block was produced after 50 iterations, nodes enter an [Open Mode](#open-mode) in which they wait for a block to reach consensus or a Dusk-signed [Emergency Block](#emergency-block) to be received.
 
 ### Proposal
 
-In this step, a unique provisioner is appointed as the *block generator* for the iteration.
-This is done by assigning a single credit with Deterministic Sortition.
+In this step, a unique provisioner is selected with [Deterministic Sortition](#deterministic-sortition) and appointed as the *block generator*.
 
-The block generator, if online, creates a new *candidate block*, digitally signs it, and broadcasts it to the network.
+If online, the generator creates a new *candidate block*, digitally signs it, and broadcasts it to the network.
 
-The other provisioners wait to receive the block from the network for a certain timeout. If the message is received before the timeout expires, the step outputs the candidate block. Otherwise, if the timeout expires, the step outputs an empty value, to indicate no candidate was received.
+All other provisioners wait to receive the block from the network, for a certain timeout. If the candidate is received before the timeout expires, the step outputs it. Otherwise, the step outputs $NoCandidate$, indicating that no block was received.
 
-The step output will be used as the input for the Validation step.
+The step output is used as the input for the following Validation step.
 
 ### Validation
 
-In this step, a *committee* of provisioners is appointed to decide whether the candidate block was generated and if it is a valid successor of the current chain tip.
-The committee is formed by assigning 64 credits with Deterministic Sortition. Such a committee will then have at most 64 members.
+In this step, a *committee* of provisioners, selected by assigning 64 credits with [Deterministic Sortition](#deterministic-sortition), is appointed to decide whether a candidate block was generated for the iteration, and if it is a valid successor of the current chain tip.
 
 ::: Note
-The extracted block generator is excluded from the extractions of the Validation and Ratification steps, to avoid voting on its own block.
+The candidate generator is excluded from the the Validation and Ratification committees to prevent him from voting on his own block.
 :::
 
-Each member of the committee votes on the result of the Proposal step: if the candidate block was received, the provisioner verifies its validity as a successor of the current tip, and then votes accordingly: $Valid$, if the verification succeeded, or $Invalid$ otherwise; if no candidate was received, the provisioner casts a $NoCandidate$ vote.
+Each member of the committee votes on the result of the Proposal step (on their own node): if the candidate block was received, he verifies its validity and then votes accordingly: $Valid$, if the verification succeeded, or $Invalid$ otherwise; otherwise, he votes $NoCandidate$.
 
-At the same time, all provisioners, including the committee members, collect the votes received from the network until a quorum is reached or the step timeout expires. Vote count is based on the credits of each voter. 
+At the same time, all provisioners, including the committee members, collect the votes received from the network until a quorum is reached or the step timeout expires. A Validation quorum is reached with either a *supermajority* ($\frac{2}{3}$ of the committee credits) of $Valid$ votes, or a *majority* ($\frac{1}{2}{+}1$) of $Invalid$ or $NoCandidate$ votes. Vote count is based on the credits of each voter.
 
-A Validation quorum is reached with either a *supermajority* ($\frac{2}{3}$ of the committee credits) of $Valid$ votes, or a *majority* ($\frac{1}{2}{+}1$) of non-Valid votes ($Invalid$ or $NoCandidate$).
-
-If a quorum is reached, the step outputs the winning vote ($Valid$, $Invalid$, $NoCandidate$) along with the aggregated signatures of all collected votes. 
-Otherwise, if the timeout expires, the step outputs $NoQuorum$. 
+If a quorum is reached, the step outputs the corresponding vote ($Valid$, $Invalid$, $NoCandidate$) along with the aggregated signatures of collected votes. If the timeout expires before reaching a quorum, the step outputs $NoQuorum$. 
 
 ::: Note
-A $NoQuorum$ output represents an unknown result: it is possible that votes reached a quorum but the provisioner did not received them in time. This notion is important to understand [finality](#finality).
+A $NoQuorum$ output represents an unknown result: it is in fact possible that votes actually reached a quorum but the provisioner did not receive all of them in time. This notion is important to understand [finality](#finality).
 :::
 
-The step output will be used as the input for the Ratification step.
+The step output is used as the input for the following Ratification step.
 
 ### Ratification
 
-In this step, a new *committee* of provisioners, different from the Validation one, is appointed to confirm the result of the Validation step (i.e., whether the Validation committee reached a quorum).
-As for Validation, this committee is formed by assigning 64 credits with Deterministic Sortition.
+In this step, a new committee of provisioners, different from the Validation one, is appointed to confirm, or ratify, the result of the Validation step. Similar to Validation, this committee is formed by assigning 64 credits with [Deterministic Sortition](#deterministic-sortition).
 
-Members of the committee cast a vote with the output of the Validation step. At the same time, all provisioners, including committee members, collect Ratification votes from the network until a quorum is reached or the step timeout expires. 
-<!--  -->
-In this step, a quorum can either be 
+The main purpose of this step is to ensure provisioners are aligned with the outcome of the Validation step: if the result was a $Valid$ quorum, it ensures a large portion of provisioners will indeed accept the block, while in case of $\text{non-}Valid$ quorum, it ensures the iteration will be attested as failed (which is relevant to block [finality](#finality)).
 
-If a quorum is reached for any result, a $\mathsf{Quorum}$ message is generated with an *attestation* of the iteration, which contains the aggregated signatures of both validation and ratification votes.
+Members of the committee cast a vote corresponding to the Validation output (on their own node): $Valid$, $Invalid$, or $NoCandidate$, if a quorum was reached, and $NoQuorum$ otherwise. 
 
-<!-- Since the attestation proves a candidate reached a quorum, receiving this message is sufficient to accept the candidate into the local chain. -->
+At the same time, all provisioners, including committee members, collect votes from the network until a quorum is reached or the step timeout expires. In this step, a quorum can either be a *supermajority* ($\frac{2}{3}$ of the committee credits) of $Valid$ votes, or a *majority* ($\frac{1}{2}{+}1$) of $Invalid$, $NoCandidate$, or $NoQuorum$ votes.
 
-The main purpose of the Ratification step is to ensure provisioners are "aligned" with respect to the validation result: if validation result was $Valid$, it ensures a supermajority of provisioners accept the block. Similarly, in case of non-Valid result, it ensures a majority of provisioners will attest this iteration as failed, which, in turn, is used in determining the block [*finality*](#finality).
+The step outputs $Success$ if a quorum of $Valid$ was reached, $Fail$ if a quorum of non-Valid votes was reached, or $NoQuorum$ if the timeout expired. 
 
+::: Note
+A result of $Fail(NoQuorum)$ means that a majority of the Ratification committee agreed on not having seen a quorum in the Validation step. This is effectively considered as a failed iteration, even if a quorum of Validation votes actually existed.
+:::
 
+The output of the Ratification step determines the iteration outcome.
 
-If the provisioner is part of the committee, it casts a vote with the winning validation vote ($Valid$, $Invalid$, $NoCandidate$, $NoQuorum$). 
-The vote is signed and broadcast using a $\mathsf{Ratification}$ message, which also include the validation votes that determined the result.
+### Attestation
 
-Then, all nodes, including the committee members, collect votes from the network until a *supermajority*  ($\frac{2}{3}$ of the committee credits) of $Valid$ votes is reached, a *majority* ($\frac{1}{2}{+}1$) of $\text{non-}Valid$ votes is reached, or the step timeout expires. 
+If a quorum is reached in the Ratification step, an ***attestation*** for the iteration is produced. An attestation contains the Ratification output ($Success$, $Fail(Invalid)$, $Fail(NoCandidate)$, or $Fail(NoQuorum)$) and the corresponding vote signatures for Validation and Ratification, in aggregated form (two bitsets are also included to indicate which committee members cast the vote in each step).
 
-If any quorum is reached, the step outputs the winning vote ($Valid$, $Invalid$, $NoCandidate$). Otherwise, if the step timeout expires, the step outputs $NoQuorum$.
-In all cases, except $NoQuorum$, the output of the step includes the aggregated votes that determined the result.
+If the iteration ends without a consensus (i.e., Ratification step outputs $NoQuorum$), the outcome is considered unknown by the node and no attestation is created. The reason for this is the intrisic uncertainty of missing quorum, which is simply not possible to prove (votes can have been cast but not been received).
 
-The output, together with the validation output, will be used to determine the outcome of the iteration.
+To speed up synchronization, all attestations are broadcast to the network. If a node is still running an iteration and receives a valid attestation from the network, it immediately interrupts the consensus execution and acts according to the attested result.
 
-<!-- TODO: move to ratification? -->
-Note that a quorum non-Valid votes are used to prove an iteration failed (i.e., it can't reach a quorum of $Valid$ votes), which is functional to [block finality](#finality).
+We call ***Success Attestation*** an attestation of a $Success$ result and ***Fail Attestation*** one for a $Fail$ result.
 
+### Outcome
+
+When a Success Attestation is produced, or received, the iteration ends, and the candidate block is accepted as the new tip into the local chain. This also determines the end of the round.
+
+If a Fail Attestation is produced, or received, the iteration ends, and a new one is started. The attestation is also stored in a *failed iterations* registry, which will be included in future candidate blocks of the same round to determine the *finality state* in case of acceptance (see [Finality](#finality)).
 
 ## Finality
 
-Due to the asynchronous nature of the network, more than one block can reach consensus in the same round (but in different iterations), creating a chain *fork* (i.e., two parallel branches stemming from a common ancestor). This is typically due to consensus messages being delayed or lost due to network congestion.
+Given the distributed nature of the protocol, it is possible that multiple iterations (in the same round) reach consensus on a candidate block, producing a blockchain *fork* (i.e., multiple branches stemming from a common block). This is typically due to network congestion, which can cause messages to be delayed or lost. In these cases, different nodes can accept different blocks for the same height creating a split in the network. 
 
-When a fork occurs, network nodes can initially accept either of the two blocks at the same height, depending on which one they see first. 
-However, when multiple same-height blocks are received, nodes always choose the lowest-iteration one. This mechanism allows to automatically resolve forks as soon as all conflicting blocks are received by all nodes.
+To resolve conflicts, when a node detects multiple blocks for the same round, it always chooses the one from the lowest iteration. This mechanism allows to automatically resolve forks as soon as all conflicting blocks are received by all nodes.
 
-As a consequence of the above, blocks from iterations greater than 0 could potentially be replaced if a lower-iteration block also reached consensus. Instead, blocks reaching consensus at iteration 0 can't be replaced by lower-iteration ones with the same parent. However, they can be replaced if an ancestor block is reverted.
+As a consequence of the above, blocks from iterations greater than 0 can potentially be replaced by a lower-iteration block that also reached consensus. On the other hand, blocks from iteration 0 can't be replaced by lower-iteration ones.
 
-To handle forks, we use the concept of consensus state, which defines whether a block can or cannot be replaced by another one from the network.
-In particular, blocks in the local chain can be in three states:
+To handle forks, we use the concept of *finality*, where a block is considered *final* if it cannot be reverted anymore, (that is, it becomes an immutable part of the ledger).
 
-  - *Accepted*: the block has a $Valid$ quorum but there might be a lower-iteration block with the same parent that also reached a $Valid$ quorum; an Accepted block can then be replaced by a lower-iteration one; *Accepted* blocks are blocks that reached consensus at Iteration higher than 0 and for which not all previous iterations have a Failed Attestation. 
+In particular, each block in the blockchain can be in one of the following ***finality states***:
 
-  - *Attested*: the block has a Valid quorum and all previous iterations have a Failed Attestation; this block cannot be replaced by a lower-iteration block with the same parent but one of its predecessors is Accepted and could be replaced; blocks reaching quorum at iteration 0 are Attested by definition (because no previous iteration exists).
+  - $Accepted$: the block has been accepted but it might be replaced by a lower-iteration block with a Success Attestation;
+
+  - $Attested$: the block has been accepted and it cannot be replaced by a lower-iteration block. It can however be reverted if a previous block is replaced.
   
-  - *Final*: the block is attested and all its predecessors are final; this block is definitive and cannot be replaced in any case.
+  - $Confirmed$: the block is either $Accepted$ or $Attested$ but has lower probability of being replaced due to the acceptance of enough blocks after it (see [finality rules](#finality-rules)). It can however be reverted if a previous block is replaced.
+
+  - $Final$: the block cannot be replaced nor reverted anymore and is then immutable.
+
+::: Note
+A block can only be $Final$ if all ancestors are also $Final$. This effectively divides the chain in a *final* part a *non-final* one.
+:::
+
+<!-- DOING: reviewing -->
+### Finality Rules
+We here define the rules used to set and update the finality state of a block in the local chain of a node.
+
+To define the finality rules, we use the concept of previous non-attested iterations, or $PNI$: given a block at iteration $I$, $PNI$ is the number of iterations lower than $I$ for which there is no Fail Attestation.
+The $PNI$ value for a block is obtained directly from the its $FailedIterations$ field, which contain all the Fail Attestation for previous iterations known to the generator.
+
+<!-- TODO: the reason for using PNI is that iterations with a Fail Attestation are provably failed, so no candidate can have reached agreement for the same iteration. This means the only candidates that can potentially replace a block are those from iterations with an unknown outcome, that is those without an attestation. -->
+
+The Finality State of each block in the local chain is determined as follows:
+
+ - A new block is marked as $Attested$ if $PNI=0$, and $Accepted$ if $PNI>0$;
+ - If a block is $Attested$, it is marked as $Confirmed$ when its successor is marked $Attested$ or $Confirmed$;
+ - If a block is $Accepted$, it is marked as $Confirmed$ after accepting $2 \times PNI$ consecutive $Attested$ or $Confirmed$ blocks;
+ - If a block is $Confirmed$ and its parent is $Final$, it is marked as $Final$.
+
+For instance, if a block from iteration 5 has 2 previous iterations with a Fail Attestation (that is, $PNI=3$), it is initially marked as $Accepted$ and becomes $Confirmed$ when the following $2 \times 3 = 6$ blocks are either $Attested$ or $Confirmed$. If, when marked as $Confirmed$, its parent block is $Final$, it is also marked as $Final$.
+
+
+## Special Modes
+When the network is failing to produce a block for a given round, the SA protocol progressively enter less-strict modes of operation, where certain constraints are not enforced anymore, so as to increase the probability to produce a block.
+
+### Relaxed Mode
+To avoid bloating the block size with Fail Attestations, the $FailedIterations$ field is limited to 8 attestations. Therefore, after 8 failed iterations, consensus enters the so-called *relaxed mode*, in which Fail Attestations are not stored anymore.
+
+### Emergency Mode
+After 16 failed iterations, the consensus enters the *Emergency Mode*, in which iterations are kept active until either they reach a result (i.e., either a *success* or a *fail* quorum) or a block is accepted. Extracted provisioners are allowed to participate to all emergency-mode iterations at the same time, increasing the risk of forks but maximizing the probability of producing a block.
+
+### Open Mode
+If a node reaches the end of the last iteration without an accepted block, it enters the *Open Mode*, in which all currently-active emergency-mode iterations are kept running, but no new ones are started. In other words, in Open Mode, nodes wait for missing nodes to rejoin the network and reach consensus on one of the iterations.
+
+### Emergency Block
+In extreme cases, in which a large amount of provisioners is failing to participate and no block is produced, an *Emergency Block* can be produced by one of the nodes run by Dusk. This block needs no validation nor consensus and is automatically accepted by all nodes. Consensus will then start from the following round following the standard rules. Note that the Emergency Block can be replaced by a proper block if produced before reaching Rolling Finality (see the *Finality* section below).
 
 ## Global Parameters
 
-|          Name           |    Value    |
-| :---------------------: | :---------: |
-|      Minimum Stake      |  1000 Dusk  |
-|     Epoch Duration      | 2160 Blocks |
-|    Committee Credits    |     64      |
-|   Maximum Iterations    |     255     |
-| Rolling Finality Blocks |      5      |
-|  Maximum Step Timeout   |     60      |
+|           Name           |    Value    |
+| :----------------------: | :---------: |
+|      Minimum Stake       |  1000 Dusk  |
+|      Epoch Duration      | 2160 Blocks |
+|    Committee Credits     |     64      |
+|    Maximum Iterations    |     50      |
+|   Maximum Step Timeout   |     40      |
+|  Relaxed Mode Iteration  |      8      |
+| Emergency Mode Iteration |     16      |
 
 [^1]: a provisioner is *eligible* if it has a stake of at least 1000 DUSK and at least two *epochs* have ended since the stake was created. A new epoch is started every 2160 blocks, counting from the genisis block.
