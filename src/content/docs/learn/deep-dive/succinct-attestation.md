@@ -114,32 +114,29 @@ Given the distributed nature of the protocol, it is possible that multiple itera
 
 To resolve conflicts, when a node detects multiple blocks for the same round, it always chooses the one from the lowest iteration. This mechanism allows to automatically resolve forks as soon as all conflicting blocks are received by all nodes.
 
-As a consequence of the above, blocks from iterations greater than 0 can potentially be replaced by a lower-iteration block that also reached consensus. On the other hand, blocks from iteration 0 can't be replaced by lower-iteration ones.
+As a consequence of the above, blocks from iterations greater than 0 can potentially be replaced by a lower-iteration block that also reached consensus. On the other hand, blocks from iteration 0 cannot be replaced by lower-iteration ones.
 
 To handle forks, we use the concept of *finality*, where a block is considered *final* if it cannot be reverted anymore, (that is, it becomes an immutable part of the ledger).
 
-In particular, each block in the blockchain can be in one of the following ***finality states***:
+In particular, each block in the blockchain can be in one of the following ***Finality States***:
 
-  - $Accepted$: the block has been accepted but it might be replaced by a lower-iteration block with a Success Attestation;
+  - $Accepted$: the block has been accepted but it might be replaced by a lower-iteration candidate with a Success Attestation;
 
-  - $Attested$: the block has been accepted and it cannot be replaced by a lower-iteration block. It can however be reverted if a previous block is replaced.
+  - $Attested$: the block has been accepted and it cannot be replaced by a lower-iteration candidate. It can however be reverted if a previous block is replaced.
   
   - $Confirmed$: the block is either $Accepted$ or $Attested$ but has lower probability of being replaced due to the acceptance of enough blocks after it (see [finality rules](#finality-rules)). It can however be reverted if a previous block is replaced.
 
   - $Final$: the block cannot be replaced nor reverted anymore and is then immutable.
 
-::: Note
-A block can only be $Final$ if all ancestors are also $Final$. This effectively divides the chain in a *final* part a *non-final* one.
-:::
+### Previous Non-Attested Iterations (PNI)
 
-<!-- DOING: reviewing -->
+The initial finality state of an accepted block is based on the number of *previous non-attested iterations*, or $PNI$.
+
+Given a block at iteration $I$, $PNI$ is the number of iterations lower than $I$ for which there is no Fail Attestation. This number is obtained directly from the $FailedIterations$ field of the block itself, which contains all the Fail Attestation for previous iterations known to the generator.
+
+The reason for basing finality on $PNI$ is the following: a Fail Attestation proves that a quorum was reached for a Fail result, which implies that no Success Attestation can have been produced for the candidate in the same iteration (because only one quorum is possible[^2]). Thus, the accepted block cannot be replaced by a candidate from such iteration. With the same rationale, we can say that a block can only be replaced by candidates from (previous) iterations whose result is unknown, that is, for which there no Fail Attestation.
+
 ### Finality Rules
-We here define the rules used to set and update the finality state of a block in the local chain of a node.
-
-To define the finality rules, we use the concept of previous non-attested iterations, or $PNI$: given a block at iteration $I$, $PNI$ is the number of iterations lower than $I$ for which there is no Fail Attestation.
-The $PNI$ value for a block is obtained directly from the its $FailedIterations$ field, which contain all the Fail Attestation for previous iterations known to the generator.
-
-<!-- TODO: the reason for using PNI is that iterations with a Fail Attestation are provably failed, so no candidate can have reached agreement for the same iteration. This means the only candidates that can potentially replace a block are those from iterations with an unknown outcome, that is those without an attestation. -->
 
 The Finality State of each block in the local chain is determined as follows:
 
@@ -150,21 +147,36 @@ The Finality State of each block in the local chain is determined as follows:
 
 For instance, if a block from iteration 5 has 2 previous iterations with a Fail Attestation (that is, $PNI=3$), it is initially marked as $Accepted$ and becomes $Confirmed$ when the following $2 \times 3 = 6$ blocks are either $Attested$ or $Confirmed$. If, when marked as $Confirmed$, its parent block is $Final$, it is also marked as $Final$.
 
+::: Note
+A block can only be $Final$ if all previous blocks are $Final$.
+:::
 
-## Special Modes
+
+## Special Consensus Modes
 When the network is failing to produce a block for a given round, the SA protocol progressively enter less-strict modes of operation, where certain constraints are not enforced anymore, so as to increase the probability to produce a block.
 
 ### Relaxed Mode
-To avoid bloating the block size with Fail Attestations, the $FailedIterations$ field is limited to 8 attestations. Therefore, after 8 failed iterations, consensus enters the so-called *relaxed mode*, in which Fail Attestations are not stored anymore.
+After 8 failed iterations, the consensus enters the *Relaxed Mode*, in which no more Fail Attestations are stored in the $FailedIterations$ field. In other words, $FailedIterations$ will only contain at most 8 attestations.
+This mode is enabled to avoid bloating the size of candidate blocks with an excessive number of attestations.
+
+Blocks produced in Relaxed Mode cannot ever be $Attested$.
 
 ### Emergency Mode
-After 16 failed iterations, the consensus enters the *Emergency Mode*, in which iterations are kept active until either they reach a result (i.e., either a *success* or a *fail* quorum) or a block is accepted. Extracted provisioners are allowed to participate to all emergency-mode iterations at the same time, increasing the risk of forks but maximizing the probability of producing a block.
+After 16 failed iterations, the consensus enters the *Emergency Mode*, in which iterations are kept active until either they reach a result (i.e., either a *Success* or a *Fail* attestation is produced) or a block at the same round is accepted. In particular, in this mode steps do not have a timeout and they only end if a positive result is achieved (i.e., a candidate is produced in Proposal, and a quorum is reached in Validation and Ratification).
+
+Extracted provisioners are allowed to participate to all emergency-mode iterations at the same time, increasing the risk of forks but maximizing the probability of producing a block.
+
+Note that $NoCandidate$ and $NoQuorum$ results and votes are not allowed in Emergency Mode.
 
 ### Open Mode
-If a node reaches the end of the last iteration without an accepted block, it enters the *Open Mode*, in which all currently-active emergency-mode iterations are kept running, but no new ones are started. In other words, in Open Mode, nodes wait for missing nodes to rejoin the network and reach consensus on one of the iterations.
+If a node reaches the end of the last iteration without an accepted block, it enters the *Open Mode*, in which all currently-active emergency-mode iterations are kept running, but no new ones are started. 
+
+This mode is designed to cope with a massive network congestion or split: in particular, nodes wait for missing nodes to rejoin the network and reach consensus on one of the iterations.
 
 ### Emergency Block
-In extreme cases, in which a large amount of provisioners is failing to participate and no block is produced, an *Emergency Block* can be produced by one of the nodes run by Dusk. This block needs no validation nor consensus and is automatically accepted by all nodes. Consensus will then start from the following round following the standard rules. Note that the Emergency Block can be replaced by a proper block if produced before reaching Rolling Finality (see the *Finality* section below).
+In extreme cases, in which no block is produced for an excessive amount of time, an *Emergency Block* can be broadcast by one of the nodes run by Dusk. This block needs no validation nor consensus and is automatically accepted by all nodes. Consensus will then start from the following round following the standard rules. 
+
+Note that the Emergency Block can be replaced by a proper block if produced before reaching Rolling Finality (see the *Finality* section below).
 
 ## Global Parameters
 
@@ -179,3 +191,5 @@ In extreme cases, in which a large amount of provisioners is failing to particip
 | Emergency Mode Iteration |     16      |
 
 [^1]: a provisioner is *eligible* if it has a stake of at least 1000 DUSK and at least two *epochs* have ended since the stake was created. A new epoch is started every 2160 blocks, counting from the genisis block.
+
+[^2]: this is true as long as committee members do not cast a double vote. To discourage such a behavior, double votes are penalized with slashing.
