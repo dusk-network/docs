@@ -15,17 +15,18 @@ This guide explains setting up the wallet and the last steps needed to start run
 
 ### Obtain a mnemonic
 
-If you haven't obtained a mnemonic yet, you can do so by:
-- Using the command `rusk-wallet`and select the option to create a new wallet.
-- Using the [Web Wallet](https://apps.dusk.network/wallet/setup/) to obtain a mnemonic.
+Before setting up your node wallet, you’ll need a mnemonic. You can obtain one using any of the following methods:
 
-If you haven't made a wallet yet, use our CLI [Rusk Wallet](https://apps.dusk.network/wallet/setup/), which you can download [here](https://github.com/dusk-network/rusk/releases/tag/rusk-wallet-0.1.0-rc.0), and create a new wallet.
+- **Using the CLI wallet ([rusk-wallet](https://github.com/dusk-network/rusk/blob/master/rusk-wallet/src/bin/README.md))**, either directly on your node or locally on your machine. You can download Rusk Wallet from the [Rusk releases page](https://github.com/dusk-network/rusk/releases?q=rusk+wallet&expanded=true).
+- **Using the [Web Wallet](https://apps.dusk.network/wallet/setup/)** if you would rather use a web app to access your wallet on your main device.
 
-**It is important that you back up your mnemonic phrase and don't share it with anyone as this is gives anyone access to your wallet and funds**
+**Important:** Back up your mnemonic phrase securely and never share it. Anyone with access to this phrase can control your wallet and funds.
 
-You can either write the mnemonic phrase down or create the wallet locally on your computer, backup the file and use the restore option on the server.
+If you generate your wallet directly on the node using `rusk-wallet`, no restore is necessary, the wallet is already in place.
 
-### Restore Wallet
+If you created your wallet elsewhere (e.g. via the Web Wallet or on your local machine), you’ll need to restore it on your node using the generated mnemonic.
+
+### Restore Wallet (if created externally)
 
 If you already have a mnemonic it is time to set your wallet up on the node.
 
@@ -35,7 +36,7 @@ Once you have access to a Dusk mnemonic, run the following command:
 rusk-wallet restore
 ```
 
-If your node is not running, the wallet might tell you `some operations won't be available`. This is fine, and happens due to your node not being online yet. You can still continue to follow the steps below.
+If your node isn't running yet, `rusk-wallet` may show a message like `some operations won't be available`. This is expected; the wallet can still be restored successfully.
 
 You will be asked to provide your recovery phrase/mnemonic, **in lowercase**, and to enter a password for the wallet.
 
@@ -57,46 +58,45 @@ sh /opt/dusk/bin/setup_consensus_pwd.sh
 
 #### Start your node
 
-If you've configured everything correctly, you can now start rusk:
+We recommend using [fast-syncing](/operator/guides/fast-sync) to bring your node up to date quickly. It significantly reduces the time required to become consensus-ready.
 
+If you prefer to sync from genesis (e.g., for auditing or archival purposes), do **not** use fast-syncing.
+
+Start your node with:
 ```sh
 service rusk start
 ```
 
-Your node will now start syncing. You can check if it indeed is by running:
+Once the node is running, check its sync progress by running:
 
 ```sh
 ruskquery block-height
 ```
 
-It is best to wait until your node is synced up. You can find the latest block height on [the block explorer](https://explorer.dusk.network/). Alternatively, consider [fast-syncing](/operator/guides/fast-sync) for a quicker method.
+Compare your node's block height to the [block explorer](https://explorer.dusk.network/) to confirm if it's catching up.
 
 ## Testnet Faucet
 
-You can request funds from our [Discord faucet](/operator/guides/nocturne-faucet) for testnet. The faucet will give you 5000 nDUSK. The minimum to stake is 1000 nDUSK.
+You can request 5000 nDUSK from our [Discord faucet](/operator/guides/nocturne-faucet). The minimum stake is 1000 nDUSK.
 
 ## Stake your DUSK
 
-The final step is to stake. To allow your node to actively participate in the consensus & receive rewards for doing so, your wallet needs to stake a minimum of 1000 DUSK. If you want to stake 1000 DUSK, you can initiate staking by running the following command in the terminal:
+The final step is staking. To allow your node to participate in consensus and earn rewards, your wallet must stake at least 1000 DUSK.
 
-You can stake by running:
+Initiate staking with:
 
 ```sh
-rusk-wallet stake --amt 1000 # Or however much you want to stake
+rusk-wallet stake --amt 1000 # Replace with your desired amount
 ```
 
-Once the transaction has gone through, you can view your staking information by running:
+After the stake transaction, verify that your stake status is updated:
 
 ```sh
 rusk-wallet stake-info
 ```
 
-To see if your node is participating in consensus and creating blocks, occasionally check:
+Check for the `eligible stake` and `stake active from block` fields to be updated.
 
-```sh
-grep "execute_state_transition" /var/log/rusk.log | tail -n 5
-```
+**Note**: Your stake takes 2 epochs (4320 blocks) to mature. Only after that will it start participating in consensus.
 
-Note that this can take a while, given that your stake needs at least 2 epochs, or 4320 blocks, to mature. Your stake, relative to the total stake, also plays a factor.
-
-If everything went right, and your node starts accepting and creating blocks, you have successfully set up your wallet & node!
+You can periodically run `rusk-wallet stake-info` to monitor if your accumulated rewards are increasing, which is a clear indicator that your node is successfully participating in consensus.
