@@ -24,7 +24,7 @@ Once it tells you the operation is complete, run the following command to start 
 service rusk start
 ```
 
-This process will ensure your node is up-to-date with the latest blockchain state, allowing you to sync faster and get back to participating in the network in less time.
+This process bootstraps your node with the latest available state snapshot, allowing it to sync the remaining blocks much faster than starting from genesis.
 
 :::note
 If you are experiencing errors in downloading the state, it might be due to some remnants of previous state syncing. Try to clean up with:
