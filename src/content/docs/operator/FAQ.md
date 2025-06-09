@@ -36,11 +36,17 @@ You can launch `ruskquery info` to check the chain ID of your node. If you have 
 One epoch consists of **2160** blocks.
 
 
+#### Can I run a node without staking?
+Yes, you can run a node to just propagate transactions. But your node won't be able to participate in consensus and accrue staking rewards.
+
 ## Staking
 
 #### What is the minimum amount of DUSK I must stake?
 
 **1000** (1 thousand) Dusk.
+
+#### How long until rewards starts accruing, and how are they determined?
+Staking becomes active after the 4320 block maturity period, which corresponds to approximately 12 hours. More information regarding staking rewards can be found [here](/learn/guides/staking-basics#how-are-rewards-determined).
 
 #### Increase your stake & compounding Rewards
 Details about increasing your stake and compounding your rewards can be found [here](/learn/guides/staking-basics#re-stake-rewards--increase-stake).
@@ -60,16 +66,30 @@ Your stake is defined by a consensus key and an owner. The owner is by default t
 1. If your owner key is set to a different key, no one is able to unstake, stake or withdraw using your consensus key.
 2. If the key you use to send funds around is set to a different key than the consensus key, no one will be able to send funds from your wallet using your consensus key.
    - This is naturally the case for shielded accounts as they use different keys by default.
-   - For public accounts you need to create a separated account holding your public account balance.
+   - For public accounts, you need to create a separate account holding your public account balance.
 
-In summary, consensus keys can be strictly limited to signing consensus messages such as block proposal, validation, and voting. All other critical operations, such as unstaking or sending funds, can be separated to other keys.
+In summary, consensus keys can be strictly limited to signing consensus messages such as block proposal, validation, and voting. All other critical operations, such as unstaking or sending funds, can be separated into other keys.
+
+#### Can I store my keys separately from the machine running the node?
+
+The node only needs the [consensus key](/operator/guides/node-wallet-setup/#export-consensus-key). Use that wallet instance to export the key and copy it over to the node.
+
+You can do that by using `scp`, for example with:
+```bash
+scp consensus.keys duskadmin@yournodeipaddress :/opt/dusk/conf/
+```
+As there's also a password on the file when you export, you need to set it on the server side as well (the sh /opt/dusk/bin/setup_consensus_pwd.sh step)
 
 #### What if I lose access to my server or keys?
 
 As long as you have your mnemonic phrase stored safely, you can recover everything else.
 
-#### What should I do if I lose my SSH-key file?
-Unstake using the web wallet, destroy your droplet, and follow the setup procedure to recreate your node.
+#### What should I do if I lose my SSH key file?
+1) Spin up a fresh instance and [install Rusk](/operator/installation)
+2) Restore your wallet using the previous mnemonic. 
+3) [Export the consensus key](/operator/guides/node-wallet-setup/#export-consensus-key) from the restored wallet.
+4) Once the new node is fully synced, it will start participating in consensus. There is no need to stake again. You can then safely delete the old instance.
+
 
 ## How To's
 
@@ -82,14 +102,25 @@ rusk-wallet moonlight-stake --amt 3000
 ```
 
 #### How to resume validating again after missing an upgrade?
-If you didn't upgrade your node on time, and got soft slashed, you need to: 
+If you didn't upgrade your node on time and got soft slashed, you need to: 
 
-1) Unstake full amount
+1) Unstake the full amount
 2) Upgrade your node
 3) Use `download_state` to get you back to a recent block
-4) Start node again and wait until it's fully synced
+4) Start the node again and wait until it's fully synced
 5) Stake again
 
+#### How can I recover my node if the state is corrupted?
+Reload from a snapshot by running:
+
+```bash
+download_state
+```
+(and confirm the warning by typing 'Y'). Then, restart the node with:
+
+```bash
+service rusk start
+```
 
 #### How can I run a Dusk node on Docker?
 We don't support a production-ready Docker image for Rusk. To run Rusk through Docker as ephemeral (non-persistent storage), you can use the following command: 
@@ -148,7 +179,7 @@ You can override the HTTP listener port by:
 Configuration precedence is not applicable here, as settings are directly defined in `rusk.toml`.
 
 
-#### How to setup SSH on Digital Ocean?
+#### How to set up SSH on Digital Ocean?
 
 To set up SSH on DO, you can follow the steps below.
 
@@ -202,7 +233,7 @@ You can relay your internal port using `socat`:
 ```bash
 socat tcp-listen:8081,reuseaddr,fork tcp:localhost:8080
 ```
-This makes local port 8080 available on port 8081 and allow you to access it via external-ip:8081. To turn this into a service, you can create a `/etc/systemd/system/rusk-relay.service` file with the following content:
+This makes local port 8080 available on port 8081 and allows you to access it via external-ip:8081. To turn this into a service, you can create a `/etc/systemd/system/rusk-relay.service` file with the following content:
 
 ```bash
 [Unit]
@@ -219,7 +250,7 @@ Restart=always
 WantedBy=multi-user.target
 ```
 
-#### How can I configure the mempool timout?
+#### How can I configure the mempool timeout?
 
 The node installer sets a default value, but you can customize the mempool timeout by editing the [rusk.toml](https://github.com/dusk-network/node-installer/blob/main/conf/rusk.toml#L9) configuration file.
 
