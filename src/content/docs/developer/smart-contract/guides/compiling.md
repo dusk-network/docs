@@ -41,7 +41,7 @@ components = ["rust-src", "rustfmt", "cargo", "clippy"]
 
 This ensures compatibility with the `dusk-core` dependency in your contract.
 
-For the full list of dependencies, please look at the <a href="https://github.com/dusk-network/rusk" target="_blank">Rusk</a> readme.
+For the full list of dependencies, please look at the <a href="https://github.com/dusk-network/rusk/blob/master/README.md" target="_blank">Rusk</a> readme.
 
 ### 3. Add the wasm target
 
