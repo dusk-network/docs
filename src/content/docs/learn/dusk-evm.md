@@ -68,7 +68,7 @@ DuskEVM settles on Dusk (L1), gaining direct access to Dusk's privacy-preserving
         │     DuskEVM L2      │  ← Optimistic Rollup (OP Stack)
         │   (EVM Execution)   │
         └──────────┬──────────┘
-                   │ Blobs, Calldata
+                   │ Blobs
         ┌──────────▼──────────┐
         │     Dusk L1 DA      │  ← Data Availability & Settlement
         │  Confidential,      │
