@@ -7,7 +7,7 @@ description: Discover the essential tools, dependencies, and IDEs for developing
 This page explains what dependencies you need to have installed on your computer to start writing smart contracts in Rust.
 
 :::tip
-The full list of dependencies and their versions can be found in the <a href="https://github.com/dusk-network/rusk" target="_blank">Rusk</a> readme.
+The full list of dependencies and their versions can be found in the <a href="https://github.com/dusk-network/rusk/blob/master/README.md" target="_blank">Rusk</a> readme.
 :::
 
 ### Rust
