@@ -27,7 +27,7 @@ The native cryptocurrency of Dusk. It is used to pay for transaction fees and st
 
 #### Dusk EVM
 
-[Dusk EVM](learn/dusk-evm) is a EVM execution environment, that acts as a L2 that settles on Dusk (L1).
+[Dusk EVM](/learn/dusk-evm) is a EVM execution environment, that acts as a L2 that settles on Dusk (L1).
 
 #### Dusk VM
 
