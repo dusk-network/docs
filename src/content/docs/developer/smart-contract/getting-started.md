@@ -6,9 +6,13 @@ description: Discover the essential tools, dependencies, and IDEs for developing
 
 This page explains what dependencies you need to have installed on your computer to start writing smart contracts in Rust.
 
+:::tip
+The full list of dependencies and their versions can be found in the <a href="https://github.com/dusk-network/rusk/blob/master/README.md" target="_blank">Rusk</a> readme.
+:::
+
 ### Rust
 
-To start writing contracts in Rust we need installed <a href="https://www.rust-lang.org/tools/install" target="_blank">Rust</a> 1.71 nightly or higher. 
+To start writing contracts in Rust we need installed <a href="https://www.rust-lang.org/tools/install" target="_blank">Rust</a> `1.75.0` nightly (nightly-2023-11-10). 
 
 :::tip[Install Rust]
 You can find information to install Rust <a href="https://www.rust-lang.org/tools/install" target="_blank">here</a>.
