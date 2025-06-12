@@ -7,6 +7,7 @@ const defaultSidebar = [
       { label: "Native Issuance", link: "learn/tokenization-comparison" },
       { label: "Core Values", link: "learn/core-values" },
       { label: "Core Components", link: "learn/core-components" },
+      { label: "DuskEVM", link: "learn/dusk-evm" },
       { label: "Tokenomics", link: "learn/tokenomics" },
       { label: "Wallet Terminology", link: "learn/wallet-terminology" },
       { label: "Transaction Models", link: "learn/tx-models" },
