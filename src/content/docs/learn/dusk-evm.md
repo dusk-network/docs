@@ -7,9 +7,9 @@ DuskEVM is an EVM-equivalent execution environment within the modular Dusk stack
 
 DuskEVM enables developers to deploy smart contracts using standard EVM tooling while benefiting from a modular architecture designed to support regulatory compliance and meet the needs of financial institutions.
 
-
+:::note[Note]
 The separation of execution environments like DuskEVM from DuskDS introduces modularity into Dusk’s architecture, enabling scalability, extensibility, and protocol composability.
-
+:::
 
 ## Dusk's Modular Stack
 
@@ -17,7 +17,7 @@ With the introduction of DuskEVM, Dusk has expanded into a modular stack, provid
 
 | Layer            | Description                                                                 |
 |------------------|-----------------------------------------------------------------------------|
-| **DuskDS**        | Settlement and data availability layer. It's where consensus and staking happen|
+| **DuskDS**        | Settlement and data availability layer.|
 | **DuskEVM**       | EVM execution environment                     |
 | **DuskVM**        | Execution environment using Phoenix                  |
 
@@ -64,14 +64,6 @@ DuskEVM currently inherits a 7-day challenge period from the OP Stack. This is a
 
 ### Architecture
 
-          ┌──────────────────────┐
-          │     User / dApp      │
-          └────────┬─────────────┘
-                   │
-        ┌──────────▼──────────┐
-        │    DuskEVM          │  ← EVM execution environment
-        └──────────┬──────────┘
-                   │ Blobs
-        ┌──────────▼──────────┐
-        │      DuskDS         │  ← Consensus and Data Availability
-        └─────────────────────┘
+The diagram below illustrates Dusk’s evolution from a monolithic design to a modular architecture, where DuskDS acts as the foundational consensus and data availability layer, and multiple execution environments operate independently at the application layer:
+
+![Dusk's modular architecture](../../../assets/dusk_architecture.png)
