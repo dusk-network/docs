@@ -26,7 +26,9 @@ Blocks are added to the blockchain if they receive enough votes. The Determinist
 
 [Deep dive into Succinct Attestation](/learn/deep-dive/succinct-attestation)
 
-## Execution Layer: Dusk VM
+## Execution Layers
+
+### Dusk VM
 
 [Dusk VM](/learn/deep-dive/dusk-vm) is a highly optimized <a href="https://en.wikipedia.org/wiki/Virtual_machine#Process_virtual_machines" target="_blank">virtual machine</a> built around Wasmtime, a WASM runtime. It is a ZK-friendly virtual machine, enabling the development and execution of privacy-focused smart contracts and applications. 
 

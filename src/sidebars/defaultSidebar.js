@@ -7,7 +7,6 @@ const defaultSidebar = [
       { label: "Native Issuance", link: "learn/tokenization-comparison" },
       { label: "Core Values", link: "learn/core-values" },
       { label: "Core Components", link: "learn/core-components" },
-      { label: "DuskEVM", link: "learn/dusk-evm" },
       { label: "Tokenomics", link: "learn/tokenomics" },
       { label: "Wallet Terminology", link: "learn/wallet-terminology" },
       { label: "Transaction Models", link: "learn/tx-models" },
@@ -103,6 +102,7 @@ const defaultSidebar = [
       },
       { label: "Economic Protocol", link: "learn/deep-dive/economic-protocol" },
       { label: "Dusk VM", link: "learn/deep-dive/dusk-vm" },
+      { label: "DuskEVM", link: "learn/deep-dive/dusk-evm" },
       {
         label: "Succinct Attestation Consensus",
         link: "learn/deep-dive/succinct-attestation",

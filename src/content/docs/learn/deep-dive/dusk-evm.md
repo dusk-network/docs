@@ -66,4 +66,4 @@ DuskEVM currently inherits a 7-day challenge period from the OP Stack. This is a
 
 The diagram below illustrates Dusk’s evolution from a monolithic design to a modular architecture, where DuskDS acts as the foundational consensus and data availability layer, and multiple execution environments operate independently at the application layer:
 
-![Dusk's modular architecture](../../../assets/dusk_architecture.png)
+![Dusk's modular architecture](../../../../assets/modular_vs_monolithic.png)
