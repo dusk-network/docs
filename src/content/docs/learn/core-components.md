@@ -7,13 +7,15 @@ Dusk is built on a foundation of custom-developed tools and components, specific
 
 What sets Dusk apart from other blockchains is its tailor-made architecture, driven by continuous cryptographic research to ensure compliance, privacy, and robust network security, providing a reliable foundation to be a **Decentralized Market Infrastructure** (DeMI).
 
-## Rusk
+## DuskDS: Settlement and Data Availability
+
+### Rusk
 
 <a href="https://github.com/dusk-network/rusk/" target="_blank">Rusk</a> can be thought of as the technological heart of the Dusk protocol, similar to the motherboard of a computer. It is the reference implementation of the Dusk protocol in Rust. Rusk serves multiple critical functions. It includes foundational elements like the genesis contracts, such as the transfer and stake contract. It integrates key components such as Plonk, Kadcast and Dusk VM, and supplies host functions to smart contract developers through Dusk Core. Beyond that, Rusk houses the consensus mechanism and node software, maintaining the chain state, database and network. It also provides crucial external APIs through the Rusk Universal Event System (RUES).
 
 <a href="https://github.com/dusk-network/rusk/" target="_blank">Deep dive into Rusk implementation</a>
 
-## Consensus Layer: Succinct Attestation
+### Consensus: Succinct Attestation
 
 [Succinct Attestation](/learn/deep-dive/succinct-attestation) (SA) is the unique **proof-of-stake** (PoS) consensus algorithm at the core of Dusk. It uses a committee-based approach where stakers, called provisioners, participate in generating, validating and ratifying blocks. Provisioners are randomly selected based on their stake.
 
@@ -26,25 +28,13 @@ Blocks are added to the blockchain if they receive enough votes. The Determinist
 
 [Deep dive into Succinct Attestation](/learn/deep-dive/succinct-attestation)
 
-## Execution Layer: Dusk VM
-
-[Dusk VM](/learn/deep-dive/dusk-vm) is a highly optimized <a href="https://en.wikipedia.org/wiki/Virtual_machine#Process_virtual_machines" target="_blank">virtual machine</a> built around Wasmtime, a WASM runtime. It is a ZK-friendly virtual machine, enabling the development and execution of privacy-focused smart contracts and applications. 
-
-Dusk VM is fundamentally different from many blockchain VMs in that it not only executes WASM and is able to natively support ZK operations like SNARK verifications, but it also has a completely different way in which it handles memory.
-
-[Deep dive into Dusk VM](/learn/deep-dive/dusk-vm)
-
-## Network Layer: Kadcast
+### Networking: Kadcast
 
 <a href="https://github.com/dusk-network/kadcast/blob/main/README.md" target="_blank">Kadcast</a> is an innovative peer-to-peer protocol used by Dusk to optimize message exchanges between nodes. Unlike the traditional Gossip protocols used by many blockchain protocols, which broadcasts messages to a random set of nodes, Kadcast uses a structured overlay to direct message flow. This drastically reduces network bandwidth and makes latency much more predictable, and at the same time lower compared to Gossip protocols.
 
 Kadcast is highly resilient to network changes and failures. It dynamically updates routing tables to handle node churn, making it suitable for decentralized environments where network conditions can be unpredictable. Even when nodes fail to forward messages, Kadcast’s built-in fault tolerance ensures alternative paths are used, maintaining reliable message delivery.
 
 <a href="https://github.com/dusk-network/kadcast/blob/main/README.md" target="_blank">Deep dive into Kadcast implementation</a> 
-
-## Application layer
-
-At the application layer of our network, we’ve introduced innovative protocols and a dual transaction model designed to seamlessly meet the needs of financial institutions looking to tokenize Real-World Assets. Let’s take a closer look at the Genesis contracts, Citadel and Zedger/XSC.
 
 ### Genesis Contracts
 
@@ -56,7 +46,7 @@ The [Transfer Contract](/learn/deep-dive/transaction_models/transactions) is res
 
 ### Phoenix & Moonlight
 
-[Phoenix](/learn/tx-models#phoenix) & [Moonlight](/learn/tx-models#moonlight) are transaction models supported by Dusk. Moonlight provides public transactions, while Phoenix enables shielded transactions. The flexibility of this dual-model allows users to take the best from both privacy and compliance features.
+[Phoenix](/learn/deep-dive/transaction_models/tx-models#phoenix) & [Moonlight](/learn/deep-dive/transaction_models/tx-models#moonlight) are transaction models supported by Dusk. Moonlight provides public transactions, while Phoenix enables shielded transactions. The flexibility of this dual-model allows users to take the best from both privacy and compliance features.
 
 [Deep dive into Phoenix](/learn/deep-dive/transaction_models/phoenix)
 
@@ -64,13 +54,28 @@ The [Transfer Contract](/learn/deep-dive/transaction_models/transactions) is res
 
 ### Transactions on Dusk
 
-Transactions in Dusk are managed by the Transfer Contract. The Transfer Contract oversees the handling of both transparent and obfuscated transactions within the network.
+Transactions in DuskDS are managed by the Transfer Contract. The Transfer Contract oversees the handling of both transparent and obfuscated transactions within the network.
 
-The Transfer Contract supports **both** a [UTXO](/learn/tx-models#utxos) and [account-based](/learn/tx-models#account-model) model through [Phoenix](/learn/tx-models#phoenix) and [Moonlight](/learn/tx-models#moonlight) to handle transfers of the native currency, gas payments, and serve as a contract execution entry point.
+The Transfer Contract supports **both** a [UTXO](/learn/deep-dive/transaction_models/tx-models#utxos) and [account-based](/learn/deep-dive/transaction_models/tx-models#account-model) model through [Phoenix](/learn/deep-dive/transaction_models/tx-models#phoenix) and [Moonlight](/learn/deep-dive/transaction_models/tx-models) to handle transfers of the native currency, gas payments, and serve as a contract execution entry point.
 
 [Deep dive into the Transfer Contract](/learn/deep-dive/transaction_models/transactions)
 
-### Citadel
+## Application Layer: DuskVM and Dusk EVM execution environments
+
+### Dusk VM
+
+[Dusk VM](/learn/deep-dive/dusk-vm) is a highly optimized <a href="https://en.wikipedia.org/wiki/Virtual_machine#Process_virtual_machines" target="_blank">virtual machine</a> built around Wasmtime, a WASM runtime. It is a ZK-friendly virtual machine, enabling the development and execution of privacy-focused smart contracts and applications. 
+
+Dusk VM is fundamentally different from many blockchain VMs in that it not only executes WASM and is able to natively support ZK operations like SNARK verifications, but it also has a completely different way in which it handles memory.
+
+[Deep dive into Dusk VM](/learn/deep-dive/dusk-vm)
+
+### Dusk EVM
+[Dusk EVM](/learn/deep-dive/dusk-vm) is a fully EVM-equivalent execution environment. Built on the <a href="https://docs.optimism.io/stack/getting-started" target="_blank">OP Stack</a> with support for <a href="https://www.eip4844.com/" target="_blank">EIP-4844</a> (Proto-Danksharding), it enables developers to deploy smart contracts using standard EVM tooling—while benefiting from DuskDS's regulatory compliant infrastructure.
+
+[Deep dive into Dusk EVM](/learn/deep-dive/dusk-vm)
+
+## Citadel
 
 ![Citadel](../../../assets/citadel.gif)
 
@@ -78,7 +83,7 @@ Citadel is a Self-Sovereign Identity (SSI)/Digital Identity (DI) protocol design
 
 [Deep dive into Citadel](/developer/digital-identity/protocol) 
 
-### Zedger & XSC
+## Zedger & XSC
 
 Zedger is an asset protocol that incorporates a unique hybrid transaction model combining the benefits of both UTXO and account-based transaction models. This model provides the Confidential Security Contract (XSC) functionality necessary for Dusk’s securities-related use-cases among them the full lifecycle management of securities and supporting full regulatory compliance.
 

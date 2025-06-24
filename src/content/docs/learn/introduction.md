@@ -11,7 +11,7 @@ Utilizing zero-knowledge proofs (ZKPs) and other advanced cryptographic primitiv
 All products issued on Dusk’s platform are fully compliant with the European Union’s **MiFID** II and **MiFIR** regulations, as well as compatible with the **DLT Pilot Regime Regulation**. Dusk also provides baked-in compliance with **MiCA** and **GDPR**.
 
 Dusk employs an innovative PoS-based consensus mechanism, known as [Succinct Attestation](/learn/deep-dive/succinct-attestation).
-Dusk is powered by [zero knowledge proofs](/learn/deep-dive/cryptography/zkp), and achieves flexibility through its multiple [transaction models](/learn/tx-models#transaction-models-on-dusk).
+Dusk is powered by [zero knowledge proofs](/learn/deep-dive/cryptography/zkp), and achieves flexibility through its multiple [transaction models](/learn/deep-dive/transaction_models/tx-models#transaction-models-on-dusk).
 
 Simply put, **Dusk is** a privacy-enabled and regulatory-compliant decentralized ledger paves the way for **decentralized market infrastructure**.
 
@@ -33,7 +33,7 @@ Its whole stack has been built to address all the applicable regulations that ap
 
 ### Unparalleled Privacy
 
-Dusk implements [confidential smart contracts](/developer/smart-contract/guides/my-first-contract) by allowing anyone to build ZKP-powered contracts. Our privacy-preserving and public transaction models [Phoenix and Zedger](/learn/tx-models#transaction-models-on-dusk) give users and developers the flexibility they need, based on their use-case, to pick the visibility of transactions. 
+Dusk implements [confidential smart contracts](/developer/smart-contract/guides/my-first-contract) by allowing anyone to build ZKP-powered contracts. Our privacy-preserving and public transaction models [Phoenix and Zedger](/learn/deep-dive/transaction_models/tx-models#transaction-models-on-dusk) give users and developers the flexibility they need, based on their use-case, to pick the visibility of transactions. 
 
 To ensure privacy, Dusk utilizes some of the most advanced and widely regarded cryptographic tools available in the realm of zero-knowledge (ZK) technology. Notably, Dusk employs the [PlonK](/learn/deep-dive/cryptography/plonk) proof system and the [Poseidon](/learn/deep-dive/cryptography/hashing#poseidon-hash) hash function, both of which are critical components in the ZK toolkit. PlonK is highly efficient in generating and verifying proofs, while Poseidon enhances security with its specially designed hashing algorithm tailored for ZK applications. 
 

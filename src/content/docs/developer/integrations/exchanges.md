@@ -111,15 +111,15 @@ Dusk is **fully compliant** with key global regulatory frameworks, providing rob
 - TFR (Transfer of Funds Regulation)
 
 Dusk supports two distinct transaction models, which users can navigate between in a transparent way:
-- [Phoenix](/learn/tx-models#phoenix) enables confidential transactions while maintaining regulatory compliance
-- [Moonlight](/learn/tx-models#moonlight) is a completely transparent and auditable model.
+- [Phoenix](/learn/deep-dive/transaction_models/tx-models#phoenix) enables confidential transactions while maintaining regulatory compliance
+- [Moonlight](/learn/deep-dive/transaction_models/tx-models#moonlight) is a completely transparent and auditable model.
 
 Unlike traditional privacy coins, Dusk doesn't aim for full anonymity, but instead provides both privacy and regulatory compliance.
 
 
 ### Compliance in Moonlight (public)
 
-[Moonlight](/learn/tx-models#moonlight) is designed specifically for full transaction transparency, making it ideal for integration with exchanges and ensuring that:
+[Moonlight](/learn/deep-dive/transaction_models/tx-models#moonlight) is designed specifically for full transaction transparency, making it ideal for integration with exchanges and ensuring that:
 
 - **CASPs** can easily meet compliance obligations under **AMLD5**, **MiCA**, and **TFR**.
 - There is full support for **KYC**, transaction monitoring, and reporting requirements without any legal or technical barriers.

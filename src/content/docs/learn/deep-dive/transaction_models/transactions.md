@@ -13,7 +13,7 @@ The Transfer Contract provides support for:
 - [Phoenix](/learn/deep-dive/transaction_models/phoenix): A privacy-preserving, UTXO-based model.
 
 :::note[Note]
-The Transfer Contract implements Dusk's Phoenix and Moonlight [transaction models](/learn/tx-models), allowing users to effortlessly switch between shielded and public transactions.
+The Transfer Contract implements Dusk's Phoenix and Moonlight [transaction models](/learn/deep-dive/transaction_models/tx-models), allowing users to effortlessly switch between shielded and public transactions.
 :::
 
 These two models act as equivalent payment rails for Dusk:
@@ -26,7 +26,7 @@ This dual-model approach provides the optimal flexibility for privacy and transp
 
 # Paying for gas fees
 
-[Gas fees](/learn/tx-fees) can be paid using Phoenix notes or Moonlight balances:
+[Gas fees](/learn/deep-dive/tx-fees) can be paid using Phoenix notes or Moonlight balances:
 - When paying fees using Moonlight, fees are deducted directly from the sender's balance.
 - When paying fees using Phoenix, fees are securely embedded in the zero-knowledge proof.
 
