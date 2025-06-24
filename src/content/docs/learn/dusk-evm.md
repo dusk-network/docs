@@ -1,61 +1,65 @@
 ---
 title: DuskEVM
-description: DuskEVM is a fully EVM-compatible Layer 2 rollup built on the Dusk Network. Powered by the OP Stack and EIP-4844 (Proto-Danksharding), it enables developers to leverage Ethereum tooling while settling on Dusk L1’s compliant, privacy-preserving infrastructure.
+description: DuskEVM is a fully EVM-compatible execution environment built on the Dusk Network. Powered by the OP Stack and EIP-4844 (Proto-Danksharding), it enables developers to leverage EVM tooling while settling on Dusk’s compliant and modular infrastructure.
 ---
 
-DuskEVM is an EVM-equivalent L2 execution environment built on Dusk. It leverages the <a href="https://docs.optimism.io/stack/getting-started" target="_blank">OP Stack</a> and supports <a href="https://www.eip4844.com/" target="_blank">EIP-4844</a> (Proto-Danksharding) to deliver scalable and modular EVM execution while settling on the regulatory compliant and privacy-focused Dusk (L1) infrastructure.
+DuskEVM is an EVM-equivalent execution environment within the modular Dusk stack, delivering scalable smart contract execution while inheriting security, consensus, and settlement guarantees from DuskDS.
 
-DuskEVM allows developers to deploy smart contracts using familiar EVM tooling while benefiting from Dusk’s privacy-preserving and compliant settlement layer. 
+DuskEVM enables developers to deploy smart contracts using standard EVM tooling while benefiting from a modular architecture designed to support regulatory compliance and meet the needs of financial institutions.
 
-The **separation of execution and settlement environments** introduces modularity into Dusk’s tech stack, enabling scalability, extensibility, and protocol composability. DuskEVM makes it easier to integrate with EVM applications while positioning Dusk L1 as a dedicated data availability and settlement layer. 
 
-:::note[Note]
-DuskEVM adds EVM compatibility to Dusk's compliant, privacy-first infrastructure for regulated financial markets.
-:::
-
+The separation of execution environments like DuskEVM from DuskDS introduces modularity into Dusk’s architecture, enabling scalability, extensibility, and protocol composability.
 
 
 ## Dusk's Modular Stack
 
-With the introduction of DuskEVM, Dusk has expanded into a modular stack, providing a clean separation between execution and settlement environments:
+With the introduction of DuskEVM, Dusk has expanded into a modular stack, providing a clean separation between settlement and execution environments:
 
-| Layer                 | Description                                                                 |
-|-----------------------|-----------------------------------------------------------------------------|
-| **Dusk (L1)**          | Base layer for data availability, consensus, and compliant settlement      |
-| **DuskEVM&nbsp;(L2)** | EVM execution environment for smart contracts, fully supporting EVM tooling |
+| Layer            | Description                                                                 |
+|------------------|-----------------------------------------------------------------------------|
+| **DuskDS**        | Settlement and data availability layer. It's where consensus and staking happen|
+| **DuskEVM**       | EVM execution environment                     |
+| **DuskVM**        | Execution environment using Phoenix                  |
 
 
-This modular approach makes Dusk highly extensible. New execution environments can be introduced without modifying the settlement layer, allowing each layer to evolve independently while remaining interoperable.
+
+DuskDS provides consensus, data availability, and settlement for the disintermediate trading of securities and other regulated assets.
+
+Execution environments like DuskEVM operate at the application layer, where disintermediation logic is executed. These environments can incorporate advanced cryptographic techniques, such as ZK and FHE, to enable privacy-preserving and compliant computations.
 
 :::note[Note]
-Future versions of the Dusk stack may introduce additional L2s, including a standalone privacy-preserving L2 execution environment based on the native DuskVM.
+Dusk's modular architecture makes Dusk highly extensible and composable, as new execution environments can be introduced without modifying the consensus and settlement layer.
 :::
 
 
 ### How DuskEVM works
-The Ethereum Virtual Machine (EVM) is a general-purpose, stack-based, stateless execution environment that processes smart contract logic. It is independent of consensus and data availability, and this is why many L2 rollups run their own EVM instances.
 
-DuskEVM operates within a L2 rollup that settles on Dusk (L1) instead of Ethereum. This enables full EVM-equivalence while inheriting the privacy, confidentiality, and compliance features of Dusk.
+The Ethereum Virtual Machine (EVM) is a general-purpose, stack-based, stateless execution environment that processes smart contract logic. As the EVM is independent of consensus and data availability, it can be instantiated independently.
+
+DuskEVM leverages the <a href="https://docs.optimism.io/stack/getting-started" target="_blank">OP Stack</a> and supports <a href="https://www.eip4844.com/" target="_blank">EIP-4844</a> (Proto-Danksharding)
+
+While DuskEVM uses the OP Stack architecture, it settles directly using DuskDS rather than Ethereum. This required no modification to <a href="https://github.com/ethereum-optimism/optimism" target="_blank">Optimism</a> core components and it has been implemented by adding additional services.
+
 
 :::note[Note]
-DuskEVM uses Dusk (L1) to store call data and blobs, leveraging Dusk's privacy and regulatory compliance guarantees.
+DuskEVM leverages DuskDS to store call data and blobs, enabling developers to use EVM tooling while relying on DuskDS for settlement and data availability.
 :::
+
 
 ### Components
 
-Similarly to other EVM rollups, DuskEVM relies on the following components:
+DuskEVM relies on the following components:
 
-| Component       | Description                                                             |
-|----------------|-------------------------------------------------------------------------|
-| **Sequencer**   | Batches user transactions                                               |
-| **L2 Node**     | Executes smart contracts in the EVM (e.g., Geth/Reth)                   |
-| **Batcher**     | Posts data back to L1 (Dusk)                                            |
-| **Fraud Proofs**| Mechanism to challenge invalid L2 state transitions                     |
+| Component        | Description                                                              |
+|------------------|--------------------------------------------------------------------------|
+| **Sequencer**     | Batches transactions                                                |
+| **Execution Node**| Executes smart contracts
+| **Batcher**       | Posts data and transaction batches to DuskDS                             |
+| **Fraud Proofs**  | Provides a mechanism to challenge invalid state transitions                         |
 
-Unlike other EVM rollups that settle on Ethereum, DuskEVM settles on Dusk L1. This was achieved without modifying the <a href="https://github.com/ethereum-optimism/optimism" target="_blank">Optimism</a> stack. Instead, Dusk extends it through modular side services that integrate seamlessly with the core architecture.
 
 :::note[Note]
-DuskEVM settles on Dusk (L1), gaining direct access to Dusk's privacy-preserving infrastructure and compliance-focused settlement layer.
+DuskEVM currently inherits a 7-day challenge period from the OP Stack. This is a temporary limitation, as future upgrades will introduce one-block finality.
 :::
 
 ### Architecture
@@ -65,12 +69,9 @@ DuskEVM settles on Dusk (L1), gaining direct access to Dusk's privacy-preserving
           └────────┬─────────────┘
                    │
         ┌──────────▼──────────┐
-        │     DuskEVM L2      │  ← Optimistic Rollup (OP Stack)
-        │   (EVM Execution)   │
+        │    DuskEVM          │  ← EVM execution environment
         └──────────┬──────────┘
                    │ Blobs
         ┌──────────▼──────────┐
-        │     Dusk L1 DA      │  ← Data Availability & Settlement
-        │  Confidential,      │
+        │      DuskDS         │  ← Consensus and Data Availability
         └─────────────────────┘
-
