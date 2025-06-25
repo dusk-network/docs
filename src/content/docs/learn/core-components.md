@@ -28,7 +28,17 @@ Blocks are added to the blockchain if they receive enough votes. The Determinist
 
 [Deep dive into Succinct Attestation](/learn/deep-dive/succinct-attestation)
 
-### Networking: Kadcast
+## Execution Layers
+
+### Dusk VM
+
+[Dusk VM](/learn/deep-dive/dusk-vm) is a highly optimized <a href="https://en.wikipedia.org/wiki/Virtual_machine#Process_virtual_machines" target="_blank">virtual machine</a> built around Wasmtime, a WASM runtime. It is a ZK-friendly virtual machine, enabling the development and execution of privacy-focused smart contracts and applications. 
+
+Dusk VM is fundamentally different from many blockchain VMs in that it not only executes WASM and is able to natively support ZK operations like SNARK verifications, but it also has a completely different way in which it handles memory.
+
+[Deep dive into Dusk VM](/learn/deep-dive/dusk-vm)
+
+## Network Layer: Kadcast
 
 <a href="https://github.com/dusk-network/kadcast/blob/main/README.md" target="_blank">Kadcast</a> is an innovative peer-to-peer protocol used by Dusk to optimize message exchanges between nodes. Unlike the traditional Gossip protocols used by many blockchain protocols, which broadcasts messages to a random set of nodes, Kadcast uses a structured overlay to direct message flow. This drastically reduces network bandwidth and makes latency much more predictable, and at the same time lower compared to Gossip protocols.
 
