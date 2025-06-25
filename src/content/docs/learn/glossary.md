@@ -25,6 +25,10 @@ A standardized framework for confidential smart contracts, which any company or 
 
 The native cryptocurrency of Dusk. It is used to pay for transaction fees and staking.
 
+#### Dusk EVM
+
+[Dusk EVM](/learn/deep-dive/dusk-evm) is a EVM execution environment, that acts as a L2 that settles on Dusk (L1).
+
 #### Dusk VM
 
 [Dusk VM](/learn/deep-dive/dusk-vm) is general purpose virtual machine developed by Dusk that runs WASM smart contracts and manages their memory.
