@@ -7,6 +7,7 @@ const defaultSidebar = [
       { label: "Native Issuance", link: "learn/tokenization-comparison" },
       { label: "Core Values", link: "learn/core-values" },
       { label: "Core Components", link: "learn/core-components" },
+      { label: "Cryptography", link: "learn/cryptography" },
       { label: "Tokenomics", link: "learn/tokenomics" },
       { label: "Stake Abstraction", link: "learn/hyperstaking" },
       { label: "Get involved & Community", link: "learn/community" },

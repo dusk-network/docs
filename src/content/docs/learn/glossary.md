@@ -33,13 +33,16 @@ The native cryptocurrency of Dusk. It is used to pay for transaction fees and st
 
 [Dusk VM](/learn/deep-dive/dusk-vm) is general purpose virtual machine developed by Dusk that runs WASM smart contracts and manages their memory.
 
+#### Hedger
+Hedger is the evolution of Zedger, built on DuskEVM and powered by fully homomorphic encryption for enhanced privacy.
+
 #### Hyperstaking
 
 Hyperstaking is a feature that allows smart contracts to manage stakes with custom logic. Similar to "Account Abstraction," it enables use cases like privacy-preserving staking, affiliate programs, delegation, liquid staking, and yield boosting. Staking operations are initiated via a provisioner key, with signature verification only required for the initial stake, offering flexibility and innovation in staking models.
 
 #### Kadcast
 
-[Kadcast](/learn/core-components#networking-kadcast) is a structured information propagation protocol used by Dusk, characterized by a direct correlation between network performance, latency, and the number of nodes.
+[Kadcast](/learn/core-components#network-layer-kadcast) is a structured information propagation protocol used by Dusk, characterized by a direct correlation between network performance, latency, and the number of nodes.
 
 #### Lightspeed
 
@@ -67,7 +70,7 @@ A shielded account is based on the [Phoenix](#phoenix) UTXO transaction model an
 
 #### Profile
 
-A [profile](/learn/wallet-terminology#profile-and-accounts) is a pairing of a Public Account ([Moonlight](#moonlight) and a Shielded Account ([Phoenix](#phoenix) derived from a single mnemonic. Profiles are created in pairs to allow for both public and privacy-preserving transactions.
+A [profile](/learn/wallet-terminology#profile-and-accounts) is a pairing of a Public Account [Moonlight](#moonlight) and a Shielded Account ([Phoenix](#phoenix) derived from a single mnemonic. Profiles are created in pairs to allow for both public and privacy-preserving transactions.
 
 #### RUES
 
@@ -95,7 +98,7 @@ The [Web Wallet](https://apps.dusk.network/wallet/) is the official web-based wa
 
 #### Zedger
 
-[Zedger](/learn/core-components#zedger--xsc) is a Dusk-based protocol combining UTXO and account models for the private, compliant management of securities. Zedger allows issuers to digitally represent, issue, and trade securities like stocks and bonds while ensuring regulatory compliance.
+[Zedger](/learn/core-components#zedger--hedger) is a Dusk-based protocol combining UTXO and account models for the private, compliant management of securities. Zedger allows issuers to digitally represent, issue, and trade securities like stocks and bonds while ensuring regulatory compliance.
 
 ## Definitions
 
