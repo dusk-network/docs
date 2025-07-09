@@ -11,6 +11,7 @@ DuskEVM enables developers to deploy smart contracts using standard EVM tooling 
 The separation of execution environments like DuskEVM from DuskDS introduces modularity into Dusk’s architecture, enabling scalability, extensibility, and protocol composability.
 :::
 
+
 :::note[Note]
 EVM-equivalence means that DuskEVM executes transactions using the exact same rules as Ethereum clients. This allows Ethereum smart contracts, tools, and infrastructure to run on DuskEVM without any changes or custom integrations.
 :::
@@ -35,7 +36,6 @@ Execution environments like DuskEVM operate at the application layer, where disi
 Dusk's modular architecture makes Dusk highly extensible and composable, as new execution environments can be introduced without modifying the consensus and settlement layer.
 :::
 
-
 ## How DuskEVM works
 
 The Ethereum Virtual Machine (EVM) is a general-purpose, stack-based, stateless execution environment that processes smart contract logic. As the EVM is independent of consensus and data availability, it can be instantiated independently.
@@ -45,7 +45,19 @@ DuskEVM leverages the <a href="https://docs.optimism.io/stack/getting-started" t
 While DuskEVM uses the OP Stack architecture, it settles directly using DuskDS rather than Ethereum. This required no modification to <a href="https://github.com/ethereum-optimism/optimism" target="_blank">Optimism</a> core components and it has been implemented by adding additional services.
 
 
+DuskEVM leverages DuskDS to store blobs, enabling developers to use EVM tooling while relying on DuskDS for settlement and data availability.
+
+
 :::note[Note]
+DuskEVM currently inherits a 7-day challenge period from the OP Stack. This is a temporary limitation, as future upgrades will introduce one-block finality.
+:::
+
+### Architecture
+
+The diagram below illustrates Dusk’s evolution from a monolithic design to a modular architecture, where DuskDS acts as the foundational consensus and data availability layer, and multiple execution environments operate independently at the application layer:
+
+![Dusk's modular architecture](../../../../assets/modular_vs_monolithic.png)
+=======
 DuskEVM leverages DuskDS to store all data, such as aggregated transaction data and output roots. This enables developers to use EVM tooling while relying on DuskDS for settlement and data availability.
 :::
 
@@ -62,7 +74,7 @@ DuskEVM currently inherits a 7-day challenge period from the OP Stack. This is a
 
 ## Specifications
 
-### Cheatsheet
+### Parameters
 | Feature                   | Superchain        |
 |---------------------------|-------------------|
 | **Parent chain**          | DuskDS          |
@@ -86,9 +98,6 @@ DuskEVM currently inherits a 7-day challenge period from the OP Stack. This is a
 DuskEVM does not have a public mempool, as it is currently only visible to the Sequencer. The Sequencer executes transactions from the mempool in priority fee order (highest fee first).
 :::
 
-:::note[Tip]
-To estimate the entire transaction gas costs (including the L1 Data Fee), you can use <a href="https://viem.sh/op-stack" target="_blank">OP-viem</a>. This is a JS framework that is similar to Ethers.js, but for DuskEVM.
-:::
 
 ## Transactions Flow
 

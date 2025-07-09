@@ -17,7 +17,7 @@ MiCA defines and creates regulations for two things:
 *   **Crypto Assets** - defined as ‘Distributed Ledger Technology-based cryptographic tokens that are used as a medium of exchange’. MiCA lays down specific definitions of three subclasses of crypto assets:
     *   _Electronic Money Tokens_ - crypto assets that maintain a ‘stable’ value by referencing a single ‘real word’ fiat currency, specifically (and only for the purposes of MiCA) the Euro. Examples include <a href="https://quantoz.com/solutions/stablecoins/" target="_blank">Quantoz</a> and <a href="https://stasis.net/" target="_blank">STASIS EURO</a>.
     *   _Asset-Referenced Tokens_ - crypto assets that maintain a ‘stable’ value by referencing anything other than a single fiat currency (i.e. two or more fiat currencies, one or more cryptocurrencies, one or more other assets such as gold or diamonds). Examples include [PAX Gold](https://paxos.com/paxgold/) and [DIAM](https://www.diamdexx.com/).
-    *   _Utility Tokens_ - crypto assets designed to provide access to a service offered by the issuing entity. Examples include [Dusk](/learn/tx-fees), [Filecoin](https://filecoin.io/) and [Binance Coin](https://www.binance.com/en).
+    *   _Utility Tokens_ - crypto assets designed to provide access to a service offered by the issuing entity. Examples include [Dusk](/learn/deep-dive/tx-fees), [Filecoin](https://filecoin.io/) and [Binance Coin](https://www.binance.com/en).
 *   **Crypto Asset Service Providers** - defined as entities that engage in any of the following activities:
     *   custody and administration of crypto assets on behalf of third parties
     *   crypto exchange services (running an exchange)

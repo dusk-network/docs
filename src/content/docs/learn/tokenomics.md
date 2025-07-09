@@ -39,7 +39,7 @@ The DUSK token is widely accessible on top-tier CEXs and DEXs. For more informat
 DUSK serves several key purposes within the ecosystem:
 * Used for staking in consensus participation.
 * Rewards to consensus participants.
-* Payment of network fees ([gas](/learn/tx-fees)).
+* Payment of network fees ([gas](/learn/deep-dive/tx-fees)).
 * Paying for the deployment of dApps on the network.
 * Payment of services on the network.
 
