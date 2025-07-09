@@ -5,6 +5,8 @@ import rehypeMathjax from 'rehype-mathjax';
 import defaultSidebar from "./src/sidebars/defaultSidebar";
 import starlightLinksValidator from "starlight-links-validator";
 
+const googleAnalyticsId = 'G-63RJYNDBL1';
+
 // https://astro.build/config
 export default defineConfig({
 	site: "https://docs.dusk.network",
@@ -48,6 +50,26 @@ export default defineConfig({
 			tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 4 },
 			sidebar: defaultSidebar,
 			plugins: [starlightLinksValidator()],
+			head: [
+				// Adding google analytics
+				{
+					tag: 'script',
+					attrs: {
+						async: true,
+						src: `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`,
+					},
+				},
+				{
+					tag: 'script',
+					content: `
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments);}
+					gtag('js', new Date());
+
+					gtag('config', '${googleAnalyticsId}');
+					`,
+				},
+			],
 		}),
 	],
 });
