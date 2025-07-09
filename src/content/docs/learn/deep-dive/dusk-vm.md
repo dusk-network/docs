@@ -1,5 +1,6 @@
 ---
-title: Dusk VM
+title: DuskVM
+
 description: Learn about Dusk VM, the wasmtime VM that efficiently executes smart contracts on Dusk.
 
 ---

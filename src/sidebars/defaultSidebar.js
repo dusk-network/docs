@@ -102,7 +102,7 @@ const defaultSidebar = [
       { label: "Transaction Models", link: "learn/tx-models" },
       { label: "Transaction Fees & Gas", link: "learn/tx-fees" },
       { label: "Economic Protocol", link: "learn/deep-dive/economic-protocol" },
-      { label: "Dusk VM", link: "learn/deep-dive/dusk-vm" },
+      { label: "DuskVM", link: "learn/deep-dive/dusk-vm" },
       { label: "DuskEVM", link: "learn/deep-dive/dusk-evm" },
       {
         label: "Succinct Attestation Consensus",
