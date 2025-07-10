@@ -24,7 +24,7 @@ Ensure your wallet is connected to the DuskEVM network and has been funded with 
 
 ## 3) Configure your environment
 
-Before deploying, ensure that you use the correct configuration to deploy on DuskEVM, ensuring you specify the correct `chain-id` and RPC endpoints.
+Before deploying, make sure you use the correct configuration for DuskEVM deployment, including the correct chain ID and RPC endpoints.
 
 If using Foundry, add DuskEVM's information to your `foundry.toml`:
 
