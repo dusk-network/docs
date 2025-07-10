@@ -50,7 +50,6 @@ module.exports = {
 
 ## 4) Deployment
 
-As DuskEVM is EVM-equivalent, you can use the foundry commands taking into account the different RPC endpoint (by using the `--rpc-url` flag) and your private key (using the `--private-key` flag):
 
 If using Foundry, navigate to your project’s directory and launch: 
 
