@@ -30,7 +30,7 @@ If using Foundry, add DuskEVM's information to your `foundry.toml`:
 
 ```toml
 rpc_url = "[PLACEHOLDER]"
-chain_id = [PLACEHOLDER]
+chain_id = "[PLACEHOLDER]"
 ```
 
 If using Hardhat, you can add DuskEVM in your `hardhat.config.js`: 
