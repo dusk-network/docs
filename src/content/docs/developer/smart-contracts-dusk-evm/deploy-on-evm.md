@@ -20,6 +20,7 @@ Choose a development framework, such as:
 - <a href="https://getfoundry.sh/" target="_blank">Foundry</a>
 
 ## 2) Fund your account with DUSK
+
 Ensure your wallet is connected to the DuskEVM network and has been funded with some DUSK.
 
 ## 3) Configure your environment
