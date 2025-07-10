@@ -15,7 +15,7 @@ Below, you can see the relevant information for each DuskEVM network:
 
 
 ## 1) Install a development framework
-Choose one of the following development frameworks:
+Choose a development framework, such as:
 - <a href="https://hardhat.org/" target="_blank">Hardhat</a>
 - <a href="https://getfoundry.sh/" target="_blank">Foundry</a>
 
