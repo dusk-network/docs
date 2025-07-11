@@ -3,7 +3,12 @@ import { createGroup, createLink } from "../helpers/sidebarEntryHelpers";
 export default function sidebar(currentPath) {
     return [
         createLink("Overview", "/developer/overview", currentPath),
-        createGroup("Develop Smart Contracts", currentPath, [
+        createGroup("Smart Contracts on DuskEVM", currentPath, [
+            { label: "Deploy on DuskEVM", href: '/developer/smart-contracts-dusk-evm/deploy-on-evm' },
+           
+        ],
+            false),
+        createGroup("Smart Contracts on DuskDS", currentPath, [
             {
                 type: "link",
                 label: "Learn the Basics",
@@ -50,7 +55,7 @@ export default function sidebar(currentPath) {
                 href: "/developer/smart-contract/cheat-sheet",
             }
         ], false),
-        createGroup("Integrate with Dusk", currentPath, [
+        createGroup("Integrate with DuskDS", currentPath, [
             { label: "Introduction", href: '/developer/integrations/introduction' },
             { label: "The Wallet Stack", href: '/developer/integrations/wallet-stack' },
             { label: "Wallet Core Library", href: '/developer/integrations/wallet-core' },
