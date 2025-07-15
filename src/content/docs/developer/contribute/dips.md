@@ -66,7 +66,7 @@ Additionally, proposals can be transitioned to a **Stagnant** state if they are 
 
 Below is a diagram that illustrates the DIP workflow:
 
-![DIP-diagram](../../../assets/dip-gov-diag.png)
+![DIP-diagram](../../../../assets/dip-gov-diag.png)
 
 ## Further information
 

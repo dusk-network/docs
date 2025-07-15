@@ -72,6 +72,11 @@ export default function sidebar(currentPath) {
             { label: "Citadel SDK", href: '/developer/digital-identity/sdk' },
         ],
             false),
-        createLink("Contribute to Dusk", "/developer/dips", currentPath),
+
+        createGroup("Contribute to Dusk", currentPath, [
+            { label: "Dusk Improvement Proposals", href: '/developer/contribute/dips' },
+            { label: "Grants Program", href: '/developer/contribute/grants' },
+        ],
+            false),
     ];
 }
