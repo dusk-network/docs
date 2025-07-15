@@ -1,11 +1,9 @@
 ---
 const isDeveloperPage = Astro.url.pathname.startsWith("/developer");
-const isGrantPage = Astro.url.pathname.startsWith("/grant");
 const isLearnPage = Astro.url.pathname.startsWith("/learn");
 const isOperatorPage = Astro.url.pathname.startsWith("/operator");
 
 const developerLinkStyle = isDeveloperPage ? "font-weight: bold" : "";
-const grantsLinkStyle = isGrantPage ? "font-weight: bold" : "";
 const learnLinkStyle = isLearnPage ? "font-weight: bold" : "";
 const operatorLinkStyle = isOperatorPage ? "font-weight: bold" : "";
 ---
@@ -23,9 +21,6 @@ const operatorLinkStyle = isOperatorPage ? "font-weight: bold" : "";
         <a class="tab-link" style={operatorLinkStyle} href="/operator/overview"
             >NODE OPERATOR</a
         >
-    </span>
-    <span class="site-tabs">
-        <a class="tab-link" style={grantsLinkStyle} href="/grants">GRANTS</a>
     </span>
 </div>
 

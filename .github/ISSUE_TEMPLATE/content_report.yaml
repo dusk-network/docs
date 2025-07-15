@@ -28,7 +28,6 @@ body:
         - "Learn"
         - "Developer"
         - "Node Operator"
-        - "Grants"
     validations:
        required: false
   - type: dropdown # Content Type
