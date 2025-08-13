@@ -91,7 +91,7 @@ DuskEVM currently inherits a 7-day challenge period from the OP Stack. This is a
 |-------------|---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
 | `COINBASE`  | `block.coinbase`    | Returns the address of the current Sequencer's fee wallet. Effectively the same as Ethereum, but typically does not change from block to block. |
 | `PREVRANDAO`| `block.prevrandao`  | Returns the PREVRANDAO (the most recent RANDAO) value of DuskDS at the current DuskDS origin block.                                                      |
-| `ORIGIN`    | `tx.origin`         | If the tx is a **DuskDS ⇒ DuskEVM** tx from an DuskDS smart contract, `tx.origin` is set to the **aliased address** of the originator. Else b
+| `ORIGIN`    | `tx.origin`         | If the tx is a **DuskDS ⇒ DuskEVM** tx from a DuskDS smart contract, `tx.origin` is set to the **aliased address** of the originator. Else b
 
 
 :::note[Note]
