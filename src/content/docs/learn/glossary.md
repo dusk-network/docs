@@ -44,10 +44,6 @@ Hyperstaking is a feature that allows smart contracts to manage stakes with cust
 
 [Kadcast](/learn/core-components#network-layer-kadcast) is a structured information propagation protocol used by Dusk, characterized by a direct correlation between network performance, latency, and the number of nodes.
 
-#### Lightspeed
-
-Lightspeed is the Dusk L2 solution that offers full EVM equivalence. Lightspeed allows Dusk to scale even further and maintain full interoperability with EVM-based blockchains.
-
 #### LUX
 
 The smallest denomination of DUSK. 10^9 LUX = 1 DUSK, 1 DUSK = 1,000,000,000 LUX.
