@@ -1,6 +1,6 @@
 ---
 title: Wallet Core Library
-description: Integrate with Dusk Wallet-Core library to manage transactions.
+description: Integrate with DuskDS Wallet-Core library to manage transactions.
 ---
 
 This documentation explains how to use the <a href="https://github.com/dusk-network/rusk/tree/master/wallet-core" target="_blank">wallet-core</a> library from any programming language of your preference. 
