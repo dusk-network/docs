@@ -8,7 +8,13 @@ This documentation provides an insight into everything related to development on
 
 ## Developing on Dusk
 
-There are two different stacks to develop on Dusk. The first one is building on-chain the second one is building off-chain applications that integrate with Dusk.
+The Dusk architecture offers a data availability layer ([DuskDS](/developer/integrations/introduction)) and an execution layer ([DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm)). 
+Depending on the use case, developers may want to integrate with one or another. 
+
+For a smoother integration, it is generally recomended to integrate with [DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm).
+
+It needs to be noted that Dusk is transitioning from a monolithic architecture towards a modular one. The difference between the two is represented in the picture below:
+![Dusk architecture](../../../assets/modular_vs_monolithic.png)
 
 <CardGrid>
         <LinkCard title="Smart Contracts" href="/developer/smart-contract/introduction" description="Writing smart contracts for Dusk"/>
