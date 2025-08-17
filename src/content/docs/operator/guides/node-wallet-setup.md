@@ -83,17 +83,54 @@ You can request 5000 nDUSK from our [Discord faucet](/operator/guides/nocturne-f
 
 The final step is staking. To allow your node to participate in consensus and earn rewards, your wallet must stake at least 1000 DUSK.
 
-Initiate staking with:
+### Owner vs Consensus Keys
+
+A Dusk stake involves two roles:
+
+- **Consensus Key**: Used by your node to participate in consensus to vote and sign blocks.
+- **Owner Key**: The key/address that can `unstake` and `withdraw` your stake.
+
+If you do not specify an owner when staking, the consensus key automatically becomes the owner. This is the simplest setup, but it has different security implications than using a separate owner key. 
+
+### Option 1: Keep Owner and Consensus the same (default)
 
 ```sh
 rusk-wallet stake --amt 1000 # Replace with your desired amount
 ```
 
+**Pros**:
+Simpler setup, only one address to manage.
+
+**Cons**:
+If the node is compromised and the attacker gains access to the consensus key or an unprotected wallet, they can steal your funds. 
+
+This option is acceptable if your server is well-hardened (SSH key-only access, no password logins, firewall, restricted users).
+
+### Option 2: Separate Owner and Consensus Keys (recommended)
+
+```sh
+rusk-wallet stake --amt 1000 --owner <OWNER_ADDRESS> # Replace with an address from the same mnemonic
+```
+
+Replace <OWNER_ADDRESS> with another address (e.g., from Profile 2) derived from the same mnemonic you used to set up the node wallet.
+
+**Pros**:
+Even if your node or consensus key is compromised, only the owner key can unstake or withdraw funds. 
+
+**Cons**: 
+Slightly more operational overhead. You must keep the owner key safe and available whenever you need to unstake or restake.
+
+**Security note**: This is most effective if you do not store the mnemonic on the server, or if you use a strong wallet password different from the provisioner key password.
+
+## After Staking
+
 After the stake transaction, verify that your stake status is updated:
 
 ```sh
-rusk-wallet stake-info
+rusk-wallet stake-info --profile-idx 0 # Replace with a different profile if applicable
 ```
+
+**Note**: Each address from the same mnemonic has a profile index. Use the one corresponding to your consensus key when checking stake info.
 
 Check for the `eligible stake` and `stake active from block` fields to be updated.
 
