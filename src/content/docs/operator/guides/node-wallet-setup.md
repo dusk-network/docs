@@ -112,7 +112,7 @@ This option is acceptable if your server is well-hardened (SSH key-only access, 
 rusk-wallet stake --amt 1000 --owner <OWNER_ADDRESS> # Replace with an address from the same mnemonic
 ```
 
-Replace <OWNER_ADDRESS> with another address derived from the same mnemonic you used to set up the node wallet.
+Replace <OWNER_ADDRESS> with another address (e.g., from Profile 2) derived from the same mnemonic you used to set up the node wallet.
 
 **Pros**:
 Even if your node or consensus key is compromised, only the owner key can unstake or withdraw funds. 
