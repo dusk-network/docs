@@ -88,7 +88,7 @@ The final step is staking. To allow your node to participate in consensus and ea
 A Dusk stake involves two roles:
 
 - **Consensus Key**: Used by your node to participate in consensus to vote and sign blocks.
-- **Owner Key**: The wallet that can `unstake` and `withdraw` your stake.
+- **Owner Key**: The key/address that can `unstake` and `withdraw` your stake.
 
 If you do not specify an owner when staking, the consensus key automatically becomes the owner. This is the simplest setup, but it has different security implications than using a separate owner key. 
 
