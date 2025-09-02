@@ -52,15 +52,6 @@ DuskEVM leverages DuskDS to store blobs, enabling developers to use EVM tooling 
 DuskEVM currently inherits a 7-day challenge period from the OP Stack. This is a temporary limitation, as future upgrades will introduce one-block finality.
 :::
 
-### Architecture
-
-The diagram below illustrates Dusk’s evolution from a monolithic design to a modular architecture, where DuskDS acts as the foundational consensus and data availability layer, and multiple execution environments operate independently at the application layer:
-
-![Dusk's modular architecture](../../../../assets/modular_vs_monolithic.png)
-=======
-DuskEVM leverages DuskDS to store all data, such as aggregated transaction data and output roots. This enables developers to use EVM tooling while relying on DuskDS for settlement and data availability.
-:::
-
 ## Architecture
 
 The diagram below illustrates Dusk’s evolution from a monolithic design to a modular architecture, where DuskDS acts as the foundational consensus, settlement and data availability layer, and multiple execution environments operate independently at the application layer:
