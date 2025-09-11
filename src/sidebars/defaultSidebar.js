@@ -99,8 +99,7 @@ const defaultSidebar = [
         collapsed: true,
       },
       { label: "Wallet Terminology", link: "learn/wallet-terminology" },
-      { label: "Transaction Models", link: "learn/tx-models" },
-      { label: "Transaction Fees & Gas", link: "learn/tx-fees" },
+      { label: "Transaction Fees & Gas", link: "learn/deep-dive/tx-fees" },
       { label: "Economic Protocol", link: "learn/deep-dive/economic-protocol" },
       { label: "DuskVM", link: "learn/deep-dive/dusk-vm" },
       { label: "DuskEVM", link: "learn/deep-dive/dusk-evm" },
@@ -114,7 +113,7 @@ const defaultSidebar = [
       },
 
       { label: "Token Standards", 
-        link: "learn/token-standards" 
+        link: "learn/deep-dive/token-standards" 
       },
       {
         label: "Additional Resources",
