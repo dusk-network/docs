@@ -5,6 +5,8 @@ description: Using the Rusk Wallet to leverage CLI functionalities when interact
 
 The [**Rusk Wallet**](https://github.com/dusk-network/rusk/tree/master/rusk-wallet) is a powerful and feature-rich command-line interface (CLI) wallet designed for managing DUSK and interacting directly with the network. 
 
+Latest release is <a href="https://github.com/dusk-network/rusk/releases/tag/rusk-wallet-0.2.0" target="_blank">rusk-wallet-0.2.0</a>.
+
 Users can choose to use either the interactive mode, which offers a menu-driven interface, or execute specific subcommands to perform tasks such as sending funds, managing balances, staking, and interacting with smart contracts.
 
 ## Commands Overview
