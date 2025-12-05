@@ -26,6 +26,7 @@ const defaultSidebar = [
     label: "Guides",
     items: [
       { label: "How to Stake", link: "/learn/guides/staking-basics/" },
+      { label: "DuskEVM Bridge", link: "/learn/guides/duskevm-bridge/" },
       { label: "Mainnet DUSK Migration", link: "/learn/guides/mainnet-migration/" },
       { label: "BEP20 Bridge", link: "/learn/guides/bep20-bridge/" },
       { label: "Restore Block Height", link: "/learn/guides/restore-height/" },
