@@ -59,10 +59,10 @@ The diagram below illustrates Dusk’s evolution from a monolithic design to a m
 |---|---|---|---|
 | **Live** | No | Yes | No |
 | **Chain name** | DuskEVM | DuskEVM Testnet | DuskEVM Devnet |
-| **Chain ID** | 744 | 310 | 311 |
+| **Chain ID** | 744 | 745 | 311 |
 | **Native token** | DUSK (18) | DUSK (18) | DUSK (18) |
 | **RPC (HTTPS)** | `https://rpc.evm.dusk.network` | `https://rpc.testnet.evm.dusk.network` | `https://rpc.devnet.evm.dusk.network` |
-| **RPC (WSS)** | `wss://wss.evm.dusk.network` | `wss:/wss.testnet.evm.dusk.network` | `wss://wss.devnet.evm.dusk.network` |
+| **RPC (WSS)** | `wss://wss.evm.dusk.network` | `wss://wss.testnet.evm.dusk.network` | `wss://wss.devnet.evm.dusk.network` |
 | **Explorer** | `https://explorer.evm.dusk.network/` | `https://explorer.testnet.evm.dusk.network/` | `https://explorer.devnet.evm.dusk.network/` |
 | **Explorer TX prefix** | `/tx/` | `/tx/` | `/tx/` |
 | **Explorer account prefix** | `/address/` | `/address/` | `/address/` |

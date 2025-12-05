@@ -3,15 +3,14 @@ title:  Deploy on DuskEVM
 description: Learn about the different ways of deploying smart contracts on DuskEVM.
 ---
 
-
 Developers can deploy smart contracts on DuskEVM using Solidity and familiar tools like Hardhat or Foundry. This is a guide covering the essential information required to deploy smart contracts on DuskEVM.
 
 Below, you can see the relevant information for each DuskEVM network:
 
 | **Network** | **Chain ID**             | **RPC URL**                   | **Explorer URL**                           |
 | ------- | -------------------- | ------------------------- | --------------------------------------- |
-| Mainnet | `<PLACEHOLDER>` | `<PLACEHOLDER>`       | `<"PLACEHOLDER">`          |
-| Testnet | `<PLACEHOLDER>` | `<PLACEHOLDER>`       | `<PLACEHOLDER>`  |
+| Mainnet | `744` | `https://rpc.evm.dusk.network`       | `https://explorer.evm.dusk.network`          |
+| Testnet | `745` | `https://rpc.testnet.evm.dusk.network`       | `https://explorer.testnet.evm.dusk.network`  |
 
 
 ## 1) Install a development framework
