@@ -1,16 +1,13 @@
 ---
-title: Withdraw staked ERC20 DUSK
+title: Withdraw staked ERC20 DUSK (Archived)
 description: Guide to reclaiming your DUSK from the ERC20 staking contract used in ITN2.
 ---
-
 
 If you participated in the DUSK ERC20 staking incentive program (ITN2), your DUSK remains safely stored in the ERC20 staking smart contract. This guide walks you through the steps required to withdraw it manually using Etherscan.
 
 :::note[Note]
 This **only** applies to users who staked their DUSK using the ERC20 staking portal for the ITN2 incentive program (which happened before Dusk mainnet launch).
 ::: 
-
----
 
 ### Step 1 – Open the staking contract on Etherscan
 
@@ -22,18 +19,13 @@ Then, navigate to the **"Contract"** tab:
 
 ![How to connect your wallet](../../../../assets/itn/connect-wallet-2.png)
 
----
-
 ### Step 2 – Connect your Web3 wallet
 
 Click on **“Connect to Web3”**, and approve the connection using the same Ethereum address you used to stake your DUSK.
 You will need to confirm the connection on the required wallet pop-ups.
 
-
 ![How to connect your wallet](../../../../assets/itn/connect-wallet-4.png)
 ![How to connect your wallet](../../../../assets/itn/connect-wallet-5b.png)
-
----
 
 ### Step 3 – Check your staked balance
 
@@ -46,9 +38,6 @@ You can then enter your Ethereum address and click **Query**, as this returns th
 
 ![How to check your balance](../../../../assets/itn/check-balance.png)
 
-
----
-
 ### Step 4 – Withdraw your staked DUSK
 
 1. Switch to the **“Write Contract”** tab.
@@ -58,8 +47,6 @@ You can then enter your Ethereum address and click **Query**, as this returns th
 
 ![How to withdraw your funds](../../../../assets/itn/withdraw-funds.png)
 
----
-
 ### Contract details
 
 - **ERC20 Token Address:**  
@@ -68,6 +55,4 @@ You can then enter your Ethereum address and click **Query**, as this returns th
 - **Staking Contract Address:**  
   [0x4ab6ffa52460979dde1e442fb95f8bac56c3adc3](https://etherscan.io/address/0x4ab6ffa52460979dde1e442fb95f8bac56c3adc3)
 
----
-
-If you have questions or need help recovering your staked DUSK, you can contact us on [Discord](https://dusk.network/discord).
+If you have questions or need help recovering your staked DUSK, you can contact us on [Discord](https://discord.gg/dusk-official).

@@ -29,10 +29,7 @@ const defaultSidebar = [
       { label: "Mainnet DUSK Migration", link: "/learn/guides/mainnet-migration/" },
       { label: "BEP20 Bridge", link: "/learn/guides/bep20-bridge/" },
       { label: "Restore Block Height", link: "/learn/guides/restore-height/" },
-      { label: "Withdraw staked ERC20 DUSK", link: "/learn/guides/erc20-staking/" },
-      { label: "Verify Team Account", link: "learn/verify-team-account" },  
-      { label: "Mainnet Onramp", link: "/learn/guides/dusk-mainnet-onramp/" },
-      { label: "BEP2 Migration", link: "/learn/guides/bep2-migration/" },
+      { label: "Verify Team Account", link: "learn/verify-team-account" },
     ],
   },
   {
