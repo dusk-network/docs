@@ -40,25 +40,6 @@ const defaultSidebar = [
         link: "learn/deep-dive/duskds-tx-models",
       },
       {
-        label: "Cryptography",
-        items: [
-          {
-            label: "Zero Knowledge Proofs",
-            link: "learn/deep-dive/cryptography/zkp",
-          },
-          { label: "Circuits", link: "learn/deep-dive/cryptography/circuits" },
-          {
-            label: "IOP and PCS",
-            link: "learn/deep-dive/cryptography/iop_pcs",
-          },
-          { label: "PLONK", link: "learn/deep-dive/cryptography/plonk" },
-          { label: "KZG", link: "learn/deep-dive/cryptography/kzg" },
-          { label: "BLS12-381", link: "learn/deep-dive/cryptography/bls" },
-          { label: "Hashing", link: "learn/deep-dive/cryptography/hashing" },
-        ],
-        collapsed: true,
-      },
-      {
         label: "Assets & Regulations",
         items: [
           {

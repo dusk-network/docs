@@ -14,7 +14,7 @@ It is advised to use the Node installer to [quickly launch your node on Dusk](/o
 Rusk supports different feature setups:
 - [Provisioner](/operator/provisioner) : to stake and participates in consensus.
 - [Archive node](/operator/archive-node) : to store and serve historical data.
-- [Prover](/operator/prover) : to compute [Zero-Knowledge Proofs](/learn/deep-dive/cryptography/zkp).
+- [Prover](/operator/prover) : to compute Zero-Knowledge Proofs.
 
 The node software has been tested on x86-64/AMD64 and ARM architectures. The above node types have different hardware requirements, which can be found on their respective pages.
 

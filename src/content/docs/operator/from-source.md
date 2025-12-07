@@ -16,7 +16,7 @@ The node installer setups rusk.toml file for you but for advance users this tuto
 Rusk supports different feature setups:
 - Provisioner: to stake and participates in consensus.
 - Archive node: to store and serve historical data.
-- Prover: to compute [Zero-Knowledge Proofs](/learn/deep-dive/cryptography/zkp).
+- Prover: to compute Zero-Knowledge Proofs.
 
 The node software has been tested on x86-64/AMD64 and ARM architectures. The above node types have different hardware requirements, which can be found on their respective pages.
 
