@@ -57,14 +57,9 @@ const defaultSidebar = [
         collapsed: true,
       },
       { label: "Wallet Terminology", link: "learn/wallet-terminology" },
-      { label: "Transaction Fees & Gas", link: "learn/deep-dive/tx-fees" },
       { label: "Economic Protocol", link: "learn/deep-dive/economic-protocol" },
       { label: "DuskVM", link: "learn/deep-dive/dusk-vm" },
       { label: "DuskEVM", link: "learn/deep-dive/dusk-evm" },
-      {
-        label: "Slashing",
-        link: "learn/deep-dive/slashing"
-      },
       {
         label: "Additional Resources",
         link: "learn/deep-dive/additional-resources",

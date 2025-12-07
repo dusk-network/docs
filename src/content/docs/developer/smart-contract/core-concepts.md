@@ -44,7 +44,7 @@ Because the **core** crate lacks heap memory allocations, we can explicitly also
 
 ### Usage of panic & reverting state
 
-While you can have Result types in your smart contracts and handle them in multiple function calls, in the end you may want to abort execution. For example if a specific requirement is not satisfied you can always make use of directives that lead to panic (e.g., `.expect()` or `panic!()`). This is equivalent to `require()` in Solidity. It will abort the smart contract execution and let the transaction [fail](/learn/deep-dive/tx-fees#unsuccessful-transactions). This will also **revert** the state, making no changes to it.
+While you can have Result types in your smart contracts and handle them in multiple function calls, in the end you may want to abort execution. For example if a specific requirement is not satisfied you can always make use of directives that lead to panic (e.g., `.expect()` or `panic!()`). This is equivalent to `require()` in Solidity. It will abort the smart contract execution and let the transaction fail. This will also **revert** the state, making no changes to it.
 
 ## UTXO & Account-model
 

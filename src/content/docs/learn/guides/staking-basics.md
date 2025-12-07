@@ -25,7 +25,6 @@ To begin staking, you need:
 After having staked your tokens, **it takes some time before you start earning rewards**. This is because your stake becomes active after the maturity period (4320 blocks). The maturity period of 4320 blocks corresponds to **approximately 12 hours** (based on an average block time of 10 seconds). Before expecting rewards, ensure to account for this waiting period.
 :::
 
-
 ## How are Rewards determined?
 
 Rewards are probabilistically allocated based on your node's participation in the network's consensus process.
@@ -44,7 +43,7 @@ The more DUSK you stake, the more likely you are to earn rewards as an active pa
 
 ## Slashing
 
-Dusk uses a [slashing mechanism](/learn/deep-dive/slashing) to maintain network security. If your node submits invalid blocks or goes offline, your stake may be partially reduced. This mechanism ensures the network rewards reliable participants and discourages harmful behavior.
+Dusk uses a [slashing mechanism](/learn/tokenomics#slashing) to maintain network security. If your node submits invalid blocks or goes offline, your stake may be partially reduced. This mechanism ensures the network rewards reliable participants and discourages harmful behavior.
 
 :::note[Important]
 To prevent slashing, ensure your node is operational and synced before staking.
