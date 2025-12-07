@@ -1,60 +1,140 @@
 ---
-title: Welcome to Dusk!
-description: The starting point to explore Dusk’s ecosystem and documentation.
+title: About Dusk
+description: Build regulated, privacy-preserving finance on a purpose-built blockchain.
 
 ---
 import { LinkCard, Card, CardGrid } from '@astrojs/starlight/components';
 
+Dusk is the privacy blockchain for regulated finance.
 
+It lets you launch and use markets where:
 
+- Institutions can meet real regulatory requirements on‑chain  
+- Users get confidential balances and transfers instead of full public exposure  
+- Developers build with familiar EVM tools plus native privacy and compliance primitives
 
-Welcome, Duskneer! This guide was created to help you navigate the world of Dusk with ease—let’s get started!
+Dusk combines:
 
+- Zero‑knowledge technology for confidentiality  
+- On‑chain compliance for MiCA / MiFID II / DLT Pilot Regime / GDPR‑style regimes  
+- Succinct Attestation, a PoS consensus protocol for fast, final settlement  
+- A modular architecture with DuskDS (data & settlement) and DuskEVM (EVM execution)
 
 ## What is Dusk?
 
-Dusk is a Layer-1 blockchain built to reshape the financial landscape with a focus on privacy, compliance, and decentralization. It empowers secure, on-chain issuance and trading of financial assets like bonds, stocks, and other regulated instruments, providing a reliable and compliant infrastructure for modern finance.
+Most financial markets still run on opaque, centralized systems.  
+Dusk is built to move those workflows on‑chain without sacrificing:
 
-Dusk bridges the gap between traditional finance and blockchain by enabling:
-- [Native Issuance](/learn/tokenization-comparison): Assets on Dusk exist entirely on-chain instead of being tokenized versions of off-chain assets. This removes intermediaries, cuts costs, and enables instant settlements.
-- [Institutional-Grade Privacy & Compliance](/learn/tokenization-comparison#meeting-institutional-standards):  By leveraging zero-knowledge proofs, transactions remain private while complying with regulatory standards, addressing the concerns of institutions.
-- [High Performance & Finality](/learn/introduction/#high-performance-and-finality): The whole tech stack has been built to achieve near-instant finality, ensuring efficiency even under high transaction loads.
+- Regulatory compliance  
+- Counterparty privacy  
+- Execution speed and finality
 
-Learn [more about Dusk](/learn/introduction), its [usecases](/learn/introduction#use-cases), or explore the [whitepaper](https://dusk-cms.ams3.digitaloceanspaces.com/Dusk_Whitepaper_2024_4db72f92a1.pdf).
+On Dusk, institutions can issue and manage financial instruments while enforcing disclosure, KYC/AML, and reporting rules directly in the protocol.
 
-## What can you do on Dusk?
+In short: Dusk is a privacy-enabled, regulation-aware blockchain for institutional-grade finance.
 
-There are several things you can do on Dusk:
-- [Stake and accrue rewards](/learn/guides/staking-basics/): DUSK can be staked to secure the network and receive rewards. Staking is easy, and it allows users to participate in consensus and increase the decentralization of the protocol.
-- [Issue Regulated Financial Assets](https://dusk.network/contact/): Dusk is designed for financial institutions to issue digital bonds, stocks, and RWAs natively on-chain—without the need for intermediaries like Central Securities Depositories (CSDs).
-- [Shielded and Public Transactions](/learn/deep-dive/transaction_models/tx-models): Dusk offers both shielded and public transactions through Phoenix & Moonlight. Institutions can comply with regulations while keeping sensitive data private.
-- [Use Self-Sovereign Identity](/developer/digital-identity/protocol/): Dusk’s Citadel SSI solution enables privacy-first identity verification (useful for KYC/AML), letting users prove their identity without disclosing personal details
-- [Build & Deploy Smart Contracts](/developer/smart-contract/introduction/): Dusk’s ZK-friendly virtual machine (Dusk VM) enables confidential, high-performance smart contracts.
+## Why Dusk?
 
+### Built for regulated markets
 
+Dusk is designed around the needs of regulated financial institutions:
 
-## Core Components
+- Native support for compliant issuance of securities and RWAs  
+- Identity and permissioning primitives that let you differentiate between public and restricted flows  
+- On‑chain logic that can reflect real‑world obligations (eligibility, limits, reporting, etc.)
 
-This section provides a brief overview of Dusk’s [core components](/learn/core-components), highlighting the key technologies and layers that power our network.
+See: [Core Values](/learn/core-values) and [Tokenization & Native Issuance](/learn/tokenization-comparison).
 
-| **Component**            | **Description**                                                                                                                                                                                                                                                                         |                    |
-|-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
-| **Rusk**                      | Rusk is the reference implementation of the Dusk protocol in Rust. It manages critical tasks like maintaining the chain state, database, and network, as well as offering external APIs and providing host functions.                                                                                               | ![Rusk Image](../../../assets/get_started/Rusk.png)    |
-| **Succinct Attestation**      | High-speed, near-instant finality consensus for secure transactions. It is committee-based and relies on proof-of-stake for its sybil-resistance.                                                                            | ![Succinct Attestation Image](../../../assets/get_started/Succinct_Attestation.png) |
-| **Dusk VM**  | Highly-optimized ZK-friendly virtual machine with a WASM runtime. It enables the development and execution of privacy-focused smart contracts.                                                                   | ![Dusk VM Image](../../../assets/get_started/dusk-vm.png) |
-| **Kadcast**    |A peer-to-peer network protocol ensuring fast, efficient data broadcasting. It optimizes message exchanges between nodes by using a structured overlay to direct message flow.                                                                            | ![Kadcast Image](../../../assets/get_started/Kadcast.png) |
-| **Phoenix & Moonlight**       | Dusk enables both shielded and public transactions through its dual-model approach, offering unmatched flexibility to achieve both privacy and compliance.                          | ![Phoenix & Moonlight Image](../../../assets/get_started/Phoenix_and_Moonlight.png) |
-| **Citadel**                   | Self-sovereign identity solution for privacy-preserving KYC/AML compliance. It is a protocol designed for authenticating with third party services while protecting sensitive data                                     | ![Citadel Image](../../../assets/get_started/Citadel.png) |
+### Privacy by design, transparent when needed
 
+Dusk uses zero‑knowledge proofs and dual transaction models (Phoenix and Moonlight) to let users choose between:
 
-:::tip[Tip]
-Find more details about Dusk’s core components [here](/learn/core-components).
-:::
+- Public transactions for transparent flows, and  
+- Shielded transactions for confidential balances and transfers,  
+  with the ability to reveal information to authorized parties when required.
 
+See: [Cryptography](/learn/cryptography) and [Transaction Models on Dusk](/learn/deep-dive/transaction_models/tx-models).
 
+### Fast, final settlement
+
+The Succinct Attestation consensus protocol is a proof‑of‑stake, committee‑based design:
+
+- Deterministic finality once a block is ratified  
+- No user‑facing reorgs in normal operation  
+- Designed for high throughput and low‑latency settlement suitable for markets
+
+See: [Succinct Attestation](/learn/deep-dive/succinct-attestation).
+
+### Modular & EVM-friendly
+
+Dusk separates settlement from execution, making it easier to match the right environment to each use case:
+- DuskDS – consensus, data availability, settlement, and the privacy‑enabled transaction model  
+- DuskEVM – an Ethereum‑compatible execution layer where DUSK is the native gas token  
+- Native bridging between layers so assets can move where they’re most useful
+
+See: [Core Components](/learn/core-components) and [DuskEVM Developer Docs](/developer/smart-contracts-dusk-evm/deploy-on-evm).
+
+## What can you build on Dusk?
+
+Some example use cases Dusk was designed for:
+
+**Regulated digital securities**
+- Tokenized equity, debt, or funds with embedded compliance rules  
+- On‑chain corporate actions and transparent yet privacy‑respecting cap tables
+
+**Institutional DeFi**
+- Lending, AMMs, and structured products that must enforce KYC/AML  
+- Separation of public market signals from private position details
+
+**Payment & settlement rails**
+- Confidential payments between institutions  
+- Delivery‑versus‑payment (DvP) settlement of tokenized assets
+
+**Self‑sovereign identity & access control**
+- Permissioned venues where access is controlled via verifiable credentials  
+- Compliance checks enforced in smart contracts instead of manual back‑office processes
+
+For more inspiration, see [Dusk’s use cases](https://dusk.network/pages/usecases) and [Additional Resources](/learn/deep-dive/additional-resources).
+
+## Architecture at a glance
+
+Here’s how the main components fit together:
+
+| Component   | Role in the system                                                | Learn more                                   |
+| ---------- | ------------------------------------------------------------------ | ------------------------------------------- |
+| **DuskDS** | Settlement, consensus, data availability, and native transaction model | [Core Components](/learn/core-components)   |
+| **DuskEVM**| EVM execution environment where DUSK is the gas token              | [Deploy on DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm) |
+| **Rusk**   | Reference node implementation that runs Succinct Attestation       | [Run a node](/operator/overview)            |
+| **Citadel**| Identity & access primitives for compliant, permissioned flows     | [Core Components](/learn/core-components#citadel) |
+
+If you want a deeper technical dive, start with [Cryptography](/learn/cryptography) or the [Dusk Whitepaper](https://dusk-network-dusks3.s3.eu-central-1.amazonaws.com/Dusk_Whitepaper_2024_4db72f92a1.pdf).
+
+## Start building on Dusk
+
+Choose how you want to get involved:
 
 <CardGrid>
-        <LinkCard title="Join the Community" href="https://discord.gg/dusk-official" description="Writing smart contracts for Dusk"/>
-        <LinkCard title="Stake DUSK" href="/learn/guides/staking-basics/" description="Earn rewards while securing the network."/>
-        <LinkCard title="Are you a developer?" href="/developer/smart-contract/introduction" description="Learn how to start building here"/>
+  <LinkCard
+    title="Use Dusk"
+    href="/learn/web-wallet"
+    description="Set up the Dusk Web Wallet and start interacting with the network."
+  />
+  <LinkCard
+    title="Stake DUSK"
+    href="/learn/guides/staking-basics"
+    description="Secure the network as a staker and earn protocol rewards."
+  />
+  <LinkCard
+    title="Join the Community"
+    href="https://discord.gg/dusk-official"
+    description="Get support, share ideas, and stay up to date with Dusk on Discord."
+  />
+  <LinkCard
+    title="Build on Dusk"
+    href="/developer/overview"
+    description="Explore DuskDS and DuskEVM developer docs and start building."
+  />
 </CardGrid>
+
+Looking for the details behind the narrative?  
+Head to [Core Components](/learn/core-components), [Tokenomics](/learn/tokenomics), or the [Deep‑Dive](/learn/deep-dive/introduction) section next.

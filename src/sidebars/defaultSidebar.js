@@ -1,9 +1,8 @@
 const defaultSidebar = [
-  { label: "Get Started", link: "/learn/overview" },
+  { label: "About Dusk", link: "/learn/overview" },
   {
     label: "Learn about Dusk",
     items: [
-      { label: "Introduction", link: "learn/introduction" },
       { label: "Native Issuance", link: "learn/tokenization-comparison" },
       { label: "Core Values", link: "learn/core-values" },
       { label: "Core Components", link: "learn/core-components" },
