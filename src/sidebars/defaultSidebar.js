@@ -28,7 +28,6 @@ const defaultSidebar = [
       { label: "DuskEVM Bridge", link: "/learn/guides/duskevm-bridge/" },
       { label: "Mainnet DUSK Migration", link: "/learn/guides/mainnet-migration/" },
       { label: "BEP20 Bridge", link: "/learn/guides/bep20-bridge/" },
-      { label: "Restore Block Height", link: "/learn/guides/restore-height/" },
       { label: "Verify Team Account", link: "learn/verify-team-account" },
     ],
   },
@@ -38,25 +37,7 @@ const defaultSidebar = [
       { label: "Introduction", link: "learn/deep-dive/introduction" },
       {
         label: "Transaction Models",
-        items: [
-          {
-            label: "Transactions",
-            link: "learn/deep-dive/transaction_models/transactions",
-          },
-          {
-            label: "Phoenix",
-            link: "learn/deep-dive/transaction_models/phoenix",
-          },
-          {
-            label: "Moonlight",
-            link: "learn/deep-dive/transaction_models/moonlight",
-          },
-          {
-            label: "Zedger",
-            link: "learn/deep-dive/transaction_models/zedger",
-          },
-        ],
-        collapsed: true,
+        link: "learn/deep-dive/duskds-tx-models",
       },
       {
         label: "Cryptography",
@@ -107,10 +88,6 @@ const defaultSidebar = [
       {
         label: "Slashing",
         link: "learn/deep-dive/slashing"
-      },
-
-      { label: "Token Standards", 
-        link: "learn/deep-dive/token-standards" 
       },
       {
         label: "Additional Resources",

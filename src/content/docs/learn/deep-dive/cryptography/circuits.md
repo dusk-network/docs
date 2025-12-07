@@ -5,9 +5,8 @@ description: Learn how arithmetic circuits enabled advanced cryptographic functi
 
 Arithmetic Circuits allow for zero-knowledge (ZK) operations, and are used e.g., by our genesis contracts for these specific use-cases:
 
-- [Phoenix](/learn/deep-dive/transaction_models/phoenix): to spend notes and pay for gas.
+- [Phoenix](/learn/deep-dive/duskds-tx-models): to spend notes and pay for gas.
 - [Citadel](/developer/digital-identity/protocol): to use in the Self-Sovereign Identity implementation.
-- [Zedger](/learn/deep-dive/transaction_models/zedger): to use the Zedger transaction model and spent securities.
 
 Developers can write their own ZK circuits as part of their smart contracts, allowing for the proving and verification of zero-knowledge proofs.
 
@@ -39,9 +38,3 @@ Request Creation and Encryption:
 9. **Proof Verification:**: Cryptographic commitments are computed and the signature of the session hash is verified.
 
 For additional information, you can have a look at the <a href="https://github.com/dusk-network/citadel/blob/main/src/license.rs" target="_blank">circuits</a> and <a href="https://github.com/dusk-network/citadel/blob/main/docs/specs.pdf" target="_blank">specifications</a>.
-
-## Zedger circuits
-
-:::note
-The [Zedger](/learn/deep-dive/transaction_models/zedger) repository is currently private. 
-:::

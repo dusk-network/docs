@@ -34,17 +34,13 @@ Blocks are added to the blockchain if they receive enough votes. The Determinist
 
 [Deep dive into Succinct Attestation](/learn/deep-dive/succinct-attestation)
 
-
 ### Transactions in DuskDS
 
 Transactions in DuskDS are managed by the Transfer Contract. The Transfer Contract oversees the handling of both transparent and obfuscated transactions within the network.
 
-The Transfer Contract supports both a [UTXO](/learn/deep-dive/transaction_models/tx-models#utxos) and [account-based](/learn/deep-dive/transaction_models/tx-models#account-model) model through [Phoenix](/learn/deep-dive/transaction_models/tx-models#phoenix) and [Moonlight](/learn/deep-dive/transaction_models/tx-models) to handle transfers of the native currency, gas payments, and serve as a contract execution entry point.
+The Transfer Contract supports both a UTXO and account-based model through [Phoenix](/learn/deep-dive/duskds-tx-models) and [Moonlight](/learn/deep-dive/duskds-tx-models) to handle transfers of the native currency, gas payments, and serve as a contract execution entry point.
 
 Moonlight provides public transactions, while Phoenix enables shielded transactions. The flexibility of this dual-model allows users to take the best from both privacy and compliance features.
-
-[Deep dive into the Transfer Contract](/learn/deep-dive/transaction_models/transactions)
-
 
 ## Execution environments
 
@@ -76,7 +72,7 @@ Dusk contains two fundamental Genesis contracts, which are contracts that are av
 
 The <a href="https://raw.githubusercontent.com/dusk-network/rusk/rusk-1.0.0/contracts/stake/src/state.rs" target="_blank">Stake Contract</a> manages the stakes of node [provisioners](/operator/provisioner) (stakers). It tracks active provisioners, records their rewards, and provides functions to stake, unstake, and withdraw rewards.
 
-The [Transfer Contract](/learn/deep-dive/transaction_models/transactions) is responsible for the transferring of `DUSK`, regardless of the transaction model used.
+The Transfer Contract is responsible for the transferring of `DUSK`, regardless of the transaction model used.
 
 ## Applications
 
@@ -88,8 +84,6 @@ Applications powered by Dusk provide decentralized market infrastracture (DeMI) 
 Zedger is an asset protocol that incorporates a unique hybrid transaction model combining the benefits of both UTXO and account-based transaction models. This model provides the Confidential Security Contract (XSC) functionality necessary for Dusk’s securities-related use-cases among them the full lifecycle management of securities and supporting full regulatory compliance.
 
 Zedger allows for the digital representation, native issuance and management of securities in a privacy-preserving manner. Issuers of securities are able to issue, manage, and let investors trade securities as XSC tokens It offers built-in support for compliant settlement, redemption of securities, preventing pre-approved users from having more than one account, supports dividend distribution and voting, and can handle capped transfers. Zedger aims to support a range of security types, like stocks, bonds and ETFs. The emphasis on regulatory compliance and privacy ensures that all operations meet the highest standards required by financial authorities and stakeholders.
-
-[Deep dive into Zedger](/learn/deep-dive/transaction_models/zedger) 
 
 Differently from Zedger, which operated directly on Rusk, Hedger runs on DuskEVM leveraging the EVM equivalency of Dusk’s new execution layer. ZK operations in Hedger are handled via precompiled contracts provided by DuskEVM, mirroring the functionality once exposed through host functions in Rusk. This shift enables significantly easier developer access to privacy-preserving logic, while preserving the regulatory guarantees and auditability required for compliant finance.
 

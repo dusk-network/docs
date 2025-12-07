@@ -52,13 +52,15 @@ Dusk supports both UTXO and account-based capabilities as it offers you a high l
 
 ### Absence of msg.sender
 
-In Dusk, there is no built-in variable like `msg.sender` which identifies the caller of a contract function. This is because Dusk is a privacy-focused blockchain, utilizing a UTXO-based privacy preserving transaction model ([Phoenix](/learn/deep-dive/transaction_models/phoenix)) by default.
+TODO: Add information on `msg.sender` equivalent
+
+In Dusk, there is no built-in variable like `msg.sender` which identifies the caller of a contract function. This is because Dusk is a privacy-focused blockchain, utilizing a UTXO-based privacy preserving transaction model ([Phoenix](/learn/deep-dive/duskds-tx-models)) by default.
 
 Therefore developers need to figure out how to represent users. 
 
 In Dusk, an "address" is defined by the developer within the contract's logic. This approach gives developers more control over the privacy and compliance features of their applications but also increases their responsibility to securely identify and authenticate users and transactions. 
 
-The `msg.sender` is not "abstracted" away on dusk. A way to mimic that behavior is by explicitly taking the address as function argument and a signature that signed all other function arguments (including the address). Then verifying this in the function. Examples of such usage can be found in the [transparent token standard](/learn/deep-dive/token-standards#dusks-token-standards), the [Moonlight transaction model](/learn/deep-dive/transaction_models/moonlight) and [Zedger](/learn/deep-dive/transaction_models/zedger).
+The `msg.sender` is not "abstracted" away on dusk. A way to mimic that behavior is by explicitly taking the address as function argument and a signature that signed all other function arguments (including the address). Then verifying this in the function. Examples of such usage can be found in the [Moonlight transaction model](/learn/deep-dive/duskds-tx-models).
 
 ## Methods
 

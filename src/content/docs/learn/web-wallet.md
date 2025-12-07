@@ -45,5 +45,5 @@ Once your wallet is set up, you’ll be able to view your balance, transaction h
 
 
 :::tip[Tip]
-The Dusk Web Wallet supports both **shielded** and **public** transactions, giving you the flexibility to meet privacy and compliance requirements as needed. You can use Phoenix for confidential transfers and Moonlight when full transparency is essential. [Learn more about these transaction models](/learn/deep-dive/transaction_models/tx-models). 
+The Dusk Web Wallet supports both **shielded** and **public** transactions, giving you the flexibility to meet privacy and compliance requirements as needed. You can use Phoenix for confidential transfers and Moonlight when full transparency is essential. [Learn more about these transaction models](/learn/deep-dive/duskds-tx-models). 
 :::

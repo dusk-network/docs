@@ -5,7 +5,7 @@ description: Use Dusk’s multisig to ensure your assets and operations remain s
 
 ## Multisigs on Moonlight
 
-For developers looking to implement a multisig on Dusk, using the [Moonlight](/learn/deep-dive/transaction_models/moonlight) transaction model is a more viable solution. Unlike [Phoenix](/learn/deep-dive/transaction_models/phoenix), Moonlight does not obfuscate transactions, making multisig implementations straightforward and efficient.
+For developers looking to implement a multisig on Dusk, using the [Moonlight](/learn/deep-dive/duskds-tx-models) transaction model is a more viable solution. Unlike [Phoenix](/learn/deep-dive/duskds-tx-models), Moonlight does not obfuscate transactions, making multisig implementations straightforward and efficient.
 
 In the Moonlight model, standard multisig techniques can be used. These involve multiple parties signing the same transaction with their private keys, which is then validated by the network.
 
