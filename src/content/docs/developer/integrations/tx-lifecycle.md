@@ -27,8 +27,6 @@ Transactions on Dusk follow a specific lifecycle. Here's a basic overview:
 7. **Confirmation**: The block is confirmed, making the transaction unlikely to be reverted (*block state-change* event with state changed to `confirmed`).
 8. **Finalization**: The block reaches finality, making the transaction immutable and irreversible. (*block state-change* event with state changed to `finalized`).
 
-For more details about *confirmation* and *finalization*, see the [finality rules](https://docs.dusk.network/learn/deep-dive/succinct-attestation/#finality) of the Succinct Attestation page.
-
 :::note[Failed Transactions]
 Failed transactions are defined here as a concept at the contract level. We assume that each contract, just like the transfer contract or other genesis contracts, makes use of proper error handling and panics:
 

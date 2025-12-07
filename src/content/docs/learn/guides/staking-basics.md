@@ -38,8 +38,6 @@ Rewards are probabilistically allocated based on your node's participation in th
 
 Your **rewards depend on the size of your stake relative to the total network stake**. Larger stakes increase your likelihood of being selected to propose or validate blocks, leading to more frequent rewards. Conversely, smaller stakes may experience longer intervals between rewards.
 
-You can learn more on how the Succinct Attestation consensus works [here](/learn/deep-dive/succinct-attestation).
-
 :::note[Important]
 The more DUSK you stake, the more likely you are to earn rewards as an active participant in the network.
 :::

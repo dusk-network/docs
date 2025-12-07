@@ -34,7 +34,6 @@ const defaultSidebar = [
   {
     label: "Deep dive into Dusk",
     items: [
-      { label: "Introduction", link: "learn/deep-dive/introduction" },
       {
         label: "Transaction Models",
         link: "learn/deep-dive/duskds-tx-models",
@@ -62,10 +61,6 @@ const defaultSidebar = [
       { label: "Economic Protocol", link: "learn/deep-dive/economic-protocol" },
       { label: "DuskVM", link: "learn/deep-dive/dusk-vm" },
       { label: "DuskEVM", link: "learn/deep-dive/dusk-evm" },
-      {
-        label: "Succinct Attestation Consensus",
-        link: "learn/deep-dive/succinct-attestation",
-      },
       {
         label: "Slashing",
         link: "learn/deep-dive/slashing"

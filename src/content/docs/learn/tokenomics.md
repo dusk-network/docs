@@ -115,6 +115,4 @@ credits included in the certificate. Any undistributed rewards from this 10% are
 - **5%** to the Validation Committee (validation step)
 - **5%** to the Ratification Committee (ratification step)
 
-This structure incentivizes all steps of the [SA Consensus](/learn/deep-dive/succinct-attestation), with a focus on the Block Generator, which plays the most critical role.
-
 The Block Generator is encouraged to include as many voters in the certificate as possible, as the percentage of the total reward it receive also depends on the number of votes obtained in the Validation and Ratification steps.

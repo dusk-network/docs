@@ -23,16 +23,15 @@ Through its dual transaction models (Phoenix and Moonlight), it provides a secur
 
 ### Succinct Attestation
 
-[Succinct Attestation](/learn/deep-dive/succinct-attestation) (SA) is the unique **proof-of-stake** (PoS) consensus algorithm at the core of Dusk. It uses a committee-based approach where stakers, called provisioners, participate in generating, validating and ratifying blocks. Provisioners are randomly selected based on their stake.
+Succinct Attestation (SA) is DuskDS’s permissionless, committee-based proof-of-stake consensus protocol. It uses randomly selected provisioners to propose, validate, and ratify blocks, providing fast, deterministic finality suitable for financial markets.
 
-Each round of consensus involves three steps: 
-1. **Proposal**: A provisioner creates and broadcasts a candidate block.
-2. **Validation**: A committee checks the block's validity.
-3. **Ratification**: Another committee confirms the validation outcome.
+At a high level, each round goes through three steps:
 
-Blocks are added to the blockchain if they receive enough votes. The Deterministic Sortition (DS) algorithm ensures fair and random provisioner selection.
+1. **Proposal** – a provisioner creates and broadcasts a candidate block.
+2. **Validation** – a committee checks the block’s validity.
+3. **Ratification** – another committee confirms the validation outcome and finalizes the block.
 
-[Deep dive into Succinct Attestation](/learn/deep-dive/succinct-attestation)
+For the full protocol specification and security analysis (including committee selection, finality, and slashing), see Section 3 “Consensus mechanism” of the [Dusk Whitepaper (2024)](https://dusk-cms.ams3.digitaloceanspaces.com/Dusk_Whitepaper_2024_4db72f92a1.pdf).
 
 ### Transactions in DuskDS
 

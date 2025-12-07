@@ -173,8 +173,7 @@ To reinforce confidence in compliance, there is a comprehensive and detailed **l
 - Token: `dusk`
 - Token decimals: `9` (18 decimals for ERC20 / BEP20 versions)
 - [Tokenomics and metrics](https://docs.dusk.network/learn/tokenomics)
-- Consensus Mechanism: [Succinct Attestation Consensus](https://docs.dusk.network/learn/deep-dive/succinct-attestation)
-
+- Consensus Mechanism: Succinct Attestation Consensus
 
 ## Q&As
 ### Status of Hardware Wallet Support
