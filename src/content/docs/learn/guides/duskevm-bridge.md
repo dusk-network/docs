@@ -3,22 +3,22 @@ title: Bridge DUSK from DuskDS to DuskEVM Testnet
 description: How to use the Dusk Web Wallet to move DUSK from the DuskDS testnet to the DuskEVM testnet and interact with the EVM network.
 ---
 
-This guide explains how to bridge your DUSK on DuskDS to DuskEVM on the public testnet using the official Dusk Web Wallet  
+This guide explains how to bridge your DUSK on DuskDS to DuskEVM on the public testnet using the official Dusk Web Wallet
 
-Once bridged, your DUSK becomes the native gas token on DuskEVM, so you can deploy and interact with smart contracts using standard EVM tooling. 
+Once bridged, your DUSK becomes the native gas token on DuskEVM, so you can deploy and interact with smart contracts using standard EVM tooling.
 
 ## 1) Prerequisites
 
 Before you start, make sure you have:
 
-- A Dusk Web Wallet account and some testnet DUSK. For more details on getting testnet DUSK see the [Nocturne Faucet Guide](/operator/guides/nocturne-faucet/).
+- A Dusk Web Wallet account and some testnet DUSK. For more details on getting testnet DUSK see the [Nocturne Faucet Guide](/operator/networks#how-to-get-testnet-tokens/).
 - Make sure to have the amount of DUSK unshielded you want to bridge.
 - A Web3 wallet (e.g. MetaMask) installed in your browser.
-- Optional, for developers: familiarity with the [DuskEVM deep dive](/learn/deep-dive/dusk-evm/) and [Deploy on DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm/). 
+- Optional, for developers: familiarity with the [DuskEVM deep dive](/learn/deep-dive/dusk-evm/) and [Deploy on DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm/).
 
 ## 2) Open the Web Wallet on DuskDS testnet
 
-1. Visit the [Dusk Web Wallet](https://apps.testnet.dusk.network/wallet/)   
+1. Visit the [Dusk Web Wallet](https://apps.testnet.dusk.network/wallet/)
 2. Unlock your wallet (or restore it with your 12‑word recovery phrase if needed).
 3. Confirm you have enough unshielded DUSK. You need enough for the amount you want to bridge and a small bridge fee.
 
@@ -88,7 +88,7 @@ Carefully verify:
 If everything looks good:
 
 1. Click SEND.
-2. The wizard moves to Step 3 (status screen).  
+2. The wizard moves to Step 3 (status screen).
    You’ll see status messages such as "Processing transaction" and "Transaction pending", and a "VIEW ON BLOCK EXPLORER" button for the originating transaction.
 
 Under the hood, the wallet creates and broadcasts a DuskDS transaction that calls the bridge contract’s `deposit` function with your amount. This locks DUSK on DuskDS and schedules minting on DuskEVM for your EVM address.
@@ -97,7 +97,7 @@ Under the hood, the wallet creates and broadcasts a DuskDS transaction that call
 
 ### 6.1 On DuskDS
 
-When the DuskDS transaction is created the status screen in the bridge wizard shows your transaction as **pending**. The "VIEW ON BLOCK EXPLORER" button opens the Dusk block explorer, where you can inspect the transaction status, fees and gas used. 
+When the DuskDS transaction is created the status screen in the bridge wizard shows your transaction as **pending**. The "VIEW ON BLOCK EXPLORER" button opens the Dusk block explorer, where you can inspect the transaction status, fees and gas used.
 
 You can also manually go to the [DuskDS Testnet Explorer](https://apps.testnet.dusk.network/explorer/) and search by your DuskDS address or the transaction hash.
 
@@ -107,11 +107,11 @@ Once the deposit has been processed by DuskEVM, which can take a couple of minut
 
 To inspect this on the explorer:
 
-1. Open the [DuskEVM testnet explorer](https://explorer.testnet.evm.dusk.network/).   
+1. Open the [DuskEVM testnet explorer](https://explorer.testnet.evm.dusk.network/).
 2. Search by your EVM address.
 3. You’ll see standard EVM‑style transaction details: Block number, gas used, logs, etc.
 
-Because DuskEVM is an EVM‑equivalent environment, the explorer behaves much like other EVM explorers. 
+Because DuskEVM is an EVM‑equivalent environment, the explorer behaves much like other EVM explorers.
 
 ## 7) Interacting with DuskEVM after bridging
 
@@ -127,11 +127,11 @@ Once you have DUSK on DuskEVM Testnet, you can use it just like gas on any EVM c
 
 For developers:
 
-1. Configure your tooling (Hardhat, Foundry, etc.) to talk to the DuskEVM testnet RPC endpoint and chain ID. These details are available on the [Deploy on DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm/) guide.   
+1. Configure your tooling (Hardhat, Foundry, etc.) to talk to the DuskEVM testnet RPC endpoint and chain ID. These details are available on the [Deploy on DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm/) guide.
 2. Use the same EVM address you funded via the bridge as the deployer:
    - Hardhat: set the private key of that account in your network config.
    - Foundry: use the same account for `forge create` / `cast` commands.
-3. Gas costs and transaction semantics follow the EVM‑equivalent rules described in the [DuskEVM overview](/learn/deep-dive/dusk-evm/).   
+3. Gas costs and transaction semantics follow the EVM‑equivalent rules described in the [DuskEVM overview](/learn/deep-dive/dusk-evm/).
 
 Because DuskEVM is EVM‑equivalent and built on the OP Stack, most Ethereum tooling works out of the box — you only need to point it to the correct RPC and chain ID.
 
@@ -161,4 +161,4 @@ After you submit a withdrawal:
 - On the DuskDS side, the withdrawal becomes finalizable after a certain number of blocks (the finalization period).
 - The Web Wallet’s Bridge -> Transactions view shows your pending withdrawals:
   - Once a withdrawal is ready, a "Finalize now" button appears.
-  - Clicking it sends a DuskDS transaction to finalize the withdrawal and release your DUSK back to your DuskDS account, this can take up to 15 minutes. 
+  - Clicking it sends a DuskDS transaction to finalize the withdrawal and release your DUSK back to your DuskDS account, this can take up to 15 minutes.

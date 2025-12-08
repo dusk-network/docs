@@ -43,6 +43,21 @@ Some of the functions for the Nocturne Testnet are:
 - Supporting community-run nodes for stress-testing and performance assessments.
 
 
+### How to get testnet tokens
+
+The Dusk Nocturne testnet uses a Discord bot to distribute Nocturne tokens (nDUSK).
+
+In order to access it, follow these steps:
+
+1. Access the [Dusk Discord server](https://discord.gg/dusk-official).
+2. Among the team members, locate the bot "Dusk Testnet Faucet."
+3. Right-click and select "Message".
+4. Send `!dusk` as a command. The bot will reply, asking for your Testnet wallet address.
+5. Done! Your transaction will be queued, and you will see it in your wallet once processed.
+
+There is currently a limit of 1 transaction per user/wallet every 24 hours.
+
+
 ## Lunare Devnet
 
 The Lunare Devnet is an experimental sandbox environment for internal development and initial testing of Dusk’s newest features. Lunare enables Dusk’s engineering team to iterate quickly on early-stage functionalities, benchmark them, and troubleshoot issues in a controlled setting. While Lunare offers a flexible testing ground, it is reserved for internal use and is not open to the general public.
