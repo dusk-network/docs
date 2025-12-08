@@ -11,7 +11,7 @@ Once bridged, your DUSK becomes the native gas token on DuskEVM, so you can depl
 
 Before you start, make sure you have:
 
-- A Dusk Web Wallet account and some testnet DUSK. For more details on getting testnet DUSK see the [Nocturne Faucet Guide](/operator/networks#how-to-get-testnet-tokens/).
+- A Dusk Web Wallet account and some testnet DUSK. For more details on getting testnet DUSK see the [Nocturne Faucet Guide](/operator/networks#how-to-get-testnet-tokens).
 - Make sure to have the amount of DUSK unshielded you want to bridge.
 - A Web3 wallet (e.g. MetaMask) installed in your browser.
 - Optional, for developers: familiarity with the [DuskEVM deep dive](/learn/deep-dive/dusk-evm/) and [Deploy on DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm/).

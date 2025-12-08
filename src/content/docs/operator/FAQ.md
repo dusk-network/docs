@@ -14,7 +14,8 @@ description: Frequently asked questions about running a node on Dusk.
 The full node that is used to take part in the consensus is the [**provisioner node**](/operator/provisioner).
 
 #### Can I build Rusk from source?
-Yes, instructions to build Rusk from source can be found [here](/operator/from-source)
+
+Yes, instructions to build Rusk from source can be found [here](https://github.com/dusk-network/rusk/blob/master/INSTALLATION.md)
 
 #### Which ports does Dusk use?
 
@@ -85,8 +86,9 @@ As there's also a password on the file when you export, you need to set it on th
 As long as you have your mnemonic phrase stored safely, you can recover everything else.
 
 #### What should I do if I lose my SSH key file?
-1) Spin up a fresh instance and [install Rusk](/operator/installation)
-2) Restore your wallet using the previous mnemonic. 
+
+1) Spin up a fresh instance and [install Rusk](/operator/provisioner)
+2) Restore your wallet using the previous mnemonic.
 3) [Export the consensus key](/operator/guides/node-wallet-setup/#export-consensus-key) from the restored wallet.
 4) Once the new node is fully synced, it will start participating in consensus. There is no need to stake again. You can then safely delete the old instance.
 
@@ -102,7 +104,7 @@ rusk-wallet moonlight-stake --amt 3000
 ```
 
 #### How to resume validating again after missing an upgrade?
-If you didn't upgrade your node on time and got soft slashed, you need to: 
+If you didn't upgrade your node on time and got soft slashed, you need to:
 
 1) Unstake the full amount
 2) Upgrade your node
@@ -123,7 +125,7 @@ service rusk start
 ```
 
 #### How can I run a Dusk node on Docker?
-We don't support a production-ready Docker image for Rusk. To run Rusk through Docker as ephemeral (non-persistent storage), you can use the following command: 
+We don't support a production-ready Docker image for Rusk. To run Rusk through Docker as ephemeral (non-persistent storage), you can use the following command:
 
 ```bash
 docker run -p 9000:9000/udp -p 8080:8080/tcp dusknetwork/node
@@ -138,7 +140,7 @@ Bootstrapper nodes are used during initial synchronization to help your node joi
 If you configure your node to use a different port (e.g., 42069), it’s crucial to ensure that other nodes, including bootstrappers, are aware of and can adapt to this port. Otherwise, they will not route messages to your node.
 
 **With the Node Installer:**
-If you are using the Node Installer, it is recommended to specify Kadcast configuration updates in `/opt/dusk/services/rusk.conf.user`. This file takes precedence over `rusk.conf.default` and ensures your changes are retained during updates. 
+If you are using the Node Installer, it is recommended to specify Kadcast configuration updates in `/opt/dusk/services/rusk.conf.user`. This file takes precedence over `rusk.conf.default` and ensures your changes are retained during updates.
 
 You can add or modify the following section:
 
