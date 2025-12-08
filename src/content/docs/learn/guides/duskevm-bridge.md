@@ -3,7 +3,7 @@ title: Bridge DUSK from DuskDS to DuskEVM Testnet
 description: How to use the Dusk Web Wallet to move DUSK from the DuskDS testnet to the DuskEVM testnet and interact with the EVM network.
 ---
 
-This guide explains how to bridge your DUSK on DuskDS to DuskEVM on the public testnet using the official Dusk Web Wallet
+This guide explains how to bridge your DUSK on DuskDS to DuskEVM on the public testnet using the official Dusk Web Wallet.
 
 Once bridged, your DUSK becomes the native gas token on DuskEVM, so you can deploy and interact with smart contracts using standard EVM tooling.
 
