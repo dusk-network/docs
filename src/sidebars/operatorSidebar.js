@@ -10,8 +10,6 @@ export default function sidebar(currentPath) {
             { label: "Run a prover node", href: "/operator/prover" },
             { label: "Choose a Network", href: "/operator/networks" },
             { label: "Maintenance & Monitoring", href: "/operator/maintenance-monitoring" },
-            { label: "Manually Install Rusk", href: "/operator/installation/" },
-            { label: "Install Rusk from source", href: "/operator/from-source/" },
             { label: "FAQ", href: "/operator/faq" },
             { label: "Troubleshooting", href: "/operator/troubleshooting" },
             //{ label: "Upgrades history", href: "/operator/introduction/history" },
