@@ -14,7 +14,7 @@ The GraphQL API provides access to finalized historical blockchain transaction-e
 The **moonlightHistory** endpoint allows for advanced filtering, enabling queries based on sender, receiver, block range, and pagination.**fullMoonlightHistory** retrieves all public `DUSK` value transfers for a given address, without additional filtering options.
 :::
 
-You can also checkout the [transaction models](/learn/deep-dive/transaction_models/tx-models#transaction-models-on-dusk) page, to get familiar with the terminology of `moonlight` & `phoenix`.
+You can also checkout the [transaction models](/learn/deep-dive/duskds-tx-models) page, to get familiar with the terminology of `moonlight` & `phoenix`.
 
 Refer to [GraphQL queries](/developer/integrations/http-api/#graphql-queries) for additional information on the GraphQL endpoint.
 

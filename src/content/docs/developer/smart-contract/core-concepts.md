@@ -44,7 +44,7 @@ Because the **core** crate lacks heap memory allocations, we can explicitly also
 
 ### Usage of panic & reverting state
 
-While you can have Result types in your smart contracts and handle them in multiple function calls, in the end you may want to abort execution. For example if a specific requirement is not satisfied you can always make use of directives that lead to panic (e.g., `.expect()` or `panic!()`). This is equivalent to `require()` in Solidity. It will abort the smart contract execution and let the transaction [fail](/learn/deep-dive/tx-fees#unsuccessful-transactions). This will also **revert** the state, making no changes to it.
+While you can have Result types in your smart contracts and handle them in multiple function calls, in the end you may want to abort execution. For example if a specific requirement is not satisfied you can always make use of directives that lead to panic (e.g., `.expect()` or `panic!()`). This is equivalent to `require()` in Solidity. It will abort the smart contract execution and let the transaction fail. This will also **revert** the state, making no changes to it.
 
 ## UTXO & Account-model
 
@@ -52,13 +52,15 @@ Dusk supports both UTXO and account-based capabilities as it offers you a high l
 
 ### Absence of msg.sender
 
-In Dusk, there is no built-in variable like `msg.sender` which identifies the caller of a contract function. This is because Dusk is a privacy-focused blockchain, utilizing a UTXO-based privacy preserving transaction model ([Phoenix](/learn/deep-dive/transaction_models/phoenix)) by default.
+TODO: Add information on `msg.sender` equivalent
+
+In Dusk, there is no built-in variable like `msg.sender` which identifies the caller of a contract function. This is because Dusk is a privacy-focused blockchain, utilizing a UTXO-based privacy preserving transaction model ([Phoenix](/learn/deep-dive/duskds-tx-models)) by default.
 
 Therefore developers need to figure out how to represent users. 
 
 In Dusk, an "address" is defined by the developer within the contract's logic. This approach gives developers more control over the privacy and compliance features of their applications but also increases their responsibility to securely identify and authenticate users and transactions. 
 
-The `msg.sender` is not "abstracted" away on dusk. A way to mimic that behavior is by explicitly taking the address as function argument and a signature that signed all other function arguments (including the address). Then verifying this in the function. Examples of such usage can be found in the [transparent token standard](/learn/deep-dive/token-standards#dusks-token-standards), the [Moonlight transaction model](/learn/deep-dive/transaction_models/moonlight) and [Zedger](/learn/deep-dive/transaction_models/zedger).
+The `msg.sender` is not "abstracted" away on dusk. A way to mimic that behavior is by explicitly taking the address as function argument and a signature that signed all other function arguments (including the address). Then verifying this in the function. Examples of such usage can be found in the [Moonlight transaction model](/learn/deep-dive/duskds-tx-models).
 
 ## Methods
 

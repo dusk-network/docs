@@ -50,11 +50,11 @@ The smallest denomination of DUSK. 10^9 LUX = 1 DUSK, 1 DUSK = 1,000,000,000 LUX
 
 #### Moonlight
 
-[Moonlight](/learn/deep-dive/transaction_models/tx-models#moonlight) is an account-based transaction model on Dusk that tracks balances for accounts and contracts, offering full transparency. It is faster and cheaper than Phoenix, making it easier for developers to integrate with external protocols.
+[Moonlight](/learn/deep-dive/duskds-tx-models) is an account-based transaction model on Dusk that tracks balances for accounts and contracts, offering full transparency. It is faster and cheaper than Phoenix, making it easier for developers to integrate with external protocols.
 
 #### Phoenix
 
-[Phoenix](/learn/deep-dive/transaction_models/tx-models#phoenix) is a UTXO-based, privacy-preserving transaction model on Dusk used for transferring DUSK. It enables users to spend "notes" privately using zero-knowledge proofs without linking balances to addresses.
+[Phoenix](/learn/deep-dive/duskds-tx-models) is a UTXO-based, privacy-preserving transaction model on Dusk used for transferring DUSK. It enables users to spend "notes" privately using zero-knowledge proofs without linking balances to addresses.
 
 #### Public Account
 
@@ -82,7 +82,7 @@ The official CLI wallet for Dusk, enabling users to manage DUSK, interact with t
 
 #### Succinct Attestation
 
-[Succinct Attestation](/learn/deep-dive/succinct-attestation) is a unique Proof-of-Stake consensus algorithm developed by Dusk which allows network participants to compete for block producer rights.
+Succinct Attestation is a unique Proof-of-Stake consensus algorithm developed by Dusk which allows network participants to compete for block producer rights.
 
 #### W3sper SDK
 

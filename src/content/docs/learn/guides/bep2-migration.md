@@ -1,5 +1,5 @@
 ---
-title: Dusk BEP2 Migration (Closed)
+title: Dusk BEP2 Migration (Archived)
 description: The BEP2 to BEP20 DUSK migration has ended. This page is kept for transparency.
 ---
 

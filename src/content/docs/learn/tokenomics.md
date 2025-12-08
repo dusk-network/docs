@@ -39,18 +39,22 @@ The DUSK token is widely accessible on top-tier CEXs and DEXs. For more informat
 DUSK serves several key purposes within the ecosystem:
 * Used for staking in consensus participation.
 * Rewards to consensus participants.
-* Payment of network fees ([gas](/learn/deep-dive/tx-fees)).
+* Payment of network fees (See [Transaction fees & gas](#transaction-fees--gas)).
 * Paying for the deployment of dApps on the network.
 * Payment of services on the network.
 
-### DUSK for Transaction Fees
+### Transaction fees & gas
 
-DUSK represents the only medium responsible for transaction fee payments. Each transaction requires to have an attached fee. The transaction fees exist to subsidize consensus participants for the computation costs as well as to act as a deterrent against DDoS attacks. Specifically, Dusk utilizes an internal accounting system to express the cost of operations inside the virtual machine called `gas`. 
+Every transaction on Dusk consumes **gas**, a unit that measures how much work it does on-chain.
 
-Users wishing to add their transaction to a block enter a *generalized first-price auction (GFP)* by setting a gas price (i.e. `gasprice`) they are willing to pay per unit of gas. The block has a gas limit, and transactions consume the available gas based on the auction results.
-The `baseprice` is the minimum gas price that can be set for a transaction. The `gaslimit` is required as a workaround to the halting problem, ensuring that every transaction does halt at after a finite amount computation cycles, either due to the successful termination or due to the gas consumption reaching the allocated.
+- You specify a **gas limit** (maximum work you’re willing to pay for) and a **gas price** in `LUX`  
+  (`1 LUX = 10⁻⁹ DUSK).
+- The actual fee paid is `gas_used × gas_price`. Unused gas is not charged.
+- If a transaction runs out of gas during execution, it is reverted and the fee for the gas consumed is still charged.
 
-Dusk is also working on innovative gas payment mechanisms to further improve the tokenomics and user experience, while integrating seamlessly with business requirements. As such, Dusk improves over the usual gas management in blockchain by introducing possibilities that are unavailable in other networks. More information can be found on the [economic model page](/learn/deep-dive/economic-protocol).
+Gas price adjusts with network demand. When demand is low, prices tend to be low, resulting in very cheap transactions for users.
+
+Collected fees are added to the block reward and redistributed as described in [Incentive structure](#incentive-structure).
 
 ## Token Allocation and Vesting Overview
 
@@ -107,7 +111,12 @@ More information regarding the model can be found in the
 
 ## Incentive Structure
 
-To ensure network security, economic sustainability, and consensus efficiency, the following reward distribution structure is applied:
+Each block has a **block reward** that consists of:
+
+- Newly emitted DUSK according to the [token emission schedule](#token-emission-schedule)
+- All transaction fees paid in that block
+
+This total reward is distributed between network participants and the development fund. In the current design:
 
 - **70%** to the Block Generator (proposal step) and an extra **10%** depending on the
 credits included in the certificate. Any undistributed rewards from this 10% are burned as part of the gas-burning mechanism.
@@ -115,6 +124,42 @@ credits included in the certificate. Any undistributed rewards from this 10% are
 - **5%** to the Validation Committee (validation step)
 - **5%** to the Ratification Committee (ratification step)
 
-This structure incentivizes all steps of the [SA Consensus](/learn/deep-dive/succinct-attestation), with a focus on the Block Generator, which plays the most critical role.
+This structure rewards all roles in Succinct Attestation, with a strong incentive for block generators to include as many votes as possible in their certificates.
 
-The Block Generator is encouraged to include as many voters in the certificate as possible, as the percentage of the total reward it receive also depends on the number of votes obtained in the Validation and Ratification steps.
+## Slashing
+
+Dusk uses soft slashing to discourage misbehaviour and long downtime from provisioners. The protocol does not burn a provisioner’s staked DUSK; instead it temporarily reduces how that stake participates and earns rewards.
+
+### When can you be slashed?
+
+Soft slashing is only applied when a provisioner repeatedly fails to behave as expected, for example by:
+
+- running outdated or modified node software; or
+- frequently missing assigned duties (e.g. block generator or committee slots).
+
+If you run the official, up‑to‑date node and keep it online and in sync, slashing should be rare.
+
+### Effects of soft slashing
+
+Soft slashing has two consequences:
+
+**Suspension**  
+
+After enough faults, the provisioner’s stake is **suspended** for one or more epochs:
+
+- the suspended stake is not considered for committee selection;  
+- it earns no rewards while suspended;  
+- repeated faults increase the length of future suspensions.  
+
+Once the suspension period ends and the node behaves correctly, the stake becomes eligible again.
+
+**Penalization**  
+
+Alongside suspension, a portion of the stake is **penalized**:
+
+- the penalized portion is moved to the claimable rewards pool, so no DUSK is lost from the system;  
+- the effective stake used in sortition is reduced, so the node is selected less often;  
+- the penalty grows with consecutive suspensions (starting around 10% of the stake and increasing in steps).  
+If the effective stake falls below the minimum (1000 DUSK), it must be un‑staked and re‑staked to participate again.
+
+In practice, avoiding slashing is straightforward: run the official software, keep your node current and online, and monitor it for missed duties.

@@ -1,5 +1,5 @@
 ---
-title: Dusk Mainnet On-Ramp
+title: Dusk Mainnet On-Ramp (Archived)
 description: Step-by-step guide on how to move BEP20 and ERC20 DUSK to be included in the Dusk mainnet genesis.
 ---
 
@@ -24,14 +24,3 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 ## **On-ramp Genesis State**
 
 You can find the genesis on-ramp state for ERC20 DUSK [here](https://raw.githubusercontent.com/dusk-network/dusk-migration/refs/heads/genesis-state/genesis-state-eth.toml) and for BEP20 DUSK [here](https://raw.githubusercontent.com/dusk-network/dusk-migration/refs/heads/genesis-state/genesis-state-bsc.toml).
-
-
-### **Can you describe a couple scenarios?**
-
-1. **User Pippo**: He sends 10,000 DUSK to the Mainnet Onramp contract using the `stake` method. As of _Genesis_ on the 29th, he holds a 10,000 DUSK stake, and his node begins participating in consensus. By January 7, he starts accruing rewards. Pippo did not do a `deposit` and will have to bridge DUSK through our [mainnet migration bridge](/learn/guides/mainnet-migration), or receive DUSK from a friend, to transfer DUSK and withdraw staking rewards.
-
-2. **User Pluto**: He sends 10,000 DUSK to the Mainnet Onramp contract using the `stake` method. As of _Genesis_ on the 29th, he holds a 10,000 DUSK stake, but since he does not run a node, he never participates in consensus. _His 10,000 DUSK is removed from the active stakes and credited back as a deposit on January 3._ By January 7, he holds his original deposit but no active stake. At that point, he can choose to run a node by re-staking and waiting through the two-epoch maturity period.
-
-3. **User Paperino**: He sends 900 DUSK to the Mainnet Onramp contract using the deposit method. His deposit is recorded at _Genesis_ and available from that point on (on December 29th, on January 3rd and  on January 7th).
-
-4. **User Topolino**: He does not send any DUSK to the Mainnet Onramp contract by January 2. He can only move his funds onto Mainnet after January 7, and must use the [mainnet migration bridge](/learn/guides/mainnet-migration) to do so.
