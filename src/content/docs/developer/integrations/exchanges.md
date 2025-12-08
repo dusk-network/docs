@@ -18,7 +18,7 @@ To access the blockchain you can either:
 
 You can interact with the blockchain and submit transactions by operating a Dusk node.
 
-To set up a node, you may choose to use the [node installer](/operator/guides/provisioner-node/#node-installer) or manually install Rusk by following the provided [installation instructions](/operator/installation).
+To set up a node, you may choose to use the [node installer](/operator/provisioner/#node-installer) or manually install Rusk by following the provided [installation instructions](/operator/installation).
 
 Requirements vary depending on whether you are configuring a [Provisioner](/operator/provisioner) node or an [Archive](/operator/archive-node) node.
 

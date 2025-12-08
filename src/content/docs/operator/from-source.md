@@ -6,7 +6,7 @@ description: Learn how to install and configure a Dusk node.
 :::note[Node Installer]
 This page here is for advanced users looking for additional information or custom setups.
 
-It is advised to use the Node installer to [quickly launch your node on Dusk](/operator/guides/provisioner-node).
+It is advised to use the Node installer to [quickly launch your node on Dusk](/operator/provisioner).
 
 The node installer setups rusk.toml file for you but for advance users this tutorial will tell you how to setup that file
 :::
@@ -79,7 +79,7 @@ cargo b --release -p dusk-rusk
 Or as archival
 
 ```bash
-cargo b --release --features archive -p dusk-rusk 
+cargo b --release --features archive -p dusk-rusk
 ```
 
 Or as prover only
@@ -99,8 +99,8 @@ Now before building the node we need the following:
 1. The location of the rusk.toml configuration file
 2. The location of the database path
 3. `DUSK_CONSENSUS_KEYS_PASS` which is the password for your consensus keys
-4. Base state of the mainnet 
-5. `RUSK_STATE_PATH` path of our state 
+4. Base state of the mainnet
+5. `RUSK_STATE_PATH` path of our state
 
 Let start by creating a `~/.dusk/rusk` at your home directory. This is where we'll setup our node:
 
@@ -130,7 +130,7 @@ EOF
 
 We'll generate our state using our rusk binary we moved, make sure you add the `--force` flag to override any existing state
 
-We place our state in the `mainnet_state` folder to keep it seperate 
+We place our state in the `mainnet_state` folder to keep it seperate
 
 ```
 RUSK_STATE_PATH=/Users/username/.dusk/mainnet_state ./rusk recovery state --init $HOME/.dusk/rusk/genesis.toml
@@ -142,11 +142,11 @@ The node installer sets up the rusk.toml file for you. An example for the file i
 
 We will copy that and add some entires which the node installer adds for you
 
-We'll set up the file for **mainnet** 
+We'll set up the file for **mainnet**
 
 :::note[rusk.toml]
 
-This file will have different bootstrapping nodes and kadcast id for different network. Also make sure the paths in the file system are absolute 
+This file will have different bootstrapping nodes and kadcast id for different network. Also make sure the paths in the file system are absolute
 :::
 
 ```toml

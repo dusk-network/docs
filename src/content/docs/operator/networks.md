@@ -3,7 +3,7 @@ title: Choose a Network
 description:  Explore the scope of different Dusk’s environments, including testnet and mainnet.
 ---
 
-Dusk offers multiple network environments to support different stages of development, testing, and live usage. Each network serves a unique purpose, allowing developers, testers, and users to interact with the Dusk network under various conditions. 
+Dusk offers multiple network environments to support different stages of development, testing, and live usage. Each network serves a unique purpose, allowing developers, testers, and users to interact with the Dusk network under various conditions.
 
 
 # Network Overview
@@ -18,7 +18,7 @@ The available networks include:
 
 ---
 
-You can find instructons on how to run a node in the [Provisioner Node Guide](/operator/guides/provisioner-node).
+You can find instructons on how to run a node in the [Provisioner Node Guide](/operator/provisioner).
 
 ## Mainnet
 

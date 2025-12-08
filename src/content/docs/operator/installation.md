@@ -6,7 +6,7 @@ description: Learn how to install and configure a Dusk node.
 :::note[Node Installer]
 This page here is for advanced users looking for additional information or custom setups.
 
-It is advised to use the Node installer to [quickly launch your node on Dusk](/operator/guides/provisioner-node).
+It is advised to use the Node installer to [quickly launch your node on Dusk](/operator/provisioner).
 :::
 
 <a href="https://github.com/dusk-network/rusk" target="_blank">Rusk</a> contains the software needed to run a Dusk node. Users can set specific compilation flags to configure their node for different roles, allowing it to perform tasks like participating in consensus, validating transactions, and storing historical data.
