@@ -5,7 +5,7 @@ export default function sidebar(currentPath) {
         createLink("Overview", "/developer/overview", currentPath),
         createGroup("Smart Contracts on DuskEVM", currentPath, [
             { label: "Deploy on DuskEVM", href: '/developer/smart-contracts-dusk-evm/deploy-on-evm' },
-           
+
         ],
             false),
         createGroup("Smart Contracts on DuskDS", currentPath, [
@@ -53,6 +53,11 @@ export default function sidebar(currentPath) {
                 type: "link",
                 label: "Cheat Sheet",
                 href: "/developer/smart-contract/cheat-sheet",
+            },
+            {
+                type: "link",
+                label: "Digital Identity Protocol",
+                href: '/developer/digital-identity/protocol'
             }
         ], false),
         createGroup("Integrate with DuskDS", currentPath, [
@@ -67,12 +72,6 @@ export default function sidebar(currentPath) {
             { label: "Address Format", href: '/developer/integrations/addresses' },
         ],
             false),
-        createGroup("Use Digital Identity", currentPath, [
-            { label: "Citadel Protocol", href: '/developer/digital-identity/protocol' },
-            { label: "Citadel SDK", href: '/developer/digital-identity/sdk' },
-        ],
-            false),
-
         createGroup("Contribute to Dusk", currentPath, [
             { label: "Dusk Improvement Proposals", href: '/developer/contribute/dips' },
             { label: "Grants Program", href: '/developer/contribute/grants' },
