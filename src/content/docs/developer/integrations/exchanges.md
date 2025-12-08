@@ -48,10 +48,6 @@ You can find a detailed overview of the full transaction lifecycle [here](/devel
 
 The [W3sper SDK](/developer/integrations/w3sper) provides address generation, transaction building, signing, and decoding functionalities. It can operate completely offline, without the need for an online wallet or node.
 
-The W3sper SDK leverages [wallet-core](/developer/integrations/wallet-core) to facilitate offline transaction processing and signing, producing both the transaction hash and signed transaction outputs.
-
-The library for transaction serialization and decoding is called [dusk-bytes](https://github.com/dusk-network/dusk-bytes).
-
 ## Memo field support
 
 Dusk transactions also support a memo field, allowing exchanges to attach a short reference to each transaction. This is particularly useful for labeling deposits or withdrawals with user identifiers or order references.
@@ -157,10 +153,10 @@ To reinforce confidence in compliance, there is a comprehensive and detailed **l
 
 - [Whitepaper](https://dusk-cms.ams3.digitaloceanspaces.com/Dusk_Whitepaper_2024_4db72f92a1.pdf)
 - [Audits](https://github.com/dusk-network/audits)
+
 ### Libraries
 
 - [W3sper SDK](/developer/integrations/w3sper)
-- [Wallet Stack](/developer/integrations/wallet-stack)
 - [RUES (events system)](/developer/integrations/w3sper)
 
 ### User-facing tools
