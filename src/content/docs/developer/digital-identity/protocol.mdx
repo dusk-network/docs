@@ -1,11 +1,11 @@
 ---
-title: Citadel Protocol
+title: Citadel
 description: Discover how Citadel leverages zero-knowledge proofs to offer a privacy-preserving and compliant Self-Sovereign Identity (SSI) protocol on Dusk.
 ---
 
 In a digitized world of today, in which different parties are massively interacting with each other exchanging huge amounts of personal and sensitive information, it is extremely important that those participants have full control over the information they expose and share. For this reason, the term Self-Sovereign Identity (SSI) began to be used to describe systems where their users are able to manage their identities in a fully transparent and private manner. This means that, at any moment, every user knows which information about them is being shared while using their identity.
 
-Citadel is a zero-knowledge-proofs-based SSI management system where users' identities are stored in a trusted and private manner using a decentralized network. In our particular case, using the Dusk Blockchain. 
+Citadel is a zero-knowledge-proofs-based SSI management system where users' identities are stored in a trusted and private manner using a decentralized network. In our particular case, using the Dusk Blockchain.
 
 There are three different parties involved in our protocol:
 
@@ -29,7 +29,7 @@ Citadel is composed of two main protocols: the *license request protocol*, and t
   - **(user) request_service**: the user requests the service by sending the session cookie to the SP, using a secure channel (e.g. an HTTPS connection).
   - **(SP) fetch_session**: the SP, upon receiving a session cookie, scans the network for a session with the same ID that the session cookie has.
   - **(SP) grant service**: the SP verifies locally the session cookie using the fetched session from the Blockchain, and grants access to the service or denies it based on the output of the verification.
-  
+
 The above steps are depicted in detail in the figure that follows.
 
 ![protocol_citadel.svg](../../../../assets/protocol.png)
@@ -38,19 +38,25 @@ You can find a more detailed description in the [specs](https://github.com/dusk-
 
 ## The License Contract
 
-Citadel is possible thanks to the *license contract* deployed in the Dusk blockchain. The following diagram illustrates how concrete messages are passing between protocol actors, from an implementation point of view.
+Citadel is possible thanks to the *license contract* that can be deployed on DuskDS. The following diagram illustrates how concrete messages are passing between protocol actors, from an implementation point of view.
 
 ![Citadel implementation](../../../../assets/implementation_citadel.png)
 
 
-## Using Citadel
+## Citadel SDK
 
-Dusk brings **Moat**, the Citadel SDK. It includes a command line interface tool, as well as an Application Programming Interface (API), which allows users of Dusk to use the built-in Citadel mechanism. You can learn more in the specific [Moat docs](/developer/digital-identity/sdk) .
+Dusk brings **Moat**, the Citadel SDK. It is a Software Development Kit allowing developers to implement SSI solutions using Citadel and  Dusk.
+
+It includes a CLI and API for developers to integrate with.
 
 import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
 <CardGrid>
-     <LinkCard title="Citadel SDK" icon="add-document" href="/developer/digital-identity/sdk" description="Documentation on how to use Moat, the Citadel SDK."/>
+    <LinkCard title="GitHub Repository" icon="github" href="https://github.com/dusk-network/citadel/"/>
     <LinkCard title="Specification" icon="pencil" href="https://github.com/dusk-network/citadel/blob/main/docs/specs.pdf" description="Citadel specification document."/>
     <LinkCard title="Original Paper" icon="pencil" href="https://arxiv.org/pdf/2301.09378.pdf" description="Original research paper describing the idea behind Citadel."/>
 </CardGrid>
+
+### Using the CLI
+
+Setup, prerequisites and usage is described in the [README](https://github.com/dusk-network/moat/blob/main/README.md) and [EXAMPLES](https://github.com/dusk-network/moat/blob/main/moat-example/README.md).
