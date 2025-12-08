@@ -3,7 +3,7 @@ title: Choose a Network
 description:  Explore the scope of different Dusk’s environments, including testnet and mainnet.
 ---
 
-Dusk offers multiple network environments to support different stages of development, testing, and live usage. Each network serves a unique purpose, allowing developers, testers, and users to interact with the Dusk network under various conditions. 
+Dusk offers multiple network environments to support different stages of development, testing, and live usage. Each network serves a unique purpose, allowing developers, testers, and users to interact with the Dusk network under various conditions.
 
 
 # Network Overview
@@ -18,7 +18,7 @@ The available networks include:
 
 ---
 
-You can find instructons on how to run a node in the [Provisioner Node Guide](/operator/guides/provisioner-node).
+You can find instructons on how to run a node in the [Provisioner Node Guide](/operator/provisioner).
 
 ## Mainnet
 
@@ -41,6 +41,21 @@ Some of the functions for the Nocturne Testnet are:
 - Testing new protocol updates, security measures, and feature releases.
 - Enabling developers to deploy and test smart contracts.
 - Supporting community-run nodes for stress-testing and performance assessments.
+
+
+### How to get testnet tokens
+
+The Dusk Nocturne testnet uses a Discord bot to distribute Nocturne tokens (nDUSK).
+
+In order to access it, follow these steps:
+
+1. Access the [Dusk Discord server](https://discord.gg/dusk-official).
+2. Among the team members, locate the bot "Dusk Testnet Faucet."
+3. Right-click and select "Message".
+4. Send `!dusk` as a command. The bot will reply, asking for your Testnet wallet address.
+5. Done! Your transaction will be queued, and you will see it in your wallet once processed.
+
+There is currently a limit of 1 transaction per user/wallet every 24 hours.
 
 
 ## Lunare Devnet

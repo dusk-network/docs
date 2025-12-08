@@ -1,9 +1,24 @@
 ---
-title: Run a Provisioner on Dusk
-description: A step-by-step guide on installing the Dusk node.
+title: Run a provisioner node
+description: Discover what a Dusk Full Validator Node (Provisioner) is and how to run such a node
 ---
 
-In this guide, we’ll be using [DigitalOcean](https://www.digitalocean.com/) (DO) as our go-to [Virtual Private Server](https://en.wikipedia.org/wiki/Virtual_private_server) (VPS) service. The same can be replicated on Vultr, AWS, Hetzner, or any other cloud service or for node runners at home. While it is indeed possible to run a node on home infrastructure, this guide will not deal with those types of setups.
+Provisioner nodes are full nodes equipped with participating in consensus. Participating in consensus is incentivized by the protocol through staking rewards. As the backbone of network security and transaction validation, Provisioners play a crucial role in processing and appending new blocks to the Dusk blockchain.
+
+Provisioners are required to stake a **minimum of 1000 DUSK** to participate in the consensus mechanism. In return, they earn rewards for validating transactions and generating blocks, providing a financial incentive for securing the network. These rewards not only compensate users for locking up their assets but also encourage ongoing participation in block creation and voting.
+
+## Provisioner Specifications
+
+The following specifications support Provisioner nodes with limited proving capacity. It is always recommended to have at least 2 cores available.
+
+| CPU            | RAM  | Storage | Network Connection |
+| :------------- | :--- | :------ | :----------------- |
+| 2 cores; 2 GHz | 4 GB | 50 GB   | 10 Mbps            |
+
+## Run a Provisioner on Dusk
+> A step-by-step guide on installing the Dusk node.
+
+In the following guide, we’ll be using [DigitalOcean](https://www.digitalocean.com/) (DO) as our go-to [Virtual Private Server](https://en.wikipedia.org/wiki/Virtual_private_server) (VPS) service. The same can be replicated on Vultr, AWS, Hetzner, or any other cloud service or for node runners at home. While it is indeed possible to run a node on home infrastructure, this guide will not deal with those types of setups.
 
 We work under the assumption that you’ve already created an account for your respective service, and provided it with a payment method. If not, you can get a $200 credit by using [our referral link](https://m.do.co/c/9ae612e34de9).
 
@@ -11,29 +26,29 @@ We work under the assumption that you’ve already created an account for your r
 
 DO uses droplets, which are Linux-based virtual machines. When you’re [logged in](https://cloud.digitalocean.com/login) and have set up a default project, navigate to _Droplets_ under the _Manage_ section of your project, and click on [_Create Droplet_](https://cloud.digitalocean.com/droplets/new).
 
-![Create droplet page.](../../../../assets/node-guide/create-droplet.png)
+![Create droplet page.](../../../assets/node-guide/create-droplet.png)
 
 On the _Create Droplets_ page, select any of the provided regions under the _Choose Region_ header. Choosing different regions is good for decentralization and resilience.
 
 Under _Choose an image_, pick Ubuntu version 24.04 (LTS) x64.
 
-![Select region and image for the droplet.](../../../../assets/node-guide/region-image-droplet.png)
+![Select region and image for the droplet.](../../../assets/node-guide/region-image-droplet.png)
 
 Next, we have to pick the size of the droplet. The [node requirements](/operator/provisioner#provisioner-specifications) for a provisioner node are in line with the _SHARED CPU_ -> _Regular_ -> $24/mo option. Select it.
 
-![Select size of the droplet.](../../../../assets/node-guide/requirements-droplet.png)
+![Select size of the droplet.](../../../assets/node-guide/requirements-droplet.png)
 
 Choose an authentication method to access your droplet. Using a SSH key is more secure, but you can also use a password if you prefer. We recommend the SSH key approach. You can follow DOs instructions here: [How to Add SSH Keys to New or Existing Droplets](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/)
 
-![Set an authentication method.](../../../../assets/node-guide/authenticate-droplet.png)
+![Set an authentication method.](../../../assets/node-guide/authenticate-droplet.png)
 
 That's it for creating your droplet! Give it a hostname, and click on _Create Droplet_:
 
-![Create the droplet.](../../../../assets/node-guide/finish-droplet.png)
+![Create the droplet.](../../../assets/node-guide/finish-droplet.png)
 
 DO will now set the droplet up for you. This can take a minute:
 
-![Droplet being created.](../../../../assets/node-guide/droplet-creation.png)
+![Droplet being created.](../../../assets/node-guide/droplet-creation.png)
 
 ## Configure Firewall
 
@@ -46,7 +61,7 @@ The Rusk node uses the Kadcast protocol to communicate messages between nodes on
 
 If you're using DO or a similar cloud provider, configure a firewall group. Navigate to _Networking_ -> _Firewalls_ under the _Manage_ section of your project. Click on the [_Create Firewall_](https://cloud.digitalocean.com/networking/firewalls) button.
 
-![Create firewall page.](../../../../assets/node-guide/create-firewall.png)
+![Create firewall page.](../../../assets/node-guide/create-firewall.png)
 
 Give the firewall a name, open UDP under port 9000 (optionally TCP under 8080 too). Leave all the Outbound rules as they are.
 
@@ -54,7 +69,7 @@ Apply the rules to the node droplet you made.
 
 Your firewall should look as follows:
 
-![Configure firewall.](../../../../assets/node-guide/configure-firewall.png)
+![Configure firewall.](../../../assets/node-guide/configure-firewall.png)
 
 Click on _Create Firewall_ to apply this firewall to your node's droplet.
 
@@ -78,15 +93,15 @@ For non-default SSH ports, replace `ssh` with the specific port number. Adjust c
 
 Navigate back to your [droplets overview](https://cloud.digitalocean.com/droplets) and select your droplet:
 
-![Droplet overview.](../../../../assets/node-guide/droplet-overview.png)
+![Droplet overview.](../../../assets/node-guide/droplet-overview.png)
 
 You can connect to your node through SSH on your local machine, or simply click on _Console_ on your droplets page:
 
-![Connect to droplet through web UI.](../../../../assets/node-guide/droplet-console.png)
+![Connect to droplet through web UI.](../../../assets/node-guide/droplet-console.png)
 
 A terminal should pop-up and connect you to your Droplet
 
-![Droplet terminal.](../../../../assets/node-guide/droplet-terminal.png)
+![Droplet terminal.](../../../assets/node-guide/droplet-terminal.png)
 
 ### (Optional) User and Group Permissions
 
@@ -173,3 +188,4 @@ You should see the latest version number confirming a successful installation.
 Now that you have setup rusk, it's time to setup your wallet to finally start participating in consensus
 
 You can read the [node wallet guide](/operator/guides/node-wallet-setup) for a step-by-step instruction how to set it up on the server.
+

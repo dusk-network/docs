@@ -19,6 +19,8 @@ export default defineConfig({
 		'/itn/node-running-guide': '/nocturne/node-running-guide',
 		'/itn/testnet-faucet': '/nocturne/testnet-faucet',
 		'/itn/upgrade-node': '/nocturne/upgrade-node',
+        '/operator/guides/archive-node': '/operator/archive-node',
+        '/operator/guides/provisioner-node': '/operator/provisioner',
 	},
 	integrations: [
 		starlight({

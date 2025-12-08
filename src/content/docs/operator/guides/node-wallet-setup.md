@@ -6,7 +6,7 @@ description: Learn how to setup your Dusk wallet for staking and node running.
 :::note[Node Installer]
 This guide assumes that you have already installed Rusk using the node-installer.
 
-You can use the node installer guide to [quickly launch your Provisioner node](/operator/guides/provisioner-node).
+You can use the node installer guide to [quickly launch your Provisioner node](/operator/provisioner).
 :::
 
 This guide explains setting up the wallet and the last steps needed to start running your node.
@@ -77,7 +77,7 @@ Compare your node's block height to the [block explorer](https://explorer.dusk.n
 
 ## Testnet Faucet
 
-You can request 5000 nDUSK from our [Discord faucet](/operator/guides/nocturne-faucet). The minimum stake is 1000 nDUSK.
+You can request 5000 nDUSK from our [Discord faucet](/operator/networks#how-to-get-testnet-tokens). The minimum stake is 1000 nDUSK.
 
 ## Stake your DUSK
 
@@ -90,7 +90,7 @@ A Dusk stake involves two roles:
 - **Consensus Key**: Used by your node to participate in consensus to vote and sign blocks.
 - **Owner Key**: The key/address that can `unstake` and `withdraw` your stake.
 
-If you do not specify an owner when staking, the consensus key automatically becomes the owner. This is the simplest setup, but it has different security implications than using a separate owner key. 
+If you do not specify an owner when staking, the consensus key automatically becomes the owner. This is the simplest setup, but it has different security implications than using a separate owner key.
 
 ### Option 1: Keep Owner and Consensus the same (default)
 
@@ -102,7 +102,7 @@ rusk-wallet stake --amt 1000 # Replace with your desired amount
 Simpler setup, only one address to manage.
 
 **Cons**:
-If the node is compromised and the attacker gains access to the consensus key or an unprotected wallet, they can steal your funds. 
+If the node is compromised and the attacker gains access to the consensus key or an unprotected wallet, they can steal your funds.
 
 This option is acceptable if your server is well-hardened (SSH key-only access, no password logins, firewall, restricted users).
 
@@ -115,9 +115,9 @@ rusk-wallet stake --amt 1000 --owner <OWNER_ADDRESS> # Replace with an address f
 Replace <OWNER_ADDRESS> with another address (e.g., from Profile 2) derived from the same mnemonic you used to set up the node wallet.
 
 **Pros**:
-Even if your node or consensus key is compromised, only the owner key can unstake or withdraw funds. 
+Even if your node or consensus key is compromised, only the owner key can unstake or withdraw funds.
 
-**Cons**: 
+**Cons**:
 Slightly more operational overhead. You must keep the owner key safe and available whenever you need to unstake or restake.
 
 **Security note**: This is most effective if you do not store the mnemonic on the server, or if you use a strong wallet password different from the provisioner key password.
