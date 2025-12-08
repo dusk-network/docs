@@ -7,7 +7,7 @@ export default function sidebar(currentPath) {
         createGroup("Run a node", currentPath, [
             { label: "Run a provisioner node", href: "/operator/provisioner" },
             { label: "Run an archive node", href: "/operator/archive-node" },
-            { label: "Provers", href: "/operator/prover" },
+            { label: "Run a prover node", href: "/operator/prover" },
             { label: "Choose a Network", href: "/operator/networks" },
             { label: "Maintenance & Monitoring", href: "/operator/maintenance-monitoring" },
             { label: "Manually Install Rusk", href: "/operator/installation/" },
@@ -22,7 +22,6 @@ export default function sidebar(currentPath) {
             { label: "Fast-Sync a Node", href: "/operator/guides/fast-sync" },
             { label: "Manually Re-Sync a Node", href: "/operator/guides/manual-resync" },
             { label: "Upgrade a Node", href: "/operator/guides/upgrade-node" },
-            { label: "Nocturne faucet", href: "/operator/guides/nocturne-faucet" },
         ], false),
     ];
 }

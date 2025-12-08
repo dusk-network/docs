@@ -1,5 +1,5 @@
 ---
-title: Provers
+title: Run a Prover node
 description: Learn about Dusk Provers for generating zero-knowledge proofs within Dusk.
 ---
 
