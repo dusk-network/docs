@@ -61,9 +61,6 @@ export default function sidebar(currentPath) {
             }
         ], false),
         createGroup("Integrate with DuskDS", currentPath, [
-            { label: "Introduction", href: '/developer/integrations/introduction' },
-            { label: "The Wallet Stack", href: '/developer/integrations/wallet-stack' },
-            { label: "Wallet Core Library", href: '/developer/integrations/wallet-core' },
             { label: "Transaction Lifecycle", href: '/developer/integrations/tx-lifecycle' },
             { label: "W3sper SDK", href: '/developer/integrations/w3sper' },
             { label: "HTTP API", href: '/developer/integrations/http-api' },
