@@ -3,56 +3,16 @@ import { createGroup, createLink } from "../helpers/sidebarEntryHelpers";
 export default function sidebar(currentPath) {
     return [
         createLink("Overview", "/developer/overview", currentPath),
-        createGroup("Smart Contracts on DuskEVM", currentPath, [
-            { label: "Deploy on DuskEVM", href: '/developer/smart-contracts-dusk-evm/deploy-on-evm' },
-
-        ],
-            false),
-        createGroup("Smart Contracts on DuskDS", currentPath, [
+        createGroup("Build on Dusk", currentPath, [
             {
                 type: "link",
-                label: "Learn the Basics",
-                href: "/developer/smart-contract/introduction",
+                label: "Deploy on DuskEVM",
+                href: '/developer/smart-contracts-dusk-evm/deploy-on-evm'
             },
             {
                 type: "link",
-                label: "Get Started",
-                href: "/developer/smart-contract/getting-started",
-            },
-            {
-                type: "group",
-                label: "Guides",
-                entries: [
-                    { label: "Develop", href: '/developer/smart-contract/guides/my-first-contract' },
-                    { label: "Compile", href: '/developer/smart-contract/guides/compiling' },
-                    { label: "Deploy", href: '/developer/smart-contract/guides/deploying' },
-                    { label: "Debug", href: '/developer/smart-contract/guides/debugging' },
-                    { label: "Test", href: '/developer/smart-contract/guides/testing' },
-                    { label: "Upgrade", href: '/developer/smart-contract/guides/upgrades' },
-                    { label: "Interact", href: '/developer/smart-contract/guides/interacting' },
-                    { label: "Multisig", href: '/developer/smart-contract/guides/multisig' }
-                ],
-                collapsed: true,
-            },
-            {
-                type: "link",
-                label: "Core Concepts",
-                href: "/developer/smart-contract/core-concepts",
-            },
-            {
-                type: "link",
-                label: "Stake Abstraction",
-                href: "/developer/smart-contract/hyperstaking_tech",
-            },
-            {
-                type: "link",
-                label: "FAQ",
-                href: '/developer/smart-contract/faq'
-            },
-            {
-                type: "link",
-                label: "Cheat Sheet",
-                href: "/developer/smart-contract/cheat-sheet",
+                label: "Smart Contracts on DuskDS",
+                href: "/developer/smart-contracts-duskds",
             },
             {
                 type: "link",
