@@ -1,23 +1,82 @@
 ---
-title: Developer Documentation
-description: Explore the comprehensive guide to Dusk’s developer tools, use-cases and know-how.
+title: Build on Dusk
+description: Choose between DuskEVM and DuskDS and start building on Dusk.
 ---
-import { LinkCard, Card, CardGrid } from '@astrojs/starlight/components';
 
-This documentation provides an insight into everything related to development on Dusk. It covers the creation of smart contracts, but also how to integrate Dusk and its applications into your own projects.
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
-## Developing on Dusk
+Dusk has a **modular architecture** with:
 
-The Dusk architecture offers a data availability layer DuskDS and an execution layer ([DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm)). 
-Depending on the use case, developers may want to integrate with one or another. 
+- **DuskDS** – the settlement and data layer (consensus, data availability, native transaction models, protocol contracts, DuskVM).
+- **DuskEVM** – the EVM execution layer where most smart contracts and dApps live.
 
-For a smoother integration, it is generally recomended to integrate with [DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm).
+As a builder you usually:
 
-It needs to be noted that Dusk is transitioning from a monolithic architecture towards a modular one. The difference between the two is represented in the picture below:
-![Dusk architecture](../../../assets/modular_vs_monolithic.png)
+- write and deploy contracts on **DuskEVM**, and
+- rely on DuskDS for finality, privacy and settlement under the hood.
+
+## Choose your path
 
 <CardGrid>
-        <LinkCard title="Smart Contracts" href="/developer/smart-contract/introduction" description="Writing smart contracts for Dusk"/>
-        <LinkCard title="Integrate with DuskEVM" href="/developer/smart-contracts-dusk-evm/deploy-on-evm" description="Deploy your smart contracts on DuskEVM"/>
-        <LinkCard title="Dusk Improvement Proposals" href="/developer/contribute/dips" description="Contribute to the core protocol development"/>
+  <LinkCard
+    title="Smart Contracts on DuskEVM (recommended)"
+    href="/developer/smart-contracts-dusk-evm/deploy-on-evm"
+    description="Deploy Solidity or Vyper contracts on DuskEVM using familiar EVM tooling."
+  />
+  <LinkCard
+    title="Smart Contracts on DuskDS (advanced)"
+    href="/developer/smart-contracts-duskds"
+    description="Write Rust/WASM contracts directly on the DuskDS settlement layer."
+  />
+  <LinkCard
+    title="Integrate with DuskDS"
+    href="/developer/integrations/tx-lifecycle"
+    description="Use HTTP APIs, W3sper, and events to integrate wallets, exchanges, and backends."
+  />
+  <LinkCard
+    title="Dusk Improvement Proposals"
+    href="/developer/contribute/dips"
+    description="Contribute to the core protocol and standards."
+  />
 </CardGrid>
+
+## When to use DuskEVM
+
+Use **DuskEVM** for almost all application‑level use cases:
+
+- DeFi protocols, AMMs, lending, RWAs
+- NFTs and gaming
+- Apps that expect an EVM environment (tooling, libraries, infra)
+
+You get:
+
+- Familiar languages and tooling (Solidity/Vyper, Hardhat/Foundry, etc.)
+- DUSK as the native gas token
+- Privacy & compliance features via the underlying DuskDS architecture and Hedger.
+
+See: [Smart Contracts on DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm).
+
+## When to use DuskDS contracts
+
+Use DuskDS smart contracts only when you need:
+
+- protocol‑level control on the settlement layer,
+- direct interaction with the DuskDS transaction models, or
+- specialised contracts that must run “next to” consensus.
+
+Typical examples include:
+
+- genesis / protocol contracts (transfers, staking),
+- low‑level infrastructure contracts,
+- experiments that need direct access to the DuskDS VM and its unique features.
+
+If that’s you, start with:  
+[Smart Contracts on DuskDS](/developer/smart-contracts-duskds).
+
+## Examples
+
+You can explore existing contracts and examples in the Dusk repos:
+
+- Protocol contracts in [`rusk/contracts`](https://github.com/dusk-network/rusk/tree/master/contracts)
+- The DuskDS example [`my-first-contract`](https://github.com/dusk-network/my-first-contract)
+- DuskEVM examples in the [DuskEVM docs](/developer/smart-contracts-dusk-evm/deploy-on-evm)

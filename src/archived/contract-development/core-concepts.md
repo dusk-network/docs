@@ -50,18 +50,6 @@ While you can have Result types in your smart contracts and handle them in multi
 
 Dusk supports both UTXO and account-based capabilities as it offers you a high level of freedom on how to design and write your contracts.
 
-### Absence of msg.sender
-
-TODO: Add information on `msg.sender` equivalent
-
-In Dusk, there is no built-in variable like `msg.sender` which identifies the caller of a contract function. This is because Dusk is a privacy-focused blockchain, utilizing a UTXO-based privacy preserving transaction model ([Phoenix](/learn/deep-dive/duskds-tx-models)) by default.
-
-Therefore developers need to figure out how to represent users. 
-
-In Dusk, an "address" is defined by the developer within the contract's logic. This approach gives developers more control over the privacy and compliance features of their applications but also increases their responsibility to securely identify and authenticate users and transactions. 
-
-The `msg.sender` is not "abstracted" away on dusk. A way to mimic that behavior is by explicitly taking the address as function argument and a signature that signed all other function arguments (including the address). Then verifying this in the function. Examples of such usage can be found in the [Moonlight transaction model](/learn/deep-dive/duskds-tx-models).
-
 ## Methods
 
 Smart contracts on Dusk can retrieve data from other contracts without altering their contract’s state, as well as modifying the contract’s state without returning any data. 
