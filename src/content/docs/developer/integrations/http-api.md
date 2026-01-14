@@ -13,7 +13,7 @@ This is achieved by avoiding the need to convert data to JSON or base64.
 Data can be fetched from the following endpoints:
 
 - **Mainnet**: https://nodes.dusk.network/
-- **Testnet**: https://nodes.testnet.dusk.network/
+- **Testnet**: https://testnet.nodes.dusk.network/
 
 These links also provide access to archive-related endpoints for comprehensive historical data retrieval.
 
