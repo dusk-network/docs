@@ -18,7 +18,7 @@ Want to **bridge from BEP20 DUSK to native DUSK** instead? Check our [Migration 
 3. Navigate to the **Send** tab.
 4. Enter the official **Bridge Address** as the recipient:
 ```
-mFqH6RVxCoWQfjQ23H9YVr8JhQ697M5DD4ob76kcuoEYqqYA6H9cxHrxjvnZ6z4PQKsBd3PBpRYLN9M3FgkQQVywREzkzgeme4ersJgLaxYaQzZSAzkd1QBJ4ByTe9NrhXp
+22cZ2G95wTiknTakS1of6UXUTMkvNrYf8r2r3fmvp2hQx1edAULWvYF67xDqxRn2b44tJZo7JpMsWYUHj5CA2M4RkjX7rQ7vAfSpr7SHe6dnfmucEGgwr46auwdx3ZAgMCsH
 ```
 5. In the **Memo** field, enter your **BEP20 compatible address** (your BSC wallet address).
 6. Specify the amount of native DUSK to bridge. The minimum is 1.000000001 DUSK (just over 1 DUSK).
