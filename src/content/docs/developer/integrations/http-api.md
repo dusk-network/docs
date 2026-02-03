@@ -473,7 +473,7 @@ Upon success, the transaction is propagated across the network. This endpoint re
 
 #### Contract Events
 
-**Endpoint**: `/on/contracts:[contract-id]/[event-name]`, where `[event-name]` is optional. If the event name is not provided, the connection will listen to all events on the given contract.
+**Endpoint**: `/on/contracts:[contract-id]/[event-name]`, where `[event-name]` is the topic of the event being listened to. If the event name is not provided, an error will be returned.
 
 **Method**: `GET`
 
