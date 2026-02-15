@@ -38,7 +38,9 @@ Hedger is the evolution of Zedger, built on DuskEVM and powered by fully homomor
 
 #### Hyperstaking
 
-Hyperstaking is a feature that allows smart contracts to manage stakes with custom logic. Similar to "Account Abstraction," it enables use cases like privacy-preserving staking, affiliate programs, delegation, liquid staking, and yield boosting. Staking operations are initiated via a provisioner key, with signature verification only required for the initial stake, offering flexibility and innovation in staking models.
+Hyperstaking is stake abstraction: a feature that lets smart contracts participate in staking and manage staking rewards with on-chain logic.
+
+It enables use cases like staking pools, delegated staking services, and other programmable staking patterns. See: [Stake Abstraction](/learn/hyperstaking).
 
 #### Kadcast
 
