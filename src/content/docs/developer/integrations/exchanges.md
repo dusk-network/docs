@@ -3,9 +3,9 @@ title: Integrate with Exchanges
 description: Add $DUSK to your exchanges. Discover the integration process, technical requirements, and support resources.
 ---
 
-# Introduction
+## Introduction
 
-This guide shows how to add DUSK to an Exchange by providing all the relevant information. In the first section we outline general details regarding mainnet integration and token migration. We will then look into what are the available libraries and APIs to access and interact with the blockchain, as well as providing links to all the relevant resources, and addressing some common requests.
+This guide covers the main integration touchpoints for listing DUSK on an exchange: node access, monitoring deposits/withdrawals, transaction tooling, and references.
 
 ## Connect to Dusk
 
@@ -40,7 +40,7 @@ You can rely on the RPC infrastructure hosted by the community, or run an [archi
 
 To monitor deposit and withdrawal events, you can utilize [RUES](/developer/integrations/http-api#event-subscriptions) by subscribing via a websocket.
 
-In most cases, 1 block confirmation is sufficient for finality. The only exception to the 1 block finality is when the network is in a rolling finality state, in which up to 5 additional blocks may be required to achieve finality.
+For finality, rely on block state events: treat a transaction as final once the containing block reaches `finalized` (via `blocks/statechange`), and handle reverts (`blocks/reverted`).
 
 You can find a detailed overview of the full transaction lifecycle [here](/developer/integrations/tx-lifecycle).
 
@@ -98,7 +98,9 @@ Users get to create accounts owned by multiple different BLS keys, where any imp
 
 ## Compliance
 
-Dusk is **fully compliant** with key global regulatory frameworks, providing robust adherence to financial and data protection standards:
+This section is informational and not legal advice.
+
+Dusk is designed for regulated-asset workflows. Depending on your jurisdiction, you may need to consider frameworks such as:
 
 - Market Abuse Regulations (MAR)
 - Data Protection Regulations (GDPR)
@@ -118,7 +120,7 @@ Unlike traditional privacy coins, Dusk doesn't aim for full anonymity, but inste
 [Moonlight](/learn/deep-dive/duskds-tx-models) is designed specifically for full transaction transparency, making it ideal for integration with exchanges and ensuring that:
 
 - **CASPs** can easily meet compliance obligations under **AMLD5**, **MiCA**, and **TFR**.
-- There is full support for **KYC**, transaction monitoring, and reporting requirements without any legal or technical barriers.
+- Transparent, auditable transfers that can simplify monitoring and reporting requirements.
 
 :::note[Important]
 Exchanges **only** need to support the Moonlight transaction model.
@@ -136,13 +138,13 @@ When using shielded transactions, it is important to know that they are not anon
 
 These design decisions serve an important compliance function:
 
-- 🔄 Conversions are atomic, preserving state integrity between shielded and public balances.
-- 🔐 Only the rightful owner can perform conversions between shielded and public balances, enforced via cryptographic proof.
-- ❌ Shielded-to-public and public-to-shielded transfers are impossible: the two models are cryptographically separated at the protocol level.
-- 🛡️ Exchanges are inherently protected from unauthorized or anonymous deposits, since shielded transactions cannot target public addresses.
-- 🧾 Every shielded transaction reveals the sender’s identity to the receiver, ensuring full traceability.
+- Conversions are atomic, preserving state integrity between shielded and public balances.
+- Only the rightful owner can perform conversions between shielded and public balances, enforced via cryptographic proof.
+- Shielded-to-public and public-to-shielded transfers are impossible: the two models are cryptographically separated at the protocol level.
+- Exchanges are protected from unauthorized deposits, since shielded transactions cannot target public addresses.
+- Every shielded transaction reveals the sender’s identity to the receiver, enabling traceability for the receiver.
 
-This architecture makes Dusk fundamentally different from privacy coins, as they focus on full anonimity. Dusk is designed to offer privacy with accountability, enabling full compliance while preserving confidentiality when needed.
+This architecture makes Dusk fundamentally different from privacy coins, which focus on full anonymity. Dusk is designed to offer privacy with accountability, enabling compliance while preserving confidentiality when needed.
 
 
 ### Legal opinion
@@ -157,7 +159,7 @@ To reinforce confidence in compliance, there is a comprehensive and detailed **l
 ### Libraries
 
 - [W3sper SDK](/developer/integrations/w3sper)
-- [RUES (events system)](/developer/integrations/w3sper)
+- [RUES (events system)](/developer/integrations/http-api)
 
 ### User-facing tools
 
@@ -196,4 +198,4 @@ Current token contracts are:
 - ERC20 Contract Address: [0x940a2db1b7008b6c776d4faaca729d6d4a4aa551](https://etherscan.io/address/0x940a2db1b7008b6c776d4faaca729d6d4a4aa551)
 - BEP20 Contract Address: [0xb2bd0749dbe21f623d9baba856d3b0f0e1bfec9c](https://bscscan.com/token/0xb2bd0749dbe21f623d9baba856d3b0f0e1bfec9c)
 
-The [migration contract](https://github.com/dusk-network/dusk-migration) has been [audited](https://github.com/dusk-network/audits/blob/main/core-audits/2024-10_migration-smart-contract-security-assessment_zellic.pdf) and user's can bridge to the Dusk mainnet via the [Dusk Web Wallet](https://wallet.dusk.network/).
+The [migration contract](https://github.com/dusk-network/dusk-migration) has been [audited](https://github.com/dusk-network/audits/blob/main/core-audits/2024-10_migration-smart-contract-security-assessment_zellic.pdf) and users can bridge to the Dusk mainnet via the [Dusk Web Wallet](https://wallet.dusk.network/).
