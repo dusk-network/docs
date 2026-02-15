@@ -73,7 +73,7 @@ The diagram below illustrates Dusk’s evolution from a monolithic design to a m
 ## Transactions Flow
 
 The process for a rollup transaction has two requirements:
-The transaction needs to be written to DuskDS, tipically by the <a href="https://github.com/ethereum-optimism/optimism/tree/v1.1.4/op-batcher" target="_blank">op-batcher</a>.
+The transaction needs to be written to DuskDS, typically by the <a href="https://github.com/ethereum-optimism/optimism/tree/v1.1.4/op-batcher" target="_blank">op-batcher</a>.
 
 The transaction needs to be executed to modify the state (by <a href="https://github.com/ethereum-optimism/op-geth" target="_blank">op-geth</a>). Afterwards,  <a href="https://github.com/ethereum-optimism/optimism/tree/develop/op-proposer" target="_blank">op-proposer</a> writes a commitment to the post-transaction state to [DuskDS](/learn/core-components#duskds) . Note that op-proposer does not need to write a commitment after each transaction to DuskDS; it is OK to commit to the state after a block of transactions.
 
@@ -90,8 +90,8 @@ These costs ultimately reflect operator expenses: running the sequencer/batcher 
 | Opcode      | Solidity Equivalent | Behavior                                                                                                                                         |
 |-------------|---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
 | `COINBASE`  | `block.coinbase`    | Returns the address of the current Sequencer's fee wallet. Effectively the same as Ethereum, but typically does not change from block to block. |
-| `PREVRANDAO`| `block.prevrandao`  | Returns the PREVRANDAO (the most recent RANDAO) value of DuskDS at the current DuskDS origin block.                                                      |
-| `ORIGIN`    | `tx.origin`         | If the tx is a **DuskDS ⇒ DuskEVM** tx from a DuskDS smart contract, `tx.origin` is set to the **aliased address** of the originator.
+| `PREVRANDAO`| `block.prevrandao`  | Returns the PREVRANDAO (the most recent RANDAO) value of DuskDS at the current DuskDS origin block.                                                |
+| `ORIGIN`    | `tx.origin`         | For **DuskDS ⇒ DuskEVM** transactions, `tx.origin` is set to the **aliased address** of the originator.                                           |
 
 :::note[Note]
 DuskEVM does not have a public mempool, as it is currently only visible to the Sequencer. The Sequencer executes transactions from the mempool in priority fee order (highest fee first).
