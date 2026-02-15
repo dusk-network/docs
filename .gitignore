@@ -19,3 +19,6 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# Local analytics exports (do not commit)
+Pages_and_screens_*.csv
