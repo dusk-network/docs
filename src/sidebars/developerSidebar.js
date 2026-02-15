@@ -25,8 +25,7 @@ export default function sidebar(currentPath) {
             { label: "W3sper SDK", href: '/developer/integrations/w3sper' },
             { label: "HTTP API", href: '/developer/integrations/http-api' },
             { label: "Integrate with Exchanges", href: '/developer/integrations/exchanges' },
-            { label: "Hashing Algorithms", href: '/developer/integrations/hashing-algorithms' },
-            { label: "Address Format", href: '/developer/integrations/addresses' },
+            { label: "Encoding & Hashing", href: '/developer/integrations/reference' },
         ],
             false),
         createGroup("Contribute to Dusk", currentPath, [
