@@ -3,181 +3,120 @@ title: FAQ
 description: Frequently asked questions about running a node on Dusk.
 ---
 
-## General
+## Basics
 
 #### Which operating system is recommended?
 
-**Ubuntu 24.04 LTS** is officially supported, tested and therefore recommended.
+Ubuntu 24.04 LTS.
 
 #### Which node should I run to participate in consensus?
 
-The full node that is used to take part in the consensus is the [**provisioner node**](/operator/provisioner).
-
-#### Can I build Rusk from source?
-
-Yes, instructions to build Rusk from source can be found [here](https://github.com/dusk-network/rusk/blob/master/INSTALLATION.md)
+Run a [Provisioner node](/operator/provisioner).
 
 #### Which ports does Dusk use?
 
-- **9000/udp**: Required for Kadcast message dissemination.
-- **8080/tcp**: Optional HTTP(S) API for querying the node.
+- `9000/udp`: Kadcast (required).
+- `8080/tcp`: HTTP API (optional, but required if you want to query the node / expose RUES).
 
-You can use ports other than 9001 and 9000, as long as inbound traffic is allowed for those ports and outbound UDP traffic is allowed for most ports.
+You can run on non-default ports as long as you configure them and allow inbound traffic.
 
-#### Can public and private ports be the same?
-Yes, public port and private port can be the same. More information about the meaning of those can be found [here](https://docs.rs/kadcast/0.7.0/kadcast/config/struct.Config.html).
+#### How do I know if my node is on the correct chain?
 
-
-####  How to know if my node is running on the correct chain ID?
-
-You can launch `ruskquery info` to check the chain ID of your node. If you have a chain ID of **1**, it indicates that your node is running on mainnet.
+Run `ruskquery info` and check the chain ID.
 
 #### How many blocks are there in one epoch?
 
-One epoch consists of **2160** blocks.
-
+2160 blocks.
 
 #### Can I run a node without staking?
-Yes, you can run a node to just propagate transactions. But your node won't be able to participate in consensus and accrue staking rewards.
+
+Yes. You can run a node for syncing, propagation, and APIs without staking, but it will not participate in consensus or earn rewards.
 
 ## Staking
 
 #### What is the minimum amount of DUSK I must stake?
 
-**1000** (1 thousand) Dusk.
+1000 DUSK.
 
-#### How long until rewards starts accruing, and how are they determined?
-Staking becomes active after the 4320 block maturity period, which corresponds to approximately 12 hours. More information regarding staking rewards can be found [here](/learn/guides/staking-basics#how-are-rewards-determined).
+#### When does my stake become active?
 
-#### Increase your stake & compounding Rewards
-Details about increasing your stake and compounding your rewards can be found [here](/learn/guides/staking-basics#re-stake-rewards--increase-stake).
+After the 4320-block maturity period (about 12 hours). See [/learn/guides/staking-basics](/learn/guides/staking-basics).
 
-## Security
+#### How do I increase stake or compound rewards?
 
-#### What about maintenance & security?
+See [/learn/guides/staking-basics#re-stake-rewards--increase-stake](/learn/guides/staking-basics#re-stake-rewards--increase-stake).
 
-Maintaining a secure and stable node is important for the proper functioning of your consensus participation. We recommend using a firewall, restricting access to unused APIs, performing regular updates, and using a static IP for uninterrupted service.
+## Keys and Recovery
 
-#### Are my keys secure on a server/vps?
+#### Are my keys secure on a server/VPS?
 
-The wallet stores your keys in encrypted form. In addition, the keys that the node uses in-memory to participate in consensus can be separated from other keys.
+Wallet data is stored encrypted at rest, but you should still treat the node as a hot environment:
 
-Your stake is defined by a consensus key and an owner. The owner is by default the same key, but can also be a contract or separate key. Your Public Balance is held by a key too, the same goes for the private, shielded Balance.
+- Keep your mnemonic backed up offline.
+- Consider using a separate owner key (`rusk-wallet stake --owner ...`) so the consensus key cannot unstake/withdraw.
+- Restrict access (firewall, SSH keys only, minimal users, patching).
 
-1. If your owner key is set to a different key, no one is able to unstake, stake or withdraw using your consensus key.
-2. If the key you use to send funds around is set to a different key than the consensus key, no one will be able to send funds from your wallet using your consensus key.
-   - This is naturally the case for shielded accounts as they use different keys by default.
-   - For public accounts, you need to create a separate account holding your public account balance.
+#### Can I store keys separately from the machine running the node?
 
-In summary, consensus keys can be strictly limited to signing consensus messages such as block proposal, validation, and voting. All other critical operations, such as unstaking or sending funds, can be separated into other keys.
+Yes. The node only needs the consensus key file (`consensus.keys`). Export it from a wallet instance and copy it to the node. See [/operator/guides/node-wallet-setup#export-consensus-key](/operator/guides/node-wallet-setup#export-consensus-key).
 
-#### Can I store my keys separately from the machine running the node?
+Example (adjust user/IP):
 
-The node only needs the [consensus key](/operator/guides/node-wallet-setup/#export-consensus-key). Use that wallet instance to export the key and copy it over to the node.
-
-You can do that by using `scp`, for example with:
 ```bash
-scp consensus.keys duskadmin@yournodeipaddress :/opt/dusk/conf/
+scp consensus.keys duskadmin@<node-ip>:/opt/dusk/conf/
 ```
-As there's also a password on the file when you export, you need to set it on the server side as well (the sh /opt/dusk/bin/setup_consensus_pwd.sh step)
 
 #### What if I lose access to my server or keys?
 
-As long as you have your mnemonic phrase stored safely, you can recover everything else.
+If you still have your mnemonic, you can restore the wallet on a new machine, re-export `consensus.keys`, and continue. You do not need to stake again.
 
-#### What should I do if I lose my SSH key file?
-
-1) Spin up a fresh instance and [install Rusk](/operator/provisioner)
-2) Restore your wallet using the previous mnemonic.
-3) [Export the consensus key](/operator/guides/node-wallet-setup/#export-consensus-key) from the restored wallet.
-4) Once the new node is fully synced, it will start participating in consensus. There is no need to stake again. You can then safely delete the old instance.
-
-
-## How To's
+## Common Tasks
 
 #### How can I stake 3000 DUSK?
 
-You can use:
-
 ```bash
-rusk-wallet moonlight-stake --amt 3000
+rusk-wallet stake --amt 3000
 ```
 
-#### How to resume validating again after missing an upgrade?
-If you didn't upgrade your node on time and got soft slashed, you need to:
-
-1) Unstake the full amount
-2) Upgrade your node
-3) Use `download_state` to get you back to a recent block
-4) Start the node again and wait until it's fully synced
-5) Stake again
-
 #### How can I recover my node if the state is corrupted?
-Reload from a snapshot by running:
+
+Reload from a snapshot and restart:
 
 ```bash
 download_state
-```
-(and confirm the warning by typing 'Y'). Then, restart the node with:
-
-```bash
 service rusk start
 ```
 
 #### How can I run a Dusk node on Docker?
-We don't support a production-ready Docker image for Rusk. To run Rusk through Docker as ephemeral (non-persistent storage), you can use the following command:
+
+We don't support a production-ready Docker image. For ephemeral (non-persistent) usage:
 
 ```bash
 docker run -p 9000:9000/udp -p 8080:8080/tcp dusknetwork/node
 ```
 
-This command starts a temporary node instance without persistent storage. Data will be lost if the container stops.
-
 #### How do I configure Kadcast to use a port other than 9000/udp?
 
-Kadcast uses UDP. If you want to run it on a non-default port, you must:
-
-- Set the advertised address (`public_address`) to the WAN IP + port that other peers can reach.
-- Optionally set `listen_address` if you need to bind to a different local interface (common behind NAT).
-- Ensure the UDP port is open and forwarded (if behind NAT).
-
-**With the Node Installer:**
-If you are using the Node Installer, it is recommended to specify Kadcast configuration updates in `/opt/dusk/services/rusk.conf.user`. This file takes precedence over `rusk.conf.default` and ensures your changes are retained during updates.
-
-You can add or modify the following section:
+If you're using the node installer, set overrides in `/opt/dusk/services/rusk.conf.user`:
 
 ```bash
 KADCAST_PUBLIC_ADDRESS=<MY_WAN_IPV4>:<NEW_PORT>
-# Optional, only if binding differs from public address
+# Optional (common behind NAT)
 KADCAST_LISTEN_ADDRESS=<MY_LAN_IPV4>:<NEW_PORT>
 ```
 
-It is important to note that:
-
-- On a VPS, the `KADCAST_PUBLIC_ADDRESS` and `KADCAST_LISTEN_ADDRESS` are often the same, as the public IPv4 is directly exposed to the internet.
-- If you are running your node from home, behind NAT, a private network, or VPN, these may differ. Ensure you configure your local IP and port accordingly, and verify that the port is forwarded correctly on your router.
-- `/opt/dusk/services/rusk.conf.user` is the highest priority file. Changes to `rusk.toml` will be overridden by the default `rusk.conf.default` configuration.
-
-**Without the Node Installer:**
-
-
-If you are **not** using the Node Installer, you will need to explicitly define the ports and IPs in the `[kadcast]` section of the `rusk.toml` file. Here's an example:
+Without the node installer, configure `rusk.toml`:
 
 ```toml
 [kadcast]
 public_address = "<MY_WAN_IPV4>:<NEW_PORT>"
 listen_address = "<MY_LAN_IPV4>:<NEW_PORT>" # Optional
-bootstrapping_nodes = [
-  "165.22.193.63:9000",
-  "167.172.175.19:9000",
-]
+bootstrapping_nodes = ["165.22.193.63:9000", "167.172.175.19:9000"]
 ```
-
-Bootstrapper nodes are the peers you dial to join the network. They typically keep using the default `:9000`.
 
 #### How do I change the HTTP API port?
 
-The HTTP API is controlled by the `[http]` section in `rusk.toml`:
+In `rusk.toml`:
 
 ```toml
 [http]
@@ -185,107 +124,24 @@ listen = true
 listen_address = "0.0.0.0:8080"
 ```
 
-You can also override the listen address via CLI with `--http-listen-addr 0.0.0.0:8081`.
+Or via CLI:
 
-
-#### How to set up SSH on Digital Ocean?
-
-To set up SSH on DO, you can follow the steps below.
-
-1) Generate an SSH key:
 ```bash
-ssh-keygen -t rsa -b 4096
+--http-listen-addr 0.0.0.0:8081
 ```
-
-2) Add the public key to Digital Ocean during droplet creation:
-```bash
-ssh -o "IdentitiesOnly=yes" -i myssh root@<your-droplet-ip>
-```
-
-3) Secure your droplet by removing the default console:
-```bash
-sudo apt-get purge droplet-agent
-```
-
-#### How can I transfer an SSH-key to another device?
-
-Copy the `.ssh` folder and key files to the new device from `~/.ssh` (Linux).
 
 #### How can I get data from testnet or mainnet nodes?
 
-First, set up the base URLs:
-
-Testnet: `https://testnet.nodes.dusk.network`  
-Mainnet: `https://nodes.dusk.network`
-
-For GraphQL and HTTP endpoints, see [/developer/integrations/http-api](/developer/integrations/http-api).
-
-For example, to subscribe to accepted blocks:
-
-```javascript
-const WS_URL = "wss://nodes.dusk.network/on";
-const SUBSCRIBE_URL = "https://nodes.dusk.network/on/blocks/accepted";
-```
-
-1. Open a WebSocket connection to `WS_URL`.
-2. The node sends the session ID as the first WebSocket text message.
-3. Subscribe via HTTP `GET` to `SUBSCRIBE_URL`, including the `Rusk-Session-Id: <session_id>` header.
-4. Keep the WebSocket open to receive event frames.
-
-Unsubscribe with an HTTP `DELETE` to the same URL (also with the `Rusk-Session-Id` header).
-
+See [/developer/integrations/http-api](/developer/integrations/http-api) and [/developer/integrations/historical_events](/developer/integrations/historical_events).
 
 #### How can I relay my internal port 8080 when using RUES?
-You can relay your internal port using `socat`:
 
 ```bash
 socat tcp-listen:8081,reuseaddr,fork tcp:localhost:8080
 ```
-This makes local port 8080 available on port 8081 and allows you to access it via external-ip:8081. To turn this into a service, you can create a `/etc/systemd/system/rusk-relay.service` file with the following content:
-
-```bash
-[Unit]
-Description=Rusk relay
-After=rusk.service
-Requires=rusk.service
-
-[Service]
-Type=simple
-ExecStart=socat tcp-listen:8081,reuseaddr,fork tcp:localhost:8080
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-```
-
-#### How can I configure the mempool timeout?
-
-The node installer sets a default value, but you can customize the mempool timeout by editing the [rusk.toml](https://github.com/dusk-network/node-installer/blob/main/conf/rusk.toml#L9) configuration file.
 
 #### How can I perform a liveness check on my node?
 
-To check if your node is live and functioning properly, you can:
-
-##### A) Check the block height
-
-To see the current block height detected by the node, launch:
-
-```bash
-ruskquery block-height
-```
-
-Monitor it over a period of time to ensure the block height is progressing.
-
-##### B) Check peer connectivity
-To view the current number of connected peers, you can launch:
-
-```bash
-ruskquery peers
-```
-
-##### C) Check service status
-If you're running the node as a service, you can verify its status with:
-
-```bash
-systemctl status rusk
-```
+- `ruskquery block-height` (should increase over time)
+- `ruskquery peers`
+- `systemctl status rusk`

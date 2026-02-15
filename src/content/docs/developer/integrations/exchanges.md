@@ -1,201 +1,93 @@
 ---
 title: Integrate with Exchanges
-description: Add $DUSK to your exchanges. Discover the integration process, technical requirements, and support resources.
+description: "Practical notes for listing DUSK: connectivity, deposits/withdrawals, and references."
 ---
 
-## Introduction
+## Integration Checklist
 
-This guide covers the main integration touchpoints for listing DUSK on an exchange: node access, monitoring deposits/withdrawals, transaction tooling, and references.
+- Decide how you'll access the network:
+  - Run your own node (recommended for production).
+  - Use public endpoints (good for prototyping).
+  - Run (or use) an archive node if you need address-based history queries.
+- Support Moonlight (public) deposits and withdrawals.
+- Handle finality and reverts: treat funds as final once the containing block is `finalized`, and re-process if a block is reverted.
+- Use the memo field if you need per-user tagging.
 
-## Connect to Dusk
+## Network Access
 
-To access the blockchain you can either:
-- Spin up a node (query data, submit transactions, provide APIs)
-- Use Dusk APIs (events system, HTTP ...)
-- Use RPC providers
+Base URLs:
 
-### Spin up a node
+- **Mainnet:** `https://nodes.dusk.network`
+- **Testnet:** `https://testnet.nodes.dusk.network`
 
-You can interact with the blockchain and submit transactions by operating a Dusk node.
+GraphQL endpoint:
 
-To set up a node, you may choose to use the [node installer](/operator/provisioner#node-installer) (recommended) or manually install Rusk by following the provided [installation instructions](https://github.com/dusk-network/rusk/blob/master/INSTALLATION.md).
+- `POST <base_url>/on/graphql/query`
 
-Requirements vary depending on whether you are configuring a [Provisioner](/operator/provisioner) node or an [Archive](/operator/archive-node) node.
+For the full HTTP/WS API and event subscription model (RUES), see [/developer/integrations/http-api](/developer/integrations/http-api).
 
-### Use Dusk APIs
+## Monitoring Deposits
 
-Dusk offers a streamlined event system through the [Rusk Universal Event System (RUES)](/developer/integrations/http-api), as data can be fetched from the following endpoints:
+Two common approaches:
 
-- **Mainnet**: https://nodes.dusk.network/
-- **Testnet**: https://testnet.nodes.dusk.network/
+- **Archive GraphQL (simplest):** poll `fullMoonlightHistory` or `moonlightHistory`. See [/developer/integrations/historical_events](/developer/integrations/historical_events).
+- **Real-time (RUES):** subscribe to blocks/transactions and correlate with GraphQL `tx(hash: ...)` lookups.
 
-These links also provide access to archive-related endpoints for comprehensive historical data retrieval.
+## Submitting Withdrawals
 
+- Use the [W3sper SDK](/developer/integrations/w3sper) to construct, sign, and broadcast transactions.
+- Or broadcast raw bytes via `POST /on/transactions/propagate` (see the HTTP API page).
 
-### Use RPC providers
+## GraphQL Quick Queries
 
-You can rely on the RPC infrastructure hosted by the community, or run an [archive node](/operator/archive-node) yourself.
-
-## Token deposits and withdrawals
-
-To monitor deposit and withdrawal events, you can utilize [RUES](/developer/integrations/http-api#event-subscriptions) by subscribing via a websocket.
-
-For finality, rely on block state events: treat a transaction as final once the containing block reaches `finalized` (via `blocks/statechange`), and handle reverts (`blocks/reverted`).
-
-You can find a detailed overview of the full transaction lifecycle [here](/developer/integrations/tx-lifecycle).
-
-## Construct, sign and decode transactions
-
-The [W3sper SDK](/developer/integrations/w3sper) provides address generation, transaction building, signing, and decoding functionalities. It can operate completely offline, without the need for an online wallet or node.
-
-## Memo field support
-
-Dusk transactions also support a memo field, allowing exchanges to attach a short reference to each transaction. This is particularly useful for labeling deposits or withdrawals with user identifiers or order references.
-
-## cURLs
-
-In this section you can find some examples to retrieve information via cURLs.
-
-### Schema Overview
-
-You can explore the GraphQL schema by making a POST request:
+Get the schema (SDL):
 
 ```sh
-curl -s --location --request POST "https://nodes.dusk.network/on/graphql/query"
+curl -s -X POST "https://nodes.dusk.network/on/graphql/query"
 ```
 
-To see available queries, you can look at the Query type, which lists all callable fields when making a request like:
+Transaction by hash:
 
 ```sh
---data-raw 'query { ... }'
+curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
+  --data-raw 'query { tx(hash: "<tx_hash>") { tx { id gasLimit gasPrice memo } err gasSpent blockHash blockHeight blockTimestamp } }'
 ```
 
-### Retrieve Transaction Details by Hash
+Latest block header:
 
-```bash
-curl -s --location --request POST "https://nodes.dusk.network/on/graphql/query" \
---data-raw 'query { tx(hash: "59a20ebc71c198eeb7ac2ac55165d26f96b6a9884cebee8575be4e429a56c443") { tx { id, gasLimit, gasPrice, txType, callData { contractId, fnName, data }, isDeploy, memo } err, gasSpent, blockHash, blockHeight, blockTimestamp, id, raw } }'
+```sh
+curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
+  --data-raw 'query { block(height: -1) { header { height hash timestamp } } }'
 ```
 
-### Retrieve Block Information by Block Height
+## Transaction Model Notes
 
-```bash
-curl -s --location --request POST "https://nodes.dusk.network/on/graphql/query" \
---data-raw 'query { block(height: 1000) { header { hash, gasLimit, height, prevBlockHash, seed, stateHash, timestamp, version } } }'
-```
+- Exchanges typically only need Moonlight (public) accounts. Phoenix (shielded) addresses are incompatible with Moonlight transfers.
+- Users can convert shielded funds to public balances themselves before depositing to an exchange.
 
-### Retrieve Latest Block
+## Cold Storage
 
-```bash
-curl -s --location --request POST "https://nodes.dusk.network/on/graphql/query" \
---data-raw 'query { blocks(last: 1) { header { hash, gasLimit, height, prevBlockHash, seed, stateHash, timestamp, version } } }'
-```
-## Cold Storage Method
+The [multisig contract](https://github.com/dusk-network/multisig-contract) contains a working example of multi-signature transfers for cold storage.
 
-The [multisig contract](https://github.com/dusk-network/multisig-contract) contains an example of how to do multi-signature transfers, where only *N* out of *M* keys must sign a message to transfer DUSK to another account.
+## Token Details
 
-Users get to create accounts owned by multiple different BLS keys, where any important action must be signed (agreed upon) by some configurable portion of those keys.
+- Token: `dusk`
+- Token decimals: `9` (18 decimals for ERC20 / BEP20 versions)
+- Consensus mechanism: Succinct Attestation
 
-## Compliance
+## Token Migration (If Applicable)
 
-This section is informational and not legal advice.
+Users can migrate ERC20/BEP20 DUSK to native DUSK using the [migration contract](https://github.com/dusk-network/dusk-migration) and the [Web Wallet](https://wallet.dusk.network/).
 
-Dusk is designed for regulated-asset workflows. Depending on your jurisdiction, you may need to consider frameworks such as:
+More information: [/learn/guides/mainnet-migration](/learn/guides/mainnet-migration).
 
-- Market Abuse Regulations (MAR)
-- Data Protection Regulations (GDPR)
-- Anti-Money Laundering Directive (AMLD5)
-- MiCA (Markets in Crypto-Assets Regulation)
-- TFR (Transfer of Funds Regulation)
+Current token contracts:
 
-Dusk supports two distinct transaction models, which users can navigate between in a transparent way:
-- [Phoenix](/learn/deep-dive/duskds-tx-models) enables confidential transactions while maintaining regulatory compliance
-- [Moonlight](/learn/deep-dive/duskds-tx-models) is a completely transparent and auditable model.
-
-Unlike traditional privacy coins, Dusk doesn't aim for full anonymity, but instead provides both privacy and regulatory compliance.
-
-
-### Compliance in Moonlight (public)
-
-[Moonlight](/learn/deep-dive/duskds-tx-models) is designed specifically for full transaction transparency, making it ideal for integration with exchanges and ensuring that:
-
-- **CASPs** can easily meet compliance obligations under **AMLD5**, **MiCA**, and **TFR**.
-- Transparent, auditable transfers that can simplify monitoring and reporting requirements.
-
-:::note[Important]
-Exchanges **only** need to support the Moonlight transaction model.
-:::
-
-### Compliance in Phoenix (shielded)
-
-Dusk features a **complete separation between public and shielded transaction models**. These models are built on distinct cryptographic foundations (with different address formats, lengths, and operational rules), ensuring clear boundaries between transparent and confidential transactions.
-
-As a result, **shielded transactions cannot be sent to public addresses**, such as those used by exchanges. The address formats are incompatible by design, preventing accidental routing or unauthorized deposits across the two models. As long as exchanges do not share their shielded addresses, they are inherently isolated from receiving shielded deposits.
-
-When using shielded transactions, it is important to know that they are not anonymous: **the sender's identity is always revealed to the receiver**. This provides full auditability within private transfers and reflects Dusk’s privacy-through-compliance design. When deciding to use and receive shielded transactions, the sender’s identity is always known, allowing an exchange to safely return funds to the rightful owner.
-
-**Shielded funds can only be converted into public balances by the user themselves**. This conversion is cryptographically enforced through signature verification, meaning assets can only be unshielded to a public address the user controls. Furthermore, conversions are atomic and do not allow any other operation or action while a conversion is taking place. This means that a conversion transaction will always contain only the conversion and no contract call, transfer or other operation.
-
-These design decisions serve an important compliance function:
-
-- Conversions are atomic, preserving state integrity between shielded and public balances.
-- Only the rightful owner can perform conversions between shielded and public balances, enforced via cryptographic proof.
-- Shielded-to-public and public-to-shielded transfers are impossible: the two models are cryptographically separated at the protocol level.
-- Exchanges are protected from unauthorized deposits, since shielded transactions cannot target public addresses.
-- Every shielded transaction reveals the sender’s identity to the receiver, enabling traceability for the receiver.
-
-This architecture makes Dusk fundamentally different from privacy coins, which focus on full anonymity. Dusk is designed to offer privacy with accountability, enabling compliance while preserving confidentiality when needed.
-
-
-### Legal opinion
-To reinforce confidence in compliance, there is a comprehensive and detailed **legal opinion** confirming adherence to applicable laws and regulations. This document is available for review upon request.
-
+- ERC20: `0x940a2db1b7008b6c776d4faaca729d6d4a4aa551`
+- BEP20: `0xb2bd0749dbe21f623d9baba856d3b0f0e1bfec9c`
 
 ## Resources
 
 - [Whitepaper](https://dusk-cms.ams3.digitaloceanspaces.com/Dusk_Whitepaper_2024_4db72f92a1.pdf)
 - [Audits](https://github.com/dusk-network/audits)
-
-### Libraries
-
-- [W3sper SDK](/developer/integrations/w3sper)
-- [RUES (events system)](/developer/integrations/http-api)
-
-### User-facing tools
-
 - [Block explorer](https://explorer.dusk.network/)
-- [Web Wallet](https://wallet.dusk.network/)
-
-### Token details
-
-- Token: `dusk`
-- Token decimals: `9` (18 decimals for ERC20 / BEP20 versions)
-- [Tokenomics and metrics](https://docs.dusk.network/learn/tokenomics)
-- Consensus Mechanism: Succinct Attestation Consensus
-
-## Q&As
-### Status of Hardware Wallet Support
-
-Hardware Wallet integration is a work in progress.
-
-### Status of Custody Solution Support
-
-Custodial integration is a work in progress.
-
-### Cross-Chain Fees
-
-For token migrations, the Dusk team covers the fees on the Dusk mainnet.
-Users are responsible for the fees of Binance Smart Chain and Ethereum.
-
-
-### Token Migration
-
-Mainnet is now live, and users can still migrate from ERC20 DUSK and BEP20 DUSK to native DUSK by using the [migration contract](https://github.com/dusk-network/dusk-migration) to burn their tokens and release an equivalent amount of DUSK on the Dusk mainnet to the specified target address.
-
-More information about the Mainnet migration can be found [here](/learn/guides/mainnet-migration).
-
-Current token contracts are:
-- ERC20 Contract Address: [0x940a2db1b7008b6c776d4faaca729d6d4a4aa551](https://etherscan.io/address/0x940a2db1b7008b6c776d4faaca729d6d4a4aa551)
-- BEP20 Contract Address: [0xb2bd0749dbe21f623d9baba856d3b0f0e1bfec9c](https://bscscan.com/token/0xb2bd0749dbe21f623d9baba856d3b0f0e1bfec9c)
-
-The [migration contract](https://github.com/dusk-network/dusk-migration) has been [audited](https://github.com/dusk-network/audits/blob/main/core-audits/2024-10_migration-smart-contract-security-assessment_zellic.pdf) and users can bridge to the Dusk mainnet via the [Dusk Web Wallet](https://wallet.dusk.network/).
