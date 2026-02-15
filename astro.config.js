@@ -30,6 +30,7 @@ export default defineConfig({
 		'/learn/wallet-terminology': '/learn/glossary',
 		'/developer/integrations/hashing-algorithms': '/developer/integrations/reference',
 		'/developer/integrations/addresses': '/developer/integrations/reference',
+		'/developer/smart-contract/hyperstaking_tech': '/learn/hyperstaking',
 	},
 	integrations: [
 		starlight({

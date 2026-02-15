@@ -1,40 +1,180 @@
 ---
 title: Stake Abstraction
-description: Learn how Hyperstaking provides stake abstraction on Dusk, enabling smart contracts to stake DUSK.
+description: Stake Abstraction (Hyperstaking) lets smart contracts stake DUSK. This page includes the technical integration guide.
 ---
 
-# What is Stake Abstraction?
+Stake Abstraction (Hyperstaking) lets **smart contracts** participate in staking on Dusk. This enables on-chain staking pools and other programmable staking logic.
 
-Stake Abstraction (Hyperstaking) enables smart contracts to participate in staking on Dusk, replacing the traditional model where only user keys are allowed to stake. This unlocks programmable and decentralized staking, allowing for automated staking pools, delegated staking services, and the creation of staking derivatives.  With Hyperstaking, **stake abstraction** becomes a reality.
+## When you need it
 
-Hyperstaking works by enabling **smart contracts to act as staking participants**, just like regular users. This means that:
+Use stake abstraction if a **contract** needs to own/manage stake and rewards, for example:
 
-- A smart contract can stake and unstake based on predefined logic within the contract.
-- Staking rewards earned by the smart contract can be automatically reinvested, distributed, or pooled.
+- Liquid staking / staking pools
+- Delegated staking services (staking-as-a-service)
+- Staking derivatives and automated reward distribution
 
-This stake abstraction not only eliminates the need for manual staking management and the need to run a node to stake, but it also unlocks new staking models that enhances flexibility for both developers and users.
+If you are staking as an individual from a wallet, you do not need this page. Use the normal staking flow instead.
 
 ## Use cases
 
-Hyperstaking expands the design space for staking on Dusk, creating new ways for users and projects to engage with the network. Key use cases include:
+### Liquid staking / staking pools
 
-### Liquid Staking
+A contract can accept deposits, stake on behalf of depositors, and distribute (or reinvest) rewards according to its own rules.
 
-Hyperstaking enables **Liquid Staking**, where Smart contracts can operate staking pools, where users delegate funds, and the contract manages the staking process automatically. This means that **users are now able to stake without running their own node**, while automatically collect rewards.
+Example: <a href="https://x.com/sozu_dusk" target="_blank" rel="noreferrer">Sozu</a> runs an automated staking pool so users can stake without operating their own node.
 
-<a href="https://x.com/sozu_dusk " target="_blank">Sozu</a> is the first project leveraging Hyperstaking, offering an automated staking pool that allow users to stake `DUSK` without the technical overhead of node operation. By utilizing smart contract staking, Sozu enhances accessibility while maintaining a trustless and decentralized environment.
+### Referral / affiliate staking
 
-### Referral-Based Staking
+Contracts can implement arbitrary reward-splitting rules (for example: route a portion of rewards to referrers, affiliates, or operators).
 
-Hyperstaking also enables **referral-based staking models**, where users who onboard others into staking earn a share of the staking rewards. This introduces a sustainable incentive structure that fosters network growth and encourages greater decentralization. More information about this upcoming project will be provided soon.
+## Protocol-level notes
 
-### Other use cases
+- The **minimum stake** requirement applies to contracts too: **1,000 DUSK**.
+- Stake is considered active after a maturity period of **4320 blocks (~12 hours)**.
+- Reward distribution depends on consensus participation; see [Staking basics](/learn/guides/staking-basics#how-are-rewards-determined).
 
-By providing stake abstraction, Hyperstaking unlocks new business models, including:
+## Technical guide (smart contract developers) {#technical-guide}
 
-- **Staking-as-a-service** platforms, where third-party providers facilitate staking for users.
-- Custom staking mechanisms, enabling projects to design **staking-based incentives** tailored to their ecosystem.
+Stake abstraction requires contracts to interact with the genesis **Stake Contract** (and the **Transfer Contract** for contract-to-contract calls).
 
-In short, the introduction of Hyperstaking on Dusk removes the limitations of traditional staking models and empowers smart contracts to redefine how staking works.
+### Reference links
 
-Deep dive into the technicalities of Hyperstaking [here](/developer/smart-contract/hyperstaking_tech)
+- Stake contract source:
+  <a href="https://raw.githubusercontent.com/dusk-network/contracts/main/genesis/stake/src/state.rs" target="_blank" rel="noreferrer">genesis/stake</a>
+- Transfer contract source:
+  <a href="https://raw.githubusercontent.com/dusk-network/contracts/main/genesis/transfer/src/state.rs" target="_blank" rel="noreferrer">genesis/transfer</a>
+- Example implementation:
+  <a href="https://raw.githubusercontent.com/dusk-network/rusk/refs/heads/master/contracts/charlie/src/state.rs" target="_blank" rel="noreferrer">rusk/contracts/charlie</a>
+
+### Required Stake Contract calls
+
+These are called on the Stake Contract:
+
+- `stake_from_contract(recv: ReceiveFromContract)` to stake from a contract.
+- `unstake_from_contract(unstake: WithdrawToContract)` to unstake.
+- `withdraw_from_contract(withdraw: WithdrawToContract)` to claim rewards.
+
+### Callbacks your contract must implement
+
+Your contract must implement these callbacks (see the example contract above):
+
+- `receive_unstake(receive: ReceiveFromContract)` to receive unstaked funds.
+- `receive_reward(receive: ReceiveFromContract)` to receive staking rewards.
+
+### Important: `stake_from_contract` must be triggered via a transfer
+
+Unlike user staking (`stake(stake: Stake)`), contracts cannot call `stake_from_contract` directly.
+
+`stake_from_contract` expects a `ReceiveFromContract` and validates that it is invoked as part of a fund transfer, so the correct pattern is:
+
+1. Move funds into the contract.
+2. Perform a `contract_to_contract` transfer to the stake contract, with `fn_name = "stake_from_contract"`.
+
+### Examples (Rust)
+
+<details>
+<summary>Stake via <code>contract_to_contract</code></summary>
+
+```rust
+pub fn stake(&mut self, stake: Stake) {
+    let value = stake.value();
+    let data = rkyv::to_bytes::<_, SCRATCH_BUF_BYTES>(&stake)
+        .expect("Stake serialization should succeed")
+        .to_vec();
+
+    // 1) Deposit funds into this contract
+    let _: () = abi::call(TRANSFER_CONTRACT, "deposit", &value)
+        .expect("Depositing funds into contract should succeed");
+
+    // 2) Call `stake_from_contract` via a contract-to-contract transfer
+    let contract_to_contract = ContractToContract {
+        contract: STAKE_CONTRACT,
+        value,
+        data,
+        fn_name: "stake_from_contract".into(),
+    };
+
+    let _: () = abi::call(
+        TRANSFER_CONTRACT,
+        "contract_to_contract",
+        &contract_to_contract,
+    )
+    .expect("Transferring to stake contract should succeed");
+}
+```
+
+</details>
+
+<details>
+<summary>Unstake + receive callback</summary>
+
+```rust
+pub fn unstake(&mut self, unstake: Withdraw) {
+    let value = unstake.transfer_withdraw().value();
+    let data =
+        rkyv::to_bytes::<_, SCRATCH_BUF_BYTES>(unstake.transfer_withdraw())
+            .expect("Withdraw serialization should succeed")
+            .to_vec();
+
+    let withdraw_to_contract = WithdrawToContract::new(
+        *unstake.account(),
+        value,
+        "receive_unstake",
+    )
+    .with_data(data);
+
+    let _: () = abi::call(
+        STAKE_CONTRACT,
+        "unstake_from_contract",
+        &withdraw_to_contract,
+    )
+    .expect("Unstake from stake contract should succeed");
+}
+
+pub fn receive_unstake(&mut self, receive: ReceiveFromContract) {
+    let withdraw: TransferWithdraw = rkyv::from_bytes(&receive.data)
+        .expect("Withdraw should deserialize");
+
+    let _: () = abi::call(TRANSFER_CONTRACT, "withdraw", &withdraw)
+        .expect("Withdrawing stake should succeed");
+}
+```
+
+</details>
+
+<details>
+<summary>Withdraw rewards + receive callback</summary>
+
+```rust
+pub fn withdraw(&mut self, unstake: Withdraw) {
+    let value = unstake.transfer_withdraw().value();
+    let data =
+        rkyv::to_bytes::<_, SCRATCH_BUF_BYTES>(unstake.transfer_withdraw())
+            .expect("Withdraw serialization should succeed")
+            .to_vec();
+
+    let withdraw_to_contract = WithdrawToContract::new(
+        *unstake.account(),
+        value,
+        "receive_reward",
+    )
+    .with_data(data);
+
+    let _: () = abi::call(
+        STAKE_CONTRACT,
+        "withdraw_from_contract",
+        &withdraw_to_contract,
+    )
+    .expect("Withdraw rewards from stake contract should succeed");
+}
+
+pub fn receive_reward(&mut self, receive: ReceiveFromContract) {
+    let withdraw: TransferWithdraw = rkyv::from_bytes(&receive.data)
+        .expect("Withdraw should deserialize");
+
+    let _: () = abi::call(TRANSFER_CONTRACT, "withdraw", &withdraw)
+        .expect("Withdrawing rewards should succeed");
+}
+```
+
+</details>
