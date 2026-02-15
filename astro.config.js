@@ -21,6 +21,9 @@ export default defineConfig({
 		'/itn/upgrade-node': '/nocturne/upgrade-node',
         '/operator/guides/archive-node': '/operator/archive-node',
         '/operator/guides/provisioner-node': '/operator/provisioner',
+		'/learn/guides/dusk-mainnet-onramp': '/learn/guides/legacy',
+		'/learn/guides/bep2-migration': '/learn/guides/legacy',
+		'/learn/guides/erc20-staking': '/learn/guides/legacy',
 	},
 	integrations: [
 		starlight({
