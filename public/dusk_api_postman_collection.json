@@ -302,7 +302,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "10",
+							"raw": "{{peers_count}}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3127,6 +3127,385 @@
 				}
 			],
 			"description": "Endpoints for handling ZK proofs."
+		},
+		{
+			"name": "Contracts",
+			"item": [
+				{
+					"name": "Get Contract Balance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{node_url}}/on/contract:{{contract_id_hex}}/status",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"contract:{{contract_id_hex}}",
+								"status"
+							]
+						},
+						"description": "Returns the current balance for a smart contract as JSON: { \"balance\": <number> }."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contract Metadata",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{node_url}}/on/contract:{{contract_id_hex}}/metadata",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"contract:{{contract_id_hex}}",
+								"metadata"
+							]
+						},
+						"description": "Returns contract metadata including owner and data driver availability (if supported by the node)."
+					},
+					"response": []
+				},
+				{
+					"name": "Download Contract Data Driver",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{node_url}}/on/contract:{{contract_id_hex}}/download_driver",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"contract:{{contract_id_hex}}",
+								"download_driver"
+							]
+						},
+						"description": "Downloads the WASM data driver for the contract (binary response)."
+					},
+					"response": []
+				},
+				{
+					"name": "Contract Call (Raw)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{node_url}}/on/contracts:{{contract_id_hex}}/{{contract_fn_name}}",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"contracts:{{contract_id_hex}}",
+								"{{contract_fn_name}}"
+							]
+						},
+						"description": "Calls a contract query method. Provide the call data in the request body.\n\n- For raw bytes: send `0x...` in the body, or set Content-Type to application/octet-stream.\n- For JSON encoding (if a driver exists): set Content-Type to application/json and send JSON in the body.",
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Data Drivers",
+			"item": [
+				{
+					"name": "Driver Schema",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{node_url}}/on/driver:{{contract_id_hex}}/get_schema",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"driver:{{contract_id_hex}}",
+								"get_schema"
+							]
+						},
+						"description": "Returns the JSON schema for the contract data driver (if available)."
+					},
+					"response": []
+				},
+				{
+					"name": "Driver Version",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{node_url}}/on/driver:{{contract_id_hex}}/get_version",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"driver:{{contract_id_hex}}",
+								"get_version"
+							]
+						},
+						"description": "Returns the data driver version string (if available)."
+					},
+					"response": []
+				},
+				{
+					"name": "Decode Event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{node_url}}/on/driver:{{contract_id_hex}}/decode_event:{{contract_event_name}}",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"driver:{{contract_id_hex}}",
+								"decode_event:{{contract_event_name}}"
+							]
+						},
+						"description": "Decodes a contract event payload using the data driver. The request body must contain the event bytes.",
+						"body": {
+							"mode": "raw",
+							"raw": "0x"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Encode Input (JSON)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{node_url}}/on/driver:{{contract_id_hex}}/encode_input_fn:{{contract_fn_name}}",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"driver:{{contract_id_hex}}",
+								"encode_input_fn:{{contract_fn_name}}"
+							]
+						},
+						"description": "Encodes JSON input for a contract function using the data driver.",
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decode Output",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{node_url}}/on/driver:{{contract_id_hex}}/decode_output_fn:{{contract_fn_name}}",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"driver:{{contract_id_hex}}",
+								"decode_output_fn:{{contract_fn_name}}"
+							]
+						},
+						"description": "Decodes raw output bytes for a contract function using the data driver.",
+						"body": {
+							"mode": "raw",
+							"raw": "0x"
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Blobs",
+			"item": [
+				{
+					"name": "Blob By Hash (Raw)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{node_url}}/on/blobs:{{blob_hash}}/hash",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"blobs:{{blob_hash}}",
+								"hash"
+							]
+						},
+						"description": "Fetches a blob by its versioned hash. By default returns raw bytes (hex unless binary is requested)."
+					},
+					"response": []
+				},
+				{
+					"name": "Blob By Hash (JSON)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{node_url}}/on/blobs:{{blob_hash}}/hash",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"blobs:{{blob_hash}}",
+								"hash"
+							]
+						},
+						"description": "Fetches a blob by its versioned hash and returns the JSON sidecar (requires Content-Type: application/json)."
+					},
+					"response": []
+				},
+				{
+					"name": "Blob By Commitment (Raw)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{node_url}}/on/blobs:{{blob_commitment}}/commitment",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"blobs:{{blob_commitment}}",
+								"commitment"
+							]
+						},
+						"description": "Fetches a blob by its commitment. By default returns raw bytes (hex unless binary is requested)."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stats",
+			"item": [
+				{
+					"name": "Account Count (Archive)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{node_url}}/on/stats/account_count",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"stats",
+								"account_count"
+							]
+						},
+						"description": "Returns the number of active public accounts recorded by the archive (if available)."
+					},
+					"response": []
+				},
+				{
+					"name": "Transaction Count (Archive)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{node_url}}/on/stats/tx_count",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"stats",
+								"tx_count"
+							]
+						},
+						"description": "Returns finalized transaction counts split into public/shielded/total (if available)."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event Subscriptions",
+			"item": [
+				{
+					"name": "Subscribe: Blocks Accepted",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Rusk-Session-Id",
+								"value": "{{rusk_session_id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{node_url}}/on/blocks/accepted",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"blocks",
+								"accepted"
+							]
+						},
+						"description": "Subscribes the current WebSocket session to accepted block events. Events are delivered over the WebSocket. Requires Rusk-Session-Id."
+					},
+					"response": []
+				},
+				{
+					"name": "Unsubscribe: Blocks Accepted",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Rusk-Session-Id",
+								"value": "{{rusk_session_id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{node_url}}/on/blocks/accepted",
+							"host": [
+								"{{node_url}}"
+							],
+							"path": [
+								"on",
+								"blocks",
+								"accepted"
+							]
+						},
+						"description": "Unsubscribes the current WebSocket session from accepted block events. Requires Rusk-Session-Id."
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -3167,6 +3546,46 @@
 		},
 		{
 			"key": "proof_input",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "contract_id_hex",
+			"value": "0100000000000000000000000000000000000000000000000000000000000000",
+			"type": "string"
+		},
+		{
+			"key": "contract_fn_name",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "contract_event_name",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "blob_hash",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "blob_commitment",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "rusk_session_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "peers_count",
+			"value": "5",
+			"type": "string"
+		},
+		{
+			"key": "gas_price_max_txs",
 			"value": "",
 			"type": "string"
 		}
