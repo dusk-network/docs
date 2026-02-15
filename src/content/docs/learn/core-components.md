@@ -63,8 +63,8 @@ Dusk supports multiple execution environments on top of DuskDS. Each environment
 
 Dusk ships with two genesis contracts:
 
-- **Stake**: tracks provisioners, stakes, rewards, and validator set management. (<a href="https://github.com/dusk-network/rusk/tree/master/contracts/contracts/stake" target="_blank" rel="noreferrer">source</a>)
-- **Transfer**: transfers `DUSK` and is the entry point for transaction execution and gas payment. (<a href="https://github.com/dusk-network/rusk/tree/master/contracts/contracts/transfer" target="_blank" rel="noreferrer">source</a>)
+- **Stake**: tracks provisioners, stakes, rewards, and validator set management. (<a href="https://github.com/dusk-network/contracts/tree/main/genesis/stake" target="_blank" rel="noreferrer">source</a>)
+- **Transfer**: transfers `DUSK` and is the entry point for transaction execution and gas payment. (<a href="https://github.com/dusk-network/contracts/tree/main/genesis/transfer" target="_blank" rel="noreferrer">source</a>)
 
 For node operators: [Run a provisioner node](/operator/provisioner/).
 
