@@ -9,7 +9,12 @@ Here you can find answers explaining how to solve errors you may encounter.
 This error occurs when one of the peers of your node is running on a different chain. You can safely ignore this error unless your node hasn't been upgraded correctly.
 
 #### Consensus msg discarded: reason="too far in the future"
-You can use the `--network=host` flag to resolve networking problems.
+This means your node is receiving consensus messages for rounds much higher than your current tip (more than ~10 blocks ahead). Common causes:
+
+- Your node is still syncing or stuck behind the network tip
+- You're connected to the wrong network/chain ID
+
+Check your block height (`ruskquery block-height`) against the explorer. If you are stuck, consider fast-syncing (`download_state`) or a manual resync.
 
 #### Unable to resolve domain:  invalid socket address
 Such errors usually indicate DNS problems. Check your DNS settings.
@@ -61,15 +66,15 @@ netstat -tuplen
 You can also verify if something else is running on port 8080 by running:
 
 ```bash
-curl -s --request POST "http://127.0.0.1:8080/on/node/info"
+curl -si --request POST "http://127.0.0.1:8080/on/node/info" | head
 ```
-If you receive a **404 page not found** response, another service is using that port.
+If the response is not from Rusk (for example, HTML/404, or missing the `Rusk-Version` header), another service is likely using that port.
 
 #### "chain.stalled" error
 This indicates your node cannot process blocks due to:
 
 Port not being forwarded or incorrect Kadcast address in `/opt/dusk/services/rusk.conf.default`.
-To fix the issues, you should ensure the required ports (9000/udp, 8080/tcp) are accessible and verify that the `kadcast_address` is correct.
+To fix the issues, ensure the required ports (9000/udp, 8080/tcp) are accessible and verify your Kadcast addresses (for example `KADCAST_PUBLIC_ADDRESS` and, if needed behind NAT, `KADCAST_LISTEN_ADDRESS`).
 To check the state of your node, you can run:
 
 ```bash

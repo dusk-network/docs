@@ -66,7 +66,7 @@ It is best to wait until your node is synced up. You can find the latest block h
 If you want to serve archive data to the outside world, your node needs to enable the http capabilities. This can be done by adding
 
 ```toml
-// rusk.toml
+# rusk.toml
 [http]
 listen = true
 listen_address = '0.0.0.0:8080'
@@ -78,10 +78,9 @@ Now you can query the archive for data with an external client application.
 
 ## Test archive endpoint
 
-You can check which graphQL endpoints are available by calling the endpoint with an empty query:
+You can check which GraphQL queries are available by retrieving the schema (SDL). On RUES, an empty body returns the schema:
 ```bash
-curl -i -H 'Content-Type: application/json' \
-   -X POST -d "" https://yournodeIPorDomain.example
+curl -s -X POST "http://<your-node-host>:8080/on/graphql/query"
 ```
 
 This should now return a different list than a normal node returns. An example endpoint that is now available is the **checkBlock** endpoint, which returns true or false whether a block height matches a specific block hash, which can also be queried only for finalized blocks.
@@ -89,11 +88,18 @@ This should now return a different list than a normal node returns. An example e
 In order to test this endpoint, you can run the following command.
 
 ```bash
-curl -i -H 'Content-Type: application/json' \
-   -X POST -d "query { checkBlock(height: 1, hash: \"abc\", onlyFinalized: true) }" https://yournodeIPorDomain.example
+curl -s -X POST "http://<your-node-host>:8080/on/graphql/query" \
+  --data-raw '{ block(height: 1) { header { hash } } }' | jq .
 ```
 
-which should return `{"checkBlock":false}`
+Then use the returned block hash with `checkBlock`:
+
+```bash
+curl -s -X POST "http://<your-node-host>:8080/on/graphql/query" \
+  --data-raw 'query { checkBlock(height: 1, hash: "<block_hash>", onlyFinalized: true) }' | jq .
+```
+
+On a non-archive node, `onlyFinalized: true` returns an error.
 
 ## Stake with archive node
 
