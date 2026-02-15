@@ -1,5 +1,5 @@
 ---
-title: Stake Abstraction
+title: Stake Abstraction (Technical Guide)
 description: Learn how stake abstraction is implemented on Dusk via Hyperstaking, and how to use it in your smart contracts.
 ---
 
