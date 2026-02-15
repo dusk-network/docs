@@ -1,255 +1,105 @@
+/*
+  Keep this file intentionally small.
+  Heavy component/layout overrides make Starlight upgrades painful and usually degrade information hierarchy.
+*/
+
 :root {
-	--__sl-font: "Soehne", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	--mono-font-family: "Soehne Mono", monospace;
-	--sl-text-3x: 58px;
+  --sl-font: "Soehne";
+  --sl-font-mono: "Soehne Mono";
 }
 
-/* Light mode colors. */
-:root[data-theme="light"] {
-	--default-color: #E2DFE9;
-	--on-surface-color: #EDEAF3;
-	--sl-color-text-accent: #101010;
-	--sl-color-bg-nav: var(--on-surface-color);
-	--sl-color-bg-sidebar: var(--on-surface-color);
-	--sl-color-hairline: transparent;
-	--sl-color-hairline-light: #908E94;
-	--sl-color-black: var(--default-color);
-
-	--sl-color-red-high: #F04367;
-	--sl-color-red: #ED254E;
-	--sl-color-red-low: #ED254E;
-
-	--sl-color-green-high: #28E6A1;
-	--sl-color-green: #16DB93;
-	--sl-color-green-low: #16DB93;
-
-	--sl-color-orange-high: #FFDC60;
-	--sl-color-orange: #FFCF23;
-	--sl-color-orange-low: #FFCF23;
-
-	--sl-color-blue-high: #EDEAF3;
-	--sl-color-blue: #EDEAF3;
-	--sl-color-blue-low: #EDEAF3;
-
-	--sl-color-purple-high: #EDEAF3;
-	--sl-color-purple: #EDEAF3;
-	--sl-color-purple-low: #EDEAF3;
+/* Sidebar/menu: avoid faux-bold artifacts (we only ship Soehne 400/500). */
+.sidebar-pane {
+  font-synthesis: none;
+  /* De-emphasize navigation text vs main content when surfaces match. */
+  --sl-color-gray-2: var(--sl-color-gray-3);
 }
 
-/* Dark mode colors. */
-:root[data-theme="dark"] {
-	--default-color: #101010;
-	--on-surface-color: #2E2D30;
-	--sl-color-text-accent: #71b1ff;
-	--sl-color-bg-nav: var(--on-surface-color);
-	--sl-color-bg-sidebar: var(--on-surface-color);
-	--sl-color-hairline: transparent;
-	--sl-color-hairline-light: #908E94;
-	--sl-color-white: #E2DFE9;
-
-	--sl-color-red-high: #F04367;
-	--sl-color-red: #ED254E;
-	--sl-color-red-low: #ED254E;
-
-	--sl-color-green-high: #28E6A1;
-	--sl-color-green: #16DB93;
-	--sl-color-green-low: #16DB93;
-
-	--sl-color-orange-high: #FFDC60;
-	--sl-color-orange: #FFCF23;
-	--sl-color-orange-low: #FFCF23;
-
-	--sl-color-blue-high: #2E2D30;
-	--sl-color-blue: #2E2D30;
-	--sl-color-blue-low: #2E2D30;
-
-	--sl-color-purple-high: #2E2D30;
-	--sl-color-purple: #2E2D30;
-	--sl-color-purple-low: #2E2D30;
+/* Starlight uses 600 in the sidebar for group labels and current page. Map to real weight. */
+.sidebar-pane .large,
+.sidebar-pane [aria-current="page"],
+.sidebar-pane [aria-current="page"]:hover,
+.sidebar-pane [aria-current="page"]:focus {
+  font-weight: 500;
 }
 
-body {
-	background-color: var(--default-color);
-	min-width: 375px;
+/* Keep the right-side TOC label from shouting. */
+.right-sidebar-panel h2 {
+  font-weight: 500;
 }
 
-.sl-link-card {
-	background-color: var(--on-surface-color) !important;
-	border: none !important;
-	box-shadow: none !important;
-	border-radius: 24px !important;
-	padding: 16px 22px 16px 22px !important;
+/* Header brand: make the logo + "DOCUMENTATION" less dominant. */
+.site-title {
+  font-size: var(--sl-text-sm);
 }
 
-.action {
-	border-radius: 24px !important;
-	padding: 14.4px 20px 14.4px 20px !important;
-}
-
-.minimal {
-	border: 1px solid #101010 !important;
-}
-
-.large {
-	font-weight: 500;
-}
-
-@media (min-width: 72rem) {
-	.right-sidebar {
-		padding-top: calc(var(--sl-nav-height) + var(--sl-mobile-toc-height));
-		margin-top: calc(var(--sl-nav-height));
-	}
-}
-
-mobile-starlight-toc nav {
-	top: 8.3rem;
-	background-color: var(--default-color);
-	border-top: none;
+.site-title img {
+  height: 1.5rem;
 }
 
 @media (min-width: 50rem) {
-	mobile-starlight-toc nav {
-		top: 8.5rem;
-	}
-}
-
-.toggle {
-	border-radius: 100px;
-	background-color: var(--sl-color-bg-nav);
-}
-
-.dropdown {
-	background-color: var(--sl-color-bg-nav);
-	/* border-color: white; */
-}
-
-.title {
-	font-weight: 500 !important;
-}
-
-.starlight-aside__title {
-	font-weight: 500;
-}
-
-:root[data-theme="dark"] .minimal {
-	border: 1px solid var(--sl-color-white) !important;
-}
-
-h1 {
-	font-size: 58px;
-	font-weight: 400;
-}
-
-h2 {
-	font-size: 29px;
-	font-weight: 400;
-}
-
-.site-title span {
-	font-size: 14px;
-	font-weight: 400;
-}
-
-.sl-markdown-content {
-	margin: 0 !important;
-}
-
-.hero {
-	padding-block: 0 !important;
-	padding-bottom: 4rem !important;
-}
-
-button[data-open-modal] {
-	border-radius: 24px !important;
-}
-
-dialog {
-	border-radius: 24px !important;
-}
-
-starlight-menu-button button {
-	top: 44px !important;
-	inset-inline-end: 32px !important;
-}
-
-:root[data-theme="light"] .starlight-aside,
-:root[data-theme="light"] .starlight-aside__title {
-	color: #2E2D30;
-}
-
-:root[data-theme="dark"] .starlight-aside,
-:root[data-theme="dark"] .starlight-aside__title {
-	color: #EDEAF3;
-}
-
-.starlight-aside code {
-	background-color: transparent;
-}
-
-.MathJax * {
-	display: inline !important;
-}
-
-.sidebar-content {
-	border-radius: 24px;
-}
-
-.ss-wrapper {
-	overflow: hidden;
-	width: 100%;
-	height: 100%;
-	position: relative;
-	z-index: 1;
-	float: left;
-}
-
-.ss-content {
-	height: 100%;
-	width: calc(100% + 18px);
-	padding: 0 0 0 0;
-	position: relative;
-	overflow: auto;
-	box-sizing: border-box;
-}
-
-.ss-content.rtl {
-	width: calc(100% + 18px);
-	right: auto;
-}
-
-.ss-scroll {
-	position: relative;
-	background: rgba(0, 0, 0, 0.1);
-	width: 9px;
-	border-radius: 4px;
-	top: 0;
-	z-index: 2;
-	cursor: pointer;
-	opacity: 0;
-	transition: opacity 0.25s linear;
-}
-
-.ss-hidden {
-	display: none;
-}
-
-.ss-container:hover .ss-scroll,
-.ss-container:active .ss-scroll {
-	opacity: 1;
-}
-
-.ss-grabbed {
-	-o-user-select: none;
-	-ms-user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
-}
-
-.starlight-aside__content a {
-	color: #71b1ff !important;
-}
-
-:root[data-theme="dark"] .starlight-aside--caution {
-	background-color: #ffa423b5;
+  .site-title {
+    font-size: var(--sl-text-sm);
   }
+  .site-title img {
+    height: 1.75rem;
+  }
+}
+
+/* Light theme */
+:root[data-theme="light"] {
+  /* Dusk cornflower */
+  --sl-color-accent: #71b1ff;
+  --sl-color-accent-high: #71b1ff;
+  --sl-color-accent-low: #dbe9ff;
+  --sl-color-text-accent: var(--sl-color-accent);
+
+  /* On light cornflower, "invert" text should be dark, not white. */
+  --sl-color-text-invert: #101010;
+
+  /* Neutral UI surfaces */
+  --sl-color-bg: #f6f5fa;
+  --sl-color-bg-nav: #f6f5fa;
+  --sl-color-bg-sidebar: #f6f5fa;
+  --sl-color-bg-inline-code: rgba(0, 0, 0, 0.06);
+}
+
+/* Dark theme */
+:root[data-theme="dark"] {
+  /* Brand accent */
+  --sl-color-accent: #71b1ff;
+  --sl-color-accent-high: #71b1ff;
+  --sl-color-accent-low: #132a46;
+  --sl-color-text-accent: var(--sl-color-accent);
+
+  /* Neutral UI surfaces */
+  --sl-color-bg: #101010;
+  --sl-color-bg-nav: #101010;
+  --sl-color-bg-sidebar: #101010;
+  --sl-color-bg-inline-code: rgba(255, 255, 255, 0.08);
+  --sl-color-hairline-shade: #2e2d30;
+
+  /* Tame pure white in headings/UI */
+  --sl-color-white: #e2dfe9;
+  --sl-color-black: #101010;
+}
+
+/* Dusk-style rounding for cards and primary actions without changing layout behavior. */
+.sl-link-card {
+  border-radius: 1.25rem !important;
+}
+
+.action {
+  border-radius: 1.25rem !important;
+}
+
+/* Light-mode primary buttons: cornflower background needs dark text for contrast. */
+:root[data-theme="light"] .sl-link-button.primary,
+:root[data-theme="light"] .sl-link-button.primary:hover {
+  color: var(--sl-color-text-invert);
+}
+
+/* Keep callouts readable on the neutral dark surface. */
+:root[data-theme="dark"] .starlight-aside--caution {
+  background-color: rgba(255, 164, 35, 0.22);
+}
