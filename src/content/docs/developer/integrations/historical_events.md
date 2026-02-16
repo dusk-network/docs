@@ -44,7 +44,7 @@ query {
 curl -X POST \
   -H "Content-Type: application/json" \
   --data '{"query": "query { moonlightHistory(sender: \"<sender_address>\") { json } }"}' \
-  <graphql_endpoint>
+  https://nodes.dusk.network/on/graphql/query
 ```
 
 ##### Query by Receiver
@@ -65,7 +65,7 @@ query {
 curl -X POST \
   -H "Content-Type: application/json" \
   --data '{"query": "query { moonlightHistory(receiver: \"<receiver_address>\") { json } }"}' \
-  <graphql_endpoint>
+  https://nodes.dusk.network/on/graphql/query
 ```
 
 
@@ -91,7 +91,7 @@ query {
 curl -X POST \
   -H "Content-Type: application/json" \
   --data '{"query": "query { moonlightHistory(sender: \"<sender_address>\", receiver: \"<receiver_address>\") { json } }"}' \
-  <graphql_endpoint>
+  https://nodes.dusk.network/on/graphql/query
 ```
 
 ### `fullMoonlightHistory`
@@ -114,7 +114,7 @@ query {
 curl -X POST \
   -H "Content-Type: application/json" \
   --data '{"query": "query { fullMoonlightHistory(address: \"<address>\") { json } }"}' \
-  <graphql_endpoint>
+  https://nodes.dusk.network/on/graphql/query
 ```
 
 ## Filtering
@@ -171,7 +171,7 @@ jq '.moonlightHistory.json | map(select(.events | any(.target == "01000000000000
 curl -X POST \
   -H "Content-Type: application/json" \
   --data '{"query": "query { moonlightHistory(address: \"<address>\") { json } }"}' \
-  <graphql_endpoint> | jq '.moonlightHistory.json | map(select(.events | any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
+  https://nodes.dusk.network/on/graphql/query | jq '.moonlightHistory.json | map(select(.events | any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
 ```
 
 This ensures that only public protocol transactions are retrieved.
@@ -193,5 +193,5 @@ jq '.moonlightHistory.json | map(select(.events | length == 1 and any(.target ==
 curl -X POST \
   -H "Content-Type: application/json" \
   --data '{"query": "query { moonlightHistory(address: \"<address>\") { json } }"}' \
-  <graphql_endpoint> | jq '.moonlightHistory.json | map(select(.events | length == 1 and any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
+  https://nodes.dusk.network/on/graphql/query | jq '.moonlightHistory.json | map(select(.events | length == 1 and any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
 ```

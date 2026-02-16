@@ -27,7 +27,7 @@ Requirements vary depending on whether you are configuring a [Provisioner](/oper
 Dusk offers a streamlined event system through the [Rusk Universal Event System (RUES)](/developer/integrations/http-api), as data can be fetched from the following endpoints:
 
 - **Mainnet**: https://nodes.dusk.network/
-- **Testnet**: https://nodes.testnet.dusk.network/
+- **Testnet**: https://testnet.nodes.dusk.network/
 
 These links also provide access to archive-related endpoints for comprehensive historical data retrieval.
 
