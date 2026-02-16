@@ -30,8 +30,9 @@ Before deploying, make sure you use the correct configuration for DuskEVM deploy
 If using Foundry, add DuskEVM's information to your `foundry.toml`:
 
 ```toml
-rpc_url = "[PLACEHOLDER]"
-chain_id = "[PLACEHOLDER]"
+[rpc_endpoints]
+dusk_evm_mainnet = "https://rpc.evm.dusk.network"
+dusk_evm_testnet = "https://rpc.testnet.evm.dusk.network"
 ```
 
 If using Hardhat, you can add DuskEVM in your `hardhat.config.js`: 
@@ -39,9 +40,13 @@ If using Hardhat, you can add DuskEVM in your `hardhat.config.js`:
 ```js
 module.exports = {
   networks: {
-    duskEVM: {
-      url: "<PLACEHOLDER>",
-      chainId: "<PLACEHOLDER>",
+    duskEvmMainnet: {
+      url: "https://rpc.evm.dusk.network",
+      chainId: 744,
+    },
+    duskEvmTestnet: {
+      url: "https://rpc.testnet.evm.dusk.network",
+      chainId: 745,
     }
   }
 };
@@ -53,12 +58,12 @@ module.exports = {
 If using Foundry, navigate to your project’s directory and launch: 
 
 ```
-forge create src/{YourContract}.sol:{ContractName} --rpc-url "PLACEHOLDER" --private-key {YourPrivateKey}
+forge create src/{YourContract}.sol:{ContractName} --rpc-url dusk_evm_testnet --private-key {YourPrivateKey}
 ```
 
 If using Hardhat, add a deploy script in the scripts folder (e.g., add `scripts/deploy.js`), and then run it (e.g., with `npx hardhat run scripts/deploy.js --network duskEVM`).
 
-# Further Resources
+## Further Resources
 
 For full deployment workflows and advanced usage, refer to the official documentation of your preferred tool:
 

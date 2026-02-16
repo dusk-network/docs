@@ -3,7 +3,7 @@ title: Core Components
 description: Introduction to the core components that power Dusk.
 ---
 
-Dusk is built with a modular architecture, leveraging the  tools and components, specifically designed to meet [institutional standards](/learn/tokenization-comparison#meeting-institutional-standards) for privacy, regulatory compliance, and secure interactions with regulated assets. These components enable Dusk to support not only the tokenization of real-world assets (RWAs) but also [native issuance](/learn/tokenization-comparison#native-issuance).
+Dusk is built with a modular architecture, leveraging tools and components specifically designed to meet [institutional standards](/learn/tokenization-comparison#meeting-institutional-standards) for privacy, regulatory compliance, and secure interactions with regulated assets. These components enable Dusk to support not only the tokenization of real-world assets (RWAs) but also [native issuance](/learn/tokenization-comparison#native-issuance).
 
 What sets Dusk apart from other blockchains is its tailor-made architecture, driven by continuous cryptographic research to ensure compliance, privacy, and robust network security, providing a reliable foundation to be a **Decentralized Market Infrastructure** (DeMI).
 
@@ -53,7 +53,7 @@ Dusk VM is fundamentally different from many blockchain VMs in that it not only 
 [Deep dive into Dusk VM](/learn/deep-dive/dusk-vm)
 
 ### Dusk EVM
-[Dusk EVM](/learn/deep-dive/dusk-vm) is a fully EVM-equivalent execution environment. Built on the <a href="https://docs.optimism.io/stack/getting-started" target="_blank">OP Stack</a> with support for <a href="https://www.eip4844.com/" target="_blank">EIP-4844</a> (Proto-Danksharding), it enables developers to deploy smart contracts using standard EVM tooling—while benefiting from DuskDS's regulatory compliant infrastructure.
+[Dusk EVM](/learn/deep-dive/dusk-evm) is a fully EVM-equivalent execution environment. Built on the <a href="https://docs.optimism.io/stack/getting-started" target="_blank">OP Stack</a> with support for <a href="https://www.eip4844.com/" target="_blank">EIP-4844</a> (Proto-Danksharding), it enables developers to deploy smart contracts using standard EVM tooling while benefiting from DuskDS's regulatory compliant infrastructure.
 
 [Deep dive into Dusk EVM](/learn/deep-dive/dusk-evm)
 
@@ -75,7 +75,7 @@ The Transfer Contract is responsible for the transferring of `DUSK`, regardless 
 
 ## Applications
 
-Applications powered by Dusk provide decentralized market infrastracture (DeMI) for regulated finance. While Zedger and Hedger facilitate secure asset lifecycle management, Citadel enables self-sovereign identity (SSI) with selective disclosure. These applications are designed to meet regulatory standards without compromising on decentralization, privacy, or usability.
+Applications powered by Dusk provide decentralized market infrastructure (DeMI) for regulated finance. While Zedger and Hedger facilitate secure asset lifecycle management, Citadel enables self-sovereign identity (SSI) with selective disclosure. These applications are designed to meet regulatory standards without compromising on decentralization, privacy, or usability.
 
 
 ### Zedger / Hedger

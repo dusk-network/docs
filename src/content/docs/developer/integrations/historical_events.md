@@ -11,10 +11,10 @@ The GraphQL API provides access to finalized historical blockchain transaction-e
 2. `fullMoonlightHistory`
 
 :::tip
-The **moonlightHistory** endpoint allows for advanced filtering, enabling queries based on sender, receiver, block range, and pagination.**fullMoonlightHistory** retrieves all public `DUSK` value transfers for a given address, without additional filtering options.
+The **moonlightHistory** endpoint allows for advanced filtering, enabling queries based on sender, receiver, block range, and pagination. **fullMoonlightHistory** retrieves all public `DUSK` value transfers for a given address, without additional filtering options.
 :::
 
-You can also checkout the [transaction models](/learn/deep-dive/duskds-tx-models) page, to get familiar with the terminology of `moonlight` & `phoenix`.
+You can also check out the [transaction models](/learn/deep-dive/duskds-tx-models) page to get familiar with the terminology of `moonlight` and `phoenix`.
 
 Refer to [GraphQL queries](/developer/integrations/http-api/#graphql-queries) for additional information on the GraphQL endpoint.
 
@@ -22,7 +22,7 @@ Refer to [GraphQL queries](/developer/integrations/http-api/#graphql-queries) fo
 
 ### `moonlightHistory`
 
-Retrieves emitted events from transactions based on sender and/or receiver.  The `moonlightHistory' endpoint allows you to specify block ranges (fromBlock, toBlock) to retrieve all transfers within the specified block range. You can also specify a maxCount and a pageCount to limit the number of results returned. Pagination should be used with care as it is offset-based and **not** cursor-based.
+Retrieves emitted events from transactions based on sender and/or receiver. The `moonlightHistory` endpoint allows you to specify block ranges (fromBlock, toBlock) to retrieve all transfers within the specified block range. You can also specify a maxCount and a pageCount to limit the number of results returned. Pagination should be used with care as it is offset-based and **not** cursor-based.
 
 #### Example Queries
 
@@ -41,10 +41,8 @@ query {
 **cURL Command:**
 
 ```sh
-curl -X POST \
-  -H "Content-Type: application/json" \
-  --data '{"query": "query { moonlightHistory(sender: \"<sender_address>\") { json } }"}' \
-  https://nodes.dusk.network/on/graphql/query
+curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
+  --data-raw 'query { moonlightHistory(sender: "<sender_address>") { json } }'
 ```
 
 ##### Query by Receiver
@@ -62,17 +60,15 @@ query {
 **cURL Command:**
 
 ```sh
-curl -X POST \
-  -H "Content-Type: application/json" \
-  --data '{"query": "query { moonlightHistory(receiver: \"<receiver_address>\") { json } }"}' \
-  https://nodes.dusk.network/on/graphql/query
+curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
+  --data-raw 'query { moonlightHistory(receiver: "<receiver_address>") { json } }'
 ```
 
 
 
 ##### Query by Sender and Receiver
 
-> If **both sender and receiver** are specified, it will **only** return events from transactions where an outflow occured on the sender's side and an inflow occured on the receiver's side within the same transaction.
+> If **both sender and receiver** are specified, it will **only** return events from transactions where an outflow occurred on the sender's side and an inflow occurred on the receiver's side within the same transaction.
 
 ```graphql
 query {
@@ -88,15 +84,13 @@ query {
 **cURL Command:**
 
 ```sh
-curl -X POST \
-  -H "Content-Type: application/json" \
-  --data '{"query": "query { moonlightHistory(sender: \"<sender_address>\", receiver: \"<receiver_address>\") { json } }"}' \
-  https://nodes.dusk.network/on/graphql/query
+curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
+  --data-raw 'query { moonlightHistory(sender: "<sender_address>", receiver: "<receiver_address>") { json } }'
 ```
 
 ### `fullMoonlightHistory`
 
-Returns all transactions that have an inflow or outflow of public Dusk for the given address, without the granular filtering options available in `moonlightHistory`. The `fullMoonlightHistory' endpoint allows you to specify block ranges (fromBlock, toBlock) to retrieve all transfers within the specified block range.
+Returns all transactions that have an inflow or outflow of public Dusk for the given address, without the granular filtering options available in `moonlightHistory`. The `fullMoonlightHistory` endpoint allows you to specify block ranges (fromBlock, toBlock) to retrieve all transfers within the specified block range.
 
 #### Example Query
 
@@ -111,10 +105,8 @@ query {
 **cURL Command:**
 
 ```sh
-curl -X POST \
-  -H "Content-Type: application/json" \
-  --data '{"query": "query { fullMoonlightHistory(address: \"<address>\") { json } }"}' \
-  https://nodes.dusk.network/on/graphql/query
+curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
+  --data-raw 'query { fullMoonlightHistory(address: "<address>") { json } }'
 ```
 
 ## Filtering
@@ -136,7 +128,7 @@ Example JavaScript, Rust, Bash function to filter based on it:
 
 ```javascript
 function filterMoonlightTransactions(response) {
-    return response.moonlightHistory.json.filter(tx =>
+    return response.fullMoonlightHistory.json.filter(tx =>
         tx.events.some(event =>
             event.target === "0100000000000000000000000000000000000000000000000000000000000000" &&
             event.topic === "moonlight"
@@ -151,7 +143,7 @@ function filterMoonlightTransactions(response) {
 use serde_json::Value;
 
 fn filter_moonlight_transactions(response: &Value) -> Vec<&Value> {
-    response["moonlightHistory"]["json"].as_array().unwrap_or(&vec![]).iter()
+    response["fullMoonlightHistory"]["json"].as_array().unwrap_or(&vec![]).iter()
         .filter(|tx| tx["events"].as_array().unwrap_or(&vec![]).iter()
             .any(|event| event["target"] == "0100000000000000000000000000000000000000000000000000000000000000"
                 && event["topic"] == "moonlight"))
@@ -162,16 +154,15 @@ fn filter_moonlight_transactions(response: &Value) -> Vec<&Value> {
 #### Bash
 >  using jq
 ```sh
-jq '.moonlightHistory.json | map(select(.events | any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
+jq '.fullMoonlightHistory.json | map(select(.events | any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
 ```
 
 **cURL Command with Filtering:**
 
 ```sh
-curl -X POST \
-  -H "Content-Type: application/json" \
-  --data '{"query": "query { moonlightHistory(address: \"<address>\") { json } }"}' \
-  https://nodes.dusk.network/on/graphql/query | jq '.moonlightHistory.json | map(select(.events | any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
+curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
+  --data-raw 'query { fullMoonlightHistory(address: "<address>") { json } }' \
+  | jq '.fullMoonlightHistory.json | map(select(.events | any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
 ```
 
 This ensures that only public protocol transactions are retrieved.
@@ -184,14 +175,13 @@ The entry we are looking for is a `MoonlightTransactionEvent`, which is the same
 
 #### Example Bash
 ```sh
-jq '.moonlightHistory.json | map(select(.events | length == 1 and any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
+jq '.fullMoonlightHistory.json | map(select(.events | length == 1 and any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
 ```
 
 **cURL Command with Filtering:**
 
 ```sh
-curl -X POST \
-  -H "Content-Type: application/json" \
-  --data '{"query": "query { moonlightHistory(address: \"<address>\") { json } }"}' \
-  https://nodes.dusk.network/on/graphql/query | jq '.moonlightHistory.json | map(select(.events | length == 1 and any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
+curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
+  --data-raw 'query { fullMoonlightHistory(address: "<address>") { json } }' \
+  | jq '.fullMoonlightHistory.json | map(select(.events | length == 1 and any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
 ```

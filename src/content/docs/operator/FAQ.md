@@ -135,9 +135,11 @@ This command starts a temporary node instance without persistent storage. Data w
 
 #### How do I configure Kadcast to use a port other than 9000/udp?
 
-Bootstrapper nodes are used during initial synchronization to help your node join the network. They operate on their own predefined Kadcast port (9000 by default).
+Kadcast uses UDP. If you want to run it on a non-default port, you must:
 
-If you configure your node to use a different port (e.g., 42069), it’s crucial to ensure that other nodes, including bootstrappers, are aware of and can adapt to this port. Otherwise, they will not route messages to your node.
+- Set the advertised address (`public_address`) to the WAN IP + port that other peers can reach.
+- Optionally set `listen_address` if you need to bind to a different local interface (common behind NAT).
+- Ensure the UDP port is open and forwarded (if behind NAT).
 
 **With the Node Installer:**
 If you are using the Node Installer, it is recommended to specify Kadcast configuration updates in `/opt/dusk/services/rusk.conf.user`. This file takes precedence over `rusk.conf.default` and ensures your changes are retained during updates.
@@ -145,8 +147,9 @@ If you are using the Node Installer, it is recommended to specify Kadcast config
 You can add or modify the following section:
 
 ```bash
-KADCAST_PUBLIC_ADDRESS=<MY_WAN_IPv4:<NEW_PORT>
-KADCAST_LISTEN_ADDRESS=<MY_LOCAL_IPv4:<NEW_PORT>
+KADCAST_PUBLIC_ADDRESS=<MY_WAN_IPV4>:<NEW_PORT>
+# Optional, only if binding differs from public address
+KADCAST_LISTEN_ADDRESS=<MY_LAN_IPV4>:<NEW_PORT>
 ```
 
 It is important to note that:
@@ -160,25 +163,29 @@ It is important to note that:
 
 If you are **not** using the Node Installer, you will need to explicitly define the ports and IPs in the `[kadcast]` section of the `rusk.toml` file. Here's an example:
 
-```bash
+```toml
 [kadcast]
+public_address = "<MY_WAN_IPV4>:<NEW_PORT>"
+listen_address = "<MY_LAN_IPV4>:<NEW_PORT>" # Optional
 bootstrapping_nodes = [
-    { address = "165.22.193.63", port = <new-port> },
-    { address = "167.172.175.19", port = <new-port> }
+  "165.22.193.63:9000",
+  "167.172.175.19:9000",
 ]
-
-[http]
-listener_addr = "0.0.0.0:8080" # Default HTTP listener address
 ```
 
-You can override the HTTP listener port by:
+Bootstrapper nodes are the peers you dial to join the network. They typically keep using the default `:9000`.
 
-- Using the `--http-listener-addr` flag (e.g. `--http-listener-addr 0.0.0.0:8081`).
-- Modifying the `listener_addr` in the rusk.toml file as shown above.
-- Setting it as an environment variable (e.g. `HTTP_LISTENER_ADDR=0.0.0.0:8081`).
+#### How do I change the HTTP API port?
 
+The HTTP API is controlled by the `[http]` section in `rusk.toml`:
 
-Configuration precedence is not applicable here, as settings are directly defined in `rusk.toml`.
+```toml
+[http]
+listen = true
+listen_address = "0.0.0.0:8080"
+```
+
+You can also override the listen address via CLI with `--http-listen-addr 0.0.0.0:8081`.
 
 
 #### How to set up SSH on Digital Ocean?
@@ -208,25 +215,24 @@ Copy the `.ssh` folder and key files to the new device from `~/.ssh` (Linux).
 
 First, set up the base URLs:
 
-Testnet: `testnet.nodes.dusk.network`
-Mainnet: `nodes.dusk.network`
+Testnet: `https://testnet.nodes.dusk.network`  
+Mainnet: `https://nodes.dusk.network`
 
-For example:
+For GraphQL and HTTP endpoints, see [/developer/integrations/http-api](/developer/integrations/http-api).
+
+For example, to subscribe to accepted blocks:
 
 ```javascript
-const WS_URL = 'https://nodes.dusk.network/on';
-const EVENT_SUBSCRIPTION_URL = 'https://nodes.dusk.network/on/blocks/accepted';
+const WS_URL = "wss://nodes.dusk.network/on";
+const SUBSCRIBE_URL = "https://nodes.dusk.network/on/blocks/accepted";
 ```
-Then, initialize a Rusk session by sending a POST request to the session endpoint (`WS_URL`). The server will `return a Rusk-Session-Id`:
 
-```json
-{
-    "sessionId": "abcd1234efgh5678ijkl"
-}
-```
-Use this session ID as an HTTP header (Rusk-Session-Id: <ID>) when subscribing to events at `EVENT_SUBSCRIPTION_URL`.
+1. Open a WebSocket connection to `WS_URL`.
+2. The node sends the session ID as the first WebSocket text message.
+3. Subscribe via HTTP `GET` to `SUBSCRIBE_URL`, including the `Rusk-Session-Id: <session_id>` header.
+4. Keep the WebSocket open to receive event frames.
 
-Finally, keep a websocket connection open using the session ID. Events will be sent to your websocket in real time.
+Unsubscribe with an HTTP `DELETE` to the same URL (also with the `Rusk-Session-Id` header).
 
 
 #### How can I relay my internal port 8080 when using RUES?
@@ -283,4 +289,3 @@ If you're running the node as a service, you can verify its status with:
 ```bash
 systemctl status rusk
 ```
-

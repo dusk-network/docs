@@ -28,30 +28,30 @@ The W3sper SDK is making use of WASM, and it is a JavaScript-based SDK designed 
 
 ### Loading a WASM
 
-If `getLocalWasmBuffer()` is not specified, W3sper will automatically download the WebAssembly (`wallet-core.wasm`) from the default remote source.
+W3sper relies on a wallet-core WASM driver.
+
+- If you connect to a node via `Network.connect(...)`, W3sper loads the driver automatically from the node (`/static/drivers/`).
+- For offline usage, you can load the driver from disk via `useAsProtocolDriver(...)`.
 
 ```js
-import { Network, useAsProtocolDriver } from "@dusk/w3sper";
+import { Network } from "@dusk/w3sper";
 
-// Connects to the default network (automatically fetching Wasm)
+// Connects to a node (loads the protocol driver automatically)
 const network = await Network.connect("https://nodes.dusk.network");
-
-// W3sper will fetch `wallet-core.wasm` from the appropriate source
-await useAsProtocolDriver();
 ```
 
 The WASM file can be fetched from:
 
 - **Mainnet:** https://nodes.dusk.network/static/drivers/wallet-core.wasm
 - **Testnet:** https://testnet.nodes.dusk.network/static/drivers/wallet-core.wasm
-- **Localhost:**
+- **Local node:** `http://<your-node-host>:8080/static/drivers/wallet-core.wasm`
 
 This implies that while `getLocalWasmBuffer()` is needed for local execution, it’s not required for online transactions.
 
-The below function loads the **wallet_core.wasm** file:
+The below function loads a local wallet-core WASM file:
 
-```bash
-const WASM_RELEASE_PATH = "../../bin/wallet_core.wasm";
+```js
+const WASM_RELEASE_PATH = "./dusk_wallet_core.wasm"; // Adjust to your path
 
 export function getLocalWasmBuffer() {
     if (typeof Deno !== "undefined") {
@@ -61,20 +61,22 @@ export function getLocalWasmBuffer() {
 }
 ```
 :::note[Tip]
-Using `getLocalWasmBuffer` is needed for **offline** profile generation, but not it is not needed when executing transactions, checking balances, or querying data.
+Using `getLocalWasmBuffer` is needed for **offline** profile generation. It is not needed when you connect to a node and let W3sper load the driver for you.
 :::
 
 
 ### Load the protocol driver
 
-Some examples depend on `ProfileGenerator` , which requires the protocol driver. If it's not loaded, you'll get the error:
+Some examples depend on `ProfileGenerator`, which requires the protocol driver. If it's not loaded, you'll get the error:
 
 `no protocol driver loaded yet. call 'load' first.`
 
 By wrapping the logic inside `useAsProtocolDriver()`, you can ensure that the protocol driver stays in memory while profiles are being generated:
 
 ```js
-import { useAsProtocolDriver } from "@dusk/w3sper";
+import { ProfileGenerator, useAsProtocolDriver } from "@dusk/w3sper";
+
+const seeder = () => crypto.getRandomValues(new Uint8Array(64));
 
 await useAsProtocolDriver(await getLocalWasmBuffer()).then(async () => {
     const profiles = new ProfileGenerator(seeder);
@@ -88,11 +90,10 @@ This ensures `ProfileGenerator` only runs when the protocol driver is available,
 
 ### Ensure that the seeder is correctly used
 
-The seeder is defined as an `async` function that returns a `Uint8Array`. This means that you need to make sure to pass the resolved seed to `ProfileGenerator`:
+The seeder is an (async) function that returns a `Uint8Array`. Pass the function itself to `ProfileGenerator`:
 
 ```js
-const seed = await seeder();
-const profiles = new ProfileGenerator(seed);
+const profiles = new ProfileGenerator(seeder);
 ```
 
 ### Generate a profile using a BIP39 generated seed
@@ -105,7 +106,7 @@ _This code can be run in an offline environment_
 npm install bip39
 ```
 
-#### Step 2: Use BIP39 library to generate a 64 bit seed, then use this seed to generate a profile and output the default address and account
+#### Step 2: Use BIP39 library to generate a 64-byte seed, then use it to generate a profile and output the default address and account
 
 ```js
 import bip39 from "bip39";
@@ -137,9 +138,10 @@ _This code can be run in an offline environment_
 ```js
 import { Network, Transfer } from "@dusk/w3sper";
 
+// Assumes you already have `defaultProfile` from the ProfileGenerator examples above.
 const amount = 77n; // Example (arbitrary) amount
 const to = "oCqYsUMRqpRn2kSabH52Gt6FQCwH5JXj5MtRdYVtjMSJ73AFvdbPf98p3gz98fQwNy9ZBiDem6m9BivzURKFSKLYWP3N9JahSPZs9PnZ996P18rTGAjQTNFsxtbrKx79yWu"; // Example public key
-const nonce = 22n // Example (arbitrary) nonce
+const nonce = 22n; // Example (arbitrary) nonce
 const gas = { limit: 500_000_000n }; // Example (sensible) gas limit
 
 const transfer = new Transfer(defaultProfile) // defaultProfile can be the same as we generated earlier
@@ -150,8 +152,7 @@ const transfer = new Transfer(defaultProfile) // defaultProfile can be the same 
     .gas(gas)
     .build();
 
-// Output the transfer as a string
-console.log(transfer.toString()); // "[object Object]"
+console.log(transfer);
 
 // You could write the transfer object to a file or into storage depending on your needs.
 ```
@@ -163,7 +164,7 @@ _This code needs to be run in an internet connected environment_
 ```js
 import { Network, Transfer } from "@dusk/w3sper";
 
-// Connect to a node (using the Dusk mainnet load balanced URL for this example, but it could be any valid node)
+// Connect to a node (using testnet for this example, but it could be any valid node)
 const network = await Network.connect("https://testnet.nodes.dusk.network/");
 
 // We will use the transfer object we created above. In a real-world application you would need to retrieve this from a file or out of storage...
@@ -284,4 +285,3 @@ console.log(lux.parseFromDusk("1"));                    // BigInt(1e9)
 console.log(lux.parseFromDusk("1234.567890123"));       // 1_234_567_890_123n
 console.log(lux.parseFromDusk("9007199.254740993"));    // 9_007_199_254_740_993n
 ```
-
