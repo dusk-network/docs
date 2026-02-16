@@ -21,6 +21,16 @@ export default defineConfig({
 		'/itn/upgrade-node': '/nocturne/upgrade-node',
         '/operator/guides/archive-node': '/operator/archive-node',
         '/operator/guides/provisioner-node': '/operator/provisioner',
+		'/learn/guides/dusk-mainnet-onramp': '/learn/guides/legacy',
+		'/learn/guides/bep2-migration': '/learn/guides/legacy',
+		'/learn/guides/erc20-staking': '/learn/guides/legacy',
+		'/learn/deep-dive/assets-and-regulations/mica': '/learn/deep-dive/assets-and-regulations',
+		'/learn/deep-dive/assets-and-regulations/lifecycle': '/learn/deep-dive/assets-and-regulations',
+		'/learn/deep-dive/assets-and-regulations/dematerialization': '/learn/deep-dive/assets-and-regulations',
+		'/learn/wallet-terminology': '/learn/glossary',
+		'/developer/integrations/hashing-algorithms': '/developer/integrations/reference',
+		'/developer/integrations/addresses': '/developer/integrations/reference',
+		'/developer/smart-contract/hyperstaking_tech': '/learn/hyperstaking',
 	},
 	integrations: [
 		starlight({

@@ -38,7 +38,9 @@ Hedger is the evolution of Zedger, built on DuskEVM and powered by fully homomor
 
 #### Hyperstaking
 
-Hyperstaking is a feature that allows smart contracts to manage stakes with custom logic. Similar to "Account Abstraction," it enables use cases like privacy-preserving staking, affiliate programs, delegation, liquid staking, and yield boosting. Staking operations are initiated via a provisioner key, with signature verification only required for the initial stake, offering flexibility and innovation in staking models.
+Hyperstaking is stake abstraction: a feature that lets smart contracts participate in staking and manage staking rewards with on-chain logic.
+
+It enables use cases like staking pools, delegated staking services, and other programmable staking patterns. See: [Stake Abstraction](/learn/hyperstaking).
 
 #### Kadcast
 
@@ -66,7 +68,11 @@ A shielded account is based on the [Phoenix](#phoenix) UTXO transaction model an
 
 #### Profile
 
-A [profile](/learn/wallet-terminology#profile-and-accounts) is a pairing of a Public Account [Moonlight](#moonlight) and a Shielded Account ([Phoenix](#phoenix) derived from a single mnemonic. Profiles are created in pairs to allow for both public and privacy-preserving transactions.
+A profile is a pairing of a [Moonlight](#moonlight) (public) account and a [Phoenix](#phoenix) (shielded) account derived from a single mnemonic.
+
+Wallets use profiles so you can manage both transaction models side-by-side, while keeping keys and addresses organized.
+
+![Wallet hierarchy](../../../assets/wallet_hierarchy.png)
 
 #### RUES
 

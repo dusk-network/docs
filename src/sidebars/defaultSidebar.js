@@ -39,25 +39,7 @@ const defaultSidebar = [
         label: "Transaction Models",
         link: "learn/deep-dive/duskds-tx-models",
       },
-      {
-        label: "Assets & Regulations",
-        items: [
-          {
-            label: "MiCA",
-            link: "learn/deep-dive/assets-and-regulations/mica",
-          },
-          {
-            label: "Security Lifecycle",
-            link: "learn/deep-dive/assets-and-regulations/lifecycle",
-          },
-          {
-            label: "Security Dematerialization",
-            link: "learn/deep-dive/assets-and-regulations/dematerialization",
-          },
-        ],
-        collapsed: true,
-      },
-      { label: "Wallet Terminology", link: "learn/wallet-terminology" },
+      { label: "Assets & Regulations", link: "learn/deep-dive/assets-and-regulations" },
       { label: "Economic Protocol", link: "learn/deep-dive/economic-protocol" },
       { label: "DuskVM", link: "learn/deep-dive/dusk-vm" },
       { label: "DuskEVM", link: "learn/deep-dive/dusk-evm" },
