@@ -28,7 +28,7 @@ The stake is considered active after a maturity period of 4320 blocks (~12 hours
 :::
 
 ### Interacting with the Stake Contract
-Stake Abstraction requires contracts to interact with the <a href="https://raw.githubusercontent.com/dusk-network/rusk/rusk-1.0.0/contracts/stake/src/state.rs" target="_blank">Stake Contract</a>.
+Stake Abstraction requires contracts to interact with the <a href="https://raw.githubusercontent.com/dusk-network/contracts/main/genesis/stake/src/state.rs" target="_blank" rel="noreferrer">Stake Contract</a>.
 
 
 #### Required contract calls
@@ -72,7 +72,7 @@ To implement Stake Abstraction, you can refer to <a href="https://raw.githubuser
 
 Differently from normal users, that stake directly by calling `stake(stake: Stake)`, smart contracts must use `stake_from_contract(recv: ReceiveFromContract)`.
 
-This is because the <a href="https://raw.githubusercontent.com/dusk-network/rusk/rusk-1.0.0/contracts/stake/src/state.rs" target="_blank">Stake Contract</a> defines `stake_from_contract(recv: ReceiveFromContract)`, which requires a `ReceiveFromContract` object. By doing so, it ensures that the calling contract is verified as the stake owner and that the function is only triggered as part of a fund transfer.
+This is because the <a href="https://raw.githubusercontent.com/dusk-network/contracts/main/genesis/stake/src/state.rs" target="_blank" rel="noreferrer">Stake Contract</a> defines `stake_from_contract(recv: ReceiveFromContract)`, which requires a `ReceiveFromContract` object. By doing so, it ensures that the calling contract is verified as the stake owner and that the function is only triggered as part of a fund transfer.
 
 In the <a href="https://raw.githubusercontent.com/dusk-network/rusk/refs/heads/master/contracts/charlie/src/state.rs" target="_blank">example</a> implementation, `stake()` does not call `stake_from_contract` directly. Instead, it first transfers the funds and then invokes `stake_from_contract` via a `contract-to-contract` call.
 
