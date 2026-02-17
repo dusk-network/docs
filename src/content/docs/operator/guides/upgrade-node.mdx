@@ -3,9 +3,9 @@ title: Upgrade your node
 description: Learn how to update your Dusk node to the latest version of the Nocturne testnet.
 ---
 
-A network may be occasionally upgraded with new features and performance optimizations.
+A network may occasionally be upgraded with new features and performance optimizations.
 
-To make the upgrade process as flawless as possible, the [node installer](https://github.com/dusk-network/node-installer) script may be updated from time to time. This script can be ran in a non-destructive way, meaning it changes only what is needed. It will gracefully shut down Rusk for you.
+To make the upgrade process as flawless as possible, the [node installer](https://github.com/dusk-network/node-installer) script may be updated from time to time. This script can be run in a non-destructive way, meaning it changes only what is needed. It will gracefully shut down Rusk for you.
 
 ## How to Upgrade
 
@@ -71,7 +71,7 @@ If everything else fails, check out the [manual resync](/operator/guides/manual-
 This only applies for testnet.
 :::
 
-Sometimes the Testnet gets reset. For that you need to reset the state of Nocturne.
+Sometimes the testnet gets reset. In that case you need to reset the state of Nocturne.
 
 1. To reset the state of Nocturne, download the latest version of our installer:
 ```sh
@@ -95,9 +95,9 @@ rusk-wallet stake-info
 ```
 If you already have DUSK staked, wait until the chain starts producing blocks. You can check [our explorer](https://testnet.apps.dusk.network/explorer/) to see if the chain is progressing or when it will produce the genesis block.
 
-1. If you do not have testnet DUSK, request nDUSK from the [faucet](/operator/networks#how-to-get-testnet-tokens).
+5. If you do not have testnet DUSK (nDUSK), request it from the [faucet](/operator/networks#how-to-get-testnet-tokens).
 
-2. Stake your nDUSK:
+6. Stake your nDUSK:
 ```sh
 rusk-wallet stake --amt 1000 # Or however much you want to stake
 ```

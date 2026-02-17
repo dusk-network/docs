@@ -173,7 +173,7 @@ For JavaScript integration, use [w3sper](https://github.com/dusk-network/rusk/tr
 
 ## Deploying
 
-To deploy a contract, use the [Rusk Wallet](https://github.com/dusk-network/rusk/tree/master/rusk-wallet/src/bin):
+To deploy a contract, use the [Rusk Wallet](/learn/rusk-wallet):
 
 ```bash
 rusk-wallet contract-deploy \

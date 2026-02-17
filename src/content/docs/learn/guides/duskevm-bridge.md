@@ -3,11 +3,11 @@ title: Bridge DUSK from DuskDS to DuskEVM Testnet
 description: How to use the Dusk Web Wallet to move DUSK from the DuskDS testnet to the DuskEVM testnet and interact with the EVM network.
 ---
 
-Bridge testnet DUSK from DuskDS to DuskEVM using the official Dusk Web Wallet. Once bridged, DUSK is the native gas token on DuskEVM Testnet.
+Bridge testnet DUSK (nDUSK) from DuskDS to DuskEVM using the official Dusk Web Wallet. Once bridged, DUSK is the native gas token on DuskEVM Testnet.
 
 ## Fast path
 
-1. Get testnet DUSK in the Web Wallet and **unshield** the amount you want to bridge. See: [How to get testnet tokens](/operator/networks#how-to-get-testnet-tokens).
+1. Get testnet DUSK (nDUSK) in the Web Wallet and **unshield** the amount you want to bridge. See: [How to get testnet tokens](/operator/networks#how-to-get-testnet-tokens).
 2. Open the Web Wallet (testnet): [apps.testnet.dusk.network/wallet](https://apps.testnet.dusk.network/wallet/)
 3. Go to `Dashboard -> Bridge` and connect your Web3 wallet (approve adding/switching to DuskEVM when prompted).
 4. Set **From: DuskDS** and **To: DuskEVM**, enter an amount, and send.
@@ -17,7 +17,7 @@ Bridge testnet DUSK from DuskDS to DuskEVM using the official Dusk Web Wallet. O
 
 ## 1) Prerequisites
 
-- A Dusk Web Wallet account with some **testnet DUSK** (and the amount you want to bridge **unshielded**). See: [How to get testnet tokens](/operator/networks#how-to-get-testnet-tokens).
+- A Dusk Web Wallet account with some **testnet DUSK (nDUSK)** (and the amount you want to bridge **unshielded**). See: [How to get testnet tokens](/operator/networks#how-to-get-testnet-tokens).
 - A Web3 wallet (e.g. MetaMask) installed in your browser.
 - Optional: [DuskEVM deep dive](/learn/deep-dive/dusk-evm/) and [Deploy on DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm/).
 

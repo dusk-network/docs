@@ -1,61 +1,57 @@
 ---
 title: Core Values
-description: Learn about Dusk’s decentralized Financial Market Infrastructure and how it provides privacy and regulatory compliance.
+description: "What Dusk optimizes for: regulated markets, privacy with selective disclosure, and deterministic settlement."
 ---
+
+This page summarizes the principles behind Dusk and the tradeoffs they imply.
+If you’re new, start with [Overview](/learn/overview) and then read [Core Components](/learn/core-components).
+
+## Principles
+
+### Regulated workflows, on-chain
+
+Dusk is built for markets where rules are part of the product:
+
+- eligibility and access controls
+- disclosure and reporting requirements
+- constraints like limits, holds, and transfer restrictions
+
+### Privacy with selective disclosure
+
+Dusk treats privacy as a protocol feature, not an application add-on:
+
+- confidential balances and transfers where needed
+- the ability to reveal information to authorized parties when required
+
+For details, see [Cryptography](/learn/cryptography) and [Transaction Models](/learn/deep-dive/duskds-tx-models).
+
+### Deterministic settlement
+
+Market infrastructure needs predictable finality. DuskDS is designed for fast, deterministic settlement suitable for regulated venues.
+
+### Modular architecture
+
+Dusk separates settlement from execution so you can match the right environment to each use case:
+
+- DuskDS for consensus, settlement, and privacy-capable transaction models
+- DuskEVM for EVM-compatible application development
 
 ## Vision
 
-Dusk's **vision** describes the desired state of our organization within a foreseeable timeframe and guides the direction of the business's efforts in a practical way. You can regard it as the objective of the organization and the lighthouse in planning and constantly reassessing the step in building a highly-effective strategic plan.
-
 :::tip[Dusk's vision]
-We envision a future where digital assets are seamlessly integrated into the decentralized global economy.
+Digital assets integrated into the decentralized global economy.
 :::
-
-It is worth expanding on some of the terminology of our *vision statement* and their significance for Dusk's overall strategy in advancing our [mission](#mission).
-
-<details class="info">
-<summary>**More on Dusk's vision**</summary>
-💡 Dusk's vision significantly extends the *decentralized finance (DeFi)* focus horizon. The latter relates almost exclusively to a class of digital assets (i.e. utility tokens) alternative to, and non-overlapping with traditional asset-backed instruments. Instead, our vision extends the *DeFi principles* to the whole panoply of assets and, as such, it encompasses the entire ensemble of digital tokens, including those being **asset-backed**, i.e. **tokens representing ownership of real world goods or financial instruments, and as such regulated by the law**. The most emblematic of these assets are [securities](https://www.investopedia.com/terms/s/security.asp), and with *security tokens* we indicate their digital representation on the digital ledger technology (DLT) such as *blockchain*.
-</details>
-
-:::note
-🔮 The term Decentralized Market Infrastructure (DeMI) refers to leveraging Distributed Ledger Technologies (DLTs) to create a protocol-based Financial Market Infrastructure, as opposed to traditional platform-based systems like Central Securities Depositories (CSDs). DeMI enhances the efficiency and reduces the costs of regulated financial markets.
-:::
-
-## Ambition
-
-:::tip[Dusk's ambition]
-A decentralized, privacy-preserving, and programmable financial market infrastructure.
-:::
-
-The [DLT-R regime](https://www.ey.com/en_gr/tax/tax-alerts/regulation-eu-2022-858-on-distributed-ledger-technology-market-infrastructures) came into effect in June 2023. It is Dusk ambition to comply with the DLT-R regulation and enhance a licensed security exchange to operate under such exemption.
 
 ## Mission
 
-With **mission** we define Dusk organization’s *core purpose, focus, and aims*. 
-
 :::tip[Dusk's mission]
-We empower users to fully control their assets.
+Enable people and institutions to control and use their assets on-chain, within real-world constraints.
 :::
-
-This mission statement is short but dense in its significance. In its essence, Dusk enroots within the DeFi movement, insofar as aiming to return to the users the prerogative to be custodians of their own assets, and dispose of them as they see fit (within the confines of what the law allows). 
-
-In fact, the ambition goes far beyond custodianship, as DeFi protocols provide the opportunity to augment digital assets with behaviours and characteristics that can be directly programmed within the assets themselves, and composed as the users sees fit. These behaviours are codified within the so called _smart contracts_.
-
-<details class="info">
-<summary>**More on DeFi advantages**</summary>
-💡 `DeFi` protocols uniquely allow for **user-centric composability of applications**, as well as **global liquidity aggregation** across the entirety of their ecosystem. This departs radically from the incumbent **platform-brokered** landscape, where financial services are siloed, interoperability is almost non-existent, and liquidity is fragmented.
-</details>
 
 ## Culture
 
-At Dusk, we prioritize our core values of **integrity, communication, innovation, responsibility, and collaboration** in all of our endeavors. 
+We aim to be clear and rigorous in the way we build:
 
-<details class="info">
-<summary>**More on Dusk's culture**</summary>
-💡 Dusk is a flat, community-oriented organization that is focused on advancing a novel networking protocol through a combination of pervasive knowledge sharing, an evolutionary development process, frequent communication, and joint ownership of all deliverables. We strive to tame complexity through these practices and to be a trusted and respected leader in the decentralized software industry.
-
-We are committed to honesty, effective communication, and continuous innovation, and we take ownership of our tasks and responsibilities with a focus on excellence and the best interests of our users. We also value collaboration and teamwork, fostering a culture of mutual support and shared knowledge.
-
-These values are integral to our identity as a company and our commitment to delivering high-quality decentralized software.
-</details>
+- write things down (docs, specs, and concrete examples)
+- prefer secure-by-design primitives over “bolt-on” complexity
+- keep developer UX practical (EVM where it helps, native where it matters)

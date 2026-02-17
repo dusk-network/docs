@@ -1,49 +1,52 @@
 ---
 title: Web Wallet
-description: Use the Dusk Web Wallet to manage your DUSK and interact with the network.
+description: Use the Dusk Web Wallet to manage DUSK in your browser.
 ---
 
-The [Dusk Web Wallet](https://wallet.dusk.network) is the seamless tool to manage DUSK and interact with the network securely. Designed with an intuitive UI, the web wallet allows users to send and receive funds, manage assets, and interact with decentralized applications (dApps) built on Dusk. 
+The Dusk Web Wallet is the simplest way to manage DUSK and interact with the network.
+It runs in your browser and supports both **public** (Moonlight) and **shielded** (Phoenix) transfers.
 
-The Web Wallet can be accessed directly from your browser without the need to install any extensions.
+## What you can do with it
 
-With Dusk’s dual-model approach, you can choose to send funds through a **shielded** or **public** transaction, giving you full control over your transaction’s privacy.
+- Create or restore a Dusk wallet from a mnemonic.
+- Send and receive DUSK using public or shielded transfers.
+- Migrate ERC20/BEP20 DUSK to native DUSK: [ERC20/BEP20 Migration](/learn/guides/mainnet-migration).
+- Bridge native DUSK to BSC: [Native DUSK to BEP20 Bridge](/learn/guides/bep20-bridge).
+- Bridge DuskDS testnet to DuskEVM testnet: [DuskDS to DuskEVM bridge](/learn/guides/duskevm-bridge).
 
-ou can easily convert your funds between public and shielded forms. This flexibility accommodates diverse needs, ensuring both user privacy and regulatory compliance
+For node/operator staking workflows, use the CLI wallet and operator guides instead:
+[Staking on Dusk](/learn/guides/staking-basics), [Rusk Wallet](/learn/rusk-wallet), and [Run a provisioner node](/operator/provisioner).
+
 ## How to use the Web Wallet
 
-Using the Web Wallet is easy and intuitive:
+### 1) Open the Web Wallet
 
-### 1) Access the Web Wallet
-Visit the official [Web Wallet](https://wallet.dusk.network) page using any modern web browser.
+Visit the official Web Wallet at <a href="https://apps.dusk.network/wallet/" target="_blank" rel="noreferrer">apps.dusk.network/wallet</a>.
 
 :::note[Important]
-Always ensure you are on the official Dusk website to prevent phishing attacks.
+Always verify the URL before entering your recovery phrase. Never share your mnemonic or private keys.
 :::
 
-### 2) Create or Restore a Wallet
+### 2) Create or restore a wallet
+
 You can either create a new wallet or restore an existing one using your recovery phrase.
 
-#### Option A) Create a New Wallet
-1. Click **Create New Wallet**  
-2. Write down and securely store your **12-word recovery phrase**. This phrase is the only way to recover your wallet. Never share it with anyone, and keep it in a safe
-1. Set a **strong password** to encrypt your wallet. If you lose the password, you can still recover your funds by creating a new wallet from the recovery phrase.
+#### Option A) Create a new wallet
 
-#### Option B) Restore an Existing Wallet
-1. Click **Restore Wallet**  
-2. Enter your **12-word recovery phrase** and follow the instructions to access your funds.
+1. Click **Create New Wallet**.
+2. Write down and securely store your **12-word recovery phrase**.
+3. Set a **strong password** to encrypt your wallet.
 
-### 3) Add and Manage DUSK
-Once your wallet is set up, you’ll be able to view your balance, transaction history, and manage DUSK.
+#### Option B) Restore an existing wallet
 
-- **To Receive DUSK:**  
-   - Navigate to the **Receive** tab and copy your wallet address. Share this address with the sender to receive funds.
+1. Click **Restore Wallet**.
+2. Enter your **12-word recovery phrase** and follow the prompts.
 
-- **To Send DUSK:**  
-   - Navigate to the **Send** tab, enter the recipient’s address, amount, and choose between shielded or public transfer options.  
-   - Confirm and sign the transaction.
+### 3) Receive or send DUSK
 
+- **Receive**: open the **Receive** tab and copy your address.
+- **Send**: open the **Send** tab, enter the recipient and amount, then choose **public** or **shielded**.
 
-:::tip[Tip]
-The Dusk Web Wallet supports both **shielded** and **public** transactions, giving you the flexibility to meet privacy and compliance requirements as needed. You can use Phoenix for confidential transfers and Moonlight when full transparency is essential. [Learn more about these transaction models](/learn/deep-dive/duskds-tx-models). 
+:::tip
+Public transfers use Moonlight. Shielded transfers use Phoenix. Learn more about both models in [Transaction Models on Dusk](/learn/deep-dive/duskds-tx-models).
 :::

@@ -1,165 +1,126 @@
 ---
-title: Tokenomics 
-description: Overview of Dusk’s tokenomics, allocation, vesting schedules, and incentives.
-
-
+title: Tokenomics
+description: DUSK token utility, supply, emissions, and staking incentives.
 ---
 
-The Dusk protocol utilizes the DUSK token both as an incentive for consensus participation and as its primary native currency. DUSK is currently represented as an ERC20 or BEP20 token. Since mainnet is now live, users are able to [migrate tokens to native DUSK](/learn/guides/mainnet-migration) via a burner contract.
+DUSK is the native token used for transaction fees (gas) and staking on the Dusk network.
 
-This page provides an in-depth overview of the DUSK token’s metrics, utility, allocation, emission schedule, rewards, as well as insights from the <a href="https://github.com/dusk-network/audits/blob/main/core-audits/2024-09_protocol-security-review_oak-security.pdf">Economic Protocol Design</a> report.
+If you hold ERC20/BEP20 DUSK (on Ethereum/BSC), follow the [mainnet migration guide](/learn/guides/mainnet-migration) to move to native DUSK.
 
-## Token Metrics
+For economic model rationale and assumptions, see the <a href="https://github.com/dusk-network/audits/blob/main/core-audits/2024-09_protocol-security-review_oak-security.pdf" target="_blank" rel="noreferrer">Economic Protocol Design</a> report.
 
-- **Token Name**: Dusk
-- **Token Symbol**: DUSK
-- **Initial Supply**: 500,000,000 DUSK, comprising both ERC20, BEP20. These are migrated to native DUSK tokens using a burner contract.
-- **Total Emitted Supply**: 500,000,000 DUSK will be emitted over 36 years to reward stakers on the mainnet, following the [Token Emission Schedule](#token-emission-schedule).
-- **Maximum Supply**: 1,000,000,000 DUSK, combining the 500M initial supply and 500M emitted over time.
-- **Circulating Supply**: Available on [this page](https://supply.dusk.network/). The circulating supply reflects the initial supply minus the DUSK held by the [Dusk deployer](https://etherscan.io/token/0x940a2db1b7008b6c776d4faaca729d6d4a4aa551?a=0x618bb3b255928ae6b2046df5c828fa1dc7e3c5f0). 
-* **ICO**: Raised \$8 million in November 2018, with tokens priced at $0.0404. Private sale tokens account for 50% of the total supply, split between 10% DUSK BEP20 and 40% DUSK ERC20.
+## Quick facts
 
-## Token Contract
+- **Symbol**: DUSK
+- **Decimals (native DUSK)**: 9 (`1 DUSK = 1,000,000,000 LUX`)
+- **Decimals (ERC20/BEP20 DUSK)**: 18 (see [migration guide](/learn/guides/mainnet-migration))
+- **Supply model**: 500,000,000 initial + 500,000,000 emitted over time (max 1,000,000,000)
+- **Live supply**: see [supply.dusk.network](https://supply.dusk.network/)
 
-The DUSK token is available as an ERC20 on Ethereum and a BEP20 on Binance Smart Chain.
+## What DUSK is used for
 
-| Chain                | Standard | Contract Address                           |
-|----------------------|----------|--------------------------------------------|
-| Ethereum             | ERC20    | [0x940a2db1b7008b6c776d4faaca729d6d4a4aa551](https://etherscan.io/token/0x940a2db1b7008b6c776d4faaca729d6d4a4aa551) |
-| Binance Smart Chain  | BEP20    | [0xb2bd0749dbe21f623d9baba856d3b0f0e1bfec9c](https://bscscan.com/token/0xb2bd0749dbe21f623d9baba856d3b0f0e1bfec9c) |
+- **Gas**: pay for transactions and on-chain execution.
+- **Staking**: secure the network and earn rewards.
 
-## Token Markets & Exchanges
+## Fees and gas
 
-The DUSK token is widely accessible on top-tier CEXs and DEXs. For more information on the various locations DUSK is accessible, see the markets pages for Coinmarketcap and Coingecko:
-- [DUSK markets Coinmarketcap](https://coinmarketcap.com/currencies/dusk/#Markets)
-- [DUSK markets Coingecko](https://www.coingecko.com/en/coins/dusk)
+Every transaction consumes **gas** (a unit of work). Fees are paid in `DUSK`.
 
-## Token Utility
+- You set a **gas limit** and a **gas price** (in `LUX`).
+- The fee paid is `gas_used * gas_price`.
+- Unused gas is not charged.
+- If a transaction runs out of gas, it reverts, but the gas spent is still paid.
 
-DUSK serves several key purposes within the ecosystem:
-* Used for staking in consensus participation.
-* Rewards to consensus participants.
-* Payment of network fees (See [Transaction fees & gas](#transaction-fees--gas)).
-* Paying for the deployment of dApps on the network.
-* Payment of services on the network.
+Collected fees are part of the **block reward** and are redistributed (see [Incentives](#incentives)).
 
-### Transaction fees & gas
+## Staking parameters
 
-Every transaction on Dusk consumes **gas**, a unit that measures how much work it does on-chain.
+For the user-facing flow, see [Staking on Dusk](/learn/guides/staking-basics).
 
-- You specify a **gas limit** (maximum work you’re willing to pay for) and a **gas price** in `LUX`  
-  (`1 LUX = 10⁻⁹ DUSK).
-- The actual fee paid is `gas_used × gas_price`. Unused gas is not charged.
-- If a transaction runs out of gas during execution, it is reverted and the fee for the gas consumed is still charged.
+- **Minimum stake**: 1,000 DUSK
+- **Maximum stake**: no upper bound
+- **Maturity**: 2 epochs (4,320 blocks)
+- **Unstaking**: no penalties or waiting period
+- **Adding to stake (top-ups)**: see [Adding to an existing stake](/learn/guides/staking-basics#adding-to-an-existing-stake)
 
-Gas price adjusts with network demand. When demand is low, prices tend to be low, resulting in very cheap transactions for users.
+## Incentives
 
-Collected fees are added to the block reward and redistributed as described in [Incentive structure](#incentive-structure).
+Each block has a **block reward** consisting of:
 
-## Token Allocation and Vesting Overview
+- newly emitted DUSK (see [Token emission](#token-emission)), and
+- all transaction fees paid in that block.
 
-The vesting period ran from May 2019 to April 2022.
+Reward distribution:
 
-| Allocation Category | Percentage | DUSK Tokens   | Vested        |
-|---------------------|------------|---------------|---------------|
-| Token Sale          | 50%        | 250,000,000   | 250,000,000   |
-| Team                | 6.4%       | 32,000,000    | 32,000,000    |
-| Advisors            | 6.4%       | 32,000,000    | 32,000,000    |
-| Development         | 18.1%      | 90,500,000    | 90,500,000    |
-| Exchange            | 11.8%      | 59,000,000    | 59,000,000    |
-| Marketing           | 7.3%       | 36,500,000    | 36,500,000    |
-| **Total**           | **100%**   | **500,000,000** | **500,000,000** |
+- **Block generator**: 70% + up to an extra 10% (based on credits included in the certificate; any undistributed portion is burned)
+- **Development fund**: 10%
+- **Validation committee**: 5%
+- **Ratification committee**: 5%
 
-## Staking Details
+## Token emission
 
-Staking is a crucial aspect of the Dusk protocol, allowing token holders to contribute to network security. For more details on the emission schedule, see the **[Token Emission Schedule](/learn/tokenomics#token-emission-schedule)** below. Here are the primary details for staking DUSK tokens:
+The network emits a total of **500,000,000 DUSK** over **36 years** to fund staking rewards.
+Emissions follow a geometric decay model with reduction rate `r = 0.5` (halving every 4 years).
 
-* **Minimum Staking Amount**: 1000 DUSK.
-* **Maximum Staking Amount**: No upper bound.
-* **Stake Maturity Period**: 2 Epochs - 4320 blocks.
-* **Unstaking**: No penalties or waiting period.
+<details>
+<summary><strong>Emission schedule (by period)</strong></summary>
 
-## Token Emission Schedule
+| Period (Years) | Period Duration (Blocks) | Total Emission (DUSK) | Total Supply (Cumulative) | Emission Per Block | Reduction Rate (r) |
+|---|---:|---:|---:|---:|---:|
+| 1 (0-4) | 12,614,400 | 250.48M | 250.48M | 19.8574 | N/A |
+| 2 (4-8) | 12,614,400 | 125.24M | 375.72M | 9.9287 | 0.5 |
+| 3 (8-12) | 12,614,400 | 62.62M | 438.34M | 4.9644 | 0.5 |
+| 4 (12-16) | 12,614,400 | 31.31M | 469.65M | 2.4822 | 0.5 |
+| 5 (16-20) | 12,614,400 | 15.65M | 485.30M | 1.2411 | 0.5 |
+| 6 (20-24) | 12,614,400 | 7.83M | 493.13M | 0.6206 | 0.5 |
+| 7 (24-28) | 12,614,400 | 3.91M | 497.04M | 0.3103 | 0.5 |
+| 8 (28-32) | 12,614,400 | 1.95M | 498.99M | 0.1551 | 0.5 |
+| 9 (32-36) | 12,614,400 | 0.98M | 499.97M | 0.0776 | 0.5 |
 
-The DUSK token emission schedule plays a vital role in incentivizing network participants, particularly in the early stages of the blockchain network, where transaction fees alone may not be sufficient to reward node operators and validators. By systematically emitting tokens over time, the Dusk network ensures that participants are adequately compensated for securing and maintaining the network, fostering its growth and decentralization.
-
-The token emission has been designed to align with the long-term vision of building a robust and enduring ecosystem, while controlling inflation and limiting potential attack vectors. The emission schedule follows a carefully structured geometric decay model, wherein the number of emitted tokens reduces systematically every 4 years. This approach balances the need for continuous token issuance with inflation control, ensuring long-term sustainability and stability for the DUSK token economy.
-
-Key aspects of the DUSK token emission schedule include:
-
-- **36-Year Emission Duration**: The token emission is distributed across 36 years, divided into 9 periods of 4 years each.
-- **Emission Reduction Every 4 Years**: Token emission decreases every 4 years by a fixed reduction rate, ensuring gradual reduction in token issuance, similar to Bitcoin’s halving model.
-
-## Token Emission
-
-The emission rate starts with a reduction rate `r = 0.5`, meaning the token emission halves every 4 years. This strategy is designed to rapidly build network participation by providing strong early incentives.
-
-| Period (Years)     | Period Duration (Blocks) | Total Emission (DUSK) | Total Supply (Cumulative) | Emission Per Block | Reduction Rate (r) |
-|--------------------|--------------------------|-----------------------|---------------------------|--------------------|--------------------|
-| 1 (0-4)            | 12,614,400               | 250.48M               | 250.48M                   | 19.8574 DUSK/block | N/A                |
-| 2 (4-8)            | 12,614,400               | 125.24M               | 375.72M                   | 9.9287 DUSK/block  | 0.5                |
-| 3 (8-12)           | 12,614,400               | 62.62M                | 438.34M                   | 4.9644 DUSK/block  | 0.5                |
-| 4 (12-16)          | 12,614,400               | 31.31M                | 469.65M                   | 2.4822 DUSK/block  | 0.5                |
-| 5 (16-20)          | 12,614,400               | 15.65M                | 485.30M                   | 1.2411 DUSK/block  | 0.5                |
-| 6 (20-24)          | 12,614,400               | 7.83M                 | 493.13M                   | 0.6206 DUSK/block  | 0.5                |
-| 7 (24-28)          | 12,614,400               | 3.91M                 | 497.04M                   | 0.3103 DUSK/block  | 0.5                |
-| 8 (28-32)          | 12,614,400               | 1.95M                 | 498.99M                   | 0.1551 DUSK/block  | 0.5                |
-| 9 (32-36)          | 12,614,400               | 0.98M                 | 499.97M                   | 0.0776 DUSK/block  | 0.5                |
-
-More information regarding the model can be found in the
-<a href="https://github.com/dusk-network/audits/blob/main/core-audits/2024-09_protocol-security-review_oak-security.pdf">Economic Protocol Design</a> report.
-
-## Incentive Structure
-
-Each block has a **block reward** that consists of:
-
-- Newly emitted DUSK according to the [token emission schedule](#token-emission-schedule)
-- All transaction fees paid in that block
-
-This total reward is distributed between network participants and the development fund. In the current design:
-
-- **70%** to the Block Generator (proposal step) and an extra **10%** depending on the
-credits included in the certificate. Any undistributed rewards from this 10% are burned as part of the gas-burning mechanism.
-- **10%** to the Dusk Development Fund
-- **5%** to the Validation Committee (validation step)
-- **5%** to the Ratification Committee (ratification step)
-
-This structure rewards all roles in Succinct Attestation, with a strong incentive for block generators to include as many votes as possible in their certificates.
+</details>
 
 ## Slashing
 
-Dusk uses soft slashing to discourage misbehaviour and long downtime from provisioners. The protocol does not burn a provisioner’s staked DUSK; instead it temporarily reduces how that stake participates and earns rewards.
+Dusk uses **soft slashing** to discourage repeated faults and long downtime.
+Soft slashing does not burn stake; it reduces a provisioner's effective participation and rewards.
 
-### When can you be slashed?
+- **Suspension**: stake is suspended for one or more epochs (not eligible for selection; earns no rewards).
+- **Penalization**: a portion of stake is moved to the claimable rewards pool, reducing effective stake used in sortition.
 
-Soft slashing is only applied when a provisioner repeatedly fails to behave as expected, for example by:
+In practice: run official software, keep it updated and online, and monitor missed duties.
 
-- running outdated or modified node software; or
-- frequently missing assigned duties (e.g. block generator or committee slots).
+## Token versions and contracts
 
-If you run the official, up‑to‑date node and keep it online and in sync, slashing should be rare.
+Native DUSK is the mainnet token.
+ERC20 and BEP20 DUSK exist on other chains for migration and bridging.
 
-### Effects of soft slashing
+| Chain | Standard | Contract address |
+|---|---|---|
+| Ethereum | ERC20 | [0x940a2db1b7008b6c776d4faaca729d6d4a4aa551](https://etherscan.io/token/0x940a2db1b7008b6c776d4faaca729d6d4a4aa551) |
+| BSC | BEP20 | [0xb2bd0749dbe21f623d9baba856d3b0f0e1bfec9c](https://bscscan.com/token/0xb2bd0749dbe21f623d9baba856d3b0f0e1bfec9c) |
 
-Soft slashing has two consequences:
+## Markets
 
-**Suspension**  
+For up-to-date markets and trading venues, see:
 
-After enough faults, the provisioner’s stake is **suspended** for one or more epochs:
+- [CoinMarketCap markets](https://coinmarketcap.com/currencies/dusk/#Markets)
+- [CoinGecko markets](https://www.coingecko.com/en/coins/dusk)
 
-- the suspended stake is not considered for committee selection;  
-- it earns no rewards while suspended;  
-- repeated faults increase the length of future suspensions.  
+## Historical allocation (initial supply)
 
-Once the suspension period ends and the node behaves correctly, the stake becomes eligible again.
+The vesting period ran from May 2019 to April 2022.
 
-**Penalization**  
+<details>
+<summary><strong>Allocation and vesting table</strong></summary>
 
-Alongside suspension, a portion of the stake is **penalized**:
+| Allocation Category | Percentage | DUSK Tokens | Vested |
+|---|---:|---:|---:|
+| Token Sale | 50% | 250,000,000 | 250,000,000 |
+| Team | 6.4% | 32,000,000 | 32,000,000 |
+| Advisors | 6.4% | 32,000,000 | 32,000,000 |
+| Development | 18.1% | 90,500,000 | 90,500,000 |
+| Exchange | 11.8% | 59,000,000 | 59,000,000 |
+| Marketing | 7.3% | 36,500,000 | 36,500,000 |
+| Total | 100% | 500,000,000 | 500,000,000 |
 
-- the penalized portion is moved to the claimable rewards pool, so no DUSK is lost from the system;  
-- the effective stake used in sortition is reduced, so the node is selected less often;  
-- the penalty grows with consecutive suspensions (starting around 10% of the stake and increasing in steps).  
-If the effective stake falls below the minimum (1000 DUSK), it must be un‑staked and re‑staked to participate again.
-
-In practice, avoiding slashing is straightforward: run the official software, keep your node current and online, and monitor it for missed duties.
+</details>

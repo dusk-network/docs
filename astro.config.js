@@ -27,6 +27,7 @@ export default defineConfig({
 		'/learn/deep-dive/assets-and-regulations/mica': '/learn/deep-dive/assets-and-regulations',
 		'/learn/deep-dive/assets-and-regulations/lifecycle': '/learn/deep-dive/assets-and-regulations',
 		'/learn/deep-dive/assets-and-regulations/dematerialization': '/learn/deep-dive/assets-and-regulations',
+		'/learn/deep-dive/economic-protocol': '/learn/tokenomics',
 		'/learn/wallet-terminology': '/learn/glossary',
 		'/developer/integrations/hashing-algorithms': '/developer/integrations/reference',
 		'/developer/integrations/addresses': '/developer/integrations/reference',

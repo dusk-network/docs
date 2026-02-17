@@ -5,7 +5,7 @@ description: Legacy programs and guides kept for transparency. These flows are n
 
 This page collects legacy programs and guides that are no longer active.
 
-If you’re looking to move ERC20/BEP20 DUSK to native DUSK today, use: [BEP20/ERC20 Migration](/learn/guides/mainnet-migration/).
+If you’re looking to move ERC20/BEP20 DUSK to native DUSK today, use: [ERC20/BEP20 Migration](/learn/guides/mainnet-migration/).
 
 ## Mainnet Genesis On-Ramp (Ended)
 
@@ -35,4 +35,3 @@ This only applies if you staked ERC20 DUSK via the ITN2 staking portal (pre-main
 3. In **Write Contract**, call `withdraw(amount)` with that exact amount.
 
 If you need help recovering funds, ask in the Dusk Discord: <a href="https://discord.gg/dusk-official" target="_blank" rel="noreferrer">discord.gg/dusk-official</a>.
-

@@ -1,42 +1,41 @@
 ---
 title: Cryptography
-description: An overview of the cryptographic primitives used in Dusk.
+description: The main cryptographic building blocks behind Dusk’s privacy and verification.
 ---
 
-At the core of Dusk’s security model is a carefully curated suite of cryptographic primitives, many of which Dusk has helped pioneer. From the first Rust implementation of PLONK to research on PlonKup, FORT, and both the Reinforced Concrete hash and Poseidon Hash, Dusk has been pushing the state of the art to combine institutional-grade privacy with verifiable performance. Other building blocks such as BLS12-381, JubJub, Schnorr, sparse Merkle tree, and the PLONK proving system, form the low-level toolkit that powers Dusk.
+Dusk uses zero-knowledge proofs and elliptic curve cryptography to enable confidential transactions and selective disclosure.
+This page is a high-level map of the primitives you’ll see referenced across the docs.
 
-## Dusk primitives
+For protocol-level details and formal security arguments, refer to the [Dusk whitepaper](https://dusk-cms.ams3.digitaloceanspaces.com/Dusk_Whitepaper_2024_4db72f92a1.pdf) and the papers listed in [Additional Resources](/learn/deep-dive/additional-resources).
+
+## Primitives used in Dusk
 
 ![Elliptic Curves image](../../../assets/elliptic_curves.png)
 
-At the foundation of Dusk’s architecture are the cryptographic primitives - BLS12_381, JubJub, Schnorr and Poseidon. These cryptography tools provide the robust security and privacy features of the network. Besides these, we also make use of our own Merkle tree implementation called dusk-merkle, and our own PLONK proving system.
+At the foundation of Dusk’s architecture are primitives like **BLS12-381**, **JubJub**, **Schnorr**, and **Poseidon**. Dusk also uses Merkle tree constructions and a PLONK-based proving stack.
 
-### BLS12_381
+### BLS12-381
 
-BLS12_381 is a pairing-friendly elliptic curve used within Dusk to enable aggregation of signatures, which significantly reduces the amount of data to be stored and transmitted over the network, improving overall efficiency of the blockchain. This curve is especially crucial in the context of zero-knowledge proofs, where it provides the backbone for secure and private transactions.
+BLS12-381 is a pairing-friendly elliptic curve used in many modern proof systems. In Dusk it appears as part of the zero-knowledge and signature stack.
 
 ### JubJub
 
-JubJub is an elliptic curve specifically designed to enable fast, secure zero-knowledge proofs. This curve is utilized within Dusk for the construction of efficient zk-SNARKs, allowing transactions and contracts to maintain privacy and integrity without the need to reveal underlying data.
+JubJub is an elliptic curve that’s efficient in SNARK-friendly settings and is commonly used in privacy-preserving designs.
 
 ### Schnorr Signatures
 
-Schnorr signatures are a type of digital signature scheme. They offer resistance against forgery. In Dusk, Schnorr signatures contribute significantly to securing user transactions and smart contract interactions. They ensure that only valid transactions are processed and added to the blockchain.
+Schnorr signatures are a signature scheme used for authentication and integrity. In Dusk they are part of the foundation for signing and verifying protocol actions.
 
 ### Poseidon
 
-Poseidon is a cryptographic hash function specifically designed for use in zero-knowledge circuits. It is optimized for performance, security and data integrity within Dusk. By producing a unique hash value for every distinct input, it forms the heart of Dusk’s data structures, making it virtually impossible to alter transaction data once it’s included in the blockchain.
+Poseidon is a hash function designed to be efficient inside zero-knowledge circuits. It is commonly used for commitments and Merkle tree hashing in ZK applications.
 
-### Dusk-Merkle
+### dusk-merkle
 
-Dusk also includes a custom, sparse Merkle tree implementation that is agnostic to the choice of hash function. Merkle trees are a fundamental part of many blockchains, enabling efficient and secure verification of large data structures. The Dusk Merkle tree is designed for flexibility and performance, given it’s used in multiple locations like the stake and transfer contract, and Citadel. 
- 
+Dusk includes a sparse Merkle tree implementation (`dusk-merkle`). Merkle trees enable efficient membership proofs over large datasets and show up throughout blockchain systems.
+
 ### PLONK
 
-PLONK is a versatile proof system developed to facilitate the implementation of zero-knowledge proofs. It forms the core of Dusk’s proof system, allowing efficient and private transactions on the network that are both small in proof size and fast to verify. 
+PLONK is a proving system used to build zero-knowledge proofs. In Dusk it underpins privacy-preserving transactions and protocols that require succinct, verifiable computation.
 
-With PLONK, developers can define custom and reusable circuits that can be integrated into Dusk based smart contracts. 
-
-If you want the full cryptographic details and formal security arguments,
-refer to the [Dusk whitepaper](https://dusk-cms.ams3.digitaloceanspaces.com/Dusk_Whitepaper_2024_4db72f92a1.pdf) and the papers listed in
-[Additional Resources](/learn/deep-dive/additional-resources).
+With PLONK, developers can define reusable circuits and generate proofs that can be verified on-chain.
