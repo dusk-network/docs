@@ -1,0 +1,7 @@
+[
+  { "generatorBlsPubkey": "genKey1", "reward_dusk": 50000.12345678 },
+  { "generatorBlsPubkey": "genKey2", "reward_dusk": 25000.00000000 },
+  { "generatorBlsPubkey": "genKey3", "reward_dusk": 12500.5 },
+  { "generatorBlsPubkey": "genKey4", "reward_dusk": 7500.98765432 },
+  { "generatorBlsPubkey": "genKey5", "reward_dusk": 3000.25 }
+]

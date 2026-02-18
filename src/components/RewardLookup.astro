@@ -1,0 +1,105 @@
+<section>
+  <p>Enter your address to see your reward.</p>
+
+  <div>
+    <input id="address" placeholder="Paste your address here" />
+    <button id="check">Check</button>
+  </div>
+
+  <div id="status"></div>
+
+  <div id="reward" class="hidden">
+    <span>Reward:</span>
+    <span id="rewardValue"></span>
+  </div>
+</section>
+
+<style>
+  .hidden {
+    display: none;
+  }
+</style>
+
+<script is:inline>
+  (async () => {
+    const $ = (id) => document.getElementById(id);
+    const address = $("address");
+    const btn = $("check");
+    const status = $("status");
+    const rewardBox = $("reward");
+    const rewardValueEl = $("rewardValue");
+
+    function format(number, f = 2) {
+      return Number(number).toLocaleString(undefined, {
+        maximumFractionDigits: f,
+      });
+    }
+
+    function resetUI() {
+      status.textContent = "";
+      rewardValueEl.textContent = "";
+      rewardBox.classList.add("hidden");
+    }
+
+    // Normalize ETH and BLS addresses
+    const normEth = (v) => v.trim().toLowerCase();
+    const normBls = (v) => v.trim().toLowerCase();
+
+    // Prefetch both datasets once
+    const maps = { generators: new Map(), erc20: new Map() };
+
+    async function loadJson(url) {
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) throw new Error("HTTP " + response.status);
+      return response.json();
+    }
+
+    try {
+      const [gen, erc] = await Promise.all([
+        loadJson("/data/itn2/rewardsGenerators.json"),
+        loadJson("/data/itn2/rewardsErc20.json"),
+      ]);
+
+      for (const row of gen || []) {
+        const k = normBls(String(row.generatorBlsPubkey ?? ""));
+        if (k) maps.generators.set(k, row);
+      }
+      for (const row of erc || []) {
+        const k = normEth(String(row.ethAddress ?? ""));
+        if (k) maps.erc20.set(k, row);
+      }
+    } catch (e) {
+      console.error(e);
+      status.textContent = "Failed to load reward data.";
+    }
+
+    function check() {
+      resetUI();
+
+      const raw = (address.value || "").trim();
+      if (!raw) {
+        status.textContent = "Please enter an address.";
+        return;
+      }
+
+      // Try BLS first, then ETH
+      const hit =
+        maps.generators.get(normBls(raw)) ?? maps.erc20.get(normEth(raw));
+
+      if (!hit) {
+        status.textContent = "Address not found.";
+        return;
+      }
+
+      status.textContent = "";
+      rewardValueEl.textContent = `${format(hit.reward_dusk ?? 0, 2)} DUSK`;
+      rewardBox.classList.remove("hidden");
+    }
+
+    btn.addEventListener("click", check);
+    address.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") check();
+    });
+    address.addEventListener("input", resetUI);
+  })();
+</script>
