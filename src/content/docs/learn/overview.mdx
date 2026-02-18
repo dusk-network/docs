@@ -1,35 +1,29 @@
 ---
 title: About Dusk
-description: Build regulated, privacy-preserving finance on a purpose-built blockchain.
+description: A blockchain for regulated markets that need privacy, compliance controls, and fast settlement.
 
 ---
-import { LinkCard, Card, CardGrid } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
-Dusk is the privacy blockchain for regulated finance.
+Dusk is a blockchain designed for regulated finance: you can issue, trade, and settle assets on-chain without putting sensitive market data on public display.
 
-It lets you launch and use markets where:
+## At a glance
 
-- Institutions can meet real regulatory requirements on‑chain  
-- Users get confidential balances and transfers instead of full public exposure  
-- Developers build with familiar EVM tools plus native privacy and compliance primitives
+On Dusk you can build markets where:
 
-Dusk combines:
-
-- Zero‑knowledge technology for confidentiality  
-- On‑chain compliance for MiCA / MiFID II / DLT Pilot Regime / GDPR‑style regimes  
-- Succinct Attestation, a PoS consensus protocol for fast, final settlement  
-- A modular architecture with DuskDS (data & settlement) and DuskEVM (EVM execution)
+- **Institutions** can encode eligibility, disclosure, and reporting rules into on-chain workflows.
+- **Users** can use confidential balances and transfers (with the ability to reveal information to authorized parties when required).
+- **Developers** can ship dApps with familiar EVM tooling while relying on a settlement layer built for privacy and compliance.
 
 ## What is Dusk?
 
-Most financial markets still run on opaque, centralized systems.  
-Dusk is built to move those workflows on‑chain without sacrificing:
+Most financial market infrastructure is still a patchwork of closed systems. Public blockchains remove platform risk, but fully transparent execution leaks positions, counterparties, and balances.
 
-- Regulatory compliance  
-- Counterparty privacy  
-- Execution speed and finality
+Dusk is built to support regulated markets on-chain without forcing a choice between:
 
-On Dusk, institutions can issue and manage financial instruments while enforcing disclosure, KYC/AML, and reporting rules directly in the protocol.
+- **Compliance** (KYC/AML checks, eligibility, limits, reporting, disclosure)
+- **Privacy** (confidential balances and transfers, selective disclosure)
+- **Settlement performance** (fast, deterministic finality)
 
 In short: Dusk is a privacy-enabled, regulation-aware blockchain for institutional-grade finance.
 
@@ -37,7 +31,7 @@ In short: Dusk is a privacy-enabled, regulation-aware blockchain for institution
 
 ### Built for regulated markets
 
-Dusk is designed around the needs of regulated financial institutions:
+Dusk is designed around the needs of regulated financial institutions and venues:
 
 - Native support for compliant issuance of securities and RWAs  
 - Identity and permissioning primitives that let you differentiate between public and restricted flows  
@@ -47,11 +41,11 @@ See: [Core Values](/learn/core-values) and [Tokenization & Native Issuance](/lea
 
 ### Privacy by design, transparent when needed
 
-Dusk uses zero‑knowledge proofs and dual transaction models (Phoenix and Moonlight) to let users choose between:
+Dusk uses zero‑knowledge proofs and dual transaction models (Phoenix and Moonlight) to let you choose between:
 
-- Public transactions for transparent flows, and  
-- Shielded transactions for confidential balances and transfers,  
-  with the ability to reveal information to authorized parties when required.
+- Public transactions for transparent flows
+- Shielded transactions for confidential balances and transfers
+- Selective disclosure to authorized parties when required
 
 See: [Cryptography](/learn/cryptography) and [Transaction Models on Dusk](/learn/deep-dive/duskds-tx-models).
 
@@ -67,10 +61,12 @@ For the full consensus specification, see Section 3 “Consensus mechanism” of
 
 ### Modular & EVM-friendly
 
-Dusk separates settlement from execution, making it easier to match the right environment to each use case:
-- DuskDS – consensus, data availability, settlement, and the privacy‑enabled transaction model  
-- DuskEVM – an Ethereum‑compatible execution layer where DUSK is the native gas token  
-- Native bridging between layers so assets can move where they’re most useful
+Dusk separates settlement from execution:
+
+- **DuskDS**: consensus, data availability, settlement, and the privacy-enabled transaction model
+- **DuskEVM**: an Ethereum-compatible execution layer where DUSK is the native gas token
+
+Assets can move between layers so you can use the right environment for each job.
 
 See: [Core Components](/learn/core-components) and [DuskEVM Developer Docs](/developer/smart-contracts-dusk-evm/deploy-on-evm).
 
@@ -107,7 +103,7 @@ Here’s how the main components fit together:
 | **Rusk**   | Reference node implementation that runs Succinct Attestation       | [Run a node](/operator/overview)            |
 | **Citadel**| Identity & access primitives for compliant, permissioned flows     | [Core Components](/learn/core-components#citadel) |
 
-If you want a deeper technical dive, start with [Cryptography](/learn/cryptography) or the [Dusk Whitepaper](https://dusk-network-dusks3.s3.eu-central-1.amazonaws.com/Dusk_Whitepaper_2024_4db72f92a1.pdf).
+If you want a deeper technical dive, start with [Cryptography](/learn/cryptography) or the [Dusk Whitepaper](https://dusk-cms.ams3.digitaloceanspaces.com/Dusk_Whitepaper_2024_4db72f92a1.pdf).
 
 ## Start building on Dusk
 

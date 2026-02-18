@@ -17,8 +17,8 @@ This guide explains setting up the wallet and the last steps needed to start run
 
 Before setting up your node wallet, you’ll need a mnemonic. You can obtain one using any of the following methods:
 
-- **Using the CLI wallet ([rusk-wallet](https://github.com/dusk-network/rusk/blob/master/rusk-wallet/src/bin/README.md))**, either directly on your node or locally on your machine. You can download Rusk Wallet from the [Rusk releases page](https://github.com/dusk-network/rusk/releases?q=rusk+wallet&expanded=true).
-- **Using the [Web Wallet](https://apps.dusk.network/wallet/setup/)** if you would rather use a web app to access your wallet on your main device.
+- **Using the CLI wallet ([Rusk Wallet](/learn/rusk-wallet))**, either directly on your node or locally on your machine. You can download it from the [Rusk releases page](https://github.com/dusk-network/rusk/releases?q=rusk+wallet&expanded=true).
+- **Using the [Web Wallet](/learn/web-wallet)** if you would rather use a web app to access your wallet on your main device.
 
 **Important:** Back up your mnemonic phrase securely and never share it. Anyone with access to this phrase can control your wallet and funds.
 

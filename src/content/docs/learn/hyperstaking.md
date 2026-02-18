@@ -31,9 +31,9 @@ Contracts can implement arbitrary reward-splitting rules (for example: route a p
 
 - The **minimum stake** requirement applies to contracts too: **1,000 DUSK**.
 - Stake is considered active after a maturity period of **4320 blocks (~12 hours)**.
-- Reward distribution depends on consensus participation; see [Staking basics](/learn/guides/staking-basics#how-are-rewards-determined).
+- Reward distribution depends on consensus participation; see [Staking on Dusk](/learn/guides/staking-basics#how-are-rewards-determined).
 
-## Technical guide (smart contract developers) {#technical-guide}
+## Technical guide (smart contract developers)
 
 Stake abstraction requires contracts to interact with the genesis **Stake Contract** (and the **Transfer Contract** for contract-to-contract calls).
 

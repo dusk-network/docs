@@ -44,7 +44,7 @@ After the 4320-block maturity period (about 12 hours). See [/learn/guides/stakin
 
 #### How do I increase stake or compound rewards?
 
-See [/learn/guides/staking-basics#re-stake-rewards--increase-stake](/learn/guides/staking-basics#re-stake-rewards--increase-stake).
+See [/learn/guides/staking-basics#adding-to-an-existing-stake](/learn/guides/staking-basics#adding-to-an-existing-stake).
 
 ## Keys and Recovery
 

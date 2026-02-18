@@ -72,12 +72,12 @@ The [multisig contract](https://github.com/dusk-network/multisig-contract) conta
 ## Token Details
 
 - Token: `dusk`
-- Token decimals: `9` (18 decimals for ERC20 / BEP20 versions)
+- Token decimals: `9` (ERC20/BEP20 versions use 18 decimals)
 - Consensus mechanism: Succinct Attestation
 
 ## Token Migration (If Applicable)
 
-Users can migrate ERC20/BEP20 DUSK to native DUSK using the [migration contract](https://github.com/dusk-network/dusk-migration) and the [Web Wallet](https://wallet.dusk.network/).
+Users can migrate ERC20/BEP20 DUSK to native DUSK using the [migration contract](https://github.com/dusk-network/dusk-migration) and the [Web Wallet](https://apps.dusk.network/wallet/).
 
 More information: [/learn/guides/mainnet-migration](/learn/guides/mainnet-migration).
 
