@@ -3,13 +3,14 @@ title: Run an archive node
 description: Learn about Dusk archive nodes that store and give access to Dusk’s historical data.
 ---
 
-Archive nodes extend the functionality of [Provisioners](/operator/provisioner) by also preserving a complete historical record of the Dusk blockchain. While Provisioners are focused solely on the current state, archive nodes provide essential long-term data access that supports applications, users, researchers, and auditors who need comprehensive historical information.
+Archive nodes extend the functionality of [Provisioners](/operator/provisioner) by also preserving a complete historical record of the Dusk blockchain. While provisioners focus on the current state and consensus duties, archive mode adds long-term historical data access for applications, users, researchers, and auditors.
 
-Archive nodes play a unique role in the Dusk Network by focusing on data storage and accessibility, rather than participating in consensus. This means they are not required to stake DUSK, as they serve an entirely supportive function for dApps and services that rely on historical records.
+Archive nodes are commonly run as data-serving infrastructure and do not need to stake DUSK. However, archive mode is built on top of the regular node stack, so an archive node can also be configured to participate in consensus if you choose to stake and run it that way.
 
 In short, archive nodes:
 - Provide additional historical data (such as events emitted by contracts) that is not stored by a Provisioner node
-- Can participate in consensus, by staking DUSK. However, they are not required to.
+- Expose archive-only GraphQL queries such as `moonlightHistory`, `fullMoonlightHistory`, and `finalizedEvents`
+- Can also participate in consensus by staking DUSK, though that is optional
 
 :::tip[Run an Archive node]
 If you want to quickly launch & run an archive node, you can use the <a href="https://github.com/dusk-network/node-installer" target="_blank">node installer</a> by following [the archive guide](/operator/archive-node).
@@ -83,7 +84,9 @@ You can check which GraphQL queries are available by retrieving the schema (SDL)
 curl -s -X POST "http://<your-node-host>:8080/on/graphql/query"
 ```
 
-This should now return a different list than a normal node returns. An example endpoint that is now available is the **checkBlock** endpoint, which returns true or false whether a block height matches a specific block hash, which can also be queried only for finalized blocks.
+This should now return a different schema than a normal node returns. Archive-enabled nodes expose additional historical queries such as `moonlightHistory`, `fullMoonlightHistory`, and `finalizedEvents`.
+
+A regular node also exposes `checkBlock`, but the `onlyFinalized: true` behavior below is archive-only.
 
 In order to test this endpoint, you can run the following command.
 

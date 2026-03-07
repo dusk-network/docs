@@ -7,9 +7,18 @@ description: "The official CLI wallet for Dusk: scripting, staking, and operator
 
 If you prefer a UI for everyday transfers, use the [Web Wallet](/learn/web-wallet).
 
+Use these as the source of truth for your installed version:
+
+- The upstream CLI reference:
+  <a href="https://github.com/dusk-network/rusk/blob/master/rusk-wallet/src/bin/README.md" target="_blank" rel="noreferrer">rusk-wallet/src/bin/README.md</a>
+- The current releases:
+  <a href="https://github.com/dusk-network/rusk/releases?q=rusk+wallet&expanded=true" target="_blank" rel="noreferrer">Rusk releases</a>
+- Your local help output:
+  `rusk-wallet --help` and `rusk-wallet <command> --help`
+
 ## Install
 
-- Download a prebuilt binary from the <a href="https://github.com/dusk-network/rusk/releases?q=rusk+wallet&expanded=true" target="_blank" rel="noreferrer">Rusk releases page</a>.
+- Download a prebuilt binary from the releases page.
 - Or build from source from the <a href="https://github.com/dusk-network/rusk" target="_blank" rel="noreferrer">rusk repo</a>.
 
 ## Usage
@@ -33,54 +42,6 @@ rusk-wallet --help
 rusk-wallet <command> --help
 ```
 
-The full CLI command reference lives in the upstream README:
-<a href="https://github.com/dusk-network/rusk/blob/master/rusk-wallet/src/bin/README.md" target="_blank" rel="noreferrer">rusk-wallet/src/bin/README.md</a>.
-
-## Common tasks
-
-### Create or restore a wallet
-
-```bash
-rusk-wallet create
-```
-
-```bash
-rusk-wallet restore
-```
-
-### Check balance
-
-```bash
-rusk-wallet balance
-```
-
-### Transfer funds
-
-Use the built-in help for the exact flags:
-
-```bash
-rusk-wallet transfer --help
-```
-
-### Stake (owner key optional)
-
-A Dusk stake has two roles:
-
-- **Consensus key**: used to participate in consensus.
-- **Owner key**: the address that can `unstake` and `withdraw`.
-
-If you don't specify `--owner`, the consensus key is also the owner.
-
-```bash
-# Stake with the default owner (consensus key)
-rusk-wallet stake --amt 1000
-
-# Stake with a separate owner address
-rusk-wallet stake --amt 1000 --owner <OWNER_ADDRESS>
-```
-
-For the node-operator flow (exporting consensus keys, staking, and monitoring with `stake-info`), follow: [Wallet setup](/operator/guides/node-wallet-setup).
-
 ## Non-interactive use (automation)
 
 Most commands prompt for a wallet password when they need to decrypt secrets. For automation, you can provide it via `RUSK_WALLET_PWD`:
@@ -90,4 +51,18 @@ export RUSK_WALLET_PWD=<your_password>
 rusk-wallet balance
 ```
 
+For exporting provisioner keys in headless environments:
+
+```bash
+export RUSK_WALLET_EXPORT_PWD=<export_password>
+```
+
 Only do this in controlled environments, and be careful not to leak passwords via shell history, logs, or CI output.
+
+## Operator workflows
+
+If you are using the wallet for provisioner or archive-node operations, see:
+
+- [Node wallet setup](/operator/guides/node-wallet-setup)
+- [Provisioner node](/operator/provisioner)
+- [Archive node](/operator/archive-node)
