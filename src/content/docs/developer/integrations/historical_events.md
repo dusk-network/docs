@@ -5,7 +5,9 @@ description: Documentation on the access to blockchain transaction history for p
 
 ## Overview
 
-The GraphQL API provides access to finalized historical blockchain transaction-events, involving public (Moonlight) `DUSK` value transfers. It includes two primary endpoints:
+These queries are **archive-only**. You need an archive-enabled node, or a public archive endpoint, to use them. On a non-archive node they are unavailable.
+
+The archive GraphQL API provides access to finalized historical blockchain transaction-events involving public (Moonlight) `DUSK` value transfers. It includes two primary endpoints:
 
 1. `moonlightHistory`
 2. `fullMoonlightHistory`

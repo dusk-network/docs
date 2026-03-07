@@ -44,7 +44,7 @@ Stake abstraction requires contracts to interact with the genesis **Stake Contra
 - Transfer contract source:
   <a href="https://raw.githubusercontent.com/dusk-network/contracts/main/genesis/transfer/src/state.rs" target="_blank" rel="noreferrer">genesis/transfer</a>
 - Example implementation:
-  <a href="https://raw.githubusercontent.com/dusk-network/rusk/refs/heads/master/contracts/charlie/src/state.rs" target="_blank" rel="noreferrer">rusk/contracts/charlie</a>
+  <a href="https://raw.githubusercontent.com/dusk-network/rusk/refs/heads/master/contracts/tests/charlie/src/state.rs" target="_blank" rel="noreferrer">rusk/contracts/tests/charlie</a>
 
 ### Required Stake Contract calls
 

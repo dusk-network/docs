@@ -65,7 +65,7 @@ ruskquery block-height
 Once your node is close to the current block height, you can restake your DUSK tokens:
 
 ```sh
-rusk-wallet stake <amount>
+rusk-wallet stake --amt <amount>
 ```
 Replace `<amount>` with the number of DUSK tokens you wish to stake.
 

@@ -3,12 +3,12 @@ title: W3sper SDK
 description: JavaScript SDK for generating profiles, building transactions, and querying Dusk nodes.
 ---
 
-W3sper (`@dusk/w3sper`) is the JavaScript SDK used by Dusk apps and tooling to interact with nodes.
+W3sper (`@dusk/w3sper`) is the JavaScript SDK used by Dusk apps and tooling to interact with nodes. Prefer it over calling raw RUES endpoints directly from application code.
 
 ## Install
 
 ```sh
-npm install @dusk/w3sper
+deno add jsr:@dusk/w3sper
 ```
 
 ## Connect
@@ -75,15 +75,17 @@ console.log(tip.block.header);
 
 ## Offline Mode (Optional)
 
-When you call `Network.connect(...)`, W3sper loads the wallet-core WASM driver from the node (`/static/drivers/`).
-For offline usage, load the driver yourself:
+When you call `Network.connect(...)`, W3sper loads the matching `wallet-core` WASM driver from the node.
+For the current 1.6 line, that driver is served as `wallet-core-1.6.0.wasm`.
+
+For offline usage, download that same versioned driver and load it yourself:
 
 ```js
 import { ProfileGenerator, useAsProtocolDriver } from "@dusk/w3sper";
 
 async function getLocalWasmBuffer() {
   // Must return bytes (Uint8Array/ArrayBuffer). Adjust to your environment.
-  return Deno.readFile("./wallet-core.wasm");
+  return Deno.readFile("./wallet-core-1.6.0.wasm");
 }
 
 const seeder = () => crypto.getRandomValues(new Uint8Array(64));
@@ -97,8 +99,8 @@ await useAsProtocolDriver(await getLocalWasmBuffer()).then(async () => {
 
 WASM download URLs:
 
-- Mainnet: `https://nodes.dusk.network/static/drivers/wallet-core.wasm`
-- Testnet: `https://testnet.nodes.dusk.network/static/drivers/wallet-core.wasm`
+- Mainnet: `https://nodes.dusk.network/static/drivers/wallet-core-1.6.0.wasm`
+- Testnet: `https://testnet.nodes.dusk.network/static/drivers/wallet-core-1.6.0.wasm`
 
 ## Units
 

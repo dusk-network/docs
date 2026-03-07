@@ -11,7 +11,7 @@ Accounts in Dusk manage transactions with different visibility levels. An accoun
 
 #### Archive Node
 
-An [archive node](/operator/archive-node) stores the full historical record of the Dusk blockchain and does not participate in consensus.
+An [archive node](/operator/archive-node) stores the full historical record of the Dusk blockchain and exposes archive-specific historical queries. Archive mode can also participate in consensus because it extends the regular node stack rather than replacing it.
 
 #### Citadel
 
