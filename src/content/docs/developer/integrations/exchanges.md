@@ -8,10 +8,14 @@ description: "Practical notes for listing DUSK: connectivity, deposits/withdrawa
 - Decide how you'll access the network:
   - Run your own node (recommended for production).
   - Use public endpoints (good for prototyping).
-  - Run (or use) an archive node if you need address-based history queries.
+  - Run (or use) an archive node if you need address-based history queries such as `fullMoonlightHistory` or `moonlightHistory`.
 - Support Moonlight (public) deposits and withdrawals.
 - Handle finality and reverts: treat funds as final once the containing block is `finalized`, and re-process if a block is reverted.
 - Use the memo field if you need per-user tagging.
+
+:::tip[Use W3sper for Transaction Submission]
+For transaction construction, signing, and submission, prefer the [W3sper SDK](/developer/integrations/w3sper). Use raw HTTP endpoints only if you are building lower-level infrastructure around RUES.
+:::
 
 ## Network Access
 
@@ -30,7 +34,7 @@ For the full HTTP/WS API and event subscription model (RUES), see [/developer/in
 
 Two common approaches:
 
-- **Archive GraphQL (simplest):** poll `fullMoonlightHistory` or `moonlightHistory`. See [/developer/integrations/historical_events](/developer/integrations/historical_events).
+- **Archive GraphQL (simplest):** poll `fullMoonlightHistory` or `moonlightHistory` on an archive-enabled node. See [/developer/integrations/historical_events](/developer/integrations/historical_events).
 - **Real-time (RUES):** subscribe to blocks/transactions and correlate with GraphQL `tx(hash: ...)` lookups.
 
 ## Submitting Withdrawals

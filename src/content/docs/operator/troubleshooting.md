@@ -31,10 +31,12 @@ Answer with a capital **Y**, otherwise the operation will abort.
 Run the `ruskreset` command to fix this.
 
 #### "stake" command not recognized
-If staking via Moonlight, you can launch:
+Use the current CLI help output as the source of truth for your installed wallet version. The normal staking flow uses `stake`, for example:
 
 ```bash
-rusk-wallet moonlight-stake --amt 3000
+rusk-wallet --help
+rusk-wallet stake --help
+rusk-wallet stake --amt 3000
 ```
 
 #### Serialization error

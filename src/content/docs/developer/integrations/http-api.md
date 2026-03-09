@@ -3,7 +3,13 @@ title: HTTP API
 description: Query nodes, broadcast transactions, and subscribe to real-time events using RUES over HTTP and WebSocket.
 ---
 
+:::tip[Prefer W3sper First]
+For application integrations, prefer the [W3sper SDK](/developer/integrations/w3sper). It wraps transaction building, proving, submission, and common node interactions.
+:::
+
 The <a href="https://github.com/dusk-network/rusk/wiki/RUES-%28Rusk-Universal-Event-System%29" target="_blank"><strong>Rusk Universal Event System (RUES)</strong></a> is the public interface exposed by Dusk nodes.
+
+This page covers the common low-level HTTP and WebSocket surface. Treat it as an implementation guide, not as a frozen protocol spec.
 
 - Use **HTTP `POST`** for request/response calls (query node state, submit transactions, generate proofs, etc.).
 - Use **WebSocket + HTTP `GET`/`DELETE`** for real-time event subscriptions.
@@ -51,6 +57,10 @@ If the requested version is incompatible, the node rejects the request.
 **Endpoint**: `/on/graphql/query`  
 **Method**: `POST`  
 **Body**: a GraphQL query string.
+
+:::note
+Archive-only GraphQL fields such as `moonlightHistory`, `fullMoonlightHistory`, and `finalizedEvents` require an archive-enabled node.
+:::
 
 ### Get the schema (SDL)
 
@@ -257,5 +267,5 @@ Events are sent as WebSocket **binary messages**:
 2. JSON header bytes (includes `Content-Location`).
 3. Raw event data bytes (format depends on the event).
 
-If you need historical data (archive), use GraphQL queries such as `moonlightHistory` and `finalizedEvents`.
+If you need historical data, use an archive-enabled node and GraphQL queries such as `moonlightHistory`, `fullMoonlightHistory`, and `finalizedEvents`.
 See: [Retrieve historical events](/developer/integrations/historical_events).
