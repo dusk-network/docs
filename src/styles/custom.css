@@ -6,6 +6,17 @@
 :root {
   --sl-font: "Soehne";
   --sl-font-mono: "Soehne Mono";
+
+  --dusk-surface-radius: 0.5rem;
+  --dusk-surface-radius-sm: 0.375rem;
+  --dusk-border: rgba(16, 16, 16, 0.12);
+  --dusk-border-strong: rgba(16, 16, 16, 0.22);
+  --dusk-surface: #ffffff;
+  --dusk-surface-raised: #fbfafc;
+  --dusk-text-muted: #636167;
+  --dusk-shadow-soft: 0 8px 24px rgba(16, 16, 16, 0.08);
+  --dusk-nav-active-bg: rgba(113, 177, 255, 0.16);
+  --dusk-nav-active-fg: #101010;
 }
 
 /* Sidebar/menu: avoid faux-bold artifacts (we only ship Soehne 400/500). */
@@ -31,6 +42,7 @@
 /* Header brand: make the logo + "DOCUMENTATION" less dominant. */
 .site-title {
   font-size: var(--sl-text-sm);
+  font-weight: 500;
 }
 
 .site-title img {
@@ -62,6 +74,15 @@
   --sl-color-bg-nav: #f6f5fa;
   --sl-color-bg-sidebar: #f6f5fa;
   --sl-color-bg-inline-code: rgba(0, 0, 0, 0.06);
+
+  --dusk-border: rgba(16, 16, 16, 0.12);
+  --dusk-border-strong: rgba(16, 16, 16, 0.24);
+  --dusk-surface: #ffffff;
+  --dusk-surface-raised: #fbfafc;
+  --dusk-text-muted: #636167;
+  --dusk-shadow-soft: 0 8px 24px rgba(16, 16, 16, 0.08);
+  --dusk-nav-active-bg: rgba(113, 177, 255, 0.16);
+  --dusk-nav-active-fg: #101010;
 }
 
 /* Dark theme */
@@ -82,15 +103,68 @@
   /* Tame pure white in headings/UI */
   --sl-color-white: #e2dfe9;
   --sl-color-black: #101010;
+
+  --dusk-border: rgba(226, 223, 233, 0.1);
+  --dusk-border-strong: rgba(226, 223, 233, 0.2);
+  --dusk-surface: #151518;
+  --dusk-surface-raised: #1b1b1e;
+  --dusk-text-muted: #a8a5af;
+  --dusk-shadow-soft: 0 12px 32px rgba(0, 0, 0, 0.28);
+  --dusk-nav-active-bg: rgba(113, 177, 255, 0.12);
+  --dusk-nav-active-fg: #e2dfe9;
 }
 
-/* Dusk-style rounding for cards and primary actions without changing layout behavior. */
+.sidebar-pane a[aria-current="page"],
+.sidebar-pane a[aria-current="page"]:hover,
+.sidebar-pane a[aria-current="page"]:focus {
+  background: var(--dusk-nav-active-bg);
+  box-shadow: inset 3px 0 0 var(--sl-color-accent);
+  color: var(--dusk-nav-active-fg);
+}
+
+/* Dusk-style surfaces without changing Starlight layout behavior. */
 .sl-link-card {
-  border-radius: 1.25rem !important;
+  border-color: var(--dusk-border) !important;
+  border-radius: var(--dusk-surface-radius) !important;
+  background: var(--dusk-surface);
+  box-shadow: none !important;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 120ms ease,
+    box-shadow 160ms ease;
 }
 
+.sl-link-card:hover {
+  border-color: var(--dusk-border-strong) !important;
+  background: var(--dusk-surface-raised) !important;
+  box-shadow: var(--dusk-shadow-soft) !important;
+  transform: translateY(-1px);
+}
+
+.sl-link-card .title {
+  font-weight: 500 !important;
+}
+
+.sl-link-card .description {
+  color: var(--dusk-text-muted) !important;
+}
+
+.sl-link-button,
 .action {
-  border-radius: 1.25rem !important;
+  border-radius: var(--dusk-surface-radius) !important;
+  font-weight: 500;
+  letter-spacing: 0;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 120ms ease;
+}
+
+.sl-link-button:hover,
+.action:hover {
+  transform: translateY(-1px);
 }
 
 /* Light-mode primary buttons: cornflower background needs dark text for contrast. */
@@ -99,7 +173,202 @@
   color: var(--sl-color-text-invert);
 }
 
-/* Keep callouts readable on the neutral dark surface. */
+/* Docs-specific Dusk treatment for technical reading surfaces. */
+.sl-markdown-content :is(h2, h3):not(:where(.not-content *)) {
+  letter-spacing: 0;
+}
+
+.sl-markdown-content h2:not(:where(.not-content *)) {
+  padding-top: 0.25rem;
+}
+
+.sl-markdown-content code:not(:where(.not-content *, pre *)) {
+  border: 1px solid var(--dusk-border);
+  border-radius: var(--dusk-surface-radius-sm);
+  padding: 0.12em 0.34em;
+}
+
+.expressive-code {
+  --ec-brdRad: var(--dusk-surface-radius);
+  --ec-frm-edActTabBg: var(--dusk-surface-raised);
+  --ec-frm-edTabBarBrdCol: var(--dusk-border);
+}
+
+.expressive-code figure.frame {
+  border: 1px solid var(--dusk-border);
+  border-radius: var(--dusk-surface-radius);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.expressive-code .frame.has-title:not(.is-terminal) .header,
+.expressive-code .frame.is-terminal .header {
+  border-bottom-color: var(--dusk-border);
+}
+
+.expressive-code pre {
+  background: var(--dusk-surface) !important;
+}
+
+.sl-markdown-content table:not(:where(.not-content *)) {
+  border: 1px solid var(--dusk-border);
+  border-radius: var(--dusk-surface-radius);
+  background: var(--dusk-surface);
+  box-shadow: none;
+}
+
+.sl-markdown-content :is(th, td):not(:where(.not-content *)) {
+  border-bottom-color: var(--dusk-border);
+  padding: 0.7rem 0.9rem;
+}
+
+.sl-markdown-content :is(th:first-child, td:first-child):not(:where(.not-content *)) {
+  padding-inline-start: 0.9rem;
+}
+
+.sl-markdown-content :is(th:last-child, td:last-child):not(:where(.not-content *)) {
+  padding-inline-end: 0.9rem;
+}
+
+.sl-markdown-content th:not(:where(.not-content *)) {
+  background: var(--dusk-surface-raised);
+  font-weight: 500;
+}
+
+.sl-markdown-content tr:last-child td:not(:where(.not-content *)) {
+  border-bottom: 0;
+}
+
+.sl-markdown-content img:not(:where(.not-content *)) {
+  border: 1px solid var(--dusk-border);
+  border-radius: var(--dusk-surface-radius);
+  background: var(--dusk-surface);
+  box-shadow: none;
+}
+
+.sl-markdown-content details:not(:where(.not-content *)) {
+  border: 1px solid var(--dusk-border);
+  border-radius: var(--dusk-surface-radius);
+  background: var(--dusk-surface);
+  overflow: hidden;
+}
+
+.sl-markdown-content details:not(:where(.not-content *))[open] {
+  background: var(--dusk-surface-raised);
+}
+
+.sl-markdown-content summary:not(:where(.not-content *)) {
+  padding: 0.9rem 1rem;
+  color: var(--sl-color-white);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.sl-markdown-content details:not(:where(.not-content *)) > :not(summary) {
+  margin-inline: 1rem;
+}
+
+.sl-markdown-content details:not(:where(.not-content *)) > :last-child {
+  margin-bottom: 1rem;
+}
+
+.starlight-aside {
+  border: 1px solid var(--dusk-border);
+  border-inline-start-width: 3px;
+  border-radius: var(--dusk-surface-radius);
+  box-shadow: none;
+}
+
+.starlight-aside__title {
+  font-size: var(--sl-text-sm) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+:root[data-theme="light"] .starlight-aside--note,
+:root[data-theme="light"] .starlight-aside--tip {
+  background-color: rgba(113, 177, 255, 0.1);
+}
+
+:root[data-theme="dark"] .starlight-aside--note,
+:root[data-theme="dark"] .starlight-aside--tip {
+  background-color: rgba(113, 177, 255, 0.1);
+}
+
 :root[data-theme="dark"] .starlight-aside--caution {
   background-color: rgba(255, 164, 35, 0.22);
+}
+
+.pagination-links a {
+  border-color: var(--dusk-border) !important;
+  border-radius: var(--dusk-surface-radius) !important;
+  background: var(--dusk-surface);
+  box-shadow: none !important;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 120ms ease;
+}
+
+.pagination-links a:hover {
+  border-color: var(--dusk-border-strong) !important;
+  background: var(--dusk-surface-raised);
+  transform: translateY(-1px);
+}
+
+.pagination-links .link-title {
+  font-size: var(--sl-text-xl) !important;
+  font-weight: 500;
+}
+
+header button[aria-label="Search"],
+header button[aria-label="Menu"] {
+  border-color: var(--dusk-border) !important;
+  border-radius: var(--dusk-surface-radius) !important;
+  background: var(--dusk-surface) !important;
+  box-shadow: none !important;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 120ms ease;
+}
+
+header button[aria-label="Search"]:hover,
+header button[aria-label="Menu"]:hover {
+  border-color: var(--dusk-border-strong) !important;
+  background: var(--dusk-surface-raised) !important;
+  transform: translateY(-1px);
+}
+
+dialog[aria-label="Search"] {
+  border: 1px solid var(--dusk-border) !important;
+  border-radius: var(--dusk-surface-radius) !important;
+  background: var(--dusk-surface) !important;
+  box-shadow: var(--dusk-shadow-soft) !important;
+}
+
+dialog[aria-label="Search"]::backdrop {
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(10px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sl-link-card,
+  .sl-link-button,
+  .action,
+  .pagination-links a,
+  header button[aria-label="Search"],
+  header button[aria-label="Menu"] {
+    transition: none;
+  }
+
+  .sl-link-card:hover,
+  .sl-link-button:hover,
+  .action:hover,
+  .pagination-links a:hover,
+  header button[aria-label="Search"]:hover,
+  header button[aria-label="Menu"]:hover {
+    transform: none;
+  }
 }

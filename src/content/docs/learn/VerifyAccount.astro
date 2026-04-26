@@ -1,62 +1,155 @@
 <verify-account>
     <div class="verify-form">
-        <label for="channel">Select Channel</label>
-        <select id="channel">
-            <option value="x">X</option>
-            <option value="discord">Discord</option>
-            <option value="telegram">Telegram</option>
-            <option value="email">Email</option>
-        </select>
+        <div class="verify-field-grid">
+            <label class="verify-field" for="channel">
+                <span>Channel</span>
+                <select id="channel">
+                    <option value="x">X</option>
+                    <option value="discord">Discord</option>
+                    <option value="telegram">Telegram</option>
+                    <option value="email">Email</option>
+                </select>
+            </label>
 
-        <label for="account">Account Name</label>
-        <input
-            id="account"
-            type="text"
-            placeholder="Enter account name"
-        />
+            <label class="verify-field" for="account">
+                <span>Account</span>
+                <input
+                    id="account"
+                    type="text"
+                    placeholder="@account or email"
+                />
+            </label>
+        </div>
 
-        <button id="verifyButton" type="button">Verify</button>
+        <button id="verifyButton" type="button">Verify account</button>
         <p id="result" class="status"></p>
     </div>
 
     <style>
         .verify-form {
-            display: flex;
-            flex-direction: column;
+            display: grid;
             gap: 1rem;
-            max-width: 400px;
-            margin-top: 1rem;
+            max-width: 44rem;
+            margin-block: 1rem 1.5rem;
+            padding: 1rem;
+            border: 1px solid var(--dusk-border, var(--sl-color-gray-5));
+            border-radius: var(--dusk-surface-radius, 0.5rem);
+            background: var(--dusk-surface, var(--sl-color-bg));
         }
+
+        .verify-field-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        @media (min-width: 42rem) {
+            .verify-field-grid {
+                grid-template-columns: minmax(10rem, 0.75fr) minmax(0, 1.25fr);
+            }
+        }
+
+        .verify-field {
+            display: grid;
+            grid-template-rows: 1rem auto;
+            gap: 0.45rem;
+            align-content: start;
+            margin: 0;
+            color: var(--sl-color-white);
+            font-size: var(--sl-text-sm);
+            font-weight: 500;
+        }
+
+        .verify-field > span {
+            color: var(--dusk-text-muted, var(--sl-color-gray-3));
+            font-family: var(--sl-font);
+            font-size: var(--sl-text-xs);
+            font-weight: 500;
+            letter-spacing: 0;
+            line-height: 1rem;
+        }
+
         select,
         input {
-            background-color: var(--on-surface-color);
-            padding: 0.5rem 1rem 0.5rem 1rem;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 24px;
             width: 100%;
+            min-height: 2.75rem;
+            padding: 0.65rem 0.75rem;
+            border: 1px solid var(--dusk-border, var(--sl-color-gray-5));
+            border-radius: var(--dusk-surface-radius, 0.5rem);
+            background: var(--sl-color-bg);
+            color: var(--sl-color-white);
+            font-family: var(--sl-font);
+            font-size: var(--sl-text-sm);
+            font-weight: 400;
+            line-height: 1.2;
         }
+
+        select:focus,
+        input:focus {
+            border-color: var(--sl-color-accent);
+            outline: 2px solid transparent;
+            box-shadow: 0 0 0 3px rgba(113, 177, 255, 0.22);
+        }
+
         button {
-            padding: 0.5rem 1rem;
-            font-size: 1rem;
-            color: white;
-            background: #56a1fd;
-            border: none;
-            border-radius: 24px;
+            justify-self: start;
+            min-height: 2.75rem;
+            padding: 0.65rem 1rem;
+            border: 1px solid var(--sl-color-accent);
+            border-radius: var(--dusk-surface-radius, 0.5rem);
+            background: var(--sl-color-accent);
+            color: var(--sl-color-text-invert, #101010);
             cursor: pointer;
+            font: inherit;
+            font-weight: 500;
+            transition:
+                background 160ms ease,
+                border-color 160ms ease,
+                transform 120ms ease;
         }
+
         button:hover {
-            background: #71b1ff;
+            transform: translateY(-1px);
         }
+
+        button:focus-visible {
+            outline: 2px solid var(--sl-color-accent);
+            outline-offset: 3px;
+        }
+
         .status {
-            font-size: 1rem;
-            font-weight: bold;
+            display: none;
+            margin: 0;
+            padding: 0.75rem 0.85rem;
+            border: 1px solid var(--dusk-border, var(--sl-color-gray-5));
+            border-radius: var(--dusk-surface-radius, 0.5rem);
+            background: var(--dusk-surface-raised, var(--sl-color-gray-6));
+            color: var(--sl-color-white);
+            font-size: var(--sl-text-sm);
+            line-height: 1.45;
         }
+
+        .status.has-result {
+            display: block;
+        }
+
         .valid {
-            color: green;
+            border-color: rgba(87, 199, 133, 0.36);
+            background: rgba(87, 199, 133, 0.1);
         }
+
         .invalid {
-            color: red;
+            border-color: rgba(227, 122, 122, 0.4);
+            background: rgba(227, 122, 122, 0.1);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            button {
+                transition: none;
+            }
+
+            button:hover {
+                transform: none;
+            }
         }
     </style>
 </verify-account>
@@ -94,8 +187,8 @@
                 let account = this.accountInput.value.trim();
 
                 if (!account) {
-                    this.resultDisplay.textContent = "❗ Please enter an account name.";
-                    this.resultDisplay.className = "status invalid";
+                    this.resultDisplay.textContent = "Enter an account name to verify.";
+                    this.resultDisplay.className = "status invalid has-result";
                     return;
                 }
 
@@ -113,11 +206,11 @@
                 const formattedChannel = channel.charAt(0).toUpperCase() + channel.slice(1);
 
                 if (validAccounts && validAccounts.includes(normalizedAccount)) {
-                    this.resultDisplay.textContent = `✅ Verified: "${account}" is a valid ${formattedChannel} team account.`;
-                    this.resultDisplay.className = "status valid";
+                    this.resultDisplay.textContent = `Verified: ${account} is a valid ${formattedChannel} team account.`;
+                    this.resultDisplay.className = "status valid has-result";
                 } else {
-                    this.resultDisplay.textContent = `❌ Not Verified: "${account}" is not a valid ${formattedChannel} team account.`;
-                    this.resultDisplay.className = "status invalid";
+                    this.resultDisplay.textContent = `Not verified: ${account} is not listed as a valid ${formattedChannel} team account.`;
+                    this.resultDisplay.className = "status invalid has-result";
                 }
             }
         }
