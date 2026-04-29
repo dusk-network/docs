@@ -111,7 +111,7 @@ Events are emitted with `abi::emit("event_name", data)` and automatically includ
 
 Contracts have **two build targets** from the same source:
 
-1. **Contract WASM** (`make wasm`) - Runs on-chain in the Dusk VM
+1. **Contract WASM** (`make wasm`) - Runs on-chain in DuskVM
 2. **Data-driver WASM** (`make wasm-dd`) - Runs off-chain for JSON encoding/decoding
 
 The `contract` and `data-driver` features are **mutually exclusive**. See the [Forge README](https://github.com/dusk-network/forge/blob/main/README.md#cargotoml-configuration) for full Cargo.toml configuration.
