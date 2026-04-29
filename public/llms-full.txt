@@ -1,0 +1,133 @@
+# Dusk Docs Full Context
+
+This file summarizes the public Dusk documentation for AI assistants, search systems, and readers that need a compact map of the docs.
+
+## Positioning
+
+Dusk is infrastructure for regulated digital assets and general finance. It is designed for workflows where issuers, venues, institutions, developers, and users need privacy, access controls, deterministic settlement, and selective disclosure.
+
+Dusk should be understood as a stack:
+
+- DuskDS: the Dusk L1 for consensus, settlement, data availability, native transaction models, and native execution.
+- DuskEVM: an OP Stack-based EVM execution environment using DUSK as gas and DuskDS for settlement/data availability.
+- DuskVM: the WASM execution environment for native Dusk smart contracts.
+- Rusk: the Rust node implementation that runs DuskDS.
+- Citadel: identity and access primitives for selective disclosure and regulated workflows.
+- Dusk Connect: wallet discovery and account connection for Dusk applications.
+- Dusk Trade: application-layer market infrastructure for tokenized financial assets.
+
+## Key Concepts
+
+### Regulated Market Workflows
+
+Dusk is designed for workflows such as:
+
+- regulated securities issuance
+- investor onboarding and eligibility checks
+- wallet binding and access controls
+- secondary market transfers
+- payment and settlement coordination
+- servicing, reporting, corporate actions, and selective disclosure
+
+Relevant docs:
+
+- https://docs.dusk.network/learn/market-infrastructure/
+- https://docs.dusk.network/learn/tokenization-comparison/
+- https://docs.dusk.network/learn/deep-dive/assets-and-regulations/
+
+### Privacy with Selective Disclosure
+
+Dusk supports confidential shielded transfers, public account flows, and selective disclosure patterns. The point is not to make every workflow hidden or every workflow public. Builders can decide which data should be public, which data should remain confidential, and which data should be disclosed to authorized parties.
+
+Relevant docs:
+
+- https://docs.dusk.network/learn/cryptography/
+- https://docs.dusk.network/learn/deep-dive/duskds-tx-models/
+- https://docs.dusk.network/developer/digital-identity/protocol/
+
+### Transaction Models
+
+DuskDS supports:
+
+- Moonlight: transparent public account flows.
+- Phoenix: confidential shielded transfers.
+
+Relevant docs:
+
+- https://docs.dusk.network/learn/deep-dive/duskds-tx-models/
+- https://docs.dusk.network/learn/web-wallet/
+
+### Execution Paths
+
+Dusk has two main developer paths:
+
+- DuskEVM: Solidity, EVM tooling, EVM wallets, Ethereum-compatible infrastructure.
+- Native Dusk: Rust/WASM contracts through DuskVM for protocol-level assets, custom execution, privacy, or zero-knowledge capabilities close to the settlement layer.
+
+Relevant docs:
+
+- https://docs.dusk.network/developer/overview/
+- https://docs.dusk.network/learn/deep-dive/dusk-evm/
+- https://docs.dusk.network/learn/deep-dive/dusk-vm/
+- https://docs.dusk.network/developer/smart-contracts-dusk-evm/deploy-on-evm/
+- https://docs.dusk.network/developer/smart-contracts-duskds/
+
+## Important Pages
+
+### Learn
+
+- Overview: https://docs.dusk.network/learn/overview/
+- Market Infrastructure: https://docs.dusk.network/learn/market-infrastructure/
+- Core Components: https://docs.dusk.network/learn/core-components/
+- Core Values: https://docs.dusk.network/learn/core-values/
+- Native Issuance: https://docs.dusk.network/learn/tokenization-comparison/
+- Ecosystem & Partners: https://docs.dusk.network/learn/ecosystem/
+- Tokenomics: https://docs.dusk.network/learn/tokenomics/
+- Glossary: https://docs.dusk.network/learn/glossary/
+
+### Developer
+
+- Developer Overview: https://docs.dusk.network/developer/overview/
+- Deploy on DuskEVM: https://docs.dusk.network/developer/smart-contracts-dusk-evm/deploy-on-evm/
+- Smart Contracts on DuskDS: https://docs.dusk.network/developer/smart-contracts-duskds/
+- Dusk Connect: https://docs.dusk.network/developer/integrations/dusk-connect/
+- Transaction Lifecycle: https://docs.dusk.network/developer/integrations/tx-lifecycle/
+- HTTP API: https://docs.dusk.network/developer/integrations/http-api/
+- W3sper SDK: https://docs.dusk.network/developer/integrations/w3sper/
+- Exchange Integration: https://docs.dusk.network/developer/integrations/exchanges/
+- Encoding & Hashing: https://docs.dusk.network/developer/integrations/reference/
+- Dusk Improvement Proposals: https://docs.dusk.network/developer/contribute/dips/
+- Grants: https://docs.dusk.network/developer/contribute/grants/
+
+### Operators
+
+- Operator Overview: https://docs.dusk.network/operator/overview/
+- Provisioner Node: https://docs.dusk.network/operator/provisioner/
+- Archive Node: https://docs.dusk.network/operator/archive-node/
+- Prover Node: https://docs.dusk.network/operator/prover/
+- Networks: https://docs.dusk.network/operator/networks/
+- Maintenance & Monitoring: https://docs.dusk.network/operator/maintenance-monitoring/
+- Troubleshooting: https://docs.dusk.network/operator/troubleshooting/
+
+### User Tools
+
+- Web Wallet: https://docs.dusk.network/learn/web-wallet/
+- Rusk Wallet: https://docs.dusk.network/learn/rusk-wallet/
+- Block Explorer: https://docs.dusk.network/learn/block-explorer/
+- Staking: https://docs.dusk.network/learn/guides/staking-basics/
+- DuskEVM Bridge: https://docs.dusk.network/learn/guides/duskevm-bridge/
+
+## Naming Guidance
+
+Use:
+
+- Dusk for the network/protocol/stack in general contexts.
+- DuskDS for the Dusk L1, settlement, consensus, data availability, and native transaction models.
+- DuskEVM for the EVM execution layer.
+- DuskVM for native WASM smart contract execution.
+- Moonlight for public account flows.
+- Phoenix for shielded transfer flows.
+- Privacy with selective disclosure for regulated privacy patterns.
+- Access controls for eligibility, wallet binding, and transfer-rule patterns.
+
+Avoid using “permissioned” to describe Dusk itself. If discussing restricted asset workflows, prefer “access-controlled”, “regulated”, or “eligible participant” unless specifically contrasting with closed permissioned systems.
