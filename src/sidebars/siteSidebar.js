@@ -63,6 +63,7 @@ const siteSidebar = [
           { label: "Stake Abstraction", link: "/learn/hyperstaking" },
           { label: "Digital Identity Protocol", link: "/developer/digital-identity/protocol" },
           { label: "Dusk Connect", link: "/developer/integrations/dusk-connect" },
+          { label: "Dusk Wallet Extension", link: "/developer/integrations/wallet-extension" },
         ],
       },
       {

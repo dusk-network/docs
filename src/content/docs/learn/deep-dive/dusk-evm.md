@@ -7,7 +7,7 @@ DuskEVM is an EVM-equivalent execution environment built on the OP Stack that us
 
 Use DuskEVM when your application benefits from Solidity, Ethereum-compatible tooling, EVM wallets, and existing smart contract infrastructure.
 
-Use native Dusk development instead when your application needs Rust/WASM execution, direct access to native Dusk transaction models, or protocol-level privacy and zero-knowledge capabilities. For that path, see [DuskVM](/learn/deep-dive/dusk-vm/) and [Smart Contracts on DuskDS](/developer/smart-contracts-duskds/).
+Use native Dusk development instead when your application should be built directly against Dusk's own execution model: Rust/WASM contracts, native transaction models, protocol-level assets, custom market logic, or privacy and zero-knowledge capabilities. For that path, see [DuskVM](/learn/deep-dive/dusk-vm/) and [Smart Contracts on DuskDS](/developer/smart-contracts-duskds/).
 
 ## Where DuskEVM fits
 

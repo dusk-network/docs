@@ -42,6 +42,7 @@ The Dusk Connect SDK is developed in the Dusk Network GitHub organization:
 
 ## Read next
 
+- [Dusk Wallet Extension](/developer/integrations/wallet-extension)
 - [Web Wallet](/learn/web-wallet)
 - [Transaction Lifecycle](/developer/integrations/tx-lifecycle)
 - [W3sper SDK](/developer/integrations/w3sper)

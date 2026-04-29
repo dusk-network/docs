@@ -16,6 +16,7 @@
 - [Deploy on DuskEVM](https://docs.dusk.network/developer/smart-contracts-dusk-evm/deploy-on-evm/): deploy Solidity contracts on DuskEVM.
 - [Smart Contracts on DuskDS](https://docs.dusk.network/developer/smart-contracts-duskds/): write Rust/WASM contracts for native Dusk execution.
 - [Dusk Connect](https://docs.dusk.network/developer/integrations/dusk-connect/): integrate wallet discovery and account connection.
+- [Dusk Wallet Extension](https://docs.dusk.network/developer/integrations/wallet-extension/): integrate with the first-party browser wallet provider.
 - [Transaction Lifecycle](https://docs.dusk.network/developer/integrations/tx-lifecycle/): understand transaction flow.
 - [HTTP API](https://docs.dusk.network/developer/integrations/http-api/): integrate with Dusk APIs.
 - [W3sper SDK](https://docs.dusk.network/developer/integrations/w3sper/): SDK integration.

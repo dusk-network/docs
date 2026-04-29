@@ -62,7 +62,7 @@ Relevant docs:
 Dusk has two main developer paths:
 
 - DuskEVM: Solidity, EVM tooling, EVM wallets, Ethereum-compatible infrastructure.
-- Native Dusk: Rust/WASM contracts through DuskVM for protocol-level assets, custom execution, privacy, or zero-knowledge capabilities close to the settlement layer.
+- Native Dusk: general-purpose Rust/WASM contracts through DuskVM for protocol-level assets, native transaction models, custom execution, market logic, privacy, or zero-knowledge capabilities close to the settlement layer.
 
 Relevant docs:
 
@@ -91,6 +91,7 @@ Relevant docs:
 - Deploy on DuskEVM: https://docs.dusk.network/developer/smart-contracts-dusk-evm/deploy-on-evm/
 - Smart Contracts on DuskDS: https://docs.dusk.network/developer/smart-contracts-duskds/
 - Dusk Connect: https://docs.dusk.network/developer/integrations/dusk-connect/
+- Dusk Wallet Extension: https://docs.dusk.network/developer/integrations/wallet-extension/
 - Transaction Lifecycle: https://docs.dusk.network/developer/integrations/tx-lifecycle/
 - HTTP API: https://docs.dusk.network/developer/integrations/http-api/
 - W3sper SDK: https://docs.dusk.network/developer/integrations/w3sper/

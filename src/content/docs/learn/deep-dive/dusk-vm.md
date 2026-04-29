@@ -6,20 +6,20 @@ description: Learn about DuskVM, the Wasmtime-based VM that executes native smar
 
 ## Overview
 
-[DuskVM](https://github.com/dusk-network/rusk/tree/master/vm) is the WASM virtual machine for native smart contracts on Dusk. It is based on the <a href="https://wasmtime.dev" target="_blank" rel="noreferrer">Wasmtime</a> runtime, with custom support for Dusk’s execution model.
+[DuskVM](https://github.com/dusk-network/rusk/tree/master/vm) is the WASM virtual machine for native smart contracts on Dusk. It is based on the <a href="https://wasmtime.dev" target="_blank" rel="noreferrer">Wasmtime</a> runtime, with custom support for Dusk's execution model.
 
-Use DuskVM when your application needs native Dusk execution: protocol-level assets, Rust/WASM contracts, custom execution, privacy, or zero-knowledge capabilities close to the settlement layer.
+Use DuskVM when your application should run as a native Dusk contract: protocol-level assets, Rust/WASM contracts, custom execution, market logic, privacy-aware flows, or zero-knowledge capabilities close to the settlement layer.
 
-Use DuskEVM instead when your application is designed around Solidity, EVM wallets, and Ethereum-compatible tooling. See [DuskEVM](/learn/deep-dive/dusk-evm).
+Use DuskEVM instead when your application is designed around Solidity, EVM wallets, and Ethereum-compatible tooling. DuskVM is closer to Dusk's native model; DuskEVM is closer to the Ethereum developer ecosystem. See [DuskEVM](/learn/deep-dive/dusk-evm).
 
 ## Where DuskVM fits
 
-DuskVM is part of the DuskDS layer. It is the native execution environment for smart contracts that should live close to the Dusk L1 transaction models and settlement layer.
+DuskVM is part of the DuskDS layer. It is the native execution environment for general-purpose smart contracts that should live close to Dusk's transaction models and settlement layer.
 
 At a high level, DuskVM provides:
 
 - Specific memory management mechanism
-- Support for Dusk’s ABI
+- Support for Dusk's ABI
 - Support for inter-contract calls 
 
 DuskVM functions as the host-side interface, handling the execution environment and system-level operations.
