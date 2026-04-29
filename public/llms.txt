@@ -6,6 +6,7 @@
 
 - [Overview](https://docs.dusk.network/learn/overview/): high-level introduction to Dusk.
 - [Market Infrastructure](https://docs.dusk.network/learn/market-infrastructure/): how Dusk supports regulated asset workflows.
+- [Dusk Trade](https://docs.dusk.network/learn/dusk-trade/): product layer for tokenized financial asset workflows on Dusk.
 - [Core Components](https://docs.dusk.network/learn/core-components/): DuskDS, Rusk, DuskVM, DuskEVM, Citadel, and application-layer tooling.
 - [Core Values](https://docs.dusk.network/learn/core-values/): regulated workflows, access controls, selective disclosure, and deterministic settlement.
 - [Native Issuance](https://docs.dusk.network/learn/tokenization-comparison/): digitization, tokenization, and native issuance.

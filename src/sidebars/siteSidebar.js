@@ -9,6 +9,7 @@ const siteSidebar = [
         items: [
           { label: "Overview", link: "/learn/overview" },
           { label: "Market Infrastructure", link: "/learn/market-infrastructure" },
+          { label: "Dusk Trade", link: "/learn/dusk-trade" },
           { label: "Core Components", link: "/learn/core-components" },
           { label: "Core Values", link: "/learn/core-values" },
           { label: "Native Issuance", link: "/learn/tokenization-comparison" },

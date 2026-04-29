@@ -28,6 +28,8 @@ A typical dApp flow is:
 
 See [Dusk Connect](/developer/integrations/dusk-connect) for the SDK-level integration path.
 
+If you are building the application side, start with Dusk Connect. If you are testing or documenting the wallet-provider side, use this page together with the wallet provider API.
+
 ## Provider discovery
 
 The extension announces an EIP-1193-style provider through Dusk discovery events. Dusk is not an EVM chain, so wallet methods use Dusk-specific names.

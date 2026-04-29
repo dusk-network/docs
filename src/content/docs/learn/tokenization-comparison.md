@@ -43,4 +43,4 @@ In practice, that means you can:
 - build applications and tokenization-style workflows with familiar EVM tooling through **DuskEVM**, and
 - rely on **DuskDS**, the Dusk L1, for privacy-capable transaction models, data availability, and deterministic finality.
 
-If you want the architectural overview next, see [Core Components](/learn/core-components). For the product and market framing, see [Overview](/learn/overview).
+If you want the architectural overview next, see [Core Components](/learn/core-components). For the product and market framing, see [Overview](/learn/overview), [Market Infrastructure on Dusk](/learn/market-infrastructure), and [Dusk Trade](/learn/dusk-trade).

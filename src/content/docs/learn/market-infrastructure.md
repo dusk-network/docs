@@ -59,9 +59,13 @@ Use the Dusk stack depending on the layer you are building:
 - **DuskVM** for Rust/WASM contracts that need native Dusk execution.
 - **Citadel** for identity, credentials, and selective disclosure patterns.
 - **Dusk Connect** for wallet discovery and account connection in Dusk applications.
+- **Dusk Trade** for product-level tokenized asset workflows such as onboarding, wallet connection, buying, selling, and settlement coordination.
+
+If you want to understand the product layer, start with [Dusk Trade](/learn/dusk-trade). If you want the underlying regulated asset concepts, read [Assets & Regulations](/learn/deep-dive/assets-and-regulations).
 
 ## Read next
 
+- [Dusk Trade](/learn/dusk-trade)
 - [Native Issuance](/learn/tokenization-comparison)
 - [Assets & Regulations](/learn/deep-dive/assets-and-regulations)
 - [Core Components](/learn/core-components)

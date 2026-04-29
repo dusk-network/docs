@@ -9,6 +9,7 @@ If you're looking for implementation details, start here:
 - [Digital Identity Protocol (Citadel)](/developer/digital-identity/protocol)
 - [Transaction Models (Moonlight & Phoenix)](/learn/deep-dive/duskds-tx-models)
 - [Market Infrastructure on Dusk](/learn/market-infrastructure)
+- [Dusk Trade](/learn/dusk-trade)
 
 ## MiCA (EU)
 
@@ -82,6 +83,7 @@ For many tokenization projects, the relevant takeaway is that “real-world” a
 
 ## Read next
 
+- [Dusk Trade](/learn/dusk-trade)
 - [Native Issuance](/learn/tokenization-comparison)
 - [Market Infrastructure on Dusk](/learn/market-infrastructure)
 - [Digital Identity Protocol](/developer/digital-identity/protocol)

@@ -74,7 +74,7 @@ On top of the base protocol, Dusk supports application-layer protocols and tools
 
 ### Dusk Trade
 
-Dusk Trade is the application layer for tokenized financial assets on Dusk. It is being built around real market workflows: investor onboarding, wallet binding, controlled transfers, payment coordination, and compliant settlement.
+[Dusk Trade](/learn/dusk-trade) is the application layer for tokenized financial assets on Dusk. It is being built around real market workflows: investor onboarding, wallet binding, controlled transfers, payment coordination, and compliant settlement.
 
 ### Zedger / Hedger
 

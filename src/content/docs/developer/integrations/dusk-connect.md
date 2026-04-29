@@ -22,6 +22,8 @@ Dusk applications often need two kinds of integration:
 
 Dusk Connect is for the wallet side. For network APIs and transaction flow, see [Transaction Lifecycle](/developer/integrations/tx-lifecycle), [HTTP API](/developer/integrations/http-api), and [W3sper SDK](/developer/integrations/w3sper).
 
+If you are testing against the first-party browser wallet, use the [Dusk Wallet Extension](/developer/integrations/wallet-extension) as one compatible provider.
+
 ## Typical flow
 
 A dApp integration usually follows this shape:

@@ -32,6 +32,7 @@ Dusk is designed for workflows such as:
 Relevant docs:
 
 - https://docs.dusk.network/learn/market-infrastructure/
+- https://docs.dusk.network/learn/dusk-trade/
 - https://docs.dusk.network/learn/tokenization-comparison/
 - https://docs.dusk.network/learn/deep-dive/assets-and-regulations/
 
@@ -78,6 +79,7 @@ Relevant docs:
 
 - Overview: https://docs.dusk.network/learn/overview/
 - Market Infrastructure: https://docs.dusk.network/learn/market-infrastructure/
+- Dusk Trade: https://docs.dusk.network/learn/dusk-trade/
 - Core Components: https://docs.dusk.network/learn/core-components/
 - Core Values: https://docs.dusk.network/learn/core-values/
 - Native Issuance: https://docs.dusk.network/learn/tokenization-comparison/
