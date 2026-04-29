@@ -1,40 +1,43 @@
 ---
 title: Core Values
-description: "What Dusk optimizes for: regulated markets, privacy with selective disclosure, and deterministic settlement."
+description: "What Dusk optimizes for: regulated markets, access controls, privacy with selective disclosure, and deterministic settlement."
 ---
 
-This page summarizes the principles behind Dusk and the tradeoffs they imply.
+This page summarizes the principles behind Dusk and the tradeoffs they imply for builders, operators, and market participants.
 If you’re new, start with [Overview](/learn/overview) and then read [Core Components](/learn/core-components).
 
 ## Principles
 
 ### Regulated workflows, on-chain
 
-Dusk is built for markets where rules are part of the product:
+Dusk is built for markets where rules are part of the workflow:
 
 - eligibility and access controls
 - disclosure and reporting requirements
 - constraints like limits, holds, and transfer restrictions
+- settlement rules that connect assets, payments, and participants
 
 ### Privacy with selective disclosure
 
 Dusk treats privacy as a protocol feature, not an application add-on:
 
-- confidential balances and transfers where needed
-- the ability to reveal information to authorized parties when required
+- confidential balances and shielded transfers where needed
+- public accounts and transparent flows where useful
+- the ability to reveal specific information to authorized parties when required
 
 For details, see [Cryptography](/learn/cryptography) and [Transaction Models](/learn/deep-dive/duskds-tx-models).
 
 ### Deterministic settlement
 
-Market infrastructure needs predictable finality. DuskDS is designed for fast, deterministic settlement suitable for regulated venues.
+Market infrastructure needs predictable finality. DuskDS is designed for fast, deterministic settlement suitable for regulated venues, payment workflows, and tokenized assets.
 
 ### Modular architecture
 
 Dusk separates settlement from execution so you can match the right environment to each use case:
 
-- DuskDS for consensus, settlement, and privacy-capable transaction models
+- DuskDS, the Dusk L1, for consensus, data availability, settlement, and native transaction models
 - DuskEVM for EVM-compatible application development
+- DuskVM for native Rust/WASM smart contracts on Dusk
 
 ## Vision
 
