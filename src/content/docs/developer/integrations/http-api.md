@@ -1,18 +1,18 @@
 ---
 title: HTTP API
-description: Query nodes, broadcast transactions, and subscribe to real-time events using RUES over HTTP and WebSocket.
+description: Query chain data, call contracts, broadcast transactions, and subscribe to node events over HTTP and WebSocket.
 ---
 
 :::tip[Prefer W3sper First]
 For application integrations, prefer the [W3sper SDK](/developer/integrations/w3sper). It wraps transaction building, proving, submission, and common node interactions.
 :::
 
-The <a href="https://github.com/dusk-network/rusk/wiki/RUES-%28Rusk-Universal-Event-System%29" target="_blank"><strong>Rusk Universal Event System (RUES)</strong></a> is the public interface exposed by Dusk nodes.
+Dusk nodes expose two main low-level HTTP surfaces:
 
-This page covers the common low-level HTTP and WebSocket surface. Treat it as an implementation guide, not as a frozen protocol spec.
+- **GraphQL** for chain, block, transaction, mempool, archive, and other node-indexed queries.
+- **RUES-style `/on/...` routes** for transaction submission, contract calls, node operations, proof generation, driver management, and event subscriptions.
 
-- Use **HTTP `POST`** for request/response calls (query node state, submit transactions, generate proofs, etc.).
-- Use **WebSocket + HTTP `GET`/`DELETE`** for real-time event subscriptions.
+Use this page as an implementation guide for direct node integrations. Application code should normally use W3sper or another SDK layer unless it needs low-level node access.
 
 You can also [download the Postman collection](/dusk_api_postman_collection.json) and import it into Postman.
 
@@ -23,9 +23,19 @@ You can also [download the Postman collection](/dusk_api_postman_collection.json
 
 All endpoints below are relative to one of these base URLs.
 
+## Choosing the Right Surface
+
+Use **GraphQL** when you need chain, block, transaction, mempool, archive, or other node-indexed data that is not part of a contract ABI.
+
+Use **`/on/contracts:<contract_id>/<method>`** when you are querying a method exposed by a contract ABI.
+
+Use **other `/on/...` routes** for node operations such as transaction submission, proof generation, driver management, and event subscriptions.
+
+Some legacy `/on/...` shortcut routes still work for compatibility, but are deprecated. Prefer the replacement routes documented below.
+
 ## Request and Response Encoding
 
-RUES endpoints accept both binary and text payloads.
+RUES-style `/on/...` endpoints accept both binary and text payloads.
 
 ### Request body
 
@@ -41,49 +51,121 @@ Some endpoints return binary data. By default, binary responses are returned as 
 
 - To force a raw binary response, set `Accept: application/octet-stream`.
 
-## Version Headers (Optional)
+## Version Headers
 
 Nodes include a `Rusk-Version` header in responses.
 
 Clients can optionally send:
 
-- `Rusk-Version`: a semver requirement string (example: `^1.4.0`).
+- `Rusk-Version`: a semver requirement string, for example `^1.4.0`.
 - `Rusk-Version-Strict`: if present, the node requires `Rusk-Version` and performs a strict version check.
 
 If the requested version is incompatible, the node rejects the request.
 
 ## GraphQL Queries
 
-**Endpoint**: `/on/graphql/query`  
-**Method**: `POST`  
-**Body**: a GraphQL query string.
+**Endpoint**: `/graphql`
+**Method**: `POST`
+**Body**: a GraphQL-over-HTTP JSON request.
+
+Use GraphQL for chain, block, transaction, mempool, archive, and other node-indexed data.
 
 :::note
 Archive-only GraphQL fields such as `moonlightHistory`, `fullMoonlightHistory`, and `finalizedEvents` require an archive-enabled node.
 :::
 
-### Get the schema (SDL)
-
-Send an empty body to retrieve the schema:
-
-```sh
-curl -s -X POST "https://nodes.dusk.network/on/graphql/query"
-```
-
 ### Query example: latest block
 
 ```sh
-curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
-  --data-raw 'query { block(height: -1) { header { height hash } } }'
+curl -s -X POST "https://nodes.dusk.network/graphql" \
+  -H "Content-Type: application/json" \
+  --data-raw '{"query":"{ block(height: -1) { header { height hash } } }"}' | jq .
 ```
 
-:::note
-GraphQL variables can be passed via request headers using the prefix `rusk-gqlvar-`, for example: `rusk-gqlvar-height: 123`.
-:::
+### Query example: with variables
+
+```sh
+curl -s -X POST "https://nodes.dusk.network/graphql" \
+  -H "Content-Type: application/json" \
+  --data-raw '{
+    "query": "query ($height: Int!) { block(height: $height) { header { height hash } } }",
+    "variables": { "height": -1 }
+  }' | jq .
+```
+
+### Legacy raw-query endpoint
+
+`POST /on/graphql/query` is the legacy RUES GraphQL route. It accepts a raw GraphQL query string, and an empty body returns the schema SDL.
+
+Prefer `/graphql` for new integrations.
+
+```sh
+curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
+  --data-raw 'query { block(height: -1) { header { height hash } } }' | jq .
+```
+
+Legacy GraphQL variables can be passed through request headers using the `rusk-gqlvar-` prefix, for example `rusk-gqlvar-height: 123`.
+
+## Route Model and Deprecated Shortcuts
+
+New integrations should avoid legacy shortcut routes when the same data is available through GraphQL, a contract ABI query, or contract metadata.
+
+### Current route model
+
+- `/graphql` is the canonical GraphQL endpoint for chain, mempool, block, transaction, and archive queries.
+- `/on/contracts:<contract_id>/<method>` is the contract ABI query/call surface.
+  - `POST` executes a read/query call.
+  - `GET` and `DELETE` on the same path subscribe and unsubscribe from contract events, using `Rusk-Session-Id`.
+  - With `Content-Type: application/json`, Rusk uses the contract data driver to encode input and decode output.
+- `/on/contract:<contract_id>/<topic>` is the contract metadata and driver-management surface.
+  - Common topics: `metadata`, `download_driver`, and `upload_driver`.
+- `/on/driver:<contract_id>/<method>` is the data-driver utility surface.
+
+### Deprecated routes
+
+The following routes still work, but emit deprecation headers and are scheduled for removal:
+
+- `/on/account:<account_bls_pk>/status`
+- `/on/contract:<contract_id>/status`
+- `/on/contract_owner:<contract_id>/<topic>`
+
+Deprecated responses include:
+
+```text
+deprecation: true
+deprecation-note: This endpoint is deprecated and scheduled for removal
+```
+
+`/on/contract_owner:<contract_id>/<topic>` also advertises its successor:
+
+```text
+Link: </on/contract:<contract_id>/metadata>; rel="successor-version"
+```
+
+### Migration summary
+
+| Deprecated route | Use instead | Notes |
+|---|---|---|
+| `/on/account:<account_bls_pk>/status` | `POST /on/contracts:0100000000000000000000000000000000000000000000000000000000000000/account` | Returns committed `balance` and `nonce`. It does not return the old mempool-aware `next_nonce`. |
+| `/on/contract:<contract_id>/status` | `POST /on/contracts:0100000000000000000000000000000000000000000000000000000000000000/contract_balance` | Returns the scalar balance directly instead of `{ "balance": ... }`. |
+| `/on/contract_owner:<contract_id>/<topic>` | `POST /on/contract:<contract_id>/metadata` | Read `contract_owner` from the metadata response. The legacy `{topic}` segment was ignored. |
+
+The transfer genesis contract ID used for account and contract-balance queries is:
+
+```text
+0100000000000000000000000000000000000000000000000000000000000000
+```
+
+To inspect the transfer contract query surface directly, use its data driver schema:
+
+```sh
+curl -s -X POST \
+  "https://nodes.dusk.network/on/driver:0100000000000000000000000000000000000000000000000000000000000000/get_schema" | jq .
+```
 
 ## Common HTTP Endpoints
 
-All endpoints below are **HTTP `POST`** calls.
+All endpoints in this section are **HTTP `POST`** calls.
 
 ### Node
 
@@ -99,20 +181,22 @@ curl -s -X POST "https://nodes.dusk.network/on/node/info" | jq .
 
 ### Network
 
-- **Peers** (request body: number of peers): `/on/network/peers`
+- **Peers**: `/on/network/peers`
+  - Request body: number of peers to return.
 - **Peers Location**: `/on/network/peers_location`
 
 Example:
 
 ```sh
-curl -s -X POST "https://nodes.dusk.network/on/network/peers" --data-raw '5' | jq .
+curl -s -X POST "https://nodes.dusk.network/on/network/peers" \
+  --data-raw '5' | jq .
 ```
 
 ### Gas and Fees
 
 - **Gas Price Statistics**: `/on/blocks/gas-price`
 
-Optional request body: max number of mempool transactions to consider (defaults to all).
+Optional request body: max number of mempool transactions to consider. Defaults to all.
 
 ```sh
 curl -s -X POST "https://nodes.dusk.network/on/blocks/gas-price" | jq .
@@ -120,15 +204,13 @@ curl -s -X POST "https://nodes.dusk.network/on/blocks/gas-price" | jq .
 
 ### Transactions
 
-- **Preverify** (validate tx without broadcasting): `/on/transactions/preverify`
-- **Propagate** (broadcast tx): `/on/transactions/propagate`
-- **Simulate** (estimate gas): `/on/transactions/simulate`
+- **Preverify**: `/on/transactions/preverify`
+- **Propagate**: `/on/transactions/propagate`
+- **Simulate**: `/on/transactions/simulate`
 
-:::note[Important]
-For `preverify`, `propagate` and `simulate`, send the serialized transaction as bytes (for example as a `0x...` hex string).
-:::
+For `preverify`, `propagate`, and `simulate`, send the serialized transaction as bytes, for example as a `0x...` hex string.
 
-Example (format only; replace with a real tx):
+Example format:
 
 ```sh
 curl -s -X POST "https://nodes.dusk.network/on/transactions/preverify" \
@@ -137,41 +219,113 @@ curl -s -X POST "https://nodes.dusk.network/on/transactions/preverify" \
 
 ### Accounts
 
-- **Account Status**: `/on/account:<address>/status`
+:::warning[Deprecated shortcut]
+`/on/account:<account_bls_pk>/status` is deprecated. Use the transfer contract `account` query instead.
+:::
 
-Returns:
+Use the transfer genesis contract to query committed account state:
+
+**Endpoint**: `/on/contracts:0100000000000000000000000000000000000000000000000000000000000000/account`
+
+```sh
+curl -s -X POST \
+  "https://nodes.dusk.network/on/contracts:0100000000000000000000000000000000000000000000000000000000000000/account" \
+  -H "Content-Type: application/json" \
+  --data-raw '"<ACCOUNT_BLS_PK_BASE58>"' | jq .
+```
+
+Response:
 
 ```json
-{ "balance": 0, "nonce": 0, "next_nonce": 1 }
+{
+  "nonce": "7",
+  "balance": "1000"
+}
 ```
+
+The deprecated account shortcut also returned `next_nonce`. That value was derived from pending mempool transactions and has no exact one-call successor.
+
+For most clients, use `Number(nonce) + 1`. If you need mempool-aware nonce allocation, derive it client-side using GraphQL mempool data.
+
+### Contracts
+
+#### Contract ABI calls
+
+To query a contract method:
+
+**Endpoint**: `/on/contracts:<contract_id>/<method>`
+**Method**: `POST`
+
+- If you send `Content-Type: application/octet-stream`, the request body is treated as raw bytes.
+- If you send `Content-Type: application/json`, and the node has a data driver for the contract, the request body is treated as JSON input and encoded automatically.
+
+Example format:
+
+```sh
+curl -s -X POST \
+  "https://nodes.dusk.network/on/contracts:<contract_id>/<method>" \
+  -H "Content-Type: application/json" \
+  --data-raw '<json-input>' | jq .
+```
+
+#### Contract metadata and drivers
+
+- **Contract Metadata**: `/on/contract:<contract_id>/metadata`
+- **Download Data Driver**: `/on/contract:<contract_id>/download_driver`
+- **Upload Data Driver**: `/on/contract:<contract_id>/upload_driver`
+  - Requires a `sign` header.
+
+The deprecated `/on/contract_owner:<contract_id>/<topic>` route has been replaced by contract metadata. Read `contract_owner` from the metadata response.
 
 Example:
 
 ```sh
-curl -s -X POST "https://nodes.dusk.network/on/account:<address>/status" | jq .
+curl -s -X POST \
+  "https://nodes.dusk.network/on/contract:<contract_id>/metadata" | jq .
 ```
 
-### Contracts
+Example response:
 
-- **Contract Balance**: `/on/contract:<contract_id>/status`
-- **Contract Metadata**: `/on/contract:<contract_id>/metadata`
-- **Download Data Driver**: `/on/contract:<contract_id>/download_driver`
-- **Upload Data Driver**: `/on/contract:<contract_id>/upload_driver` (requires a `sign` header)
+```json
+{
+  "owner": "<OWNER_BLS_PK_BASE58>",
+  "contract_owner": "<OWNER_HEX>",
+  "driver_available": true,
+  "driver_signature": "<SIGNATURE_HEX_OR_NULL>",
+  "created_at": null
+}
+```
 
-#### Contract Calls (Queries)
+#### Contract balance
 
-To query a contract method:
+:::warning[Deprecated shortcut]
+`/on/contract:<contract_id>/status` is deprecated. Use the transfer contract `contract_balance` query instead.
+:::
 
-**Endpoint**: `/on/contracts:<contract_id>/<fn_name>`
+Use the transfer genesis contract to query a contract balance:
 
-- If you send `Content-Type: application/octet-stream`, the request body is treated as raw bytes.
-- If you send `Content-Type: application/json` and the node has a data driver for the contract, the request body is treated as JSON input and encoded automatically.
+**Endpoint**: `/on/contracts:0100000000000000000000000000000000000000000000000000000000000000/contract_balance`
 
-#### Data Drivers
+```sh
+curl -s -X POST \
+  "https://nodes.dusk.network/on/contracts:0100000000000000000000000000000000000000000000000000000000000000/contract_balance" \
+  -H "Content-Type: application/json" \
+  --data-raw '"<TARGET_CONTRACT_ID_HEX>"'
+```
 
-Drivers allow encoding/decoding contract data.
+Replacement response:
 
-**Endpoint**: `/on/driver:<contract_id>/<method>[:<target>]`
+```json
+"123456"
+```
+
+The replacement route returns the scalar balance value directly. The deprecated route wrapped that same value as `{ "balance": ... }`.
+
+#### Data drivers
+
+Drivers allow encoding and decoding contract data.
+
+**Endpoint**: `/on/driver:<contract_id>/<method>`
 
 Common methods:
 
@@ -182,6 +336,13 @@ Common methods:
 - `decode_output_fn:<fn_name>`
 - `decode_event:<event_name>`
 
+Example:
+
+```sh
+curl -s -X POST \
+  "https://nodes.dusk.network/on/driver:<contract_id>/get_schema" | jq .
+```
+
 ### Blobs
 
 - **Blob by commitment**: `/on/blobs:<commitment>/commitment`
@@ -189,66 +350,87 @@ Common methods:
 
 To retrieve a JSON sidecar instead of raw bytes, set `Content-Type: application/json`.
 
+Example:
+
+```sh
+curl -s -X POST \
+  "https://nodes.dusk.network/on/blobs:<hash>/hash" \
+  -H "Content-Type: application/json" | jq .
+```
+
 ### Stats
 
-- **Active public accounts (archive)**: `/on/stats/account_count`
-- **Finalized tx count (archive)**: `/on/stats/tx_count`
+Archive-enabled nodes expose:
+
+- **Active public accounts**: `/on/stats/account_count`
+- **Finalized transaction count**: `/on/stats/tx_count`
+
+Example:
+
+```sh
+curl -s -X POST "https://nodes.dusk.network/on/stats/tx_count" | jq .
+```
 
 ## Prover Endpoints
 
 - **Prove**: `/on/prover/prove`
 
-Send proof input as bytes (for example as a `0x...` hex string). The response is proof bytes (binary).
+Send proof input as bytes, for example as a `0x...` hex string. The response is proof bytes.
+
+```sh
+curl -s -X POST "https://nodes.dusk.network/on/prover/prove" \
+  --data-raw '0x...' \
+  --output proof.bin
+```
 
 ## Event Subscriptions
 
-Subscriptions are a 2-step process:
+Subscriptions are a two-step process:
 
 1. Open a WebSocket connection to `wss://<node>/on`.
-2. Use the session ID from that WebSocket to `GET`/`DELETE` subscriptions over HTTP.
+2. Use the session ID from that WebSocket to `GET` or `DELETE` subscriptions over HTTP.
 
 ### WebSocket session
 
 Connect to:
 
-```
+```text
 wss://nodes.dusk.network/on
 ```
 
-The node sends the **session ID as the first WebSocket text message** (16 bytes, hex-encoded). Use that value in the `Rusk-Session-Id` header.
+The node sends the **session ID as the first WebSocket text message**. Use that value in the `Rusk-Session-Id` header.
 
 ### Event URI format
 
-```
+```text
 /on/<component>[:<entity>]/<topic>
 ```
 
-- `component` and `topic` are case-insensitive (normalized to lowercase).
-- `entity` is optional for `blocks` and `transactions` (wildcard subscription), but required for `contracts`.
+- `component` and `topic` are case-insensitive and normalized to lowercase.
+- `entity` is optional for `blocks` and `transactions`, which allows wildcard subscriptions.
+- `entity` is required for `contracts`.
 
 Common topics:
 
 - `blocks`: `accepted`, `statechange`, `reverted`
 - `transactions`: `included`, `removed`, `executed`
-- `contracts`: contract-specific event topics (emitted event names)
+- `contracts`: contract-specific event topics, usually emitted event names
 
 Examples:
 
 - All accepted blocks: `/on/blocks/accepted`
 - A specific block: `/on/blocks:<block_hash>/accepted`
-- All executed txs: `/on/transactions/executed`
+- All executed transactions: `/on/transactions/executed`
 - Contract events: `/on/contracts:<contract_id>/<event_name>`
 
-### Subscribe / Unsubscribe
-
-Subscribe:
+### Subscribe
 
 ```sh
 curl -i -X GET "https://nodes.dusk.network/on/blocks/accepted" \
   -H "Rusk-Session-Id: <session_id>"
 ```
 
-Unsubscribe:
+### Unsubscribe
 
 ```sh
 curl -i -X DELETE "https://nodes.dusk.network/on/blocks/accepted" \
@@ -257,15 +439,16 @@ curl -i -X DELETE "https://nodes.dusk.network/on/blocks/accepted" \
 
 On success, the node returns `200 OK` with an empty body. Events are delivered over the WebSocket connection.
 
-If the session ID is missing/invalid, the node returns `424 Failed Dependency`.
+If the session ID is missing or invalid, the node returns `424 Failed Dependency`.
 
-## Event Payload Format (WebSocket)
+## Event Payload Format
 
 Events are sent as WebSocket **binary messages**:
 
 1. `u32` little-endian: length of the JSON header.
-2. JSON header bytes (includes `Content-Location`).
-3. Raw event data bytes (format depends on the event).
+2. JSON header bytes, including `Content-Location`.
+3. Raw event data bytes. The format depends on the event.
 
 If you need historical data, use an archive-enabled node and GraphQL queries such as `moonlightHistory`, `fullMoonlightHistory`, and `finalizedEvents`.
+
 See: [Retrieve historical events](/developer/integrations/historical_events).
