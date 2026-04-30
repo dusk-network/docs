@@ -1,0 +1,42 @@
+# Dusk Docs
+
+> Dusk is infrastructure for regulated digital assets and general finance. The docs explain how to build, integrate, and operate on Dusk across DuskDS, DuskEVM, DuskVM, Dusk Connect, Citadel, wallets, APIs, and node operations.
+
+## Start Here
+
+- [Overview](https://docs.dusk.network/learn/overview/): high-level introduction to Dusk.
+- [Market Infrastructure](https://docs.dusk.network/learn/market-infrastructure/): how Dusk supports regulated asset workflows.
+- [Dusk Trade](https://docs.dusk.network/learn/dusk-trade/): product layer for tokenized financial asset workflows on Dusk.
+- [Core Components](https://docs.dusk.network/learn/core-components/): DuskDS, Rusk, DuskVM, DuskEVM, Citadel, and application-layer tooling.
+- [Core Values](https://docs.dusk.network/learn/core-values/): regulated workflows, access controls, selective disclosure, and deterministic settlement.
+- [Native Issuance](https://docs.dusk.network/learn/tokenization-comparison/): digitization, tokenization, and native issuance.
+
+## Developer Docs
+
+- [Build on Dusk](https://docs.dusk.network/developer/overview/): choose between DuskEVM and native Dusk development.
+- [Deploy on DuskEVM](https://docs.dusk.network/developer/smart-contracts-dusk-evm/deploy-on-evm/): deploy Solidity contracts on DuskEVM.
+- [Smart Contracts on DuskDS](https://docs.dusk.network/developer/smart-contracts-duskds/): write Rust/WASM contracts for native Dusk execution.
+- [Dusk Connect](https://docs.dusk.network/developer/integrations/dusk-connect/): integrate wallet discovery and account connection.
+- [Dusk Wallet Extension](https://docs.dusk.network/developer/integrations/wallet-extension/): integrate with the first-party browser wallet provider.
+- [Transaction Lifecycle](https://docs.dusk.network/developer/integrations/tx-lifecycle/): understand transaction flow.
+- [HTTP API](https://docs.dusk.network/developer/integrations/http-api/): integrate with Dusk APIs.
+- [W3sper SDK](https://docs.dusk.network/developer/integrations/w3sper/): SDK integration.
+
+## Learn
+
+- [Transaction Models](https://docs.dusk.network/learn/deep-dive/duskds-tx-models/): Moonlight public accounts and Phoenix shielded transfers.
+- [DuskEVM](https://docs.dusk.network/learn/deep-dive/dusk-evm/): OP Stack-based EVM execution on Dusk.
+- [DuskVM](https://docs.dusk.network/learn/deep-dive/dusk-vm/): WASM execution for native Dusk contracts.
+- [Assets & Regulations](https://docs.dusk.network/learn/deep-dive/assets-and-regulations/): regulated asset workflow concepts.
+- [Cryptography](https://docs.dusk.network/learn/cryptography/): zero-knowledge proofs and cryptographic building blocks.
+
+## Operators and Tools
+
+- [Operator Overview](https://docs.dusk.network/operator/overview/): run and maintain Dusk infrastructure.
+- [Provisioner Node](https://docs.dusk.network/operator/provisioner/): run a provisioner node.
+- [Web Wallet](https://docs.dusk.network/learn/web-wallet/): use Dusk in the browser.
+- [Block Explorer](https://docs.dusk.network/learn/block-explorer/): inspect public network data.
+
+## Full Context
+
+- [llms-full.txt](https://docs.dusk.network/llms-full.txt): expanded index and terminology for LLM retrieval.

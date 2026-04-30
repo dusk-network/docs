@@ -11,6 +11,8 @@ You can use the node installer guide to [quickly launch your Provisioner node](/
 
 This guide explains setting up the wallet and the last steps needed to start running your node.
 
+For the staking model, maturity period, reward timing, and unstaking behavior, read [Staking on Dusk](/learn/guides/staking-basics) alongside this operator setup guide.
+
 ## Preparation
 
 ### Obtain a mnemonic

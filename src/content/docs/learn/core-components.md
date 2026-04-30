@@ -1,15 +1,15 @@
 ---
 title: Core Components
-description: Introduction to the core components that power Dusk.
+description: Introduction to the core components that power Dusk as infrastructure for regulated digital assets.
 ---
 
-Dusk is a modular blockchain architecture built for regulated finance: privacy where it’s needed, transparency where it’s required.
+Dusk is a modular blockchain architecture built for regulated finance: privacy where it is needed, transparency where it is useful, and deterministic settlement where market workflows require it.
 
 At a high level:
 
 | Component | Role | Where to go next |
 |---|---|---|
-| **DuskDS** | Settlement, consensus, and data availability | [Transaction Models](/learn/deep-dive/duskds-tx-models), [Run a node](/operator/overview) |
+| **DuskDS** | Dusk L1: settlement, consensus, data availability, and native transaction models | [Transaction Models](/learn/deep-dive/duskds-tx-models), [Run a node](/operator/overview) |
 | **Rusk** | The Rust node implementation that runs DuskDS and exposes APIs | [HTTP API](/developer/integrations/http-api/), <a href="https://github.com/dusk-network/rusk/" target="_blank" rel="noreferrer">GitHub</a> |
 | **DuskVM** | WASM execution environment for native smart contracts | [DuskVM deep dive](/learn/deep-dive/dusk-vm/), [Smart Contracts on DuskDS](/developer/smart-contracts-duskds/) |
 | **DuskEVM** | OP Stack-based EVM execution environment | [DuskEVM deep dive](/learn/deep-dive/dusk-evm/), [Deploy on DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm/) |
@@ -17,11 +17,11 @@ At a high level:
 
 ## DuskDS
 
-DuskDS is the settlement, consensus, and data availability layer at the foundation of the Dusk architecture. It provides finality, security, and native bridging for execution environments built on top (including DuskEVM and DuskVM).
+DuskDS is the Dusk L1: the settlement, consensus, and data availability layer at the foundation of the Dusk architecture. It provides finality, security, native transaction models, and bridging for execution environments built on top, including DuskEVM and DuskVM.
 
 DuskDS includes Rusk (the node implementation), Succinct Attestation (PoS consensus), Kadcast (P2P networking), and the genesis contracts (stake + transfer).
 
-DuskDS supports two transaction models: **Moonlight** (public) and **Phoenix** (shielded). See: [Transaction Models on Dusk](/learn/deep-dive/duskds-tx-models/).
+DuskDS supports two transaction models: **Moonlight** for transparent public accounts and **Phoenix** for confidential shielded transfers. See: [Transaction Models on Dusk](/learn/deep-dive/duskds-tx-models/).
 
 ### Rusk
 
@@ -47,13 +47,13 @@ Moonlight is account-based and public. Phoenix is UTXO-based and shielded. Both 
 
 ## Execution environments
 
-Dusk supports multiple execution environments on top of DuskDS. Each environment can focus on a specific developer experience (WASM vs EVM) while inheriting settlement and data availability from DuskDS.
+Dusk supports multiple execution environments on top of DuskDS. Each environment can focus on a specific developer experience while inheriting settlement and data availability from the Dusk L1.
 
-### Dusk VM
-[Dusk VM](/learn/deep-dive/dusk-vm) is a WASM execution environment built around Wasmtime. It’s optimized for Dusk-native smart contracts and privacy-focused applications.
+### DuskVM
+[DuskVM](/learn/deep-dive/dusk-vm) is a WASM execution environment built around Wasmtime. It is optimized for Dusk-native smart contracts that need direct access to native assets, custom execution, privacy, or zero-knowledge capabilities.
 
-### Dusk EVM
-[Dusk EVM](/learn/deep-dive/dusk-evm) is an OP Stack-based EVM-equivalent execution environment. It lets you deploy Solidity contracts using standard EVM tooling while using DuskDS for settlement and data availability.
+### DuskEVM
+[DuskEVM](/learn/deep-dive/dusk-evm) is an OP Stack-based EVM-equivalent execution environment. It lets you deploy Solidity contracts using standard EVM tooling while using DuskDS for settlement and data availability.
 
 ## Network Layer: Kadcast
 
@@ -70,7 +70,11 @@ For node operators: [Run a provisioner node](/operator/provisioner/).
 
 ## Applications
 
-On top of the base protocol, Dusk supports application-layer protocols for regulated markets.
+On top of the base protocol, Dusk supports application-layer protocols and tools for regulated markets.
+
+### Dusk Trade
+
+[Dusk Trade](/learn/dusk-trade) is the application layer for tokenized financial assets on Dusk. It is being built around real market workflows: investor onboarding, wallet binding, controlled transfers, payment coordination, and compliant settlement.
 
 ### Zedger / Hedger
 

@@ -5,8 +5,20 @@ description: DuskEVM is an OP Stack-based EVM execution environment that uses Du
 
 DuskEVM is an EVM-equivalent execution environment built on the OP Stack that uses DuskDS for settlement and data availability.
 
-Use DuskEVM when you want to deploy Solidity contracts and use standard EVM tooling (wallets, explorers, Hardhat, Foundry).
-For Dusk-native smart contracts (WASM; Phoenix/Moonlight), see [DuskVM](/learn/deep-dive/dusk-vm/).
+Use DuskEVM when your application benefits from Solidity, Ethereum-compatible tooling, EVM wallets, and existing smart contract infrastructure.
+
+Use native Dusk development instead when your application should be built directly against Dusk's own execution model: Rust/WASM contracts, native transaction models, protocol-level assets, custom market logic, or privacy and zero-knowledge capabilities. For that path, see [DuskVM](/learn/deep-dive/dusk-vm/) and [Smart Contracts on DuskDS](/developer/smart-contracts-duskds/).
+
+## Where DuskEVM fits
+
+DuskEVM is the EVM execution path in the Dusk stack:
+
+- **Developers** use familiar Solidity tooling.
+- **Applications** can inherit settlement and data availability from DuskDS.
+- **Users** pay gas in DUSK on DuskEVM.
+- **Privacy-sensitive flows** can use additional Dusk tooling such as Hedger where appropriate.
+
+For the broader architecture, see [Core Components](/learn/core-components).
 
 ## Network Information
 

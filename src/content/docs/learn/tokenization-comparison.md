@@ -1,9 +1,9 @@
 ---
 title: Native Issuance
-description: What native issuance means, how it differs from tokenization, and why it matters for regulated assets.
+description: What native issuance means, how it differs from tokenization, and why it matters for regulated digital assets.
 ---
 
-People often use “tokenization” to mean “putting an asset on a blockchain”. For regulated assets, it helps to be more precise because the lifecycle (issuance, custody, trading, settlement, reporting) determines what has to happen off-chain.
+People often use “tokenization” to mean “putting an asset on a blockchain”. For regulated assets, it helps to be more precise because the lifecycle (issuance, custody, trading, settlement, disclosure, reporting) determines what still has to happen outside the ledger.
 
 This page defines the terms and explains where **native issuance** fits in.
 
@@ -19,7 +19,7 @@ Tokenization is issuing a token that represents an asset (or a claim on an asset
 
 ### Native issuance
 
-Native issuance means the asset itself is created and managed **on-chain**: issuance, transfers, and (depending on the design) settlement happen on the ledger without needing to reconcile a “token” against a separate system of record.
+Native issuance means the asset itself is created and managed **on-chain**: issuance, transfers, servicing, and settlement can happen around the ledger instead of using a token as a wrapper around a separate system of record.
 
 ### Digitization vs Tokenization vs Native Issuance
 Here’s a quick comparison:
@@ -27,20 +27,20 @@ Here’s a quick comparison:
 |                      | **Digitization**                                                      | **Tokenization**                                                    | **Native Issuance**                                                |
 |---------------------------------|----------------------------------------------------------------------|--------------------------------------------------------------------|--------------------------------------------------------------------|
 | **Definition**                  | Conversion of paper-based systems into a digital format                   | Creation of a synthetic asset representing an underlying asset | Assets created directly on-chain without needing an underlying asset |
-| **Functionality**               | Basic digital representation, no added functionality                  | Fractionalization and Programmability (Smart Contracts) | Full asset lifecycle on-chain with no reconciliation requirements  |
-| **Settlement Process**          | Relies on traditional systems like CSDs and clearinghouses             | Relies on traditional systems like CSDs and clearinghouses             | Instant on-chain settlement, no reliance on external systems        |
-| **Custody**                     | Custodial (assets held by third-party)                               | Custodial (underlying asset held by a third-party)                     | Non-custodial, asset exists fully on-chain                          |
-| **Efficiency**                  | Inefficient due to reliance on intermediaries and slow settlement      | Some efficiency improvements but still faces reconciliation delays and costs   | High efficiency with near-instant settlement and reduced costs   |
-| **Risk of Settlement Failure**   | Yes, due to manual reconciliation and intermediary involvement       | Yes, due to manual reconciliation and intermediary involvement                 | No, as settlement is on-chain                    |
-| **Innovation Level**            | Zero. This is how things work now                  | Low. It only introduces fractionalization and partial programmability              | High. It removes intermediaries and enables fully on-chain processes    |
+| **Functionality**               | Digital recordkeeping, often without changing the market workflow | Programmability around a representation of the asset | Asset lifecycle can be designed directly around on-chain workflows |
+| **Settlement Process**          | Relies on traditional systems like CSDs and clearinghouses | Often still relies on traditional systems or reconciliation | Settlement can happen on-chain with deterministic finality |
+| **Custody**                     | Usually custodial or registry-based | Often custodial because the underlying asset remains elsewhere | Can reduce reliance on separate custody and registry layers, depending on the legal structure |
+| **Efficiency**                  | Limited by existing intermediaries and settlement processes | Improves distribution and programmability, but may keep reconciliation overhead | Can reduce handoffs between issuance, transfer, servicing, and settlement |
+| **Operational Risk**            | Manual processes and reconciliation can create delays or errors | Reconciliation between token and underlying asset remains important | Fewer duplicated records when the asset workflow is natively on-chain |
+| **Innovation Level**            | Incremental operational improvement | Better distribution and composability | Market workflow redesign around issuance, access controls, disclosure, and settlement |
 
 ## Where Dusk fits
 
-Dusk is built for regulated markets where **privacy, compliance controls, and deterministic settlement** are requirements, not add-ons.
+Dusk is built for regulated markets where **access controls, privacy with selective disclosure, and deterministic settlement** are requirements, not add-ons.
 
 In practice, that means you can:
 
-- build applications and tokenization-style workflows with familiar EVM tooling (via **DuskEVM**), and
-- rely on the settlement layer (**DuskDS**) for privacy-capable transaction models and finality.
+- build applications and tokenization-style workflows with familiar EVM tooling through **DuskEVM**, and
+- rely on **DuskDS**, the Dusk L1, for privacy-capable transaction models, data availability, and deterministic finality.
 
-If you want the architectural overview next, see [Core Components](/learn/core-components). For the product and market framing, see [Overview](/learn/overview).
+If you want the architectural overview next, see [Core Components](/learn/core-components). For the product and market framing, see [Overview](/learn/overview), [Market Infrastructure on Dusk](/learn/market-infrastructure), and [Dusk Trade](/learn/dusk-trade).

@@ -1,32 +1,32 @@
 ---
 title: Build on Dusk
-description: Choose between DuskEVM and DuskDS and start building on Dusk.
+description: Choose between DuskEVM and native Dusk development and start building on Dusk.
 ---
 
 import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
-Dusk has a **modular architecture** with:
+Dusk has a **modular architecture** for regulated digital assets, privacy-aware applications, and deterministic settlement:
 
-- **DuskDS** – the settlement and data layer (consensus, data availability, native transaction models, protocol contracts, DuskVM).
-- **DuskEVM** – the EVM execution layer where most smart contracts and dApps live.
+- **DuskDS** – the Dusk L1: settlement, consensus, data availability, native transaction models, protocol contracts, and DuskVM.
+- **DuskEVM** – the EVM execution layer for Solidity applications and familiar EVM tooling.
 
-As a builder you usually:
+As a builder, choose the path based on what your product needs and which tooling model you want:
 
-- write and deploy contracts on **DuskEVM**, and
-- rely on DuskDS for finality, privacy and settlement under the hood.
+- use **DuskEVM** when your application benefits from Solidity, EVM tooling, existing wallets, and Ethereum-compatible infrastructure.
+- use **native Dusk** when your application should build directly on Dusk's own execution model, native transaction models, Rust/WASM contracts, protocol-level assets, privacy, or zero-knowledge capabilities.
 
 ## Choose your path
 
 <CardGrid>
   <LinkCard
-    title="Smart Contracts on DuskEVM (recommended)"
+    title="Smart Contracts on DuskEVM"
     href="/developer/smart-contracts-dusk-evm/deploy-on-evm"
     description="Deploy Solidity or Vyper contracts on DuskEVM using familiar EVM tooling."
   />
   <LinkCard
-    title="Smart Contracts on DuskDS (advanced)"
+    title="Native Dusk smart contracts"
     href="/developer/smart-contracts-duskds"
-    description="Write Rust/WASM contracts directly on the DuskDS settlement layer."
+    description="Write general-purpose Rust/WASM contracts directly on Dusk's native execution layer."
   />
   <LinkCard
     title="Integrate with DuskDS"
@@ -42,33 +42,40 @@ As a builder you usually:
 
 ## When to use DuskEVM
 
-Use **DuskEVM** for almost all application‑level use cases:
+Use **DuskEVM** when your application is designed around the EVM ecosystem:
 
-- DeFi protocols, AMMs, lending, RWAs
-- NFTs and gaming
-- Apps that expect an EVM environment (tooling, libraries, infra)
+- tokenized asset applications
+- DeFi protocols, AMMs, and lending
+- applications that expect an EVM environment: tooling, libraries, wallets, and infrastructure
 
 You get:
 
 - Familiar languages and tooling (Solidity/Vyper, Hardhat/Foundry, etc.)
 - DUSK as the native gas token
-- Privacy & compliance features via the underlying DuskDS architecture and Hedger.
+- Settlement and data availability from DuskDS
+- A route toward confidential flows through Hedger where your application needs privacy
 
 See: [Smart Contracts on DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm).
 
-## When to use DuskDS contracts
+## When to use native Dusk contracts
 
-Use DuskDS smart contracts only when you need:
+Native Dusk smart contracts are general-purpose smart contracts for Dusk's own execution environment. They are written in Rust, compiled to WASM, and executed by DuskVM.
 
-- protocol‑level control on the settlement layer,
-- direct interaction with the DuskDS transaction models, or
-- specialised contracts that must run “next to” consensus.
+Use this path when you need:
+
+- protocol-level control on the settlement layer
+- direct interaction with Dusk transaction models
+- specialized contracts that need Rust/WASM execution
+- privacy or zero-knowledge capabilities that should live close to the base protocol
+- application logic that benefits from native Dusk assets, transaction models, or execution primitives
 
 Typical examples include:
 
-- genesis / protocol contracts (transfers, staking),
-- low‑level infrastructure contracts,
-- experiments that need direct access to the DuskDS VM and its unique features.
+- genesis or protocol contracts such as transfers and staking
+- low-level infrastructure contracts
+- applications that need direct access to DuskVM and native Dusk features
+
+Compared with DuskEVM, native Dusk contracts require more familiarity with Dusk-specific tooling and architecture. The tradeoff is deeper access to the protocol's own model rather than compatibility with the broader EVM ecosystem.
 
 If that’s you, start with:  
 [Smart Contracts on DuskDS](/developer/smart-contracts-duskds).

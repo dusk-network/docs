@@ -8,6 +8,8 @@ const siteSidebar = [
         collapsed: false,
         items: [
           { label: "Overview", link: "/learn/overview" },
+          { label: "Market Infrastructure", link: "/learn/market-infrastructure" },
+          { label: "Dusk Trade", link: "/learn/dusk-trade" },
           { label: "Core Components", link: "/learn/core-components" },
           { label: "Core Values", link: "/learn/core-values" },
           { label: "Native Issuance", link: "/learn/tokenization-comparison" },
@@ -61,6 +63,8 @@ const siteSidebar = [
           { label: "Smart Contracts on DuskDS", link: "/developer/smart-contracts-duskds" },
           { label: "Stake Abstraction", link: "/learn/hyperstaking" },
           { label: "Digital Identity Protocol", link: "/developer/digital-identity/protocol" },
+          { label: "Dusk Connect", link: "/developer/integrations/dusk-connect" },
+          { label: "Dusk Wallet Extension", link: "/developer/integrations/wallet-extension" },
         ],
       },
       {

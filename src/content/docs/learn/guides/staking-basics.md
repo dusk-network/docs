@@ -22,6 +22,8 @@ To earn protocol staking rewards directly, you run a provisioner node 24/7 and s
 - Run a node: [Provisioner node](/operator/provisioner)
 - Set up wallet + stake: [Wallet setup](/operator/guides/node-wallet-setup)
 
+If you are deciding whether to operate infrastructure yourself, read this page first, then move to the operator guide once you are ready to run a node.
+
 ### 2) Staking pools (no infrastructure)
 
 Some third-party services and on-chain pools stake on behalf of users. This can let you earn staking yield without running your own node, but it adds operator and smart contract risk.
@@ -80,5 +82,6 @@ If you withdraw down to **600 DUSK** active stake, the **400 DUSK** inactive sta
 ## Next steps
 
 - Direct staking (run your own node): [Provisioner node](/operator/provisioner), then [Wallet setup](/operator/guides/node-wallet-setup)
+- Operator maintenance after staking: [Maintenance & monitoring](/operator/maintenance-monitoring)
 - Understand rewards and emissions: [Tokenomics](/learn/tokenomics)
 - If you hold ERC20/BEP20 DUSK: [Mainnet migration](/learn/guides/mainnet-migration)

@@ -1,24 +1,34 @@
 ---
 title: DuskVM
-
-description: Learn about Dusk VM, the wasmtime VM that efficiently executes smart contracts on Dusk.
+description: Learn about DuskVM, the Wasmtime-based VM that executes native smart contracts on Dusk.
 
 ---
 
-## Dusk VM
+## Overview
 
-<a href="https://github.com/dusk-network/rusk/tree/master/vm" target="_blank">Dusk VM</a> is the WASM virtual machine for running Dusk's smart contracts, and it is based on the <a href="https://wasmtime.dev" target="_blank">Wasmtime</a> runtime, with a few custom modifications:
+[DuskVM](https://github.com/dusk-network/rusk/tree/master/vm) is the WASM virtual machine for native smart contracts on Dusk. It is based on the <a href="https://wasmtime.dev" target="_blank" rel="noreferrer">Wasmtime</a> runtime, with custom support for Dusk's execution model.
+
+Use DuskVM when your application should run as a native Dusk contract: protocol-level assets, Rust/WASM contracts, custom execution, market logic, privacy-aware flows, or zero-knowledge capabilities close to the settlement layer.
+
+Use DuskEVM instead when your application is designed around Solidity, EVM wallets, and Ethereum-compatible tooling. DuskVM is closer to Dusk's native model; DuskEVM is closer to the Ethereum developer ecosystem. See [DuskEVM](/learn/deep-dive/dusk-evm).
+
+## Where DuskVM fits
+
+DuskVM is part of the DuskDS layer. It is the native execution environment for general-purpose smart contracts that should live close to Dusk's transaction models and settlement layer.
+
+At a high level, DuskVM provides:
+
 - Specific memory management mechanism
-- Support for Dusk’s ABI
+- Support for Dusk's ABI
 - Support for inter-contract calls 
 
-Dusk VM functions as the host-side interface, handling the execution environment and system-level operations
+DuskVM functions as the host-side interface, handling the execution environment and system-level operations.
 
-##### Compiling contracts to WASM
+## Compiling contracts to WASM
 
-Dusk VM expects WASM as bytecode, meaning that smart contracts must be compiled into WASM bytecode in order for Dusk VM to execute them. Smart contracts are entirely responsible for validating their inputs, processing them according to the contract’s logic, and returning the appropriate outputs. This ensures that smart contracts operate predictably and securely within the standardized execution environment provided by the Dusk VM.
+DuskVM expects WASM as bytecode, meaning that smart contracts must be compiled into WASM bytecode in order for DuskVM to execute them. Smart contracts are entirely responsible for validating their inputs, processing them according to the contract’s logic, and returning the appropriate outputs. This ensures that smart contracts operate predictably and securely within the standardized execution environment provided by DuskVM.
 
-Contracts compiled to WASM can be executed by Dusk VM, with the following caveats:
+Contracts compiled to WASM can be executed by DuskVM, with the following caveats:
 - The contract needs to expose the "argument buffer" (`argbuf`), which is a special region of 64KB in the contract's memory
 - Each exposed function complies with the following calling convention: `fn foo(u32) -> u32`
 
@@ -26,4 +36,4 @@ The received u32 value indicates the length of the input data, which has been pl
 
 ## Dusk Core
 
-<a href="https://github.com/dusk-network/rusk/tree/master/core" target="_blank">Dusk Core</a> provides a lot of useful modules that can be used on the contract side to aid in development. It is the library that allows developers to create smart contracts directly on top of Dusk Core.
+<a href="https://github.com/dusk-network/rusk/tree/master/core" target="_blank" rel="noreferrer">Dusk Core</a> provides modules that can be used on the contract side to aid development. It is the library that allows developers to create smart contracts directly on top of Dusk Core.
