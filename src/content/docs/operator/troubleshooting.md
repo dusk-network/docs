@@ -16,6 +16,11 @@ This means your node is receiving consensus messages for rounds much higher than
 
 Check your block height (`ruskquery block-height`) against the explorer. If you are stuck, consider fast-syncing (`download_state`) or a manual resync.
 
+#### My provisioner was slashed
+First, restore healthy node operation: check the installed version, sync height, service status, logs, and staking status. Then monitor the node to make sure it keeps progressing.
+
+Follow: [Slashing prevention and recovery](/operator/guides/slashing-recovery).
+
 #### Unable to resolve domain:  invalid socket address
 Such errors usually indicate DNS problems. Check your DNS settings.
 

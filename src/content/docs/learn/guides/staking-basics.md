@@ -55,7 +55,7 @@ For reward sources and distribution details, see:
 
 Dusk uses **soft slashing**: stake is not burned, but repeated faults or long downtime can suspend rewards and reduce effective stake.
 
-See: [Slashing](/learn/tokenomics#slashing).
+See: [Slashing](/learn/tokenomics#slashing). If you run a provisioner, also read [Slashing prevention and recovery](/operator/guides/slashing-recovery).
 
 ## Adding to an existing stake
 

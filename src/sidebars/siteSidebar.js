@@ -106,6 +106,8 @@ const siteSidebar = [
           { label: "Fast-Sync a Node", link: "/operator/guides/fast-sync" },
           { label: "Manually Re-Sync a Node", link: "/operator/guides/manual-resync" },
           { label: "Upgrade a Node", link: "/operator/guides/upgrade-node" },
+          { label: "Roll Back a Node Update", link: "/operator/guides/rollback-node-update" },
+          { label: "Slashing Recovery", link: "/operator/guides/slashing-recovery" },
           { label: "Choose a Network", link: "/operator/networks" },
           { label: "Maintenance & Monitoring", link: "/operator/maintenance-monitoring" },
           { label: "FAQ", link: "/operator/faq" },
