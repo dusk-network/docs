@@ -30,6 +30,10 @@ If the node is only stuck or behind, try [fast-sync](/operator/guides/fast-sync)
 
 Replace `vX.Y.Z` with the installer release you want to roll back to.
 
+For example, to roll back to installer release `v1.2.3`, set:
+
+```sh
+INSTALLER_VERSION="v1.2.3"
 ```sh
 INSTALLER_VERSION="vX.Y.Z"
 
