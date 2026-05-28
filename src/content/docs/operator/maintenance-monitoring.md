@@ -18,6 +18,8 @@ The recommended setup for network participants looking to stake and use the netw
 
 Effective monitoring and alerting systems are crucial to avoid slashing events. There are several tools available for real-time monitoring and alerting, which are particularly important for provisioners participating in consensus. Implementing these systems helps ensure continuous performance and timely responses to potential issues.
 
+At minimum, monitor whether the Rusk service is running, whether `ruskquery block-height` is progressing, and whether your node is close to the network tip. If your provisioner was slashed or is at risk of being slashed, follow [Slashing prevention and recovery](/operator/guides/slashing-recovery).
+
 ## Keys Management
 
 Proper management of your cryptographic keys is essential to ensure the security of your node.
