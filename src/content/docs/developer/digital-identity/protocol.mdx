@@ -1,62 +1,36 @@
 ---
-title: Citadel
-description: Discover how Citadel leverages zero-knowledge proofs to offer a privacy-preserving and compliant Self-Sovereign Identity (SSI) protocol on Dusk.
+title: Citadel 2
+description: Learn the core idea behind Citadel 2, Dusk's privacy-preserving identity and access protocol.
 ---
 
-In a digitized world of today, in which different parties are massively interacting with each other exchanging huge amounts of personal and sensitive information, it is extremely important that those participants have full control over the information they expose and share. For this reason, the term Self-Sovereign Identity (SSI) began to be used to describe systems where their users are able to manage their identities in a fully transparent and private manner. This means that, at any moment, every user knows which information about them is being shared while using their identity.
+Citadel 2 is an enhanced version of Dusk's self-sovereign identity protocol. It lets someone prove they hold a valid credential, called a license, without putting their personal details or the exact license they used on-chain.
 
-Citadel is a zero-knowledge-proofs-based SSI management system where users' identities are stored in a trusted and private manner using a decentralized network. In our particular case, using the Dusk Blockchain.
+## The core idea
 
-There are three different parties involved in our protocol:
+Think of a Citadel license as a private credential.
 
-- **User:** A party willing to get a license that will allow them to use particular services. They request licenses on-chain to license providers, and after receiving those licenses, they are able to use the licenses on-chain, in order to establish private off-chain connections with service providers.
-- **License Provider (LP):** A party receiving on-chain requests from users. They can accept the requests and issue the licenses on-chain, which will be addressed to the users requesting them.
-- **Service Provider (SP):** A party receiving off-chain requests from users to grant services, and whose requests can be verified by means of information stored on-chain.
+- A **User** asks a trusted **License Provider (LP)** for a license.
+- The LP checks the user off-chain, signs the relevant attribute data, publishes an encrypted license, and registers that license in a Citadel contract.
+- Later, the user wants access to a service. They generate a zero-knowledge proof showing that they own a registered LP-signed license, without revealing which license is being used.
+- The Citadel contract verifies the proof and records a public session.
+- The user sends a session cookie to the **Service Provider (SP)**, and the SP decides whether to grant access.
 
+That last point matters: Citadel proves that the session is cryptographically valid, but it does not decide service policy. The SP still decides which LPs it trusts, which attributes are accepted, whether the session is expired or revoked, and whether the cookie can be reused.
 
-## How does Citadel Work?
+## What stays private
 
-Citadel is composed of two main protocols: the *license request protocol*, and the *service request protocol*. An overview of these protocols is as follows.
+Citadel 2 is designed so that personal attributes are not written to the blockchain. The on-chain session does not reveal the user's wallet key, the license used, the LP key, the SP key, the signed attributes, or the Merkle proof path. If a service needs to learn or verify an attribute, the user discloses or proves only what that service's policy requires.
 
-- **License Request Protocol:** this is the process where a user requests a license to the LP, by means of the following steps:
-    - **(user) request_license**: it sends a transaction on-chain, including a precomputed stealth address where the license will be received.
-  - **(LP) fetch_license_request**: the LP is continuously scanning the Blockchain for incoming requests addressed to them.
-  - **(LP) issue_license**: the LP, upon verification of the request, issues a license on-chain into a transaction, using the stealth address included in the request.
-  - **(user) fetch_license**: the user scans the Blockchain for incoming licenses.
+## Using Citadel 2
 
-- **Service Request Protocol:** this is the process where a user requests a service to the SP, by means of the following steps:
-    - **(user) use_license**: it sends a transaction on-chain, including a zero-knowledge proof that proves that the user owns a valid license. In this process, a session for an specific service is opened, and a session cookie is computed: a value needed to verify that a license was correctly used, and thus, it should be shared only with the desired SP.
-  - **(user) request_service**: the user requests the service by sending the session cookie to the SP, using a secure channel (e.g. an HTTPS connection).
-  - **(SP) fetch_session**: the SP, upon receiving a session cookie, scans the network for a session with the same ID that the session cookie has.
-  - **(SP) grant service**: the SP verifies locally the session cookie using the fetched session from the Blockchain, and grants access to the service or denies it based on the output of the verification.
+Developers can deploy their own Citadel license contract on Dusk. The Citadel repository includes the Rust core library, the license contract, and `zk-citadel-wallet`, a wallet-backed CLI/TUI for deploying a contract, requesting and issuing licenses, using a license, listing saved session cookies, and verifying sessions.
 
-The above steps are depicted in detail in the figure that follows.
-
-![protocol_citadel.svg](../../../../assets/protocol.png)
-
-You can find a more detailed description in the [specs](https://github.com/dusk-network/citadel/blob/main/docs/specs.pdf).
-
-## The License Contract
-
-Citadel is possible thanks to the *license contract* that can be deployed on DuskDS. The following diagram illustrates how concrete messages are passing between protocol actors, from an implementation point of view.
-
-![Citadel implementation](../../../../assets/implementation_citadel.png)
-
-
-## Citadel SDK
-
-Dusk brings **Moat**, the Citadel SDK. It is a Software Development Kit allowing developers to implement SSI solutions using Citadel and  Dusk.
-
-It includes a CLI and API for developers to integrate with.
+A complete JavaScript SDK for developers will be available soon.
 
 import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
 <CardGrid>
     <LinkCard title="GitHub Repository" icon="github" href="https://github.com/dusk-network/citadel/"/>
-    <LinkCard title="Specification" icon="pencil" href="https://github.com/dusk-network/citadel/blob/main/docs/specs.pdf" description="Citadel specification document."/>
-    <LinkCard title="Original Paper" icon="pencil" href="https://arxiv.org/pdf/2301.09378.pdf" description="Original research paper describing the idea behind Citadel."/>
+    <LinkCard title="Specification" icon="pencil" href="https://github.com/dusk-network/citadel/blob/main/docs/specs.md" description="Full Citadel 2 protocol specification."/>
+    <LinkCard title="Wallet CLI/TUI" icon="terminal" href="https://github.com/dusk-network/citadel/tree/main/wallet" description="Deploy and interact with Citadel contracts."/>
 </CardGrid>
-
-### Using the CLI
-
-Setup, prerequisites and usage is described in the [README](https://github.com/dusk-network/moat/blob/main/README.md) and [EXAMPLES](https://github.com/dusk-network/moat/blob/main/moat-example/README.md).
