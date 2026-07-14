@@ -80,7 +80,7 @@ Keep the `0x` prefix when an SDK expects prefixed hex. Remove it for `rusk-walle
 
 ## 5. Deploy on testnet
 
-Install and configure [Rusk Wallet](/learn/rusk-wallet/) and make sure a public account has enough testnet DUSK for deployment. [Request funds from the testnet faucet](/operator/networks/#how-to-get-testnet-tokens) if needed. The commands below target testnet explicitly and use the wallet's first address by default; add `--address <ADDRESS>` to use another funded address. Testnet DUSK has no monetary value.
+Install and configure [Rusk Wallet](/use/wallets/#rusk-wallet) and make sure a public account has enough testnet DUSK for deployment. [Request funds from the testnet faucet](/operator/networks/#how-to-get-testnet-tokens) if needed. The commands below target testnet explicitly and use the wallet's first address by default; add `--address <ADDRESS>` to use another funded address. Testnet DUSK has no monetary value.
 
 Deploy the on-chain artifact with a nonce you have not used for the same contract and account:
 

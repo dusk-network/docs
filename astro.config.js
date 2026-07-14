@@ -39,6 +39,9 @@ export default defineConfig({
 		'/developer/duskds/overview': '/developer/duskvm/overview',
 		'/developer/duskds/quickstart': '/developer/duskvm/quickstart',
 		'/developer/duskds/reference': '/developer/duskvm/reference',
+		'/learn/web-wallet': '/use/wallets#web-wallet',
+		'/learn/rusk-wallet': '/use/wallets#rusk-wallet',
+		'/use/dusk-wallet': '/use/wallets#dusk-wallet',
 	},
 	integrations: [
 		starlight({
