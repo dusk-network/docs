@@ -8,12 +8,13 @@ Dusk is infrastructure for regulated digital assets and general finance. It is d
 
 Dusk should be understood as a stack:
 
-- DuskDS: the Dusk L1 for consensus, settlement, data availability, native transaction models, and native execution.
-- DuskEVM: an OP Stack-based EVM execution environment using DUSK as gas and DuskDS for settlement/data availability.
-- DuskVM: the WASM execution environment for native Dusk smart contracts.
-- Rusk: the Rust node implementation that runs DuskDS.
+- Dusk L1: the complete base network, combining DuskDS settlement and data availability with DuskVM execution.
+- DuskDS: the consensus, settlement, and data-availability foundation of the Dusk L1, including its Moonlight and Phoenix transaction models.
+- DuskVM: the Rust/WASM smart-contract execution environment that runs directly on the Dusk L1.
+- DuskEVM: an OP Stack-based EVM execution environment using DUSK as gas and DuskDS for settlement and data availability.
+- Rusk: the Rust node implementation for the Dusk L1; it runs DuskDS consensus and DuskVM execution.
 - Citadel: identity and access primitives for selective disclosure and regulated workflows.
-- Dusk Connect: wallet discovery and account connection for Dusk applications.
+- Dusk Connect: wallet-extension discovery, profile access, and user-approved transactions for browser dApps.
 - Dusk Trade: application-layer market infrastructure for tokenized financial assets.
 
 ## Key Concepts
@@ -62,16 +63,18 @@ Relevant docs:
 
 Dusk has two main developer paths:
 
-- DuskEVM: Solidity, EVM tooling, EVM wallets, Ethereum-compatible infrastructure.
-- Native Dusk: general-purpose Rust/WASM contracts through DuskVM for protocol-level assets, native transaction models, custom execution, market logic, privacy, or zero-knowledge capabilities close to the settlement layer.
+- DuskVM: Rust/WASM contracts executed directly on the Dusk L1.
+- DuskEVM: Solidity, EVM tooling, EVM wallets, and Ethereum-compatible infrastructure settled through DuskDS.
 
 Relevant docs:
 
 - https://docs.dusk.network/developer/overview/
-- https://docs.dusk.network/learn/deep-dive/dusk-evm/
+- https://docs.dusk.network/learn/dusk-evm/
 - https://docs.dusk.network/learn/deep-dive/dusk-vm/
-- https://docs.dusk.network/developer/smart-contracts-dusk-evm/deploy-on-evm/
-- https://docs.dusk.network/developer/smart-contracts-duskds/
+- https://docs.dusk.network/developer/duskevm/quickstart/
+- https://docs.dusk.network/developer/duskvm/overview/
+- https://docs.dusk.network/developer/duskvm/quickstart/
+- https://docs.dusk.network/developer/duskvm/reference/
 
 ## Important Pages
 
@@ -90,8 +93,10 @@ Relevant docs:
 ### Developer
 
 - Developer Overview: https://docs.dusk.network/developer/overview/
-- Deploy on DuskEVM: https://docs.dusk.network/developer/smart-contracts-dusk-evm/deploy-on-evm/
-- Smart Contracts on DuskDS: https://docs.dusk.network/developer/smart-contracts-duskds/
+- DuskEVM Quickstart: https://docs.dusk.network/developer/duskevm/quickstart/
+- DuskVM Overview: https://docs.dusk.network/developer/duskvm/overview/
+- DuskVM Quickstart: https://docs.dusk.network/developer/duskvm/quickstart/
+- DuskVM Contract Reference: https://docs.dusk.network/developer/duskvm/reference/
 - Dusk Connect: https://docs.dusk.network/developer/integrations/dusk-connect/
 - Dusk Wallet Extension: https://docs.dusk.network/developer/integrations/wallet-extension/
 - Transaction Lifecycle: https://docs.dusk.network/developer/integrations/tx-lifecycle/
@@ -124,10 +129,10 @@ Relevant docs:
 
 Use:
 
-- Dusk for the network/protocol/stack in general contexts.
-- DuskDS for the Dusk L1, settlement, consensus, data availability, and native transaction models.
-- DuskEVM for the EVM execution layer.
-- DuskVM for native WASM smart contract execution.
+- Dusk for the company, product suite, and network in general contexts; use Dusk network or Dusk L1 when the technical meaning could be ambiguous.
+- DuskDS for the settlement and data-availability foundation, not as a synonym for the complete Dusk L1.
+- DuskVM for Rust/WASM smart-contract execution directly on the Dusk L1.
+- DuskEVM for the EVM execution layer settled through DuskDS.
 - Moonlight for public account flows.
 - Phoenix for shielded transfer flows.
 - Privacy with selective disclosure for regulated privacy patterns.

@@ -32,7 +32,7 @@ Dusk provides a shared base for market workflows that need both public coordinat
 | Privacy | Phoenix shielded transfers and zero-knowledge proofs |
 | Transparency | Moonlight public accounts and public chain data |
 | Selective disclosure | Controlled visibility for issuers, venues, auditors, or supervisors |
-| Settlement | DuskDS finality and asset/payment coordination patterns |
+| Settlement | DuskDS finality with DuskVM asset and payment coordination |
 | EVM compatibility | DuskEVM for Solidity applications and existing EVM tooling |
 
 The goal is not to make every workflow private or every workflow public. The goal is to let builders choose what should be visible, what should be confidential, and what should be disclosed to specific parties.
@@ -54,9 +54,9 @@ Different applications can implement this differently. Dusk provides the protoco
 
 Use the Dusk stack depending on the layer you are building:
 
-- **DuskDS** for settlement, data availability, native transaction models, and Dusk-native execution.
+- **DuskDS** for consensus, settlement, data availability, and Dusk transaction models.
 - **DuskEVM** for Solidity applications, EVM tooling, and Ethereum-compatible developer workflows.
-- **DuskVM** for Rust/WASM contracts that need native Dusk execution.
+- **DuskVM** for Rust/WASM contracts that execute directly on the Dusk L1.
 - **Citadel** for identity, credentials, and selective disclosure patterns.
 - **Dusk Connect** for wallet discovery and account connection in Dusk applications.
 - **Dusk Trade** for product-level tokenized asset workflows such as onboarding, wallet connection, buying, selling, and settlement coordination.

@@ -3,29 +3,29 @@ title: Core Components
 description: Introduction to the core components that power Dusk as infrastructure for regulated digital assets.
 ---
 
-Dusk is a modular blockchain architecture built for regulated finance: privacy where it is needed, transparency where it is useful, and deterministic settlement where market workflows require it.
+The Dusk network uses a modular architecture built for regulated finance: privacy where it is needed, transparency where it is useful, and deterministic settlement where market workflows require it.
 
 At a high level:
 
 | Component | Role | Where to go next |
 |---|---|---|
-| **DuskDS** | Dusk L1: settlement, consensus, data availability, and native transaction models | [Transaction Models](/learn/deep-dive/duskds-tx-models), [Run a node](/operator/overview) |
-| **Rusk** | The Rust node implementation that runs DuskDS and exposes APIs | [HTTP API](/developer/integrations/http-api/), <a href="https://github.com/dusk-network/rusk/" target="_blank" rel="noreferrer">GitHub</a> |
-| **DuskVM** | WASM execution environment for native smart contracts | [DuskVM deep dive](/learn/deep-dive/dusk-vm/), [Smart Contracts on DuskDS](/developer/smart-contracts-duskds/) |
-| **DuskEVM** | OP Stack-based EVM execution environment | [DuskEVM overview](/learn/dusk-evm/), [DuskEVM quickstart](/developer/duskevm/quickstart/) |
+| **DuskDS** | Settlement and data-availability foundation: consensus, finality, and Dusk transaction models | [Transaction Models](/learn/deep-dive/duskds-tx-models), [Run a node](/operator/overview) |
+| **Rusk** | The Rust node implementation for the Dusk L1 | [HTTP API](/developer/integrations/http-api/), <a href="https://github.com/dusk-network/rusk/" target="_blank" rel="noreferrer">GitHub</a> |
+| **DuskVM** | Rust/WASM smart-contract execution directly on the Dusk L1 | [DuskVM deep dive](/learn/deep-dive/dusk-vm/), [DuskVM contracts](/developer/duskvm/overview/) |
+| **DuskEVM** | OP Stack-based EVM execution settled through DuskDS | [DuskEVM overview](/learn/dusk-evm/), [DuskEVM quickstart](/developer/duskevm/quickstart/) |
 | **Citadel** | Identity and access primitives (selective disclosure) | [Digital Identity protocol](/developer/digital-identity/protocol/) |
 
 ## DuskDS
 
-DuskDS is the Dusk L1: the settlement, consensus, and data availability layer at the foundation of the Dusk architecture. It provides finality, security, native transaction models, and bridging for execution environments built on top, including DuskEVM and DuskVM.
+DuskDS is the Dusk Data Availability and Settlement layer. It is the consensus, finality, and data-availability foundation of the Dusk L1, and includes the Moonlight and Phoenix transaction models used to transfer DUSK and pay for execution.
 
-DuskDS includes Rusk (the node implementation), Succinct Attestation (PoS consensus), Kadcast (P2P networking), and the genesis contracts (stake + transfer).
+DuskDS is not a name for the complete Dusk network. The Dusk L1 also includes DuskVM smart-contract execution, while DuskEVM is an EVM-compatible execution layer that settles and publishes data through DuskDS.
 
 DuskDS supports two transaction models: **Moonlight** for transparent public accounts and **Phoenix** for confidential shielded transfers. See: [Transaction Models on Dusk](/learn/deep-dive/duskds-tx-models/).
 
 ### Rusk
 
-<a href="https://github.com/dusk-network/rusk/" target="_blank" rel="noreferrer">Rusk</a> is the Rust implementation of DuskDS. It runs consensus, maintains chain state, and exposes external APIs (including the HTTP API and RUES event system used by wallets, indexers, and integrators).
+<a href="https://github.com/dusk-network/rusk/" target="_blank" rel="noreferrer">Rusk</a> is the Rust node implementation for the Dusk L1. It runs DuskDS consensus, maintains chain state, executes DuskVM contracts, and exposes the HTTP API and RUES event system used by wallets, indexers, and integrators.
 
 ### Succinct Attestation
 
@@ -47,10 +47,10 @@ Moonlight is account-based and public. Phoenix is UTXO-based and shielded. Both 
 
 ## Execution environments
 
-Dusk supports multiple execution environments on top of DuskDS. Each environment can focus on a specific developer experience while inheriting settlement and data availability from the Dusk L1.
+Dusk provides two smart-contract environments at different layers of the architecture.
 
 ### DuskVM
-[DuskVM](/learn/deep-dive/dusk-vm) is a WASM execution environment built around Wasmtime. It is optimized for Dusk-native smart contracts that need direct access to native assets, custom execution, privacy, or zero-knowledge capabilities.
+[DuskVM](/learn/deep-dive/dusk-vm) is the Wasmtime-based execution environment for Rust/WASM contracts that run directly on the Dusk L1. It is the path for contracts that need direct access to L1 assets, transaction models, privacy, or zero-knowledge capabilities.
 
 ### DuskEVM
 [DuskEVM](/learn/dusk-evm/) is an OP Stack-based EVM-equivalent execution environment. It lets you deploy Solidity contracts using standard EVM tooling while using DuskDS for settlement and data availability.
@@ -80,7 +80,7 @@ On top of the base protocol, Dusk supports application-layer protocols and tools
 
 Zedger and Hedger are protocols for issuing and managing regulated assets with built-in compliance and privacy constraints.
 
-- **Zedger** runs natively on DuskDS.
+- **Zedger** uses DuskVM contracts on the Dusk L1.
 - **Hedger** runs on DuskEVM to offer an EVM-first developer experience.
 
 ### Citadel

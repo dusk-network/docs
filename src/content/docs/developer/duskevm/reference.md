@@ -39,8 +39,8 @@ Use `eth_estimateGas` to estimate the execution limit and EIP-1559 fee fields wh
 
 An included DuskEVM transaction can be visible before its data and state have completed DuskDS settlement.
 
-- **Deposits** are credited on DuskEVM after the DuskDS deposit is processed.
-- **Withdrawals** require proof, network finality checks, and a separate DuskDS finalization transaction.
+- **Deposits** are credited on DuskEVM after the Dusk L1 deposit is processed.
+- **Withdrawals** require proof, network finality checks, and a separate Dusk L1 finalization transaction.
 
 Use the bridge, wallet, or protocol contract status instead of calculating withdrawal readiness from time alone.
 
@@ -52,7 +52,7 @@ Most Solidity contracts require no Dusk-specific changes. Account for these OP S
 |---|---|
 | `block.coinbase` | Returns the configured sequencer fee recipient. Do not assume it changes between blocks. |
 | `block.prevrandao` | Reflects rollup origin metadata. It is not a source of secure or unbiased randomness. |
-| `tx.origin` in deposits | Contract-originated DuskDS to DuskEVM deposits use OP address aliasing. Use cross-domain messaging when the original sender identity matters. |
+| `tx.origin` in deposits | Contract-originated Dusk L1 to DuskEVM deposits use OP address aliasing. Use cross-domain messaging when the original sender identity matters. |
 
 ## Contract verification
 

@@ -12,7 +12,7 @@ It runs in your browser and supports both **public** (Moonlight) and **shielded*
 - Send and receive DUSK using public or shielded transfers.
 - Migrate ERC20/BEP20 DUSK to native DUSK: [ERC20/BEP20 Migration](/learn/guides/mainnet-migration).
 - Bridge native DUSK to BSC: [Native DUSK to BEP20 Bridge](/learn/guides/bep20-bridge).
-- Bridge DuskDS testnet to DuskEVM testnet: [DuskDS to DuskEVM bridge](/learn/guides/duskevm-bridge).
+- Bridge Dusk L1 testnet to DuskEVM testnet: [Dusk L1 to DuskEVM bridge](/learn/guides/duskevm-bridge).
 
 For node/operator staking workflows, use the CLI wallet and operator guides instead:
 [Staking on Dusk](/learn/guides/staking-basics), [Rusk Wallet](/learn/rusk-wallet), and [Run a provisioner node](/operator/provisioner).

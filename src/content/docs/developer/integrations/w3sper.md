@@ -64,6 +64,30 @@ await network.transactions.withId(hash).once.executed();
 console.log({ hash });
 ```
 
+## Query a custom contract
+
+Forge builds a data-driver WASM artifact alongside each DuskVM contract. Serve that artifact with your application, register its URL under the deployed contract ID, and W3sper will use it to encode calls and decode results:
+
+```js
+import { Contract, Network } from "@dusk/w3sper";
+
+const contractId = "<CONTRACT_ID>";
+const network = await Network.connect("https://testnet.nodes.dusk.network");
+
+network.dataDrivers.register(contractId, "/drivers/dusk_counter.wasm");
+
+const counter = new Contract({
+  contractId,
+  driver: network.dataDrivers.get(contractId),
+  network,
+});
+
+console.log(await counter.call.get_count());
+await network.disconnect();
+```
+
+The driver for this example is the file produced at `target/data-driver/wasm32-unknown-unknown/release/dusk_counter.wasm`. Methods under `contract.call` are read-only; submitting contract transactions directly through W3sper also requires a synced profile and `Bookkeeper`. For browser dApps where the user's wallet should approve the transaction, use [Dusk Connect](/developer/integrations/dusk-connect/).
+
 ## Query GraphQL
 
 `network.query()` wraps your selection in `query { ... }` and calls the node GraphQL endpoint.
@@ -76,7 +100,7 @@ console.log(tip.block.header);
 ## Offline Mode (Optional)
 
 When you call `Network.connect(...)`, W3sper loads the matching `wallet-core` WASM driver from the node.
-For the current 1.6 line, that driver is served as `wallet-core-1.6.0.wasm`.
+For the current 1.6 line, that driver is served as `wallet-core-1.6.1.wasm`.
 
 For offline usage, download that same versioned driver and load it yourself:
 
@@ -85,7 +109,7 @@ import { ProfileGenerator, useAsProtocolDriver } from "@dusk/w3sper";
 
 async function getLocalWasmBuffer() {
   // Must return bytes (Uint8Array/ArrayBuffer). Adjust to your environment.
-  return Deno.readFile("./wallet-core-1.6.0.wasm");
+  return Deno.readFile("./wallet-core-1.6.1.wasm");
 }
 
 const seeder = () => crypto.getRandomValues(new Uint8Array(64));
@@ -99,8 +123,8 @@ await useAsProtocolDriver(await getLocalWasmBuffer()).then(async () => {
 
 WASM download URLs:
 
-- Mainnet: `https://nodes.dusk.network/static/drivers/wallet-core-1.6.0.wasm`
-- Testnet: `https://testnet.nodes.dusk.network/static/drivers/wallet-core-1.6.0.wasm`
+- Mainnet: `https://nodes.dusk.network/static/drivers/wallet-core-1.6.1.wasm`
+- Testnet: `https://testnet.nodes.dusk.network/static/drivers/wallet-core-1.6.1.wasm`
 
 ## Units
 

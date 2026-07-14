@@ -65,9 +65,9 @@ For the full consensus specification, see Section 3 “Consensus mechanism” of
 
 Dusk separates settlement from execution:
 
-- **DuskDS**: the Dusk L1 for consensus, data availability, settlement, and native transaction models
+- **DuskDS**: the consensus, settlement, and data-availability foundation of the Dusk L1
 - **DuskEVM**: an Ethereum-compatible execution layer where DUSK is the native gas token
-- **DuskVM**: the WASM execution environment for Dusk-native smart contracts
+- **DuskVM**: Rust/WASM smart-contract execution directly on the Dusk L1
 
 Assets can move between layers so you can use the right environment for each job.
 
@@ -101,7 +101,8 @@ Here’s how the main components fit together:
 
 | Component   | Role in the system                                                | Learn more                                   |
 | ---------- | ------------------------------------------------------------------ | ------------------------------------------- |
-| **DuskDS** | Dusk L1: settlement, consensus, data availability, and native transaction models | [Core Components](/learn/core-components)   |
+| **DuskDS** | Dusk Data Availability and Settlement layer: consensus, finality, data availability, and transaction models | [Core Components](/learn/core-components)   |
+| **DuskVM** | Rust/WASM smart-contract execution directly on the Dusk L1 | [Build on DuskVM](/developer/duskvm/quickstart/) |
 | **DuskEVM**| EVM execution environment where DUSK is the gas token              | [Build on DuskEVM](/developer/duskevm/quickstart/) |
 | **Rusk**   | Reference node implementation that runs Succinct Attestation       | [Run a node](/operator/overview)            |
 | **Citadel**| Identity and access primitives for selective disclosure and regulated flows | [Core Components](/learn/core-components#citadel) |
@@ -131,7 +132,7 @@ Choose how you want to get involved:
   <LinkCard
     title="Build on Dusk"
     href="/developer/overview"
-    description="Explore DuskDS and DuskEVM developer docs and start building."
+    description="Explore DuskVM and DuskEVM developer docs and start building."
   />
 </CardGrid>
 

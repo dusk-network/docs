@@ -30,27 +30,19 @@ See [Dusk Connect](/developer/integrations/dusk-connect) for the SDK-level integ
 
 If you are building the application side, start with Dusk Connect. If you are testing or documenting the wallet-provider side, use this page together with the wallet provider API.
 
-## Provider discovery
+## Connect from a dApp
 
-The extension announces an EIP-1193-style provider through Dusk discovery events. Dusk is not an EVM chain, so wallet methods use Dusk-specific names.
+Use `@dusk/connect` to discover the extension and request profile access. This also handles multiple compatible Dusk wallets without binding the application to this extension:
 
 ```js
-const providers = [];
+import { createDuskWallet } from "@dusk/connect";
 
-window.addEventListener("dusk:announceProvider", (event) => {
-  providers.push(event.detail);
-});
-
-window.dispatchEvent(new Event("dusk:requestProvider"));
-
-const dusk = providers[0]?.provider;
-const [account] = await dusk.request({ method: "dusk_requestAccounts" });
-
-dusk.on("accountsChanged", console.log);
-dusk.on("chainChanged", console.log);
+const wallet = createDuskWallet();
+await wallet.ready();
+const profiles = await wallet.connect();
 ```
 
-For the canonical provider API, see the wallet repository:
+See [Dusk Connect](/developer/integrations/dusk-connect/) for installation, provider selection, and application integration. The extension still exposes the lower-level Dusk provider API for wallet authors and specialized integrations:
 
 - <a href="https://github.com/dusk-network/wallet/blob/main/docs/provider-api.md" target="_blank" rel="noreferrer">Dusk Wallet provider API</a>
 

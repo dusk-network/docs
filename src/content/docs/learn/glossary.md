@@ -21,13 +21,17 @@ An [archive node](/operator/archive-node) stores the full historical record of t
 
 A standard for confidential smart contracts that can be adapted to business requirements (for example, privacy constraints and compliance rules).
 
+#### Dusk
+
+Dusk is the name of the organization and the broader product and network suite. Where the technical meaning could be ambiguous, these docs use **Dusk network** for the protocol generally and **Dusk L1** for the complete base layer.
+
 #### DUSK
 
 The native token of Dusk. It is used to pay for transaction fees (gas) and staking.
 
 #### DuskDS
 
-DuskDS is the settlement layer of the Dusk architecture: consensus, data availability, settlement, and the native transaction models.
+DuskDS is the Dusk Data Availability and Settlement layer: the consensus, finality, and data-availability foundation of the Dusk L1, including its Moonlight and Phoenix transaction models.
 
 #### DuskEVM
 
@@ -35,7 +39,7 @@ DuskDS is the settlement layer of the Dusk architecture: consensus, data availab
 
 #### DuskVM
 
-[DuskVM](/learn/deep-dive/dusk-vm) is a WASM execution environment for Dusk-native smart contracts.
+[DuskVM](/learn/deep-dive/dusk-vm) is the Rust/WASM smart-contract execution environment that runs directly on the Dusk L1.
 
 #### Hedger
 
@@ -89,7 +93,7 @@ RUES (Rusk Universal Event System) is the event system used to stream chain even
 
 #### Rusk
 
-[Rusk](/learn/core-components#rusk) is the Rust node implementation of DuskDS.
+[Rusk](/learn/core-components#rusk) is the Rust node implementation for the Dusk L1. It runs DuskDS consensus and DuskVM execution.
 
 #### Rusk Wallet
 

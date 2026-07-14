@@ -34,7 +34,7 @@ The BSC address is provided in the **memo** field. If you omit the memo or provi
 ## Steps
 
 1. Open the [Web Wallet](https://apps.dusk.network/wallet/).
-2. Open or import your native Dusk wallet.
+2. Open or import your Dusk wallet.
 3. Navigate to the **Send** tab.
 4. Enter the official **Bridge Address** as the recipient:
 ```
