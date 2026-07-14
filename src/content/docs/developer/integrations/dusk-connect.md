@@ -1,50 +1,63 @@
 ---
 title: Dusk Connect
-description: Integrate Dusk wallet discovery and account connection into applications.
+description: Connect Dusk applications to compatible wallet extensions with @dusk/connect.
 ---
 
-Dusk Connect is the wallet integration layer for Dusk applications. It gives dApps a consistent way to discover compatible wallets, request accounts, and build connection flows around Dusk accounts.
+Dusk Connect (`@dusk/connect`) is the wallet integration layer for browser dApps on Dusk. It discovers compatible wallet extensions, requests profile access, tracks the active wallet and network, and sends user-approved transactions through the selected wallet.
 
-Use Dusk Connect when your application needs to:
+The SDK is framework-agnostic, typed, and has no runtime dependencies. An optional modal and `<dusk-connect-button>` are available from `@dusk/connect/ui`.
 
-- detect compatible Dusk wallet providers
-- let users select a wallet
-- request account access
-- handle public and shielded account flows in a consistent UI
-- integrate with Dusk wallet software without hardcoding one provider
+## Install
+
+Dusk Connect is published on JSR:
+
+```bash
+npx jsr add @dusk/connect
+```
+
+For Deno:
+
+```bash
+deno add jsr:@dusk/connect
+```
+
+## Connect a wallet
+
+`createDuskWallet()` starts wallet discovery and exposes a reactive view of the connection:
+
+```js
+import { createDuskWallet } from "@dusk/connect";
+
+const wallet = createDuskWallet();
+await wallet.ready();
+
+if (wallet.state.availableProviders.length > 1 && !wallet.state.providerId) {
+  await wallet.selectProvider(wallet.state.availableProviders[0].uuid);
+}
+
+const profiles = await wallet.connect();
+console.log(profiles[0]);
+```
+
+`wallet.connect()` opens the selected wallet's approval flow. The wallet state updates when the user changes profile, account access, or network. Use `wallet.subscribe()` to update application state reactively.
 
 ## Where it fits
 
-Dusk applications often need two kinds of integration:
+Use Dusk Connect for user-facing wallet flows:
 
-- **Network integration**: read chain data, submit transactions, and observe events.
-- **Wallet integration**: ask a user to connect an account and approve actions.
+- discover one or more compatible wallet extensions
+- let the user select a wallet and grant profile access
+- access public accounts and request shielded receive addresses
+- request message signatures and user-approved transactions
+- react to profile, authorization, and network changes
 
-Dusk Connect is for the wallet side. For network APIs and transaction flow, see [Transaction Lifecycle](/developer/integrations/tx-lifecycle), [HTTP API](/developer/integrations/http-api), and [W3sper SDK](/developer/integrations/w3sper).
+For a native smart-contract dApp, `createDuskApp()` adds read-only contract calls, data-driver loading, and prepared contract writes to the same wallet connection. Use [W3sper](/developer/integrations/w3sper/) or the [HTTP API](/developer/integrations/http-api/) when an application or backend needs direct node access without an injected wallet.
 
-If you are testing against the first-party browser wallet, use the [Dusk Wallet Extension](/developer/integrations/wallet-extension) as one compatible provider.
+The [Dusk Wallet Extension](/developer/integrations/wallet-extension/) is the first-party wallet provider for testing this flow. Dusk Connect uses the Dusk discovery protocol instead of hardcoding a particular extension.
 
-## Typical flow
+## Next steps
 
-A dApp integration usually follows this shape:
-
-1. Discover available Dusk wallet providers.
-2. Show the user the compatible wallets.
-3. Request account access from the selected wallet.
-4. Store the active account and provider for the session.
-5. Ask the wallet to approve transactions or account actions when needed.
-
-The exact API depends on the version of Dusk Connect you integrate.
-
-## Repository
-
-The Dusk Connect SDK is developed in the Dusk Network GitHub organization:
-
-- <a href="https://github.com/dusk-network/connect" target="_blank" rel="noreferrer">dusk-network/connect</a>
-
-## Read next
-
-- [Dusk Wallet Extension](/developer/integrations/wallet-extension)
-- [Web Wallet](/learn/web-wallet)
-- [Transaction Lifecycle](/developer/integrations/tx-lifecycle)
-- [W3sper SDK](/developer/integrations/w3sper)
+- [Dusk Connect repository and API reference](https://github.com/dusk-network/connect)
+- [Dusk Wallet Extension](/developer/integrations/wallet-extension/)
+- [Transaction Lifecycle](/developer/integrations/tx-lifecycle/)
+- [W3sper SDK](/developer/integrations/w3sper/)

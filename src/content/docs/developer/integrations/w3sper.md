@@ -86,7 +86,7 @@ console.log(await counter.call.get_count());
 await network.disconnect();
 ```
 
-The driver for this example is the file produced at `target/data-driver/wasm32-unknown-unknown/release/dusk_counter.wasm`. Methods under `contract.call` are read-only; submitting contract transactions also requires a synced profile and `Bookkeeper`.
+The driver for this example is the file produced at `target/data-driver/wasm32-unknown-unknown/release/dusk_counter.wasm`. Methods under `contract.call` are read-only; submitting contract transactions directly through W3sper also requires a synced profile and `Bookkeeper`. For browser dApps where the user's wallet should approve the transaction, use [Dusk Connect](/developer/integrations/dusk-connect/).
 
 ## Query GraphQL
 

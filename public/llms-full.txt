@@ -13,7 +13,7 @@ Dusk should be understood as a stack:
 - DuskVM: the WASM execution environment for native Dusk smart contracts.
 - Rusk: the Rust node implementation that runs DuskDS.
 - Citadel: identity and access primitives for selective disclosure and regulated workflows.
-- Dusk Connect: wallet discovery and account connection for Dusk applications.
+- Dusk Connect: wallet-extension discovery, profile access, and user-approved transactions for browser dApps.
 - Dusk Trade: application-layer market infrastructure for tokenized financial assets.
 
 ## Key Concepts

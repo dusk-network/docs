@@ -23,6 +23,7 @@ Both environments are general-purpose. The choice is primarily about the executi
 | [Forge](https://github.com/dusk-network/forge) | Scaffolds contracts and generates ABI exports, schemas, and data drivers from annotated Rust |
 | [DuskVM](/learn/deep-dive/dusk-vm/) | Executes contract WASM and persists contract state |
 | [Rusk Wallet](/learn/rusk-wallet/) | Signs and submits deployment and contract-call transactions |
+| [Dusk Connect](/developer/integrations/dusk-connect/) | Connects browser dApps to compatible Dusk wallet extensions for account access and transaction approval |
 | [W3sper](/developer/integrations/w3sper/) | Connects JavaScript applications to Dusk nodes and contract data drivers |
 
 A typical workflow is:
@@ -30,6 +31,6 @@ A typical workflow is:
 1. Scaffold a contract with Forge.
 2. Implement and test it locally against DuskVM.
 3. Build and verify the contract and data-driver WASM artifacts.
-4. Deploy the contract and submit calls through Rusk Wallet or an SDK.
+4. Deploy the contract, then connect applications through Dusk Connect, W3sper, or the HTTP API.
 
 Start with the [native Dusk quickstart](/developer/duskds/quickstart/). Use the [contract reference](/developer/duskds/reference/) when you need the ABI, state, serialization, event, or deployment details.

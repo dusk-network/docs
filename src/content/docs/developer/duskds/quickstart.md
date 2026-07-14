@@ -112,6 +112,6 @@ rusk-wallet --network testnet contract-call \
   --fn-args "${ARGS#0x}"
 ```
 
-`contract-call` submits a transaction and waits for inclusion. For read-only queries and application integration, use [W3sper](/developer/integrations/w3sper/) or the [Rusk HTTP API](/developer/integrations/http-api/).
+`contract-call` submits a transaction and waits for inclusion. In a browser dApp, use [Dusk Connect](/developer/integrations/dusk-connect/) to discover wallet extensions, request account access, and ask the selected wallet to approve transactions. Use [W3sper](/developer/integrations/w3sper/) or the [Rusk HTTP API](/developer/integrations/http-api/) for direct node queries and contract data-driver integration.
 
 Before building a production contract, read the [native contract reference](/developer/duskds/reference/).

@@ -18,7 +18,7 @@
 - [Native Dusk Overview](https://docs.dusk.network/developer/duskds/overview/): understand native Rust/WASM contract development.
 - [Native Dusk Quickstart](https://docs.dusk.network/developer/duskds/quickstart/): create, test, build, and deploy a native contract.
 - [Native Contract Reference](https://docs.dusk.network/developer/duskds/reference/): understand the native contract, ABI, state, event, and deployment model.
-- [Dusk Connect](https://docs.dusk.network/developer/integrations/dusk-connect/): integrate wallet discovery and account connection.
+- [Dusk Connect](https://docs.dusk.network/developer/integrations/dusk-connect/): discover wallet extensions, request profile access, and submit user-approved transactions from browser dApps.
 - [Dusk Wallet Extension](https://docs.dusk.network/developer/integrations/wallet-extension/): integrate with the first-party browser wallet provider.
 - [Transaction Lifecycle](https://docs.dusk.network/developer/integrations/tx-lifecycle/): understand transaction flow.
 - [HTTP API](https://docs.dusk.network/developer/integrations/http-api/): integrate with Dusk APIs.
