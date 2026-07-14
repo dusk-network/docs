@@ -14,8 +14,10 @@
 ## Developer Docs
 
 - [Build on Dusk](https://docs.dusk.network/developer/overview/): choose between DuskEVM and native Dusk development.
-- [Deploy on DuskEVM](https://docs.dusk.network/developer/smart-contracts-dusk-evm/deploy-on-evm/): deploy Solidity contracts on DuskEVM.
-- [Smart Contracts on DuskDS](https://docs.dusk.network/developer/smart-contracts-duskds/): write Rust/WASM contracts for native Dusk execution.
+- [DuskEVM Quickstart](https://docs.dusk.network/developer/duskevm/quickstart/): deploy Solidity contracts on DuskEVM.
+- [Native Dusk Overview](https://docs.dusk.network/developer/duskds/overview/): understand native Rust/WASM contract development.
+- [Native Dusk Quickstart](https://docs.dusk.network/developer/duskds/quickstart/): create, test, build, and deploy a native contract.
+- [Native Contract Reference](https://docs.dusk.network/developer/duskds/reference/): understand the native contract, ABI, state, event, and deployment model.
 - [Dusk Connect](https://docs.dusk.network/developer/integrations/dusk-connect/): integrate wallet discovery and account connection.
 - [Dusk Wallet Extension](https://docs.dusk.network/developer/integrations/wallet-extension/): integrate with the first-party browser wallet provider.
 - [Transaction Lifecycle](https://docs.dusk.network/developer/integrations/tx-lifecycle/): understand transaction flow.
@@ -25,7 +27,7 @@
 ## Learn
 
 - [Transaction Models](https://docs.dusk.network/learn/deep-dive/duskds-tx-models/): Moonlight public accounts and Phoenix shielded transfers.
-- [DuskEVM](https://docs.dusk.network/learn/deep-dive/dusk-evm/): OP Stack-based EVM execution on Dusk.
+- [DuskEVM](https://docs.dusk.network/learn/dusk-evm/): OP Stack-based EVM execution on Dusk.
 - [DuskVM](https://docs.dusk.network/learn/deep-dive/dusk-vm/): WASM execution for native Dusk contracts.
 - [Assets & Regulations](https://docs.dusk.network/learn/deep-dive/assets-and-regulations/): regulated asset workflow concepts.
 - [Cryptography](https://docs.dusk.network/learn/cryptography/): zero-knowledge proofs and cryptographic building blocks.

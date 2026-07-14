@@ -33,7 +33,7 @@ Transaction inclusion is fast, but inclusion and settlement are different stages
 
 Choose **DuskEVM** for Solidity applications, EVM wallets, existing Ethereum libraries, and EVM infrastructure.
 
-Choose **native Dusk development** for Rust/WASM contracts, native transaction models, protocol-level assets, or direct use of Dusk's privacy and zero-knowledge capabilities. See [DuskVM](/learn/deep-dive/dusk-vm/) and [Smart Contracts on DuskDS](/developer/smart-contracts-duskds/).
+Choose **native Dusk development** for Rust/WASM contracts, native transaction models, protocol-level assets, or direct use of Dusk's privacy and zero-knowledge capabilities. See [DuskVM](/learn/deep-dive/dusk-vm/) and [native Dusk contracts](/developer/duskds/overview/).
 
 ## Start here
 

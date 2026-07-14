@@ -68,10 +68,12 @@ Dusk has two main developer paths:
 Relevant docs:
 
 - https://docs.dusk.network/developer/overview/
-- https://docs.dusk.network/learn/deep-dive/dusk-evm/
+- https://docs.dusk.network/learn/dusk-evm/
 - https://docs.dusk.network/learn/deep-dive/dusk-vm/
-- https://docs.dusk.network/developer/smart-contracts-dusk-evm/deploy-on-evm/
-- https://docs.dusk.network/developer/smart-contracts-duskds/
+- https://docs.dusk.network/developer/duskevm/quickstart/
+- https://docs.dusk.network/developer/duskds/overview/
+- https://docs.dusk.network/developer/duskds/quickstart/
+- https://docs.dusk.network/developer/duskds/reference/
 
 ## Important Pages
 
@@ -90,8 +92,10 @@ Relevant docs:
 ### Developer
 
 - Developer Overview: https://docs.dusk.network/developer/overview/
-- Deploy on DuskEVM: https://docs.dusk.network/developer/smart-contracts-dusk-evm/deploy-on-evm/
-- Smart Contracts on DuskDS: https://docs.dusk.network/developer/smart-contracts-duskds/
+- DuskEVM Quickstart: https://docs.dusk.network/developer/duskevm/quickstart/
+- Native Dusk Overview: https://docs.dusk.network/developer/duskds/overview/
+- Native Dusk Quickstart: https://docs.dusk.network/developer/duskds/quickstart/
+- Native Contract Reference: https://docs.dusk.network/developer/duskds/reference/
 - Dusk Connect: https://docs.dusk.network/developer/integrations/dusk-connect/
 - Dusk Wallet Extension: https://docs.dusk.network/developer/integrations/wallet-extension/
 - Transaction Lifecycle: https://docs.dusk.network/developer/integrations/tx-lifecycle/

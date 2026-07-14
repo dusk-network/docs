@@ -61,7 +61,9 @@ const siteSidebar = [
         items: [
           { label: "DuskEVM Quickstart", link: "/developer/duskevm/quickstart" },
           { label: "DuskEVM Reference", link: "/developer/duskevm/reference" },
-          { label: "Smart Contracts on DuskDS", link: "/developer/smart-contracts-duskds" },
+          { label: "Native Dusk Overview", link: "/developer/duskds/overview" },
+          { label: "Native Dusk Quickstart", link: "/developer/duskds/quickstart" },
+          { label: "Native Dusk Reference", link: "/developer/duskds/reference" },
           { label: "Stake Abstraction", link: "/learn/hyperstaking" },
           { label: "Digital Identity Protocol", link: "/developer/digital-identity/protocol" },
           { label: "Dusk Connect", link: "/developer/integrations/dusk-connect" },

@@ -11,7 +11,7 @@ At a high level:
 |---|---|---|
 | **DuskDS** | Dusk L1: settlement, consensus, data availability, and native transaction models | [Transaction Models](/learn/deep-dive/duskds-tx-models), [Run a node](/operator/overview) |
 | **Rusk** | The Rust node implementation that runs DuskDS and exposes APIs | [HTTP API](/developer/integrations/http-api/), <a href="https://github.com/dusk-network/rusk/" target="_blank" rel="noreferrer">GitHub</a> |
-| **DuskVM** | WASM execution environment for native smart contracts | [DuskVM deep dive](/learn/deep-dive/dusk-vm/), [Smart Contracts on DuskDS](/developer/smart-contracts-duskds/) |
+| **DuskVM** | WASM execution environment for native smart contracts | [DuskVM deep dive](/learn/deep-dive/dusk-vm/), [Native Dusk contracts](/developer/duskds/overview/) |
 | **DuskEVM** | OP Stack-based EVM execution environment | [DuskEVM overview](/learn/dusk-evm/), [DuskEVM quickstart](/developer/duskevm/quickstart/) |
 | **Citadel** | Identity and access primitives (selective disclosure) | [Digital Identity protocol](/developer/digital-identity/protocol/) |
 
