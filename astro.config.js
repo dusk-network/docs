@@ -34,7 +34,11 @@ export default defineConfig({
 		'/developer/smart-contract/hyperstaking_tech': '/learn/hyperstaking',
 		'/learn/deep-dive/dusk-evm': '/learn/dusk-evm',
 		'/developer/smart-contracts-dusk-evm/deploy-on-evm': '/developer/duskevm/quickstart',
-		'/developer/smart-contracts-duskds': '/developer/duskds/overview',
+		'/developer/smart-contracts-duskds': '/developer/duskvm/overview',
+		'/developer/duskds': '/developer/duskvm/overview',
+		'/developer/duskds/overview': '/developer/duskvm/overview',
+		'/developer/duskds/quickstart': '/developer/duskvm/quickstart',
+		'/developer/duskds/reference': '/developer/duskvm/reference',
 	},
 	integrations: [
 		starlight({

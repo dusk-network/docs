@@ -1,19 +1,19 @@
 ---
 title: Build on Dusk
-description: Choose between DuskEVM and native Dusk development and start building on Dusk.
+description: Choose between DuskVM and DuskEVM development and start building on Dusk.
 ---
 
 import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
-Dusk has a **modular architecture** for regulated digital assets, privacy-aware applications, and deterministic settlement:
+Dusk provides two smart-contract paths:
 
-- **DuskDS** – the Dusk L1: settlement, consensus, data availability, native transaction models, protocol contracts, and DuskVM.
-- **DuskEVM** – the EVM execution layer for Solidity applications and familiar EVM tooling.
+- **DuskVM** executes Rust/WASM contracts directly on the Dusk L1.
+- **DuskEVM** provides Solidity and Vyper execution with settlement and data availability through DuskDS.
 
 As a builder, choose the path based on what your product needs and which tooling model you want:
 
 - use **DuskEVM** when your application benefits from Solidity, EVM tooling, existing wallets, and Ethereum-compatible infrastructure.
-- use **native Dusk** when your application should build directly on Dusk's own execution model, native transaction models, Rust/WASM contracts, protocol-level assets, privacy, or zero-knowledge capabilities.
+- use **DuskVM** when your application should execute directly on the Dusk L1 using Rust/WASM, protocol contracts, Dusk transaction models, privacy, or zero-knowledge capabilities.
 
 ## Choose your path
 
@@ -24,9 +24,9 @@ As a builder, choose the path based on what your product needs and which tooling
     description="Deploy Solidity or Vyper contracts on DuskEVM using familiar EVM tooling."
   />
   <LinkCard
-    title="Native Dusk smart contracts"
-    href="/developer/duskds/overview"
-    description="Write general-purpose Rust/WASM contracts directly on Dusk's native execution layer."
+    title="Smart Contracts on DuskVM"
+    href="/developer/duskvm/overview"
+    description="Write general-purpose Rust/WASM contracts that execute directly on the Dusk L1."
   />
   <LinkCard
     title="Integrate a Dusk dApp"
@@ -57,32 +57,32 @@ You get:
 
 See: [DuskEVM quickstart](/developer/duskevm/quickstart/).
 
-## When to use native Dusk contracts
+## When to use DuskVM
 
-Native Dusk smart contracts are general-purpose smart contracts for Dusk's own execution environment. They are written in Rust, compiled to WASM, and executed by DuskVM.
+DuskVM smart contracts are general-purpose contracts written in Rust and compiled to WASM. They execute directly on the Dusk L1.
 
 Use this path when you need:
 
-- protocol-level control on the settlement layer
+- protocol-level logic that executes directly on the Dusk L1
 - direct interaction with Dusk transaction models
 - specialized contracts that need Rust/WASM execution
 - privacy or zero-knowledge capabilities that should live close to the base protocol
-- application logic that benefits from native Dusk assets, transaction models, or execution primitives
+- application logic that benefits from Dusk L1 assets, transaction models, or execution primitives
 
 Typical examples include:
 
 - genesis or protocol contracts such as transfers and staking
 - low-level infrastructure contracts
-- applications that need direct access to DuskVM and native Dusk features
+- applications that need direct access to DuskVM and L1 features
 
-Compared with DuskEVM, native Dusk contracts require more familiarity with Dusk-specific tooling and architecture. The tradeoff is deeper access to the protocol's own model rather than compatibility with the broader EVM ecosystem.
+Compared with DuskEVM, DuskVM contracts require more familiarity with Dusk-specific tooling and architecture. The tradeoff is direct L1 execution rather than compatibility with the broader EVM ecosystem.
 
-If that’s you, start with the [native Dusk contract overview](/developer/duskds/overview/), then build the example in the [quickstart](/developer/duskds/quickstart/).
+If that’s you, start with the [DuskVM contract overview](/developer/duskvm/overview/), then build the example in the [quickstart](/developer/duskvm/quickstart/).
 
 ## Examples
 
 You can explore existing contracts and examples in the Dusk repos:
 
 - Protocol genesis contracts in [`contracts/genesis`](https://github.com/dusk-network/contracts/tree/main/genesis)
-- The native contract framework and template in [Forge](https://github.com/dusk-network/forge)
+- The DuskVM contract framework and template in [Forge](https://github.com/dusk-network/forge)
 - DuskEVM examples in the [DuskEVM quickstart](/developer/duskevm/quickstart/)

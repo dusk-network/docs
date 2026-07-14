@@ -35,9 +35,9 @@ Market infrastructure needs predictable finality. DuskDS is designed for fast, d
 
 Dusk separates settlement from execution so you can match the right environment to each use case:
 
-- DuskDS, the Dusk L1, for consensus, data availability, settlement, and native transaction models
-- DuskEVM for EVM-compatible application development
-- DuskVM for native Rust/WASM smart contracts on Dusk
+- DuskDS for consensus, settlement, data availability, and Dusk transaction models
+- DuskVM for Rust/WASM smart contracts executed directly on the Dusk L1
+- DuskEVM for EVM-compatible application development settled through DuskDS
 
 ## Vision
 
@@ -57,4 +57,4 @@ We aim to be clear and rigorous in the way we build:
 
 - write things down (docs, specs, and concrete examples)
 - prefer secure-by-design primitives over “bolt-on” complexity
-- keep developer UX practical (EVM where it helps, native where it matters)
+- keep developer UX practical (DuskEVM where compatibility helps, DuskVM where direct L1 execution matters)

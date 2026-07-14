@@ -1,20 +1,20 @@
 ---
-title: Native Dusk contracts
-description: Build Rust and WebAssembly smart contracts for Dusk's native execution environment.
+title: DuskVM smart contracts
+description: Build Rust and WebAssembly smart contracts that execute directly on the Dusk L1.
 ---
 
-Native Dusk contracts are written in Rust, compiled to WebAssembly (WASM), and executed by [DuskVM](/learn/deep-dive/dusk-vm/) on Dusk's L1. They use Dusk's native contract ABI and can integrate directly with the contracts and transaction models that make up DuskDS.
+DuskVM contracts are written in Rust, compiled to WebAssembly (WASM), and executed directly on the Dusk L1. They use the Dusk contract ABI and can integrate with L1 protocol contracts and transaction models.
 
-This is the lower-level development path on Dusk. It gives a contract direct access to Dusk's native execution model, but uses Dusk-specific tooling rather than the Ethereum toolchain.
+This path gives contracts direct access to Dusk's L1 execution model, but uses Dusk-specific tooling rather than the Ethereum toolchain.
 
 ## Choose an execution environment
 
 | Choose | When you need |
 |---|---|
-| **Native Dusk** | Rust/WASM, Dusk-native contracts and primitives, or logic that belongs close to the settlement layer |
+| **DuskVM** | Rust/WASM, Dusk L1 contracts and primitives, or logic that should execute directly on the L1 |
 | **[DuskEVM](/developer/duskevm/quickstart/)** | Solidity or Vyper, EVM wallets, and Ethereum-compatible libraries and tooling |
 
-Both environments are general-purpose. The choice is primarily about the execution model and developer ecosystem your application needs.
+Both environments are general-purpose. DuskVM executes contracts directly on the Dusk L1; DuskEVM provides EVM-compatible execution with settlement and data availability through DuskDS.
 
 ## Toolchain
 
@@ -33,4 +33,4 @@ A typical workflow is:
 3. Build and verify the contract and data-driver WASM artifacts.
 4. Deploy the contract, then connect applications through Dusk Connect, W3sper, or the HTTP API.
 
-Start with the [native Dusk quickstart](/developer/duskds/quickstart/). Use the [contract reference](/developer/duskds/reference/) when you need the ABI, state, serialization, event, or deployment details.
+Start with the [DuskVM quickstart](/developer/duskvm/quickstart/). Use the [contract reference](/developer/duskvm/reference/) when you need the ABI, state, serialization, event, or deployment details.

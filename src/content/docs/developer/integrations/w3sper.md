@@ -66,7 +66,7 @@ console.log({ hash });
 
 ## Query a custom contract
 
-Forge builds a data-driver WASM artifact alongside each native Dusk contract. Serve that artifact with your application, register its URL under the deployed contract ID, and W3sper will use it to encode calls and decode results:
+Forge builds a data-driver WASM artifact alongside each DuskVM contract. Serve that artifact with your application, register its URL under the deployed contract ID, and W3sper will use it to encode calls and decode results:
 
 ```js
 import { Contract, Network } from "@dusk/w3sper";

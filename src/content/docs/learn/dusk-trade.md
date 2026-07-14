@@ -28,7 +28,7 @@ Dusk Trade is not the base protocol. It is a product layer that can use the Dusk
 | --- | --- |
 | **DuskDS** | Settlement, finality, data availability, native transaction models |
 | **DuskEVM** | EVM-compatible application execution and Solidity tooling |
-| **DuskVM** | Native Rust/WASM execution for Dusk-specific contracts |
+| **DuskVM** | Rust/WASM smart-contract execution directly on the Dusk L1 |
 | **Citadel** | Identity, credentials, and selective disclosure patterns |
 | **Dusk Connect** | Wallet discovery and account connection |
 | **Dusk Wallet Extension** | First-party browser wallet provider for Dusk applications |

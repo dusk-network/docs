@@ -73,7 +73,7 @@ Regulated assets usually require more than a transfer:
 - investor updates
 - reporting and audit trails
 
-DuskDS provides deterministic finality and native transaction models. Applications can use DuskEVM or native Dusk contracts depending on whether the workflow needs EVM compatibility, native execution, or closer integration with Dusk’s transaction models.
+DuskDS provides deterministic finality and Dusk's Moonlight and Phoenix transaction models. Applications can use DuskEVM or DuskVM contracts depending on whether a workflow needs EVM compatibility or direct L1 execution.
 
 ## Dematerialization and CSDs (Concepts)
 

@@ -1,9 +1,9 @@
 ---
-title: Native contract reference
-description: The contract, state, ABI, serialization, event, build, and deployment model for native Dusk contracts.
+title: DuskVM contract reference
+description: The contract, state, ABI, serialization, event, build, and deployment model for DuskVM contracts.
 ---
 
-Native Dusk contracts are `no_std` Rust libraries compiled to `wasm32-unknown-unknown`. Forge's `#[dusk_forge::contract]` macro turns an annotated module into the exports expected by DuskVM.
+DuskVM contracts are `no_std` Rust libraries compiled to `wasm32-unknown-unknown`. Forge's `#[dusk_forge::contract]` macro turns an annotated module into the exports expected by DuskVM.
 
 ## Contract shape
 

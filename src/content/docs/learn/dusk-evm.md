@@ -8,9 +8,9 @@ DuskEVM brings Solidity, EVM wallets, and Ethereum tooling to Dusk. Existing EVM
 ## Why DuskEVM
 
 - **Start with the EVM stack.** Use Solidity or Vyper with Foundry, Hardhat, viem, ethers, and standard EVM wallets.
-- **Use DUSK natively.** DUSK pays for execution and moves between DuskDS and DuskEVM through the bridge.
+- **Use DUSK throughout.** DUSK pays for execution and moves between the Dusk L1 and DuskEVM through the bridge.
 - **Settle on DuskDS.** Batches and state commitments anchor DuskEVM activity to Dusk's consensus and data-availability layer.
-- **Reach the wider Dusk stack.** EVM applications can connect to Dusk-native assets, infrastructure, and privacy-oriented workflows as those integrations require.
+- **Reach the wider Dusk stack.** EVM applications can connect to Dusk L1 assets, infrastructure, and privacy-oriented workflows as those integrations require.
 
 ## How it fits
 
@@ -27,16 +27,16 @@ A DuskEVM transaction follows a rollup lifecycle:
 3. The batcher publishes the transaction data to DuskDS.
 4. State commitments and fault proofs connect the resulting state to DuskDS settlement.
 
-Transaction inclusion is fast, but inclusion and settlement are different stages. Applications that move value between DuskEVM and DuskDS should use protocol or wallet status rather than infer finality from elapsed time.
+Transaction inclusion is fast, but inclusion and settlement are different stages. Applications that move value between DuskEVM and the Dusk L1 should use protocol or wallet status rather than infer finality from elapsed time.
 
 ## Choose an execution environment
 
 Choose **DuskEVM** for Solidity applications, EVM wallets, existing Ethereum libraries, and EVM infrastructure.
 
-Choose **native Dusk development** for Rust/WASM contracts, native transaction models, protocol-level assets, or direct use of Dusk's privacy and zero-knowledge capabilities. See [DuskVM](/learn/deep-dive/dusk-vm/) and [native Dusk contracts](/developer/duskds/overview/).
+Choose **DuskVM** for Rust/WASM contracts that should execute directly on the Dusk L1 or integrate closely with its transaction models, protocol assets, privacy, or zero-knowledge capabilities. See the [DuskVM overview](/learn/deep-dive/dusk-vm/) and [DuskVM contract guide](/developer/duskvm/overview/).
 
 ## Start here
 
 - [Deploy a contract with the DuskEVM quickstart](/developer/duskevm/quickstart/)
 - [Review networks and EVM behavior](/developer/duskevm/reference/)
-- [Bridge DUSK between DuskDS and DuskEVM](/learn/guides/duskevm-bridge/)
+- [Bridge DUSK between the Dusk L1 and DuskEVM](/learn/guides/duskevm-bridge/)

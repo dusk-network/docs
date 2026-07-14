@@ -1,5 +1,5 @@
 ---
-title: Native Dusk quickstart
+title: DuskVM quickstart
 description: Create, test, build, and deploy a Rust/WASM contract with Forge.
 ---
 
@@ -28,7 +28,7 @@ cd dusk-counter
 dusk-forge check
 ```
 
-The project contains the contract in `src/lib.rs` and DuskVM integration tests in `tests/contract.rs`. Its `rust-toolchain.toml`, Cargo features, release overflow checks, and WASM target are ready for native Dusk development.
+The project contains the contract in `src/lib.rs` and DuskVM integration tests in `tests/contract.rs`. Its `rust-toolchain.toml`, Cargo features, release overflow checks, and WASM target are ready for DuskVM development.
 
 The generated counter demonstrates the core model:
 
@@ -114,4 +114,4 @@ rusk-wallet --network testnet contract-call \
 
 `contract-call` submits a transaction and waits for inclusion. In a browser dApp, use [Dusk Connect](/developer/integrations/dusk-connect/) to discover wallet extensions, request account access, and ask the selected wallet to approve transactions. Use [W3sper](/developer/integrations/w3sper/) or the [Rusk HTTP API](/developer/integrations/http-api/) for direct node queries and contract data-driver integration.
 
-Before building a production contract, read the [native contract reference](/developer/duskds/reference/).
+Before building a production contract, read the [DuskVM contract reference](/developer/duskvm/reference/).

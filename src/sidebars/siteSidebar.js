@@ -59,11 +59,11 @@ const siteSidebar = [
       {
         label: "Build on Dusk",
         items: [
+          { label: "DuskVM Overview", link: "/developer/duskvm/overview" },
+          { label: "DuskVM Quickstart", link: "/developer/duskvm/quickstart" },
+          { label: "DuskVM Reference", link: "/developer/duskvm/reference" },
           { label: "DuskEVM Quickstart", link: "/developer/duskevm/quickstart" },
           { label: "DuskEVM Reference", link: "/developer/duskevm/reference" },
-          { label: "Native Dusk Overview", link: "/developer/duskds/overview" },
-          { label: "Native Dusk Quickstart", link: "/developer/duskds/quickstart" },
-          { label: "Native Dusk Reference", link: "/developer/duskds/reference" },
           { label: "Stake Abstraction", link: "/learn/hyperstaking" },
           { label: "Digital Identity Protocol", link: "/developer/digital-identity/protocol" },
           { label: "Dusk Connect", link: "/developer/integrations/dusk-connect" },
@@ -71,7 +71,7 @@ const siteSidebar = [
         ],
       },
       {
-        label: "Integrate with DuskDS",
+        label: "Integrate with Dusk",
         items: [
           { label: "Transaction Lifecycle", link: "/developer/integrations/tx-lifecycle" },
           { label: "W3sper SDK", link: "/developer/integrations/w3sper" },
