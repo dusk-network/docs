@@ -99,12 +99,12 @@ console.log(tip.block);
 
 ## Offline profile derivation
 
-`Network.connect()` loads `wallet-core-1.6.1.wasm` from the selected node. An offline application can download that same driver, store it locally, and load it before using profile APIs:
+`Network.connect()` loads the protocol driver expected by the installed W3sper release from the selected node. `@dusk/w3sper` 1.6.0 requests `wallet-core-1.6.0.wasm`. An offline application must download that exact driver, store it locally, and load it before using profile APIs:
 
 ```js
 import { ProfileGenerator, useAsProtocolDriver } from "@dusk/w3sper";
 
-const driver = await Deno.readFile("./wallet-core-1.6.1.wasm");
+const driver = await Deno.readFile("./wallet-core-1.6.0.wasm");
 const seeder = () => crypto.getRandomValues(new Uint8Array(64));
 
 await useAsProtocolDriver(driver);
@@ -118,12 +118,15 @@ The random seed above is only an API demonstration. Production applications must
 
 Driver URLs:
 
-- Mainnet: `https://nodes.dusk.network/static/drivers/wallet-core-1.6.1.wasm`
-- Testnet: `https://testnet.nodes.dusk.network/static/drivers/wallet-core-1.6.1.wasm`
+- Mainnet: `https://nodes.dusk.network/static/drivers/wallet-core-1.6.0.wasm`
+- Testnet: `https://testnet.nodes.dusk.network/static/drivers/wallet-core-1.6.0.wasm`
+
+Check the installed W3sper release before pinning an offline driver; the filename changes when its protocol-driver dependency changes.
 
 ## Next steps
 
 - [Dusk Connect](/developer/integrations/dusk-connect/)
 - [DuskVM quickstart](/developer/duskvm/quickstart/)
+- [Moonlight deposit scanning](/developer/integrations/historical_events/)
 - [Transaction lifecycle](/developer/integrations/tx-lifecycle/)
 - [HTTP API and RUES](/developer/integrations/http-api/)
