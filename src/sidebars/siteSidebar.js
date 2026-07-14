@@ -31,7 +31,7 @@ const siteSidebar = [
         collapsed: true,
         items: [
           { label: "Tokenomics", link: "/learn/tokenomics" },
-          { label: "Ecosystem and Partners", link: "/learn/ecosystem" },
+          { label: "Ecosystem", link: "/learn/ecosystem" },
         ],
       },
       {
@@ -53,9 +53,7 @@ const siteSidebar = [
         label: "Wallets and Explorers",
         collapsed: true,
         items: [
-          { label: "Dusk Wallet", link: "/use/dusk-wallet" },
-          { label: "Web Wallet", link: "/learn/web-wallet" },
-          { label: "Rusk Wallet", link: "/learn/rusk-wallet" },
+          { label: "Wallets", link: "/use/wallets" },
           { label: "Explorers", link: "/learn/block-explorer" },
         ],
       },

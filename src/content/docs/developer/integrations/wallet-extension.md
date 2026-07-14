@@ -3,7 +3,7 @@ title: Dusk Wallet Integration
 description: Connect applications to the official Dusk Wallet extension and its provider API.
 ---
 
-This page is for developers integrating with or building the Dusk Wallet extension. For installation and user guidance, see [Dusk Wallet](/use/dusk-wallet/).
+This page is for developers integrating with or building the Dusk Wallet extension. For installation and user guidance, see [Wallets](/use/wallets/#dusk-wallet).
 
 The Dusk Wallet extension is the first-party browser wallet for Dusk. It gives applications a provider surface for connecting Dusk accounts.
 
@@ -15,7 +15,7 @@ Use the extension when you need:
 - dApp connection through Dusk provider discovery
 - a first-party wallet to test Dusk Connect integrations
 
-For users who only need a hosted browser wallet, see [Web Wallet](/learn/web-wallet). For terminal and operator workflows, see [Rusk Wallet](/learn/rusk-wallet).
+For a hosted browser wallet or terminal and operator workflows, see [Wallets](/use/wallets/).
 
 ## How it fits with Dusk Connect
 
@@ -82,4 +82,4 @@ Then load `dist-firefox/` as a temporary add-on in `about:debugging`.
 
 - [Dusk Connect](/developer/integrations/dusk-connect)
 - [Transaction Lifecycle](/developer/integrations/tx-lifecycle)
-- [Web Wallet](/learn/web-wallet)
+- [Wallets](/use/wallets/)

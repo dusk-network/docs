@@ -97,7 +97,7 @@ RUES (Rusk Universal Event System) is the event system used to stream chain even
 
 #### Rusk Wallet
 
-The [Rusk Wallet](/learn/rusk-wallet) is the official CLI wallet for Dusk.
+The [Rusk Wallet](/use/wallets#rusk-wallet) is the official CLI wallet for Dusk.
 
 #### Shielded Account
 
@@ -113,7 +113,7 @@ Succinct Attestation is Dusk's proof-of-stake consensus protocol.
 
 #### Web Wallet
 
-The [Web Wallet](/learn/web-wallet) is the official browser-based wallet for Dusk.
+The [Web Wallet](/use/wallets#web-wallet) is Dusk's official hosted browser wallet interface.
 
 #### Zedger
 

@@ -22,7 +22,7 @@ Both environments are general-purpose. DuskVM executes contracts directly on the
 |---|---|
 | [Forge](https://github.com/dusk-network/forge) | Scaffolds contracts and generates ABI exports, schemas, and data drivers from annotated Rust |
 | [DuskVM](/learn/deep-dive/dusk-vm/) | Executes contract WASM and persists contract state |
-| [Rusk Wallet](/learn/rusk-wallet/) | Signs and submits deployment and contract-call transactions |
+| [Rusk Wallet](/use/wallets/#rusk-wallet) | Signs and submits deployment and contract-call transactions |
 | [Dusk Connect](/developer/integrations/dusk-connect/) | Connects browser dApps to compatible Dusk wallet extensions for account access and transaction approval |
 | [W3sper](/developer/integrations/w3sper/) | Connects JavaScript applications to Dusk nodes and contract data drivers |
 

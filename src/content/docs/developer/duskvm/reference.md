@@ -118,6 +118,6 @@ Both deployment and contract calls submitted as transactions consume gas, whethe
 - [Forge source and releases](https://github.com/dusk-network/forge)
 - [DuskVM source](https://github.com/dusk-network/rusk/tree/master/vm)
 - [Dusk contract ABI](https://docs.rs/dusk-core/latest/dusk_core/abi/)
-- [Rusk Wallet](/learn/rusk-wallet/)
+- [Rusk Wallet](/use/wallets/#rusk-wallet)
 - [Dusk Connect](/developer/integrations/dusk-connect/)
 - [W3sper SDK](/developer/integrations/w3sper/)

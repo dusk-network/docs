@@ -39,8 +39,7 @@
 ## Use Dusk
 
 - [Use Dusk Overview](https://docs.dusk.network/use/overview/): find wallets, staking, bridge, migration, and explorer guides.
-- [Dusk Wallet](https://docs.dusk.network/use/dusk-wallet/): install and use the official Chrome or Firefox wallet extension.
-- [Web Wallet](https://docs.dusk.network/learn/web-wallet/): use Dusk in the browser.
+- [Wallets](https://docs.dusk.network/use/wallets/): compare Dusk Wallet, Web Wallet, Rusk Wallet, and community alternatives.
 - [Explorers](https://docs.dusk.network/learn/block-explorer/): find official mainnet and testnet explorers and community alternatives.
 - [Staking](https://docs.dusk.network/learn/guides/staking-basics/): stake DUSK and participate in consensus.
 - [DuskEVM Bridge](https://docs.dusk.network/learn/guides/duskevm-bridge/): move testnet DUSK between the Dusk L1 and DuskEVM.

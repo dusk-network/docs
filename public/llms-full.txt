@@ -57,7 +57,7 @@ DuskDS supports:
 Relevant docs:
 
 - https://docs.dusk.network/learn/deep-dive/duskds-tx-models/
-- https://docs.dusk.network/learn/web-wallet/
+- https://docs.dusk.network/use/wallets/
 
 ### Execution Paths
 
@@ -86,7 +86,7 @@ Relevant docs:
 - Core Components: https://docs.dusk.network/learn/core-components/
 - Core Values: https://docs.dusk.network/learn/core-values/
 - Native Issuance: https://docs.dusk.network/learn/tokenization-comparison/
-- Ecosystem & Partners: https://docs.dusk.network/learn/ecosystem/
+- Ecosystem: https://docs.dusk.network/learn/ecosystem/
 - Tokenomics: https://docs.dusk.network/learn/tokenomics/
 - Glossary: https://docs.dusk.network/learn/glossary/
 
@@ -121,9 +121,7 @@ Relevant docs:
 ### Use Dusk
 
 - Use Dusk Overview: https://docs.dusk.network/use/overview/
-- Dusk Wallet: https://docs.dusk.network/use/dusk-wallet/
-- Web Wallet: https://docs.dusk.network/learn/web-wallet/
-- Rusk Wallet: https://docs.dusk.network/learn/rusk-wallet/
+- Wallets: https://docs.dusk.network/use/wallets/
 - Explorers: https://docs.dusk.network/learn/block-explorer/
 - Staking: https://docs.dusk.network/learn/guides/staking-basics/
 - DuskEVM Bridge: https://docs.dusk.network/learn/guides/duskevm-bridge/
