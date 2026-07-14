@@ -22,7 +22,7 @@
 - [DuskVM Quickstart](https://docs.dusk.network/developer/duskvm/quickstart/): create, test, build, and deploy a DuskVM contract.
 - [DuskVM Contract Reference](https://docs.dusk.network/developer/duskvm/reference/): understand the DuskVM contract, ABI, state, event, and deployment model.
 - [Dusk Connect](https://docs.dusk.network/developer/integrations/dusk-connect/): discover wallet extensions, request profile access, and submit user-approved transactions from browser dApps.
-- [Dusk Wallet Extension](https://docs.dusk.network/developer/integrations/wallet-extension/): integrate with the first-party browser wallet provider.
+- [Dusk Wallet Integration](https://docs.dusk.network/developer/integrations/wallet-extension/): integrate applications with the first-party browser wallet provider.
 - [Transaction Lifecycle](https://docs.dusk.network/developer/integrations/tx-lifecycle/): understand transaction flow.
 - [HTTP API](https://docs.dusk.network/developer/integrations/http-api/): integrate with Dusk APIs.
 - [Historical Events](https://docs.dusk.network/developer/integrations/historical_events/): query finalized public transfer history from archive infrastructure.
@@ -39,8 +39,9 @@
 ## Use Dusk
 
 - [Use Dusk Overview](https://docs.dusk.network/use/overview/): find wallets, staking, bridge, migration, and explorer guides.
+- [Dusk Wallet](https://docs.dusk.network/use/dusk-wallet/): install and use the official Chrome or Firefox wallet extension.
 - [Web Wallet](https://docs.dusk.network/learn/web-wallet/): use Dusk in the browser.
-- [Block Explorer](https://docs.dusk.network/learn/block-explorer/): inspect public network data.
+- [Explorers](https://docs.dusk.network/learn/block-explorer/): find official mainnet and testnet explorers and community alternatives.
 - [Staking](https://docs.dusk.network/learn/guides/staking-basics/): stake DUSK and participate in consensus.
 - [DuskEVM Bridge](https://docs.dusk.network/learn/guides/duskevm-bridge/): move testnet DUSK between the Dusk L1 and DuskEVM.
 

@@ -50,12 +50,13 @@ const siteSidebar = [
     items: [
       { label: "Overview", link: "/use/overview" },
       {
-        label: "Wallets and Explorer",
+        label: "Wallets and Explorers",
         collapsed: true,
         items: [
+          { label: "Dusk Wallet", link: "/use/dusk-wallet" },
           { label: "Web Wallet", link: "/learn/web-wallet" },
           { label: "Rusk Wallet", link: "/learn/rusk-wallet" },
-          { label: "Block Explorer", link: "/learn/block-explorer" },
+          { label: "Explorers", link: "/learn/block-explorer" },
         ],
       },
       {
@@ -99,7 +100,7 @@ const siteSidebar = [
         collapsed: true,
         items: [
           { label: "Dusk Connect", link: "/developer/integrations/dusk-connect" },
-          { label: "Dusk Wallet Extension", link: "/developer/integrations/wallet-extension" },
+          { label: "Dusk Wallet Integration", link: "/developer/integrations/wallet-extension" },
           { label: "W3sper SDK", link: "/developer/integrations/w3sper" },
         ],
       },

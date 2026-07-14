@@ -98,7 +98,7 @@ Relevant docs:
 - DuskVM Quickstart: https://docs.dusk.network/developer/duskvm/quickstart/
 - DuskVM Contract Reference: https://docs.dusk.network/developer/duskvm/reference/
 - Dusk Connect: https://docs.dusk.network/developer/integrations/dusk-connect/
-- Dusk Wallet Extension: https://docs.dusk.network/developer/integrations/wallet-extension/
+- Dusk Wallet Integration: https://docs.dusk.network/developer/integrations/wallet-extension/
 - Transaction Lifecycle: https://docs.dusk.network/developer/integrations/tx-lifecycle/
 - HTTP API: https://docs.dusk.network/developer/integrations/http-api/
 - Historical Events: https://docs.dusk.network/developer/integrations/historical_events/
@@ -121,9 +121,10 @@ Relevant docs:
 ### Use Dusk
 
 - Use Dusk Overview: https://docs.dusk.network/use/overview/
+- Dusk Wallet: https://docs.dusk.network/use/dusk-wallet/
 - Web Wallet: https://docs.dusk.network/learn/web-wallet/
 - Rusk Wallet: https://docs.dusk.network/learn/rusk-wallet/
-- Block Explorer: https://docs.dusk.network/learn/block-explorer/
+- Explorers: https://docs.dusk.network/learn/block-explorer/
 - Staking: https://docs.dusk.network/learn/guides/staking-basics/
 - DuskEVM Bridge: https://docs.dusk.network/learn/guides/duskevm-bridge/
 - Mainnet Migration: https://docs.dusk.network/learn/guides/mainnet-migration/

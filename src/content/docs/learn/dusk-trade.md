@@ -55,4 +55,4 @@ Dusk Trade is where those requirements become a usable product surface.
 - [Native Issuance](/learn/tokenization-comparison)
 - [Assets & Regulations](/learn/deep-dive/assets-and-regulations)
 - [Dusk Connect](/developer/integrations/dusk-connect)
-- [Dusk Wallet Extension](/developer/integrations/wallet-extension)
+- [Dusk Wallet](/use/dusk-wallet)

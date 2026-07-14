@@ -1,9 +1,11 @@
 ---
-title: Dusk Wallet Extension
-description: Use the Dusk Wallet browser extension as a first-party wallet for Dusk applications.
+title: Dusk Wallet Integration
+description: Connect applications to the official Dusk Wallet extension and its provider API.
 ---
 
-The Dusk Wallet extension is the first-party browser wallet for Dusk. It gives users a self-custodial wallet in Chrome and Firefox, and gives applications a provider surface for connecting Dusk accounts.
+This page is for developers integrating with or building the Dusk Wallet extension. For installation and user guidance, see [Dusk Wallet](/use/dusk-wallet/).
+
+The Dusk Wallet extension is the first-party browser wallet for Dusk. It gives applications a provider surface for connecting Dusk accounts.
 
 Use the extension when you need:
 
