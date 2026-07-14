@@ -1,189 +1,131 @@
 ---
-title: Retrieve historical events
-description: Documentation on the access to blockchain transaction history for public value transfers on Dusk.
+title: Scan Moonlight deposits
+description: Detect finalized public DUSK deposits with archive GraphQL and W3sper.
 ---
 
-## Overview
+Use an archive-enabled Rusk node to scan public Moonlight deposits. The Moonlight history indexes are updated only when blocks finalize, so their results do not require a separate confirmation delay.
 
-These queries are **archive-only**. You need an archive-enabled node, or a public archive endpoint, to use them. On a non-archive node they are unavailable.
+The public endpoints are useful for development. Run an archive node you control for production ingestion, availability, and reproducible backfills.
 
-The archive GraphQL API provides access to finalized historical blockchain transaction-events involving public (Moonlight) `DUSK` value transfers. It includes two primary endpoints:
+## Choose a query
 
-1. `moonlightHistory`
-2. `fullMoonlightHistory`
+| Query | Returns |
+|---|---|
+| `moonlightHistory(receiver: ...)` | Finalized transactions that caused an inflow to one public account, with optional block bounds and offset pagination |
+| `fullMoonlightHistory(address: ...)` | Finalized inflows and outflows affecting one public account |
+| `transactionsByMemo(memo: ...)` | Finalized indexed transactions carrying an exact memo |
 
-:::tip
-The **moonlightHistory** endpoint allows for advanced filtering, enabling queries based on sender, receiver, block range, and pagination. **fullMoonlightHistory** retrieves all public `DUSK` value transfers for a given address, without additional filtering options.
-:::
+History can include direct transfers, contract payouts, refunds, staking withdrawals, and Phoenix-to-Moonlight conversions. A direct Moonlight deposit is specifically a non-reverted transfer-contract event with topic `moonlight`, the expected receiver, and a positive value.
 
-You can also check out the [transaction models](/learn/deep-dive/duskds-tx-models) page to get familiar with the terminology of `moonlight` and `phoenix`.
+Do not identify direct transfers by counting events. A transaction can emit additional contract events without changing its transaction family.
 
-Refer to [GraphQL queries](/developer/integrations/http-api/#graphql-queries) for additional information on the GraphQL endpoint.
+## W3sper scanner
 
-## Endpoints
+Install W3sper:
 
-### `moonlightHistory`
+```bash
+deno add jsr:@dusk/w3sper
+```
 
-Retrieves emitted events from transactions based on sender and/or receiver. The `moonlightHistory` endpoint allows you to specify block ranges (fromBlock, toBlock) to retrieve all transfers within the specified block range. You can also specify a maxCount and a pageCount to limit the number of results returned. Pagination should be used with care as it is offset-based and **not** cursor-based.
+Create `scan-deposits.js`:
 
-#### Example Queries
+```js
+import { Network } from "@dusk/w3sper";
 
-##### Query by Sender
+const TRANSFER_CONTRACT =
+  "0100000000000000000000000000000000000000000000000000000000000000";
 
-> If only **sender** is specified, it will only show moonlight outflows for that address.
-
-```graphql
-query {
-    moonlightHistory(sender: "<sender_address>") {
-        json
-    }
+const account = Deno.env.get("MOONLIGHT_ACCOUNT");
+if (!account) throw new Error("Set MOONLIGHT_ACCOUNT");
+if (!/^[1-9A-HJ-NP-Za-km-z]+$/.test(account)) {
+  throw new Error("MOONLIGHT_ACCOUNT must be Base58");
 }
-```
 
-**cURL Command:**
+const nodeUrl = Deno.env.get("DUSK_NODE") ?? "https://nodes.dusk.network";
+const startHeight = Number(Deno.env.get("FROM_BLOCK") ?? "0");
+const batchSize = Number(Deno.env.get("BLOCK_BATCH_SIZE") ?? "1000");
 
-```sh
-curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
-  --data-raw 'query { moonlightHistory(sender: "<sender_address>") { json } }'
-```
-
-##### Query by Receiver
-
-> If only **receiver** is specified, it will only show moonlight inflows for that address.
-
-```graphql
-query {
-    moonlightHistory(receiver: "<receiver_address>") {
-        json
-    }
+if (!Number.isSafeInteger(startHeight) || startHeight < 0) {
+  throw new Error("FROM_BLOCK must be a non-negative integer");
 }
-```
-
-**cURL Command:**
-
-```sh
-curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
-  --data-raw 'query { moonlightHistory(receiver: "<receiver_address>") { json } }'
-```
-
-
-
-##### Query by Sender and Receiver
-
-> If **both sender and receiver** are specified, it will **only** return events from transactions where an outflow occurred on the sender's side and an inflow occurred on the receiver's side within the same transaction.
-
-```graphql
-query {
-    moonlightHistory(
-        sender: "<sender_address>"
-        receiver: "<receiver_address>"
-    ) {
-        json
-    }
+if (!Number.isSafeInteger(batchSize) || batchSize < 1) {
+  throw new Error("BLOCK_BATCH_SIZE must be a positive integer");
 }
-```
 
-**cURL Command:**
+const network = await Network.connect(nodeUrl);
 
-```sh
-curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
-  --data-raw 'query { moonlightHistory(sender: "<sender_address>", receiver: "<receiver_address>") { json } }'
-```
+try {
+  const status = await network.query("lastBlockPair { json }");
+  const finalizedHeight = status.lastBlockPair.json.last_finalized_block[0];
 
-### `fullMoonlightHistory`
-
-Returns all transactions that have an inflow or outflow of public Dusk for the given address, without the granular filtering options available in `moonlightHistory`. The `fullMoonlightHistory` endpoint allows you to specify block ranges (fromBlock, toBlock) to retrieve all transfers within the specified block range.
-
-#### Example Query
-
-```graphql
-query {
-    fullMoonlightHistory(address: "<address>") {
-        json
-    }
-}
-```
-
-**cURL Command:**
-
-```sh
-curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
-  --data-raw 'query { fullMoonlightHistory(address: "<address>") { json } }'
-```
-
-## Filtering
-
-### Filtering for public transactions
-
-There is a distinction between a **protocol transaction** and a **transfer of value**:
-
-- Transactions can be of type `moonlight`, but some transactions can also be of type `phoenix` and they can still lead to a change in the public balance of an account, while not being a public (moonlight) transaction (E.g., in the case of a conversion from shielded dusk **to** public dusk).
-- If you only want to see public transactions, you can filter the JSON response for transaction entries where at least one event contains the following fields:
-  ```json
-  "target": "0100000000000000000000000000000000000000000000000000000000000000",
-  "topic": "moonlight"
-  ```
-
-Example JavaScript, Rust, Bash function to filter based on it:
-
-#### JavaScript
-
-```javascript
-function filterMoonlightTransactions(response) {
-    return response.fullMoonlightHistory.json.filter(tx =>
-        tx.events.some(event =>
-            event.target === "0100000000000000000000000000000000000000000000000000000000000000" &&
-            event.topic === "moonlight"
-        )
+  for (
+    let fromBlock = startHeight;
+    fromBlock <= finalizedHeight;
+    fromBlock += batchSize
+  ) {
+    const toBlock = Math.min(
+      fromBlock + batchSize - 1,
+      finalizedHeight,
     );
+    const result = await network.query(`
+      moonlightHistory(
+        receiver: "${account}"
+        fromBlock: ${fromBlock}
+        toBlock: ${toBlock}
+      ) {
+        json
+      }
+    `);
+
+    const deposits = (result.moonlightHistory?.json ?? []).flatMap((group) =>
+      group.events
+        .filter((event) =>
+          event.target === TRANSFER_CONTRACT &&
+          event.topic === "moonlight" &&
+          event.reverted === false &&
+          event.data?.receiver === account &&
+          BigInt(event.data?.value ?? "0") > 0n
+        )
+        .map((event) => ({
+          txId: group.origin,
+          blockHeight: group.block_height,
+          amountLux: event.data.value,
+          memoHex: event.data.memo || null,
+        }))
+    );
+
+    console.log(JSON.stringify({ fromBlock, toBlock, deposits }));
+  }
+} finally {
+  await network.disconnect();
 }
 ```
 
-#### Rust
+Run it from the first unprocessed block:
 
-```rust
-use serde_json::Value;
-
-fn filter_moonlight_transactions(response: &Value) -> Vec<&Value> {
-    response["fullMoonlightHistory"]["json"].as_array().unwrap_or(&vec![]).iter()
-        .filter(|tx| tx["events"].as_array().unwrap_or(&vec![]).iter()
-            .any(|event| event["target"] == "0100000000000000000000000000000000000000000000000000000000000000"
-                && event["topic"] == "moonlight"))
-        .collect()
-}
+```bash
+MOONLIGHT_ACCOUNT='<PUBLIC_ACCOUNT>' \
+FROM_BLOCK='<NEXT_BLOCK>' \
+deno run --allow-env --allow-net scan-deposits.js
 ```
 
-#### Bash
->  using jq
-```sh
-jq '.fullMoonlightHistory.json | map(select(.events | any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
-```
+Amounts are integer LUX strings: `1 DUSK = 1_000_000_000 LUX`. Memos are returned as hex and are untrusted routing data; validate their decoded format before mapping them to a customer.
 
-**cURL Command with Filtering:**
+## Persist safely
 
-```sh
-curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
-  --data-raw 'query { fullMoonlightHistory(address: "<address>") { json } }' \
-  | jq '.fullMoonlightHistory.json | map(select(.events | any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
-```
+For each completed block range, use one database transaction to:
 
-This ensures that only public protocol transactions are retrieved.
+1. Insert credits with a unique constraint on the Dusk transaction ID.
+2. Record unknown or invalid destination metadata for manual review instead of dropping it.
+3. Advance the account's `next_block` checkpoint to `toBlock + 1`.
+4. Commit only after all credits in the range are durable.
 
-### Filtering for public transaction & plain standard transfer
+After a crash, restart from `next_block`. Re-scanning a range is safe when transaction IDs are unique. Never advance the checkpoint before writing its deposits, and never use a memo as the idempotency key.
 
-To retrieve only **standard** Moonlight transfers (i.e., transactions that involve a direct value transfer without additional actions, such as contract calls), you can filter for transactions where the events array contains exactly one entry.
+Use bounded block ranges instead of deep offset pagination. This keeps backfills predictable while new finalized blocks are added.
 
-The entry we are looking for is a `MoonlightTransactionEvent`, which is the same as the one above, but it will be the only event emitted during that transaction. So the only additional constraint is that events have only one entry.
+## Other public inflows
 
-#### Example Bash
-```sh
-jq '.fullMoonlightHistory.json | map(select(.events | length == 1 and any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
-```
+The scanner intentionally accepts only direct Moonlight transfers. If your integration also accepts contract payouts, staking withdrawals, refunds, or Phoenix conversions, define and test a separate rule for each relevant transfer-contract event such as `contract_to_account`, `mint`, `withdraw`, or `convert`.
 
-**cURL Command with Filtering:**
-
-```sh
-curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
-  --data-raw 'query { fullMoonlightHistory(address: "<address>") { json } }' \
-  | jq '.fullMoonlightHistory.json | map(select(.events | length == 1 and any(.target == "0100000000000000000000000000000000000000000000000000000000000000" and .topic == "moonlight")))'
-```
+See [Transaction lifecycle](/developer/integrations/tx-lifecycle/) for live mempool and finality behavior, and [HTTP API](/developer/integrations/http-api/#graphql-queries) for raw GraphQL access.

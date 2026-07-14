@@ -1,97 +1,77 @@
 ---
-title: Integrate with Exchanges
-description: "Practical notes for listing DUSK: connectivity, deposits/withdrawals, and references."
+title: Exchange integration
+description: Operate finalized Moonlight deposits and controlled DUSK withdrawals.
 ---
 
-## Integration Checklist
+Exchange integrations should use Moonlight, Dusk's public account model. Phoenix addresses and shielded notes require a different custody and scanning model; users can move funds to a public account before depositing.
 
-- Decide how you'll access the network:
-  - Run your own node (recommended for production).
-  - Use public endpoints (good for prototyping).
-  - Run (or use) an archive node if you need address-based history queries such as `fullMoonlightHistory` or `moonlightHistory`.
-- Support Moonlight (public) deposits and withdrawals.
-- Handle finality and reverts: treat funds as final once the containing block is `finalized`, and re-process if a block is reverted.
-- Use the memo field if you need per-user tagging.
+## Recommended architecture
 
-:::tip[Use W3sper for Transaction Submission]
-For transaction construction, signing, and submission, prefer the [W3sper SDK](/developer/integrations/w3sper). Use raw HTTP endpoints only if you are building lower-level infrastructure around RUES.
-:::
+| Component | Responsibility |
+|---|---|
+| Archive Rusk node | Supplies finalized Moonlight history and deterministic backfills |
+| Deposit scanner | Filters accepted deposit types, writes idempotent credits, and advances block checkpoints |
+| Custody ledger | Maps accounts or memos to customers and reconciles on-chain balances |
+| Signing service | Protects keys, serializes Moonlight nonces, builds transactions, and stores signed bytes before submission |
+| Broadcast node | Pre-verifies, propagates, and reports local mempool and ledger state |
 
-## Network Access
+Run nodes you control for production. Public endpoints are suitable for development but are not a substitute for your own availability, retention, and access policy.
 
-Base URLs:
+## Deposits
 
-- **Mainnet:** `https://nodes.dusk.network`
-- **Testnet:** `https://testnet.nodes.dusk.network`
+Choose one attribution model:
 
-GraphQL endpoint:
+- **Account per customer:** scan each assigned Moonlight account.
+- **Shared account with memo:** scan the shared account, decode the memo from hex, and accept only your documented memo format.
 
-- `POST <base_url>/on/graphql/query`
+Use the [Moonlight deposit scanner](/developer/integrations/historical_events/) against finalized archive history. It deliberately accepts direct Moonlight transfers only. Add contract payouts or Phoenix conversions only through separate, explicit event rules.
 
-For the full HTTP/WS API and event subscription model (RUES), see [/developer/integrations/http-api](/developer/integrations/http-api).
+For every credit:
 
-## Monitoring Deposits
+- store amounts as integer LUX (`1 DUSK = 1_000_000_000 LUX`);
+- use the Dusk transaction ID as the idempotency key;
+- quarantine missing, malformed, unknown, or reused customer metadata; and
+- update credits and the block checkpoint atomically.
 
-Two common approaches:
+Do not credit from a balance change, local mempool entry, `transactions/included`, or an accepted but unfinalized block.
 
-- **Archive GraphQL (simplest):** poll `fullMoonlightHistory` or `moonlightHistory` on an archive-enabled node. See [/developer/integrations/historical_events](/developer/integrations/historical_events).
-- **Real-time (RUES):** subscribe to blocks/transactions and correlate with GraphQL `tx(hash: ...)` lookups.
+## Withdrawals
 
-## Submitting Withdrawals
+W3sper provides transaction builders and submission primitives, not a complete headless wallet. A signing service must supply protected recoverable keys and synchronized `Bookkeeper` state, including committed balances, pending transactions, and Moonlight nonces.
 
-- Use the [W3sper SDK](/developer/integrations/w3sper) to construct, sign, and broadcast transactions.
-- Or broadcast raw bytes via `POST /on/transactions/propagate` (see the HTTP API page).
+For each withdrawal:
 
-## GraphQL Quick Queries
+1. Assign an internal withdrawal ID and reserve the next nonce atomically for the hot account.
+2. Build and sign once, then persist the exact serialized transaction and its Dusk transaction ID before broadcasting.
+3. Submit through W3sper or `POST /on/transactions/propagate`.
+4. Treat `202 Accepted` only as successful routing. Query execution and finality before marking the withdrawal complete.
+5. On a transport timeout, rebroadcast the same signed bytes instead of creating a new transaction blindly.
 
-Get the schema (SDL):
+A same-nonce replacement must use a strictly higher gas price and has a different transaction ID. Reconcile both IDs and never credit or debit twice. See [Transaction lifecycle](/developer/integrations/tx-lifecycle/#mempool-behavior).
 
-```sh
-curl -s -X POST "https://nodes.dusk.network/on/graphql/query"
-```
+Use [Rusk Wallet](/use/wallets/#rusk-wallet) for operator-controlled manual transactions. For an automated signer, start from the [W3sper source and tests](https://github.com/dusk-network/rusk/tree/master/w3sper.js) and implement key storage, synchronization, nonce allocation, approval policy, and audit logging as owned infrastructure.
 
-Transaction by hash:
+## Network access
 
-```sh
-curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
-  --data-raw 'query { tx(hash: "<tx_hash>") { tx { id gasLimit gasPrice memo } err gasSpent blockHash blockHeight blockTimestamp } }'
-```
+| Network | Node base URL | Explorer |
+|---|---|---|
+| Mainnet | `https://nodes.dusk.network` | [explorer.dusk.network](https://explorer.dusk.network/) |
+| Testnet | `https://testnet.nodes.dusk.network` | [apps.testnet.dusk.network/explorer](https://apps.testnet.dusk.network/explorer/) |
 
-Latest block header:
+GraphQL is available at `POST <base_url>/graphql`. Transaction submission uses `POST <base_url>/on/transactions/propagate`. See the [HTTP API](/developer/integrations/http-api/) for request formats and node policy controls.
 
-```sh
-curl -s -X POST "https://nodes.dusk.network/on/graphql/query" \
-  --data-raw 'query { block(height: -1) { header { height hash timestamp } } }'
-```
+## Asset metadata
 
-## Transaction Model Notes
+| Field | Value |
+|---|---|
+| Asset | DUSK |
+| Smallest unit | LUX |
+| Native decimals | 9 |
+| Public account model | Moonlight |
+| Consensus | Succinct Attestation |
 
-- Exchanges typically only need Moonlight (public) accounts. Phoenix (shielded) addresses are incompatible with Moonlight transfers.
-- Users can convert shielded funds to public balances themselves before depositing to an exchange.
+ERC20 and BEP20 representations use 18 decimals. Keep their metadata and accounting separate from native DUSK. Users moving legacy representations to Dusk mainnet should follow the [migration guide](/learn/guides/mainnet-migration/).
 
-## Cold Storage
+## Custody controls
 
-The [multisig contract](https://github.com/dusk-network/multisig-contract) contains a working example of multi-signature transfers for cold storage.
-
-## Token Details
-
-- Token: `dusk`
-- Token decimals: `9` (ERC20/BEP20 versions use 18 decimals)
-- Consensus mechanism: Succinct Attestation
-
-## Token Migration (If Applicable)
-
-Users can migrate ERC20/BEP20 DUSK to DUSK on Dusk mainnet using the [migration contract](https://github.com/dusk-network/dusk-migration) and the [Web Wallet](https://apps.dusk.network/wallet/).
-
-More information: [/learn/guides/mainnet-migration](/learn/guides/mainnet-migration).
-
-Current token contracts:
-
-- ERC20: `0x940a2db1b7008b6c776d4faaca729d6d4a4aa551`
-- BEP20: `0xb2bd0749dbe21f623d9baba856d3b0f0e1bfec9c`
-
-## Resources
-
-- [Whitepaper](https://dusk-cms.ams3.digitaloceanspaces.com/Dusk_Whitepaper_2024_4db72f92a1.pdf)
-- [Audits](https://github.com/dusk-network/audits)
-- [Block explorer](https://explorer.dusk.network/)
+The [Dusk contract standards](https://github.com/dusk-network/contracts/tree/main/standards) include reusable multisig and access-control primitives. They are a starting point for Dusk-native custody policies, not a substitute for your own threat model, review, and operational controls.

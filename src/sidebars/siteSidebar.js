@@ -107,8 +107,8 @@ const siteSidebar = [
         items: [
           { label: "W3sper SDK", link: "/developer/integrations/w3sper" },
           { label: "Transaction Lifecycle", link: "/developer/integrations/tx-lifecycle" },
+          { label: "Deposit Scanning", link: "/developer/integrations/historical_events" },
           { label: "HTTP API", link: "/developer/integrations/http-api" },
-          { label: "Historical Events", link: "/developer/integrations/historical_events" },
           { label: "Encoding and Hashing", link: "/developer/integrations/reference" },
           { label: "Exchange Integration", link: "/developer/integrations/exchanges" },
         ],
