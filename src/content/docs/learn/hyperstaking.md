@@ -30,8 +30,8 @@ Contracts can implement arbitrary reward-splitting rules (for example: route a p
 ## Protocol-level notes
 
 - The **minimum stake** requirement applies to contracts too: **1,000 DUSK**.
-- Stake is considered active after a maturity period of **4320 blocks (~12 hours)**.
-- Reward distribution depends on consensus participation; see [Staking on Dusk](/learn/guides/staking-basics#how-are-rewards-determined).
+- Stake becomes active at the epoch boundary after the next one, between roughly 1 and 2 epochs after submission.
+- Reward distribution depends on consensus participation; see [Staking on Dusk](/learn/guides/staking-basics#rewards).
 
 ## Technical guide (smart contract developers)
 

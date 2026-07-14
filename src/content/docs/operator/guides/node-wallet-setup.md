@@ -11,7 +11,7 @@ You can use the node installer guide to [quickly launch your Provisioner node](/
 
 This guide explains setting up the wallet and the last steps needed to start running your node.
 
-For the staking model, maturity period, reward timing, and unstaking behavior, read [Staking on Dusk](/learn/guides/staking-basics) alongside this operator setup guide.
+For the staking model, activation timing, reward timing, and unstaking behavior, read [Staking on Dusk](/learn/guides/staking-basics) alongside this operator setup guide.
 
 ## Preparation
 
@@ -136,6 +136,6 @@ rusk-wallet stake-info --profile-idx 0 # Replace with a different profile if app
 
 Check for the `eligible stake` and `stake active from block` fields to be updated.
 
-**Note**: Your stake takes 2 epochs (4320 blocks) to mature. Only after that will it start participating in consensus.
+Activation occurs at the epoch boundary after the next one, between roughly 1 and 2 epochs after submission. Use the reported `stake active from block` value rather than estimating from elapsed time.
 
 You can periodically run `rusk-wallet stake-info` to monitor if your accumulated rewards are increasing, which is a clear indicator that your node is successfully participating in consensus.

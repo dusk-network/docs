@@ -1,17 +1,22 @@
 ---
 title: Slashing prevention and recovery
-description: Learn how Dusk soft slashing affects provisioners and what to check after a slashing event.
+description: Diagnose provisioner penalties, restore healthy operation, and reduce soft- and hard-slashing risk.
 ---
 
-Dusk uses **soft slashing** to discourage repeated faults and long downtime. Stake is not burned, but a provisioner can lose eligibility or effective participation, which reduces rewards.
+Dusk applies different penalties to failed participation and provably invalid consensus behavior:
 
-Soft slashing can happen when a provisioner repeatedly fails to participate correctly in consensus. Common operational causes include:
+- **Soft penalties** can suspend eligibility and move part of active stake into locked stake. Locked stake remains owned and can be unstaked.
+- **Hard penalties** can suspend eligibility and burn part of the stake. Burned stake cannot be recovered by restarting or restaking.
+
+Failed participation is usually an operational problem. Common causes include:
 
 - Running an outdated or incompatible node version.
 - Being offline for too long.
 - Falling behind the network tip.
 - Network or firewall problems that prevent consensus messages from being sent or received.
 - Consensus key or node configuration issues.
+
+Hard penalties apply to invalid consensus votes and equivocation, including signing conflicting proposals or votes. Running the same consensus key on multiple active nodes can cause this behavior and must be avoided.
 
 ## If your provisioner was slashed
 
@@ -86,11 +91,11 @@ ruskquery block-height
 
 The height should continue to progress. If the node falls behind again, treat it as an unresolved infrastructure or networking issue.
 
-### 6. Unstake and restake if the node is healthy
+### 6. Unstake and restake only after the node is healthy
 
-If the node is on the right version, fully synced, and operating normally, unstake and restake to restore normal provisioner participation.
+If the node is on the right version, fully synced, operating normally, and the consensus key is active on only one node, unstake and restake when needed to create a new provisioner position.
 
-Slashing can be caused by temporary operational issues, such as cloud provider downtime, network disruption, or downtime during a live node update. If the underlying issue is gone, restaking is the recovery step.
+Restaking starts a new activation period. It does not restore stake burned by a hard penalty, so identify the underlying cause before submitting either transaction.
 
 ```sh
 rusk-wallet unstake
@@ -106,6 +111,7 @@ Replace `<amount>` with the amount you want to stake. The new stake must mature 
 - Alert on service downtime and repeated restart loops.
 - Keep UDP `9000` reachable for Kadcast.
 - Keep consensus keys backed up and readable by the Rusk service.
+- Never run the same consensus key on multiple active nodes.
 - Avoid running experimental or mismatched binaries on a staked provisioner.
 - Use [fast-sync](/operator/guides/fast-sync) when a node falls behind instead of waiting for a long resync from genesis.
 

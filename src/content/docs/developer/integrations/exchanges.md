@@ -81,7 +81,7 @@ The [multisig contract](https://github.com/dusk-network/multisig-contract) conta
 
 ## Token Migration (If Applicable)
 
-Users can migrate ERC20/BEP20 DUSK to native DUSK using the [migration contract](https://github.com/dusk-network/dusk-migration) and the [Web Wallet](https://apps.dusk.network/wallet/).
+Users can migrate ERC20/BEP20 DUSK to DUSK on Dusk mainnet using the [migration contract](https://github.com/dusk-network/dusk-migration) and the [Web Wallet](https://apps.dusk.network/wallet/).
 
 More information: [/learn/guides/mainnet-migration](/learn/guides/mainnet-migration).
 

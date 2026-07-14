@@ -1,34 +1,39 @@
 ---
 title: Bridge DUSK between Dusk L1 and DuskEVM Testnet
-description: Use the Dusk Web Wallet to move testnet DUSK between the Dusk L1 and DuskEVM.
+description: Move testnet DUSK between the Dusk L1 and DuskEVM through the Web Wallet.
 ---
 
-The Dusk bridge moves DUSK between the Dusk L1 and DuskEVM while keeping one asset across both environments. On DuskEVM, the bridged DUSK is available in your EVM account and is used to pay gas.
+The DuskEVM bridge keeps DUSK as the native asset on both sides. DUSK deposited into DuskEVM is available in the connected EVM account and pays DuskEVM gas.
 
-The current bridge interface labels the Dusk L1 side **DuskDS**. This guide uses **Dusk L1** for the network layer and **DuskDS** only when referring to that on-screen label.
+The bridge interface labels the Dusk L1 side **DuskDS**. This guide uses **Dusk L1** for the network and **DuskDS** only for that on-screen label.
 
-This guide uses testnet DUSK, which has no real-world value, and the testnet Web Wallet.
+:::note
+This guide uses testnet DUSK, which has no real-world value.
+:::
+
+## At a glance
+
+| | |
+|---|---|
+| Network | DuskEVM Testnet; testnet DUSK only |
+| Deposit actions | Submit on Dusk L1, then wait for the DuskEVM balance |
+| Withdrawal actions | Initiate on DuskEVM, then prove and finalize on Dusk L1 |
+| Readiness | Follow **Withdrawal status** in the Web Wallet |
+| Fees | Source transaction fee, plus two Dusk L1 fees for withdrawal proof and finalization |
+
+Withdrawal readiness depends on published network state, proof maturity, and dispute-game checks. The Web Wallet status is authoritative; do not calculate readiness from elapsed time alone.
 
 ## Before you start
 
 You need:
 
-- a Dusk Web Wallet account with unshielded testnet DUSK for deposits and withdrawal actions on the Dusk L1;
-- an EVM wallet, such as MetaMask, that supports adding a custom network; and
-- enough DUSK in the source account to cover the bridge amount and its transaction fee.
+- a Dusk account with enough unshielded testnet DUSK for the transfer and any Dusk L1 actions;
+- an EVM wallet, such as MetaMask, that supports custom networks; and
+- enough DUSK on the source side to cover the amount and transaction fee.
 
-Request DUSK from the [testnet faucet](/operator/networks#how-to-get-testnet-tokens), then unshield the amount you want to bridge.
+Request DUSK from the [testnet faucet](/operator/networks#how-to-get-testnet-tokens), then unshield the amount needed for Dusk L1 bridge actions.
 
-## Deposit into DuskEVM
-
-### 1. Open the bridge
-
-1. Open the [testnet Web Wallet](https://apps.testnet.dusk.network/wallet/) and unlock your account.
-2. Go to `Dashboard -> Bridge`.
-3. Connect your EVM wallet.
-4. Approve adding or switching to DuskEVM Testnet when your EVM wallet asks.
-
-Your wallet should be connected to:
+The Web Wallet should add or select this network:
 
 | Setting | Value |
 |---|---|
@@ -37,90 +42,76 @@ Your wallet should be connected to:
 | RPC | `https://rpc.testnet.evm.dusk.network` |
 | Currency symbol | `DUSK` |
 
-### 2. Configure the transfer
+## Deposit into DuskEVM
 
-Set:
+1. Open the [testnet Web Wallet](https://apps.testnet.dusk.network/wallet/) and unlock your Dusk account.
+2. Go to `Dashboard -> Bridge` and connect your EVM wallet.
+3. Approve adding or switching to DuskEVM Testnet when your EVM wallet asks.
+4. Set **From** to **DuskDS**, **To** to **DuskEVM**, and enter the amount.
+5. Check the full destination address selected in your EVM wallet, then review and send the Dusk L1 transaction.
 
-- **From:** DuskDS (Dusk L1)
-- **To:** DuskEVM
-- **Amount:** the amount of testnet DUSK to deposit
+Keep the transaction hash until the deposit is visible on DuskEVM.
 
-The destination is the address currently selected in your connected EVM wallet. Check the full address before continuing; an EVM transaction cannot correct a deposit sent to the wrong account.
+### Verify the deposit
 
-### 3. Review and send
+Confirm the originating transaction in the [Dusk testnet explorer](https://apps.testnet.dusk.network/explorer/). Once the deposit is processed, check the connected account in your EVM wallet or the [DuskEVM testnet explorer](https://explorer.testnet.evm.dusk.network/).
 
-On the review screen, confirm:
-
-- the displayed direction is DuskDS to DuskEVM;
-- the Dusk L1 source account and EVM destination are correct;
-- the amount and fee are acceptable.
-
-Send the transaction and keep the status screen open until the wallet has recorded it. The originating transaction can also be inspected in the [Dusk testnet explorer](https://apps.testnet.dusk.network/explorer/).
-
-### 4. Confirm the deposit
-
-After the deposit is processed, the balance of the connected EVM account increases on DuskEVM Testnet. Check it in your EVM wallet or search for the address in the [DuskEVM testnet explorer](https://explorer.testnet.evm.dusk.network/).
-
-The Dusk L1 transaction and the resulting DuskEVM credit happen on different layers, so they do not necessarily appear at the same moment.
+The Dusk L1 transaction and DuskEVM credit occur on different layers and may not appear at the same time.
 
 ## Withdraw to Dusk L1
 
-A withdrawal returns DUSK from your EVM account to the Dusk L1. Unlike a deposit, it requires three on-chain actions: initiate the withdrawal on DuskEVM, prove it on the Dusk L1, and finalize it on the Dusk L1.
+A withdrawal requires three on-chain actions: initiate it on DuskEVM, prove it on the Dusk L1, and finalize it on the Dusk L1.
 
-### 1. Submit the withdrawal
+### 1. Initiate the withdrawal
 
 1. Open `Dashboard -> Bridge` in the testnet Web Wallet.
 2. Connect the EVM wallet that holds the DUSK.
-3. Set **From** to DuskEVM and **To** to DuskDS.
-4. Enter the amount, review the destination Dusk L1 account, and send.
+3. Set **From** to **DuskEVM** and **To** to **DuskDS**.
+4. Enter the amount, check the destination Dusk account, and send.
 
-The first transaction is submitted on DuskEVM. Keep enough DUSK in the EVM account to pay its gas fee, and retain the withdrawal transaction hash.
+Keep enough DUSK in the EVM account for gas and retain the DuskEVM transaction hash.
 
-### 2. Check the withdrawal status
+### 2. Check its status
 
-Open **Withdrawal status** from the bridge. The latest withdrawal made in the current browser is filled in automatically. Otherwise, paste the DuskEVM withdrawal transaction hash and select **Check status**.
+Open **Withdrawal status**. The Web Wallet fills in the latest withdrawal from the current browser when available; otherwise, paste the DuskEVM transaction hash and select **Check status**.
 
-The first status is normally **Waiting for output proposal**. No action is required until the network has published an output that covers the withdrawal.
+The first status is normally **Waiting for output proposal**. No action is required until it changes to **Ready to prove**.
 
 ### 3. Prove on Dusk L1
 
-When the status changes to **Ready to prove**, select **Prove withdrawal** and confirm the Dusk L1 transaction in the Web Wallet.
+When the status is **Ready to prove**, select **Prove withdrawal** and confirm the Dusk L1 transaction.
 
-After the proof is submitted, the status changes to **Waiting to finalize** while the proof maturity delay and dispute-game checks complete.
-
-:::note
-Proof and finalization readiness are determined by network state, not by a timer alone. Use **Check status** rather than calculating readiness from elapsed time.
-:::
+After the proof is submitted, the status moves through **Proof submitted** and **Waiting to finalize** while the required checks complete.
 
 ### 4. Finalize on Dusk L1
 
-When the status changes to **Ready to finalize**, select **Finalize withdrawal** and confirm the Dusk L1 transaction that releases the DUSK to your Dusk account.
+When the status is **Ready to finalize**, select **Finalize withdrawal** and confirm the Dusk L1 transaction that releases the DUSK.
 
-Proving and finalizing are separate Dusk L1 transactions. Keep enough unshielded DUSK on the Dusk L1 to pay both fees. After finalization is confirmed, the returned amount appears in the destination account.
+Keep enough unshielded DUSK on the Dusk L1 to pay for both the proof and finalization transactions. The returned amount appears in the destination account after finalization confirms.
 
 ## Troubleshooting
 
 **The EVM wallet shows the wrong network**
 
-Switch to DuskEVM Testnet and confirm that the chain ID is `745` before retrying.
+Switch to DuskEVM Testnet and confirm that the chain ID is `745`.
 
-**The Dusk L1 deposit succeeded but the EVM balance has not changed**
+**A deposit succeeded on Dusk L1, but the DuskEVM balance has not changed**
 
-The deposit may still be processing between layers. Check the originating Dusk L1 transaction first, then the destination address in the DuskEVM explorer.
+Check the Dusk L1 transaction first, then search for the destination account in the DuskEVM explorer. The cross-layer credit may still be processing.
 
 **A withdrawal is still pending**
 
-Pending does not mean failed. Open **Withdrawal status** and select **Check status**. Wait if the status reports **Waiting for output proposal**, **Proof submitted**, or **Waiting to finalize**.
+Select **Check status**. Wait when the status is **Waiting for output proposal**, **Proof submitted**, or **Waiting to finalize**.
 
 **The proof cannot be submitted**
 
-Confirm that the status is **Ready to prove**, the correct Dusk account is unlocked, and the account has enough unshielded DUSK for the proof transaction fee.
+Confirm that the status is **Ready to prove**, the intended Dusk account is unlocked, and it has enough unshielded DUSK for the transaction fee.
 
 **Finalization cannot be submitted**
 
-Confirm that the status is **Ready to finalize**, the correct Dusk account is unlocked, and the account has enough unshielded DUSK for the finalization transaction fee. If the Web Wallet offers **Prove withdrawal** again, submit the newer proof before trying to finalize.
+Confirm that the status is **Ready to finalize** and that the intended Dusk account has enough unshielded DUSK. If the Web Wallet returns to **Ready to prove**, submit the newer proof before trying to finalize again.
 
 ## Next steps
 
-- [Understand how DuskEVM works](/learn/dusk-evm/)
+- [Understand DuskEVM](/learn/dusk-evm/)
 - [Deploy a contract on DuskEVM](/developer/duskevm/quickstart/)

@@ -1,70 +1,71 @@
 ---
-title: Native DUSK to BEP20 Bridge
-description: How to bridge your native DUSK tokens to BEP20 DUSK on Binance Smart Chain.
+title: Bridge DUSK from Dusk mainnet to BSC
+description: Move DUSK from Dusk mainnet to BEP20 DUSK on BNB Smart Chain.
 ---
 
-This guide explains how to bridge **native DUSK** (Dusk mainnet) to **BEP20 DUSK** on Binance Smart Chain (BSC) using the [Web Wallet](https://apps.dusk.network/wallet/).
+Send DUSK to the official bridge account through the Web Wallet to receive BEP20 DUSK at a specified BNB Smart Chain (BSC) address.
 
-When bridging, your native DUSK tokens are locked on the Dusk network. Once locked, a mint operation is initiated on Binance Smart Chain, issuing an equivalent amount of BEP20 DUSK to your specified address. The full bridging process typically takes around one hour.
+## At a glance
 
-:::note
-Want to **bridge from BEP20 DUSK to native DUSK** instead? Check our [Migration Guide](/learn/guides/mainnet-migration/) for the complete walkthrough.
-:::
+| | |
+|---|---|
+| Direction | Dusk mainnet to BSC |
+| Interface | [Mainnet Web Wallet](https://apps.dusk.network/wallet/) |
+| Destination asset | BEP20 DUSK |
+| Typical time | Around one hour |
+| Cost | Dusk transaction fee plus a 1 DUSK bridge fee |
 
-## Who this is for
-
-- You have **native DUSK** on Dusk mainnet.
-- You want **BEP20 DUSK** in an EVM wallet on BSC.
-
-## What you need
-
-- Access to the [Web Wallet](https://apps.dusk.network/wallet/).
-- Enough native DUSK to cover the amount you want to bridge **plus** the bridge fee.
-- A **BSC EVM address** (starts with `0x...`) where you want to receive BEP20 DUSK.
+To move ERC20 or BEP20 DUSK in the other direction, use the [mainnet migration guide](/learn/guides/mainnet-migration/).
 
 :::caution
-The BSC address is provided in the **memo** field. If you omit the memo or provide an invalid address, the bridge will not know where to mint, and funds can be lost.
+The memo determines which BSC address receives the BEP20 DUSK. A missing or invalid memo cannot be processed automatically and may make the transfer unrecoverable.
 :::
 
-## Expected time and fees
+## Before you start
 
-- **Time**: typically around one hour.
-- **Fees**: the bridge charges a flat **1 DUSK** fee per transaction (your minted amount is `sent - 1 DUSK`).
+You need:
 
-## Steps
+- access to the [Web Wallet](https://apps.dusk.network/wallet/);
+- more than 1 DUSK, plus enough DUSK for the network transaction fee; and
+- a BSC address that you control, beginning with `0x`.
 
-1. Open the [Web Wallet](https://apps.dusk.network/wallet/).
-2. Open or import your Dusk wallet.
-3. Navigate to the **Send** tab.
-4. Enter the official **Bridge Address** as the recipient:
-```
-24jFms4JqYdWb19jFn3CUjNUQz1AeRozYnwsHuUkLbXAj2gRBq598aLAJmqmsaPcsCNJTgTaJTaUZCXpT3s9UeWBsHTmd5hQx95JymZSUsmtwoibiB8AMp4bZjAiLMjmAH3x
-```
-5. In the **Memo** field, enter your **BEP20 compatible address** (your BSC wallet address).
-6. Specify the amount of native DUSK to bridge. The minimum is 1.000000001 DUSK (just over 1 DUSK).
-7. Review and confirm the transaction.
+The bridge deducts 1 DUSK from the amount sent. The minimum useful transfer is therefore `1.000000001 DUSK`, which delivers `0.000000001 DUSK` on BSC.
 
-Your DUSK will be locked on the Dusk network, and an equivalent amount will be minted on BSC shortly after.
+## Bridge your DUSK
 
-## FAQ
+1. Open the [Web Wallet](https://apps.dusk.network/wallet/), unlock your wallet, and open **Send**.
+2. Enter the official BSC bridge account as the recipient:
 
-**How long does the bridge process take?**  
-Typically around one hour. Network congestion and confirmation times can affect the timing.
+   ```text
+   24jFms4JqYdWb19jFn3CUjNUQz1AeRozYnwsHuUkLbXAj2gRBq598aLAJmqmsaPcsCNJTgTaJTaUZCXpT3s9UeWBsHTmd5hQx95JymZSUsmtwoibiB8AMp4bZjAiLMjmAH3x
+   ```
 
-**Where do the BEP20 tokens go?**  
-They are sent to the EVM address specified in the memo field.
+3. In **Memo**, enter the BSC address where you want to receive BEP20 DUSK.
+4. Enter an amount greater than 1 DUSK.
+5. On the review screen, compare the full bridge account and memo address with the values you intended, then send the transaction.
 
-**What happens if I omit the memo or use an invalid address?**  
-The bridge will ignore your transaction, and funds will not be bridged. This means your funds would be lost. Always double-check the memo field before confirming.
+The Web Wallet detects the bridge account and requires an EVM-formatted memo, but you remain responsible for checking that the destination address is yours.
 
-**Can I use this bridge for ERC20 DUSK?**  
-No. This bridge only supports native DUSK to **BEP20 DUSK** on Binance Smart Chain.
+## Verify the bridge
 
-**Is there a fee?**  
-Yes, the bridge charges a flat fee of 1 DUSK per transaction. Your bridged amount will be **original amount - 1 DUSK**.
+First confirm that the transfer succeeded in the [Dusk mainnet explorer](https://apps.dusk.network/explorer/). The BEP20 DUSK should then appear at the memo address on BSC. The amount received is the amount sent minus the 1 DUSK bridge fee.
+
+Processing normally takes around one hour. Network or operator conditions can extend that time.
 
 ## Troubleshooting
 
-- **Nothing arrived on BSC after around one hour**: confirm your Dusk transfer succeeded and double-check the memo contains the correct `0x...` address.
-- **I used the wrong memo address**: the bridge can’t mint to an unknown target. This is usually not reversible.
-- **I bridged to an exchange address**: only do this if the exchange explicitly supports BEP20 DUSK deposits and you’re sure the memo address is correct.
+**Nothing arrived after around one hour**
+
+Confirm that the Dusk transaction succeeded and that its memo contains the intended BSC address. Retain the Dusk transaction hash when seeking support.
+
+**The amount sent was 1 DUSK or less**
+
+No BSC payout is expected because the amount does not exceed the 1 DUSK bridge fee.
+
+**The memo is missing or incorrect**
+
+The transfer cannot be routed automatically. Do not submit another transfer until you have checked the first transaction and its memo.
+
+**The destination is an exchange address**
+
+Only bridge directly to an exchange when it explicitly supports BEP20 DUSK deposits to that exact address. Otherwise, use a self-custodial BSC wallet.
