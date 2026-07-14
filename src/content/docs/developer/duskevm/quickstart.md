@@ -5,6 +5,8 @@ description: Fund a testnet account and deploy a Solidity contract to DuskEVM.
 
 Deploy a Solidity contract to DuskEVM Testnet with Foundry or Hardhat. DuskEVM uses the standard Ethereum JSON-RPC interface, so the workflow is the same one used for other OP Stack networks.
 
+Install either [Foundry](https://getfoundry.sh/) or [Node.js](https://nodejs.org/) for the Hardhat path. Use a dedicated deployment account rather than a wallet that holds production funds.
+
 ## Testnet
 
 | Setting | Value |
@@ -21,6 +23,8 @@ cast chain-id --rpc-url https://rpc.testnet.evm.dusk.network
 
 # 745
 ```
+
+Do not continue if the RPC is unavailable or returns a different chain ID.
 
 ## 1. Fund the deployer
 
@@ -51,7 +55,13 @@ forge create src/Counter.sol:Counter \
 
 ### Hardhat 3
 
-Initialize a Hardhat project with the viem toolbox, then add DuskEVM Testnet to `hardhat.config.ts`:
+Initialize a Hardhat project:
+
+```bash
+npx hardhat --init
+```
+
+Choose **Hardhat 3** and the **TypeScript project using Node Test Runner and Viem**. Then replace the generated network configuration with DuskEVM Testnet in `hardhat.config.ts`:
 
 ```ts title="hardhat.config.ts"
 import hardhatToolboxViemPlugin from "@nomicfoundation/hardhat-toolbox-viem";

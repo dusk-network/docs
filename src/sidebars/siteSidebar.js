@@ -99,13 +99,13 @@ const siteSidebar = [
         items: [
           { label: "Dusk Connect", link: "/developer/integrations/dusk-connect" },
           { label: "Dusk Wallet Integration", link: "/developer/integrations/wallet-extension" },
-          { label: "W3sper SDK", link: "/developer/integrations/w3sper" },
         ],
       },
       {
         label: "Network Integration",
         collapsed: true,
         items: [
+          { label: "W3sper SDK", link: "/developer/integrations/w3sper" },
           { label: "Transaction Lifecycle", link: "/developer/integrations/tx-lifecycle" },
           { label: "HTTP API", link: "/developer/integrations/http-api" },
           { label: "Historical Events", link: "/developer/integrations/historical_events" },
