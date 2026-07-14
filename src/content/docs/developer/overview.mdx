@@ -40,6 +40,15 @@ As a builder, choose the path based on what your product needs and which tooling
   />
 </CardGrid>
 
+## Choose an interface
+
+- **EVM contract or dApp:** use standard EVM wallets, JSON-RPC, and tools such as Foundry, Hardhat, viem, or ethers. The wallet signs; DuskEVM exposes Ethereum-compatible interfaces.
+- **Browser dApp on the Dusk L1:** use [Dusk Connect](/developer/integrations/dusk-connect/). The wallet extension owns the keys and asks the user to approve profile access and transactions.
+- **JavaScript client that talks directly to Rusk:** use [W3sper](/developer/integrations/w3sper/). Your application owns node connectivity and, for signing, profile storage and synchronized wallet state.
+- **Infrastructure, indexer, exchange, or non-JavaScript client:** use the [Rusk HTTP API and RUES](/developer/integrations/http-api/). Your integration handles raw request encoding, version headers, subscriptions, and transaction state.
+
+For most browser applications on the Dusk L1, use Dusk Connect. Use W3sper directly when there is no injected wallet or when you need lower-level node and wallet primitives.
+
 ## When to use DuskEVM
 
 Use **DuskEVM** when your application is designed around the EVM ecosystem:

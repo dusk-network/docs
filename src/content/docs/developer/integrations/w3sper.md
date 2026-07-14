@@ -1,9 +1,11 @@
 ---
 title: W3sper SDK
-description: JavaScript SDK for generating profiles, building transactions, and querying Dusk nodes.
+description: Query Rusk nodes and use lower-level Dusk profile, synchronization, and transaction primitives from JavaScript.
 ---
 
-W3sper (`@dusk/w3sper`) is the JavaScript SDK used by Dusk apps and tooling to interact with nodes. Prefer it over calling raw RUES endpoints directly from application code.
+W3sper (`@dusk/w3sper`) is the JavaScript client for direct access to Rusk nodes. It covers node queries, account and shielded-state synchronization, data-driver based contract reads, and the lower-level primitives used by applications that manage their own wallet state.
+
+Use [Dusk Connect](/developer/integrations/dusk-connect/) instead when a browser dApp should discover a wallet extension and ask the user to approve access or transactions. Use the [HTTP API and RUES reference](/developer/integrations/http-api/) for raw or non-JavaScript integrations.
 
 ## Install
 
@@ -11,62 +13,48 @@ W3sper (`@dusk/w3sper`) is the JavaScript SDK used by Dusk apps and tooling to i
 deno add jsr:@dusk/w3sper
 ```
 
-## Connect
+## Connect and query
+
+`Network.connect()` opens the RUES connection and loads the protocol driver required by profile and transaction APIs.
 
 ```js
 import { Network } from "@dusk/w3sper";
 
 const network = await Network.connect("https://testnet.nodes.dusk.network");
-console.log(await network.node.info);
+
+try {
+  const info = await network.node.info;
+  const height = await network.blockHeight;
+
+  console.log({ version: info.version, chain: String(info.chain), height });
+} finally {
+  await network.disconnect();
+}
 ```
 
-## Generate a Profile
+## Read a public balance
 
-A seeder is an (async) function that returns a `Uint8Array` (64 bytes).
+`AccountSyncer` accepts a Moonlight account string; reading a balance does not require its private key.
 
 ```js
-import { ProfileGenerator } from "@dusk/w3sper";
+import { AccountSyncer, Network, lux } from "@dusk/w3sper";
 
-const seeder = () => crypto.getRandomValues(new Uint8Array(64));
-const profiles = new ProfileGenerator(seeder);
+const account = "<MOONLIGHT_ACCOUNT>";
+const network = await Network.connect("https://testnet.nodes.dusk.network");
 
-const me = await profiles.default;
-
-// Moonlight (public) account (Base58, 96 bytes)
-console.log(me.account.toString());
-
-// Phoenix (shielded) address (Base58, 64 bytes)
-console.log(me.address.toString());
+try {
+  const [balance] = await new AccountSyncer(network).balances([account]);
+  console.log(lux.formatToDusk(balance.value));
+} finally {
+  await network.disconnect();
+}
 ```
 
-## Get a Balance (Moonlight)
+Balances and transaction amounts are represented in `LUX`: `1 DUSK = 1_000_000_000 LUX`.
 
-```js
-import { AccountSyncer } from "@dusk/w3sper";
+## Query a DuskVM contract
 
-const [balance] = await new AccountSyncer(network).balances([me]);
-console.log(balance); // { nonce: bigint, value: bigint } (value in LUX)
-```
-
-## Send a Transfer (Moonlight)
-
-Amounts are in `LUX` (`1 DUSK = 1_000_000_000 LUX`).
-
-```js
-import { Transfer } from "@dusk/w3sper";
-
-const to = "<receiver_moonlight_account>";
-const txBuilder = new Transfer(me).amount(1_000_000_000n).to(to);
-
-const { hash } = await network.execute(txBuilder);
-await network.transactions.withId(hash).once.executed();
-
-console.log({ hash });
-```
-
-## Query a custom contract
-
-Forge builds a data-driver WASM artifact alongside each DuskVM contract. Serve that artifact with your application, register its URL under the deployed contract ID, and W3sper will use it to encode calls and decode results:
+Forge builds a data-driver WASM artifact alongside each DuskVM contract. Serve that artifact with your application, register its URL under the deployed contract ID, and W3sper uses it to encode calls and decode results:
 
 ```js
 import { Contract, Network } from "@dusk/w3sper";
@@ -82,55 +70,60 @@ const counter = new Contract({
   network,
 });
 
-console.log(await counter.call.get_count());
-await network.disconnect();
+try {
+  console.log(await counter.call.get_count());
+} finally {
+  await network.disconnect();
+}
 ```
 
-The driver for this example is the file produced at `target/data-driver/wasm32-unknown-unknown/release/dusk_counter.wasm`. Methods under `contract.call` are read-only; submitting contract transactions directly through W3sper also requires a synced profile and `Bookkeeper`. For browser dApps where the user's wallet should approve the transaction, use [Dusk Connect](/developer/integrations/dusk-connect/).
+The driver in this example is the file produced at `target/data-driver/wasm32-unknown-unknown/release/dusk_counter.wasm` by the [DuskVM quickstart](/developer/duskvm/quickstart/).
+
+## Signing transactions directly
+
+W3sper provides transaction builders, but it does not provide a complete application wallet. A client that signs without an extension must supply recoverable key storage and a synchronized treasury behind `Bookkeeper`, including public nonces and shielded notes.
+
+Do not construct a transfer directly from a newly generated `Profile`: it has no synchronized `Bookkeeper` entry and the transaction cannot obtain the required balance or nonce state. For browser dApps, let Dusk Connect and the selected wallet handle signing. For a headless wallet, start from the [W3sper source and tests](https://github.com/dusk-network/rusk/tree/master/w3sper.js) and implement the storage and synchronization boundary explicitly.
 
 ## Query GraphQL
 
-`network.query()` wraps your selection in `query { ... }` and calls the node GraphQL endpoint.
+`network.query()` wraps the selection in `query { ... }` and sends it to the node GraphQL endpoint:
 
 ```js
-const tip = await network.query("block(height: -1) { header { height hash } }");
-console.log(tip.block.header);
+const tip = await network.query(
+  "block(height: -1) { header { height hash } }",
+);
+
+console.log(tip.block);
 ```
 
-## Offline Mode (Optional)
+## Offline profile derivation
 
-When you call `Network.connect(...)`, W3sper loads the matching `wallet-core` WASM driver from the node.
-For the current 1.6 line, that driver is served as `wallet-core-1.6.1.wasm`.
-
-For offline usage, download that same versioned driver and load it yourself:
+`Network.connect()` loads `wallet-core-1.6.1.wasm` from the selected node. An offline application can download that same driver, store it locally, and load it before using profile APIs:
 
 ```js
 import { ProfileGenerator, useAsProtocolDriver } from "@dusk/w3sper";
 
-async function getLocalWasmBuffer() {
-  // Must return bytes (Uint8Array/ArrayBuffer). Adjust to your environment.
-  return Deno.readFile("./wallet-core-1.6.1.wasm");
-}
-
+const driver = await Deno.readFile("./wallet-core-1.6.1.wasm");
 const seeder = () => crypto.getRandomValues(new Uint8Array(64));
 
-await useAsProtocolDriver(await getLocalWasmBuffer()).then(async () => {
-  const profiles = new ProfileGenerator(seeder);
-  const me = await profiles.default;
-  console.log(me.account.toString());
-});
+await useAsProtocolDriver(driver);
+
+const profiles = new ProfileGenerator(seeder);
+const profile = await profiles.default;
+console.log(profile.account.toString());
 ```
 
-WASM download URLs:
+The random seed above is only an API demonstration. Production applications must use protected, recoverable key material and must never log or expose it.
+
+Driver URLs:
 
 - Mainnet: `https://nodes.dusk.network/static/drivers/wallet-core-1.6.1.wasm`
 - Testnet: `https://testnet.nodes.dusk.network/static/drivers/wallet-core-1.6.1.wasm`
 
-## Units
+## Next steps
 
-```js
-import { lux } from "@dusk/w3sper";
-
-console.log(lux.formatToDusk(1_000_000_000n)); // "1"
-console.log(lux.parseFromDusk("0.5"));         // 500_000_000n
-```
+- [Dusk Connect](/developer/integrations/dusk-connect/)
+- [DuskVM quickstart](/developer/duskvm/quickstart/)
+- [Transaction lifecycle](/developer/integrations/tx-lifecycle/)
+- [HTTP API and RUES](/developer/integrations/http-api/)
