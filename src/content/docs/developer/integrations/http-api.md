@@ -3,8 +3,8 @@ title: HTTP API
 description: Query chain data, call contracts, broadcast transactions, and subscribe to node events over HTTP and WebSocket.
 ---
 
-:::tip[Prefer W3sper First]
-For application integrations, prefer the [W3sper SDK](/developer/integrations/w3sper). It wraps transaction building, proving, submission, and common node interactions.
+:::tip[Choose the right layer]
+Use the [W3sper SDK](/developer/integrations/w3sper) for direct JavaScript node access and lower-level transaction primitives. W3sper is not a complete headless wallet: an automated signer must own protected keys and synchronized account or note state. Use this page for raw or non-JavaScript integrations.
 :::
 
 Dusk nodes expose two main low-level HTTP surfaces:
@@ -92,6 +92,16 @@ curl -s -X POST "https://nodes.dusk.network/graphql" \
     "variables": { "height": -1 }
   }' | jq .
 ```
+
+### Query example: local mempool
+
+```sh
+curl -s -X POST "https://nodes.dusk.network/graphql" \
+  -H "Content-Type: application/json" \
+  --data-raw '{"query":"{ mempoolTxs { id txType gasPrice gasLimit } }"}' | jq .
+```
+
+`mempoolTxs` returns the node's real local mempool in descending gas-price order. It is not a network-wide view, and it excludes future-nonce transactions temporarily staged in the node's prequeue. See [Transaction lifecycle](/developer/integrations/tx-lifecycle/#mempool-behavior) for admission, replacement, and expiry behavior.
 
 ### Legacy raw-query endpoint
 
@@ -210,6 +220,8 @@ curl -s -X POST "https://nodes.dusk.network/on/blocks/gas-price" | jq .
 
 For `preverify`, `propagate`, and `simulate`, send the serialized transaction as bytes, for example as a `0x...` hex string.
 
+`propagate` returns `202 Accepted` after the node accepts the transaction for routing. This does not prove that it entered the real mempool, propagated to peers, executed successfully, or finalized. A valid future-nonce transaction can be staged outside the visible mempool while the node waits for the nonce gap to close.
+
 Example format:
 
 ```sh
@@ -245,7 +257,7 @@ Response:
 
 The deprecated account shortcut also returned `next_nonce`. That value was derived from pending mempool transactions and has no exact one-call successor.
 
-For most clients, use `Number(nonce) + 1`. If you need mempool-aware nonce allocation, derive it client-side using GraphQL mempool data.
+Use `Number(nonce) + 1` only when the account has no pending transactions. A signing service must serialize nonce allocation, retain its submitted transactions, and reconcile both local mempool and committed account state before reusing a nonce.
 
 ### Contracts
 
@@ -413,7 +425,7 @@ The node sends the **session ID as the first WebSocket text message**. Use that 
 Common topics:
 
 - `blocks`: `accepted`, `statechange`, `reverted`
-- `transactions`: `included`, `removed`, `executed`
+- `transactions`: `deferred`, `dropped`, `included`, `removed`, `executed`
 - `contracts`: contract-specific event topics, usually emitted event names
 
 Examples:
@@ -449,6 +461,6 @@ Events are sent as WebSocket **binary messages**:
 2. JSON header bytes, including `Content-Location`.
 3. Raw event data bytes. The format depends on the event.
 
-If you need historical data, use an archive-enabled node and GraphQL queries such as `moonlightHistory`, `fullMoonlightHistory`, and `finalizedEvents`.
+If you need historical data, use an archive-enabled node and GraphQL queries such as `moonlightHistory`, `fullMoonlightHistory`, and `finalizedEvents`. Moonlight history is populated from finalized blocks, so it is suitable for restart-safe deposit processing without reconstructing finality from live events.
 
-See: [Retrieve historical events](/developer/integrations/historical_events).
+See [Scan Moonlight deposits](/developer/integrations/historical_events/) and [Transaction lifecycle](/developer/integrations/tx-lifecycle/).

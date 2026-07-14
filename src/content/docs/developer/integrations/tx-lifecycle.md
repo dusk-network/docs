@@ -1,81 +1,76 @@
 ---
-title: Transaction Lifecycle
-description: The lifecycle of a transaction on Dusk from creation to finalization
+title: Transaction lifecycle
+description: Transaction families, mempool behavior, execution, and finality on the Dusk L1.
 ---
-:::note[General rule]
-Transactions become immutable and are ultimately permanently recorded on the blockchain once a transaction is executed and the block reaches finality.
-:::
 
-## Steps executed during a transaction for Dusk
+This page describes transactions submitted to the Dusk L1. DuskEVM has a separate [sequencer and finality model](/developer/duskevm/reference/#inclusion-and-finality).
 
+## Transaction shape
 
-Transactions on Dusk follow a specific lifecycle. Here's a basic overview:
+A Dusk L1 transaction combines a value model with an optional action:
 
-1. **Creation**: The process begins when a wallet or similar software generates a new transaction.
-2. **Broadcasting**: The transaction is sent out to the Dusk network and broadcast within it.
-3. **Validation**: Each node receiving the transaction verifies its validity before adding it to the Mempool.
-4. **Inclusion in Mempool**: The transaction is added to the Mempool (*transaction included* event).
-   - If the transaction expires before being added to a block, it is removed from the Mempool (*transaction removed* event).
-   - If the transaction is replaced by another transaction with higher gas price, it is removed from the Mempool (*transaction removed* event)
-5. **Inclusion in candidate block**: A block generator includes the transaction from the Mempool into a candidate block.
-   - If the transaction is discarded during the block generation, it is removed from the Mempool (this event is currently not emitted[^1])
-6. **Acceptance**: The block containing the transaction is accepted into the blockchain (*block accepted* event).
-   1. **Execution**: When accepting the block, the transaction is executed (*transaction executed* event).
-      - **Successful Transaction**: No errors available
-      - **Reverted or Failed Transaction**: Errors available (*transaction executed* event with error field available). This is contract-specific and indicates a revert (panic) or other error that was returned.
-   2. **Removal from Mempool**: The transaction is removed from the mempool (*transaction removed* event).
-7. **Confirmation**: The block is confirmed, making the transaction unlikely to be reverted (*block state-change* event with state changed to `confirmed`).
-8. **Finalization**: The block reaches finality, making the transaction immutable and irreversible. (*block state-change* event with state changed to `finalized`).
+| Layer | Options | Operational effect |
+|---|---|---|
+| Value model | **Moonlight** or **Phoenix** | Moonlight uses public accounts and sequential nonces. Phoenix uses shielded notes and nullifiers. |
+| Action | Transfer, memo, contract call, contract deployment, or blob | The action is carried by either transaction family. A contract call can also deposit DUSK into the called contract. |
 
-:::note[Failed Transactions]
-Failed transactions are defined here as a concept at the contract level. We assume that each contract, just like the transfer contract or other genesis contracts, makes use of proper error handling and panics:
+Moonlight exposes its sender, optional receiver, value, nonce, fee, and optional memo. Phoenix hides transferred values and participants while exposing the cryptographic data needed to verify note spends.
 
-- If a contract panics, the transaction is reverted and there will be an error to look at.
-- If a contract returns a result that contains an error, there will also be an error to look at.
+A memo can accompany a direct transfer and is limited to 512 bytes. The transaction data field holds one of a memo, contract call, deployment, or blob payload; do not assume a memo can accompany the other payload types.
 
-Both of these are **contract specific**, the chain still executed the transaction successfully - according to the code of the smart contract.
+## Lifecycle
 
-A failed or reversed transaction has nothing to do with Dusk itself directly. The transaction was successfully executed according to Dusk's rules and recorded on the blockchain, hence the transaction executed event.
-:::
+1. **Build and sign:** the client chooses the transaction family, action, gas limit, gas price, and current spend inputs or nonce.
+2. **Submit:** the client sends serialized bytes to a node. `POST /on/transactions/propagate` returning `202 Accepted` means the node accepted the request for routing; it does not mean the transaction is in a block.
+3. **Admit:** the node pre-verifies the transaction. A valid transaction enters that node's real mempool and emits `transactions/included`.
+4. **Propagate:** the receiving node broadcasts an admitted transaction to peers. Each peer performs its own admission checks and maintains its own mempool.
+5. **Select:** a block generator considers mempool transactions in descending gas-price order, subject to block limits and execution dependencies.
+6. **Execute:** an accepted block emits `transactions/executed` for each spent transaction. `err: null` means execution succeeded; a non-null `err` records a contract panic or other execution failure. Either result consumes the nonce or notes and pays gas.
+7. **Finalize:** accepted blocks can still be reverted. A `blocks/statechange` event with `state: "finalized"` makes the block and its transactions final.
 
-:::caution[Reverted Blocks]
-Before reaching finality, blocks sometimes revert according to consensus rules.
+Do not use **included**, **removed**, **accepted**, or **confirmed** as a payment-finality signal.
 
-This can happen during steps **6** and **7**, (block reverted event). In such cases, you need to re-listen for transaction events to get the required information.
-:::
+## Mempool behavior
 
-### Checking transaction status
-> This applies to all genesis contracts and any future third party contracts that use proper error handling and panics.
-- **Successful Transaction**: Check for the combination of a successful transaction executed event (with error `None`) **and** the finalized block event.
-  - `transaction executed` event with no errors and `block statechange` `finalized` event.
-- **Reverted & Failed Transactions**: Check the transaction executed event for errors.
-  - `transaction executed` event with error field available.
-- **Reverted Block**: If a block is reverted, re-listen for the transaction events and the new block.
-  - `block reverted` event and re-evaluate the transaction status.
+| Question | Current behavior |
+|---|---|
+| Who can inspect it? | Anyone with GraphQL access to a node can query that node's real mempool through `mempoolTxs` or `mempoolTx`. This is a local view, not a network-wide snapshot. |
+| How are transactions prioritized? | Candidate selection iterates by descending `gasPrice`. Equal-price ordering is not a client contract. |
+| How does replacement work? | A transaction that conflicts on a spending ID replaces the existing transaction only when its gas price is strictly higher. Raising only the gas limit is insufficient. Moonlight uses account and nonce as its spending ID; Phoenix conflicts on spent nullifiers. |
+| What happens when the mempool is full? | A higher-priced transaction can evict the lowest-priced entry. Node operators configure the capacity; the default is 10,000 transactions. |
+| When do transactions expire? | Expiry is local node policy, not a field in the transaction. The default residence is three days, checked hourly, and both values are configurable. Clients must not treat three days as a network guarantee. |
+| What happens to future Moonlight nonces? | A transaction with a nonce gap is briefly staged outside the real mempool while the node waits for intermediate nonces. It emits `deferred`, is invisible to `mempoolTxs`, and is admitted only if the gap is filled before retries end. |
+| Can every node publish transactions? | A full Rusk node can receive and rebroadcast transactions. Its operator can disable or restrict public HTTP access, apply ACLs, or rate-limit propagation. |
 
-:::tip[Info]
-For information about events you can look at the [Rusk Universal Event System (RUES)](/developer/integrations/http-api) page
-:::
+`transactions/removed` only says that an entry left the local mempool. Inclusion in a block, replacement, expiry, capacity eviction, or removal of a conflicting transaction can all cause it. Query ledger state before deciding what happened.
 
-### Practical considerations for listening to transactions
-For example for handling Dusk deposits with Moonlight:
-- Monitor the transaction executed event and ensure no errors.
-   - Check for relevant contract specific events like `MoonlightTransactionEvent`
-- Confirm that the block containing the transaction is finalized.
-- Handle block reverts by re-listening for transaction events.
+## Events
 
-By following these guidelines, you can ensure accurate tracking of transactions on the Dusk blockchain.
+RUES exposes these transaction topics:
 
-### Deep dive: Discarded transactions
+| Topic | Meaning |
+|---|---|
+| `deferred` | Staged outside the real mempool because an admission prerequisite is missing |
+| `dropped` | Discarded before entering the real mempool |
+| `included` | Added to the local real mempool |
+| `removed` | Removed from the local real mempool for any reason |
+| `executed` | Executed in an accepted block; inspect `err` |
 
-This is nothing to be concerned about and can be ignored if you are running official wallet software or using the official SDKs (eg. w3sper).
+Block topics are `accepted`, `statechange`, and `reverted`. See the [HTTP API event model](/developer/integrations/http-api/#event-subscriptions) for subscription details.
 
-A transaction is rarely discarded in **two** cases:
-- Invalid to protocol specifications (payload incomplete, corrupted, wrong)
-- Gas limit is below the protocol minimum gas limit
+## Confirm success
 
-Such invalid transactions are also caught by pre-verifications on multiple steps both in the wallet and later on the node.
+For a live transaction watcher:
 
-To achieve this, one must actively use a modified or incorrectly implemented wallet software or SDK. Such transactions can be compared to invalid data packets on a port that are simply ignored because the listening application has no use for them.
+1. Query `tx(hash: ...)` after execution and require `err` to be null.
+2. Retain its `blockHeight` and `blockHash`.
+3. On an archive node, require `checkBlock(height: ..., hash: ..., onlyFinalized: true)` to return `true`.
+4. Store the transaction ID as an idempotency key.
 
-[^1]: The emission of this event is planned to be implemented soon.
+Archive Moonlight history is populated only when blocks finalize. Deposit systems can therefore use the [finalized deposit scanner](/developer/integrations/historical_events/) instead of reconstructing finality from live events.
+
+## Implementation references
+
+- [Mempool admission and replacement](https://github.com/dusk-network/rusk/tree/master/node/src/mempool)
+- [GraphQL transaction and mempool queries](https://github.com/dusk-network/rusk/blob/master/rusk/src/lib/http/chain/graphql/tx.rs)
+- [Transaction and block event definitions](https://github.com/dusk-network/rusk/tree/master/node-data/src/events)
