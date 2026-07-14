@@ -25,22 +25,13 @@ Start by restoring healthy node operation. Slashing is a symptom; the first prio
 ### 1. Check the installed version
 
 ```sh
+ruskquery info | jq -r '.version'
 ruskquery version
 ```
 
-If the network has a required release, upgrade to it:
+The first command reports the running Rusk version; the second checks the installed node-installer release.
 
-```sh
-curl --proto '=https' --tlsv1.2 -sSfL https://github.com/dusk-network/node-installer/releases/latest/download/node-installer.sh | sudo bash
-sudo service rusk start
-```
-
-For testnet:
-
-```sh
-curl --proto '=https' --tlsv1.2 -sSfL https://github.com/dusk-network/node-installer/releases/latest/download/node-installer.sh | sudo bash -s -- --network testnet
-sudo service rusk start
-```
+If the network has a required release, follow [Upgrade a node](/operator/guides/upgrade-node/) with the existing network and feature flags. This is especially important for archive nodes.
 
 If a newly installed release is known to be problematic and the network can still run the previous version, follow [Rollback a node update](/operator/guides/rollback-node-update).
 
@@ -50,17 +41,19 @@ If a newly installed release is known to be problematic and the network can stil
 ruskquery block-height
 ```
 
-Compare the height with the explorer. If the node is stuck or far behind, use [fast-sync](/operator/guides/fast-sync):
+Compare the height with the explorer. If a default node is stuck or far behind, use [fast-sync](/operator/guides/fast-sync):
 
 ```sh
-download_state
-sudo service rusk start
+sudo download_state
+sudo systemctl start rusk
 ```
+
+For an archive node that requires complete historical indexes, follow the archive-specific [re-sync guidance](/operator/guides/manual-resync/#restore-a-published-state) instead.
 
 ### 3. Check service status and logs
 
 ```sh
-service rusk status
+systemctl status rusk
 tail -n 100 /var/log/rusk.log
 ```
 
@@ -113,7 +106,7 @@ Replace `<amount>` with the amount you want to stake. The new stake must mature 
 - Keep consensus keys backed up and readable by the Rusk service.
 - Never run the same consensus key on multiple active nodes.
 - Avoid running experimental or mismatched binaries on a staked provisioner.
-- Use [fast-sync](/operator/guides/fast-sync) when a node falls behind instead of waiting for a long resync from genesis.
+- Use [fast-sync](/operator/guides/fast-sync) for a default node when state recovery is required; preserve complete-history requirements for archive nodes.
 
 ## Related guides
 

@@ -1,113 +1,99 @@
 ---
-title: Troubleshooting
-description: Learn how to solve issues when setting up a node on Dusk.
+title: Troubleshoot a node
+description: Diagnose Rusk startup, connectivity, synchronization, state, and wallet problems.
 ---
 
-Here you can find answers explaining how to solve errors you may encounter.
+Start with current evidence instead of resetting state immediately:
 
-#### kadcast::handling: NETWORK MISMATCH
-This error occurs when one of the peers of your node is running on a different chain. You can safely ignore this error unless your node hasn't been upgraded correctly.
+```sh
+systemctl is-active rusk
+sudo systemctl status rusk --no-pager
+ruskquery info
+ruskquery peers
+ruskquery block-height
+sudo tail -n 100 /var/log/rusk.log
+```
 
-#### Consensus msg discarded: reason="too far in the future"
-This means your node is receiving consensus messages for rounds much higher than your current tip (more than ~10 blocks ahead). Common causes:
+## Rusk will not start
 
-- Your node is still syncing or stuck behind the network tip
-- You're connected to the wrong network/chain ID
+Inspect systemd and recovery output:
 
-Check your block height (`ruskquery block-height`) against the explorer. If you are stuck, consider fast-syncing (`download_state`) or a manual resync.
+```sh
+sudo journalctl -u rusk --since "30 minutes ago" --no-pager
+sudo tail -n 100 /var/log/rusk_recovery.log
+```
 
-#### My provisioner was slashed
-First, restore healthy node operation: check the installed version, sync height, service status, logs, and staking status. Then monitor the node to make sure it keeps progressing.
+Common pre-start failures include:
 
-Follow: [Slashing prevention and recovery](/operator/guides/slashing-recovery).
+| Message or symptom | Action |
+|---|---|
+| Missing `consensus.keys` | Install the intended key at `/opt/dusk/conf/consensus.keys` with `root:dusk` ownership and mode `640`. |
+| `DUSK_CONSENSUS_KEYS_PASS` not set | Run `sudo sh /opt/dusk/bin/setup_consensus_pwd.sh`; do not place the password in shell history or logs. |
+| Rusk restarts every ten seconds | Read the first failure in `journalctl` and `rusk_recovery.log` instead of waiting through repeated restarts. |
+| Port already in use | Identify the listener with `sudo ss -ltnup`; stop or reconfigure the conflicting service. |
 
-#### Unable to resolve domain:  invalid socket address
-Such errors usually indicate DNS problems. Check your DNS settings.
+The installer-managed unit writes Rusk output to `/var/log/rusk.log`; systemd logs service transitions and pre-start failures.
 
-#### What should I do if the ruskreset command aborts?
-When prompted:
+## No peers or chain progress
 
-`WARNING: This operation will DELETE your Rusk state, wallet cache, and logs.
-Are you sure you want to proceed? (Y/n):`
+Check the local network identity and sample height twice:
 
-Answer with a capital **Y**, otherwise the operation will abort.
+```sh
+ruskquery info | jq '{version, chain_id, kadcast_address}'
+ruskquery peers
+ruskquery block-height
+sleep 30
+ruskquery block-height
+```
 
-#### PersistenceError(Os { code: 2, kind: NotFound, message: "No such file or directory" })
-Run the `ruskreset` command to fix this.
+Then verify:
 
-#### "stake" command not recognized
-Use the current CLI help output as the source of truth for your installed wallet version. The normal staking flow uses `stake`, for example:
+- the node uses the intended mainnet or testnet configuration;
+- inbound `9000/udp` reaches the Kadcast public address;
+- NAT overrides in `/opt/dusk/services/rusk.conf.user` are correct; and
+- the host has working DNS, outbound HTTPS, and UDP connectivity.
 
-```bash
+Public `8080/tcp` access is not required for consensus. It is only needed when the node intentionally serves HTTP API clients.
+
+`NETWORK MISMATCH` from an individual peer can be ignored when your own `chain_id` is correct and the node otherwise progresses. Repeated `too far in the future` messages usually mean the node is far behind or on the wrong network. A persistent `chain.stalled` condition requires checking peers, height, version, and Kadcast reachability before replacing state.
+
+## State or storage errors
+
+If the node is behind but advancing, keep monitoring. If it remains stalled on unusable state, follow [Re-sync a node](/operator/guides/manual-resync/):
+
+```sh
+download_state --list
+sudo download_state
+sudo systemctl start rusk
+```
+
+Do not delete `chain.db`, individual state files, or archive databases while Rusk is running. `ruskreset` also deletes wallet cache, archive data, and diagnostic logs; use it only when an announced reset or support procedure explicitly requires it.
+
+When disk space is exhausted, stop Rusk before moving data. Expand or replace the volume, preserve file ownership, then start and verify the service. Blindly deleting state is not a disk-cleanup strategy.
+
+## Wallet and staking errors
+
+If Rusk Wallet reports that its Rusk connection failed, verify the local service and API first:
+
+```sh
+systemctl is-active rusk
+curl -si -X POST "http://127.0.0.1:8080/on/node/info" | head
+```
+
+A Rusk response includes a `Rusk-Version` header. HTML, an unrelated `404`, or no listener indicates a port conflict or disabled local API.
+
+Use the installed CLI help as the command reference for that wallet version:
+
+```sh
+rusk-wallet --version
 rusk-wallet --help
 rusk-wallet stake --help
-rusk-wallet stake --amt 3000
 ```
 
-#### Serialization error
-First, wait for your node to be fully synced. If the node is running fine, use the following command for further details:
-```bash
-rusk-wallet --log-level debug
-```
+Do not update Rusk Wallet by cloning and compiling the Rusk repository on an installer-managed node. Rerun the [node upgrade procedure](/operator/guides/upgrade-node/) with the node's existing network and feature flags.
 
-#### Connection to Rusk Failed, some operations won't be available
-This error is expected on the first installation because the node isn't up yet. 
+For active stake, owner separation, fault diagnosis, or penalties, see [Slashing recovery](/operator/guides/slashing-recovery/).
 
-Anyways, ensure you properly followed the instructions and that you are using the latest version and check the logs for further details.
+## Still unresolved
 
-```bash
-ruskquery version
-```
-
-```bash
-tail -F /var/log/rusk.log -n 50
-```
-
-#### Port conflicts when running multiple services
-You can use the following to identify what's running on the conflicting port (e.g., 8080) and resolve the issue:
-
-```bash
-netstat -tuplen
-```
-
-You can also verify if something else is running on port 8080 by running:
-
-```bash
-curl -si --request POST "http://127.0.0.1:8080/on/node/info" | head
-```
-If the response is not from Rusk (for example, HTML/404, or missing the `Rusk-Version` header), another service is likely using that port.
-
-#### "chain.stalled" error
-This indicates your node cannot process blocks due to:
-
-Port not being forwarded or incorrect Kadcast address in `/opt/dusk/services/rusk.conf.default`.
-To fix the issues, ensure the required ports (9000/udp, 8080/tcp) are accessible and verify your Kadcast addresses (for example `KADCAST_PUBLIC_ADDRESS` and, if needed behind NAT, `KADCAST_LISTEN_ADDRESS`).
-To check the state of your node, you can run:
-
-```bash
-rusk-wallet stake-info
-```
-
-#### "Invalid Data" or "500 Internal Server Error" during staking
-Ensure you're using the latest version of `rusk-wallet`. Update by cloning the repository and reinstalling:
-
-```bash
-cargo install --path rusk/rusk-wallet
-```
-
-
-#### "PersistenceError" caused by "InvalidData" or "pointer out of bounds"
-These errors indicate that your node's state is corrupted. To fix this, reload from a snapshot by running:
-
-```bash
-download_state
-```
-(and confirm the warning by typing 'Y'). Then, restart the node with:
-
-```bash
-service rusk start
-```
-
-
-#### Compilation errors on libraries when building rusk-wallet
-Check if you are launching `make` from the root of the **rusk** directory (instead of another directory, such as **rusk-wallet**). The binary will be found in `./rusk/target/release/rusk-wallet`.
+Preserve the relevant timestamps, Rusk and installer versions, chain ID, local and network heights, peer count, and log excerpt. Remove keys, passwords, mnemonics, IPs you consider private, and other secrets before sharing diagnostics.
