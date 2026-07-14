@@ -1,111 +1,108 @@
 ---
-title: Upgrade your node
-description: Learn how to update your Dusk node to the latest version of the Nocturne testnet.
+title: Upgrade a node
+description: Apply a supported node-installer release and verify the node afterward.
 ---
 
-A network may occasionally be upgraded with new features and performance optimizations.
+The node installer pins the supported Rusk and Rusk Wallet versions for each network. Rerunning it downloads and verifies replacement binaries before stopping the current Rusk service.
 
-To make the upgrade process as flawless as possible, the [node installer](https://github.com/dusk-network/node-installer) script may be updated from time to time. This script can be run in a non-destructive way, meaning it changes only what is needed. It will gracefully shut down Rusk for you.
-
-## How to Upgrade
-
-import { Tabs, TabItem } from '@astrojs/starlight/components';
-
-<Tabs syncKey="network">
-    <TabItem label="Mainnet">
-
-    To upgrade to the latest mainnet version, run:
-
-    ```bash
-    # mainnet upgrade
-    curl --proto '=https' --tlsv1.2 -sSfL https://github.com/dusk-network/node-installer/releases/latest/download/node-installer.sh | sudo bash
-    ```
-
-    </TabItem>
-    <TabItem label="Testnet">
-
-    To upgrade to the latest Nocturne testnet version, run:
-
-    ```bash
-    # testnet upgrade
-    curl --proto '=https' --tlsv1.2 -sSfL https://github.com/dusk-network/node-installer/releases/latest/download/node-installer.sh | sudo bash -s -- --network testnet
-    ```
-
-    </TabItem>
-</Tabs>
-
-Once it's done and gives no errors, start Rusk again:
-```sh
-sudo service rusk start
-```
-
-If everything is up and running again, query the node a couple of times to see if the block height is progressing:
-```sh
-ruskquery block-height
-```
-
-Or keep an eye on the logs to see if it's making and accepting new blocks:
-```sh
-tail -F /var/log/rusk.log
-```
-
-If you see new blocks being accepted, you're up and running again.
-
-You can see the status of the Rusk service here:
-```sh
-service rusk status
-```
-
-If it is not running after starting it, and reports an error, you can check your logs to see if something is wrong, like a wrong password or no peers being found:
-```sh
-tail -n 30 /var/log/rusk.log
-```
-
-Unable to figure it out yourself? Visit our [Node Runner Troubleshooting](https://discord.com/channels/847466263064346624/1118582421055606805) on Discord.
-
-If everything else fails, check out the [manual resync](/operator/guides/manual-resync) instructions.
-
-## Roll back an update
-
-If a newly installed release causes problems and the network has not activated changes that require it, you can reinstall a previous `node-installer` release.
-
-Use a pinned installer release instead of `latest`, and only roll back across a network upgrade if the Dusk team instructs operators to do so.
-
-See: [Roll back a node update](/operator/guides/rollback-node-update).
-
-## Nocturne Reset
-
-:::note[Info]
-This only applies for testnet.
+:::caution[Keep the same role]
+Repeat the network and feature flags used for the existing node. Omitting `--feature archive` replaces an archive installation with the default Rusk binary.
 :::
 
-Sometimes the testnet gets reset. In that case you need to reset the state of Nocturne.
+## Before upgrading
 
-1. To reset the state of Nocturne, download the latest version of our installer:
+Record the current state:
+
 ```sh
-curl --proto '=https' --tlsv1.2 -sSfL https://github.com/dusk-network/node-installer/releases/latest/download/node-installer.sh | sudo bash -s -- --network testnet
+ruskquery version
+ruskquery info | jq '{version, chain_id, kadcast_address}'
+ruskquery peers
+ruskquery block-height
+systemctl is-active rusk
 ```
 
-2. Reset all the data on your node:
-```sh
-ruskreset
-```
-Type in **Y** to accept the deletion of all the state.
+Retain a secure copy of consensus keys and intentional configuration. The installer preserves:
 
-3. Start Rusk:
+- `/opt/dusk/conf/consensus.keys`;
+- `/opt/dusk/services/dusk.conf`;
+- `/opt/dusk/services/rusk.conf.user`; and
+- chain state under `/opt/dusk/rusk`.
+
+It regenerates `/opt/dusk/conf/rusk.toml`, `genesis.toml`, the Rusk systemd unit, managed binaries and scripts, and the selected user's wallet configuration. Save the old `rusk.toml` for comparison if it contains intentional changes, but do not copy it over the new network configuration wholesale.
+
+## Run the installer
+
+Choose the command matching the node.
+
+### Mainnet provisioner or full node
+
 ```sh
-service rusk start
+curl --proto '=https' --tlsv1.2 -sSfL \
+  https://github.com/dusk-network/node-installer/releases/latest/download/node-installer.sh \
+  | sudo bash
 ```
 
-4. Check if you're already staking by running:
-```sh
-rusk-wallet stake-info
-```
-If you already have DUSK staked, wait until the chain starts producing blocks. You can check [our explorer](https://testnet.apps.dusk.network/explorer/) to see if the chain is progressing or when it will produce the genesis block.
+### Mainnet archive node
 
-5. If you do not have testnet DUSK, request it from the [faucet](/operator/networks#how-to-get-testnet-tokens).
-
-6. Stake your testnet DUSK:
 ```sh
-rusk-wallet stake --amt 1000 # Or however much you want to stake
+curl --proto '=https' --tlsv1.2 -sSfL \
+  https://github.com/dusk-network/node-installer/releases/latest/download/node-installer.sh \
+  | sudo bash -s -- --feature archive
 ```
+
+### Testnet provisioner or full node
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSfL \
+  https://github.com/dusk-network/node-installer/releases/latest/download/node-installer.sh \
+  | sudo bash -s -- --network testnet
+```
+
+### Testnet archive node
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSfL \
+  https://github.com/dusk-network/node-installer/releases/latest/download/node-installer.sh \
+  | sudo bash -s -- --network testnet --feature archive
+```
+
+When an automation process runs the installer directly as root, append `--user <operator-user>` so the wallet configuration is written to the intended home directory. A normal interactive `sudo` invocation uses `SUDO_USER` automatically.
+
+The installer stops Rusk only after downloads and binary version checks pass. It enables and reloads the systemd unit, but leaves Rusk stopped.
+
+## Review and restart
+
+If the previous `rusk.toml` contained intentional operator settings, compare it with the generated file and reapply only the required values. Archive API operators commonly need to restore their `[http]` configuration.
+
+Start the service:
+
+```sh
+sudo systemctl start rusk
+```
+
+Then verify all layers:
+
+```sh
+systemctl is-active rusk
+systemctl show rusk -p ActiveState -p SubState -p NRestarts
+ruskquery info | jq '{version, chain_id, kadcast_address}'
+ruskquery peers
+ruskquery block-height
+sudo tail -n 50 /var/log/rusk.log
+```
+
+Check the height again after roughly 30 seconds and compare it with the matching [network explorer or public endpoint](/operator/networks/). For an archive node, also run an archive GraphQL query before returning API traffic to it.
+
+If Rusk fails to start, inspect:
+
+```sh
+sudo systemctl status rusk --no-pager
+sudo journalctl -u rusk --since "15 minutes ago" --no-pager
+sudo tail -n 100 /var/log/rusk_recovery.log
+```
+
+Do not repeatedly rerun the installer until the first failure is understood. See [Troubleshooting](/operator/troubleshooting/) and [Roll back a node update](/operator/guides/rollback-node-update/) when appropriate.
+
+## Testnet resets
+
+Testnet can be reset independently of mainnet. Follow an announced reset by reinstalling with `--network testnet`, then use the supported [fast-sync](/operator/guides/fast-sync/) or reset procedure specified in the announcement. Do not reset state merely because a normal upgrade temporarily lags the network.
