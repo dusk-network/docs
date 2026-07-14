@@ -5,7 +5,7 @@ description: Legacy programs and guides kept for transparency. These flows are n
 
 This page collects legacy programs and guides that are no longer active.
 
-If you’re looking to move ERC20/BEP20 DUSK to native DUSK today, use: [ERC20/BEP20 Migration](/learn/guides/mainnet-migration/).
+If you’re looking to move ERC20/BEP20 DUSK to Dusk mainnet today, use the [mainnet migration guide](/learn/guides/mainnet-migration/).
 
 ## Mainnet Genesis On-Ramp (Ended)
 
