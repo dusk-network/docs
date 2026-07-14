@@ -3,85 +3,128 @@ const siteSidebar = [
     label: "Learn",
     collapsed: false,
     items: [
+      { label: "Overview", link: "/learn/overview" },
       {
-        label: "About Dusk",
+        label: "Purpose and Products",
         collapsed: false,
         items: [
-          { label: "Overview", link: "/learn/overview" },
           { label: "Market Infrastructure", link: "/learn/market-infrastructure" },
           { label: "Dusk Trade", link: "/learn/dusk-trade" },
-          { label: "Core Components", link: "/learn/core-components" },
-          { label: "DuskEVM", link: "/learn/dusk-evm" },
-          { label: "Core Values", link: "/learn/core-values" },
           { label: "Native Issuance", link: "/learn/tokenization-comparison" },
-          { label: "Ecosystem & Partners", link: "/learn/ecosystem" },
-          { label: "Tokenomics", link: "/learn/tokenomics" },
-          { label: "Get involved & Community", link: "/learn/community" },
-          { label: "Glossary", link: "/learn/glossary" },
+          { label: "Assets and Regulations", link: "/learn/deep-dive/assets-and-regulations" },
+          { label: "Core Values", link: "/learn/core-values" },
         ],
       },
       {
-        label: "Tools",
-        items: [
-          { label: "Block Explorer", link: "/learn/block-explorer" },
-          { label: "Web Wallet", link: "/learn/web-wallet" },
-          { label: "Rusk Wallet", link: "/learn/rusk-wallet" },
-        ],
-      },
-      {
-        label: "Guides",
-        items: [
-          { label: "How to Stake", link: "/learn/guides/staking-basics" },
-          { label: "Bridge DUSK", link: "/learn/guides/duskevm-bridge" },
-          { label: "Mainnet DUSK Migration", link: "/learn/guides/mainnet-migration" },
-          { label: "BEP20 Bridge", link: "/learn/guides/bep20-bridge" },
-          { label: "Verify Team Account", link: "/learn/verify-team-account" },
-        ],
-      },
-      {
-        label: "Deep dive into Dusk",
+        label: "Architecture",
         collapsed: true,
         items: [
-          { label: "Cryptography", link: "/learn/cryptography" },
+          { label: "Core Components", link: "/learn/core-components" },
           { label: "Transaction Models", link: "/learn/deep-dive/duskds-tx-models" },
-          { label: "Assets & Regulations", link: "/learn/deep-dive/assets-and-regulations" },
           { label: "DuskVM", link: "/learn/deep-dive/dusk-vm" },
+          { label: "DuskEVM", link: "/learn/dusk-evm" },
+          { label: "Cryptography", link: "/learn/cryptography" },
+        ],
+      },
+      {
+        label: "Network and Ecosystem",
+        collapsed: true,
+        items: [
+          { label: "Tokenomics", link: "/learn/tokenomics" },
+          { label: "Ecosystem and Partners", link: "/learn/ecosystem" },
+        ],
+      },
+      {
+        label: "Reference",
+        collapsed: true,
+        items: [
+          { label: "Glossary", link: "/learn/glossary" },
           { label: "Additional Resources", link: "/learn/deep-dive/additional-resources" },
         ],
       },
     ],
   },
   {
-    label: "Developer",
+    label: "Use Dusk",
+    collapsed: true,
+    items: [
+      { label: "Overview", link: "/use/overview" },
+      {
+        label: "Wallets and Explorer",
+        collapsed: true,
+        items: [
+          { label: "Web Wallet", link: "/learn/web-wallet" },
+          { label: "Rusk Wallet", link: "/learn/rusk-wallet" },
+          { label: "Block Explorer", link: "/learn/block-explorer" },
+        ],
+      },
+      {
+        label: "Manage DUSK",
+        collapsed: true,
+        items: [
+          { label: "Stake DUSK", link: "/learn/guides/staking-basics" },
+          { label: "Bridge to DuskEVM", link: "/learn/guides/duskevm-bridge" },
+          { label: "Migrate to Dusk Mainnet", link: "/learn/guides/mainnet-migration" },
+          { label: "Bridge to BSC", link: "/learn/guides/bep20-bridge" },
+        ],
+      },
+      {
+        label: "Trust and Community",
+        collapsed: true,
+        items: [
+          { label: "Verify Team Accounts", link: "/learn/verify-team-account" },
+          { label: "Community", link: "/learn/community" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Build",
     collapsed: true,
     items: [
       { label: "Overview", link: "/developer/overview" },
       {
-        label: "Build on Dusk",
+        label: "Smart Contracts",
+        collapsed: true,
         items: [
           { label: "DuskVM Overview", link: "/developer/duskvm/overview" },
           { label: "DuskVM Quickstart", link: "/developer/duskvm/quickstart" },
           { label: "DuskVM Reference", link: "/developer/duskvm/reference" },
           { label: "DuskEVM Quickstart", link: "/developer/duskevm/quickstart" },
           { label: "DuskEVM Reference", link: "/developer/duskevm/reference" },
-          { label: "Stake Abstraction", link: "/learn/hyperstaking" },
-          { label: "Digital Identity Protocol", link: "/developer/digital-identity/protocol" },
+        ],
+      },
+      {
+        label: "Wallet Integration",
+        collapsed: true,
+        items: [
           { label: "Dusk Connect", link: "/developer/integrations/dusk-connect" },
           { label: "Dusk Wallet Extension", link: "/developer/integrations/wallet-extension" },
+          { label: "W3sper SDK", link: "/developer/integrations/w3sper" },
         ],
       },
       {
-        label: "Integrate with Dusk",
+        label: "Network Integration",
+        collapsed: true,
         items: [
           { label: "Transaction Lifecycle", link: "/developer/integrations/tx-lifecycle" },
-          { label: "W3sper SDK", link: "/developer/integrations/w3sper" },
           { label: "HTTP API", link: "/developer/integrations/http-api" },
-          { label: "Integrate with Exchanges", link: "/developer/integrations/exchanges" },
-          { label: "Encoding & Hashing", link: "/developer/integrations/reference" },
+          { label: "Historical Events", link: "/developer/integrations/historical_events" },
+          { label: "Encoding and Hashing", link: "/developer/integrations/reference" },
+          { label: "Exchange Integration", link: "/developer/integrations/exchanges" },
         ],
       },
       {
-        label: "Contribute to Dusk",
+        label: "Protocol Capabilities",
+        collapsed: true,
+        items: [
+          { label: "Stake Abstraction", link: "/learn/hyperstaking" },
+          { label: "Digital Identity", link: "/developer/digital-identity/protocol" },
+        ],
+      },
+      {
+        label: "Contribute",
+        collapsed: true,
         items: [
           { label: "Dusk Improvement Proposals", link: "/developer/contribute/dips" },
           { label: "Grants Program", link: "/developer/contribute/grants" },
@@ -90,31 +133,39 @@ const siteSidebar = [
     ],
   },
   {
-    label: "Node Operator",
+    label: "Operate",
     collapsed: true,
     items: [
       { label: "Overview", link: "/operator/overview" },
+      { label: "Choose a Network", link: "/operator/networks" },
       {
-        label: "Node types",
+        label: "Node Types",
+        collapsed: true,
         items: [
-          { label: "Provisioner node", link: "/operator/provisioner" },
-          { label: "Archive node", link: "/operator/archive-node" },
-          { label: "Prover node", link: "/operator/prover" },
+          { label: "Provisioner Node", link: "/operator/provisioner" },
+          { label: "Archive Node", link: "/operator/archive-node" },
+          { label: "Prover Node", link: "/operator/prover" },
         ],
       },
       {
-        label: "Guides",
+        label: "Set Up and Maintain",
+        collapsed: true,
         items: [
-          { label: "Setup wallet on Node", link: "/operator/guides/node-wallet-setup" },
+          { label: "Set Up the Node Wallet", link: "/operator/guides/node-wallet-setup" },
+          { label: "Maintenance and Monitoring", link: "/operator/maintenance-monitoring" },
+          { label: "Upgrade a Node", link: "/operator/guides/upgrade-node" },
           { label: "Fast-Sync a Node", link: "/operator/guides/fast-sync" },
           { label: "Manually Re-Sync a Node", link: "/operator/guides/manual-resync" },
-          { label: "Upgrade a Node", link: "/operator/guides/upgrade-node" },
           { label: "Roll Back a Node Update", link: "/operator/guides/rollback-node-update" },
+        ],
+      },
+      {
+        label: "Recovery and Help",
+        collapsed: true,
+        items: [
           { label: "Slashing Recovery", link: "/operator/guides/slashing-recovery" },
-          { label: "Choose a Network", link: "/operator/networks" },
-          { label: "Maintenance & Monitoring", link: "/operator/maintenance-monitoring" },
-          { label: "FAQ", link: "/operator/faq" },
           { label: "Troubleshooting", link: "/operator/troubleshooting" },
+          { label: "FAQ", link: "/operator/faq" },
         ],
       },
     ],

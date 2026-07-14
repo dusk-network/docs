@@ -90,7 +90,7 @@ Relevant docs:
 - Tokenomics: https://docs.dusk.network/learn/tokenomics/
 - Glossary: https://docs.dusk.network/learn/glossary/
 
-### Developer
+### Build
 
 - Developer Overview: https://docs.dusk.network/developer/overview/
 - DuskEVM Quickstart: https://docs.dusk.network/developer/duskevm/quickstart/
@@ -101,13 +101,14 @@ Relevant docs:
 - Dusk Wallet Extension: https://docs.dusk.network/developer/integrations/wallet-extension/
 - Transaction Lifecycle: https://docs.dusk.network/developer/integrations/tx-lifecycle/
 - HTTP API: https://docs.dusk.network/developer/integrations/http-api/
+- Historical Events: https://docs.dusk.network/developer/integrations/historical_events/
 - W3sper SDK: https://docs.dusk.network/developer/integrations/w3sper/
 - Exchange Integration: https://docs.dusk.network/developer/integrations/exchanges/
 - Encoding & Hashing: https://docs.dusk.network/developer/integrations/reference/
 - Dusk Improvement Proposals: https://docs.dusk.network/developer/contribute/dips/
 - Grants: https://docs.dusk.network/developer/contribute/grants/
 
-### Operators
+### Operate
 
 - Operator Overview: https://docs.dusk.network/operator/overview/
 - Provisioner Node: https://docs.dusk.network/operator/provisioner/
@@ -117,13 +118,16 @@ Relevant docs:
 - Maintenance & Monitoring: https://docs.dusk.network/operator/maintenance-monitoring/
 - Troubleshooting: https://docs.dusk.network/operator/troubleshooting/
 
-### User Tools
+### Use Dusk
 
+- Use Dusk Overview: https://docs.dusk.network/use/overview/
 - Web Wallet: https://docs.dusk.network/learn/web-wallet/
 - Rusk Wallet: https://docs.dusk.network/learn/rusk-wallet/
 - Block Explorer: https://docs.dusk.network/learn/block-explorer/
 - Staking: https://docs.dusk.network/learn/guides/staking-basics/
 - DuskEVM Bridge: https://docs.dusk.network/learn/guides/duskevm-bridge/
+- Mainnet Migration: https://docs.dusk.network/learn/guides/mainnet-migration/
+- BEP20 Bridge: https://docs.dusk.network/learn/guides/bep20-bridge/
 
 ## Naming Guidance
 

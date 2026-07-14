@@ -1,21 +1,37 @@
 ---
-title: Dusk Node Documentation
-description: A complete guide to setting up, configuring, and operating a node on Dusk.
+title: Operate Dusk
+description: Choose, set up, maintain, and troubleshoot a Dusk node.
 ---
-import { LinkCard, Card, CardGrid } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
-This Dusk Node documentation documentation is for anyone interested in running a Dusk node. Here you can find information about the different types of nodes, the requirements for running a node, and the different ways to set up a node.
+Run Dusk infrastructure by first choosing the network and node role that match your objective. The operator guides then cover setup, upgrades, monitoring, recovery, and troubleshooting.
 
-## Setting Up & Running a Node
-
-There are multiple ways to set up a Dusk node. The pages below provide guides on how to run a node.
+## Start here
 
 <CardGrid>
-        <LinkCard title="Provisioner Node" href="/operator/provisioner" description="Run a provisioner node on Dusk and participate in consensus"/>
-        <LinkCard title="Archive Node" href="/operator/archive-node" description="Run an archive node and store more detailed historical chain data"/>
-        <LinkCard title="Setup a wallet" href="/operator/guides/node-wallet-setup" description="Setup the CLI wallet on your node server"/>
+  <LinkCard title="Choose a Network" href="/operator/networks" description="Compare mainnet, testnet, and development environments before configuring a node."/>
+  <LinkCard title="Provisioner Node" href="/operator/provisioner" description="Stake DUSK and operate a node that can participate in consensus."/>
+  <LinkCard title="Archive Node" href="/operator/archive-node" description="Retain complete chain history for historical queries and infrastructure services."/>
+  <LinkCard title="Prover Node" href="/operator/prover" description="Review the requirements and setup path for proof-generation infrastructure."/>
+</CardGrid>
+
+## Operator workflow
+
+1. [Choose a network](/operator/networks/) and confirm its endpoints and chain ID.
+2. Choose the appropriate [provisioner](/operator/provisioner/), [archive](/operator/archive-node/), or [prover](/operator/prover/) role.
+3. Follow the role-specific installation and configuration instructions.
+4. Configure the [node wallet](/operator/guides/node-wallet-setup/) when the role requires one.
+5. Establish [maintenance and monitoring](/operator/maintenance-monitoring/) before treating the node as production infrastructure.
+
+## Common tasks
+
+<CardGrid>
+  <LinkCard title="Upgrade a Node" href="/operator/guides/upgrade-node" description="Apply a supported node release and verify the service after upgrading."/>
+  <LinkCard title="Sync and Re-Sync" href="/operator/guides/fast-sync" description="Use fast sync for initial state or manually re-sync when local state must be rebuilt."/>
+  <LinkCard title="Recover After Slashing" href="/operator/guides/slashing-recovery" description="Restore consensus participation safely after a provisioner has been slashed."/>
+  <LinkCard title="Troubleshoot" href="/operator/troubleshooting" description="Diagnose common service, synchronization, connectivity, and consensus problems."/>
 </CardGrid>
 
 :::tip
-For developing actively on the Node software or running nodes locally for testing you should look into the README of the <a href="https://github.com/dusk-network/rusk" target="_blank">Rusk repository</a>.
+For Rusk development or local test environments, use the <a href="https://github.com/dusk-network/rusk" target="_blank" rel="noreferrer">Rusk repository</a>. The operator guides are for deployed network infrastructure.
 :::
