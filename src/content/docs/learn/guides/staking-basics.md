@@ -1,87 +1,81 @@
 ---
 title: Staking on Dusk
-description: How staking works on Dusk, what you need, and what to expect from rewards and maturity.
+description: Choose a staking method and understand activation, rewards, top-ups, unstaking, and slashing.
 ---
 
-Staking is how Dusk selects provisioners (validator nodes) to propose and validate blocks.
-Stakers earn rewards funded by token emissions and transaction fees.
+Staking secures Dusk by selecting provisioners to propose and validate blocks. Active provisioners earn rewards from token emissions and transaction fees.
 
-## Why stake?
+## At a glance
 
-Staking DUSK allows you to:
+| | |
+|---|---|
+| Minimum direct stake | 1,000 DUSK |
+| Activation | At the epoch boundary after the next one; normally about 6 to 12 hours |
+| Direct staking requirement | A provisioner node that remains online and synchronized |
+| Unstaking | No protocol waiting period; network fees apply |
+| Rewards | Probabilistic, based on consensus participation and active stake |
 
-- Earn staking rewards.
-- Help secure the network by participating in consensus.
+## Choose how to stake
 
-## Two ways to stake
+### Run a provisioner
 
-### 1) Direct staking (run a provisioner)
+Direct staking gives you protocol rewards and responsibility for operating a provisioner node. The node must remain online, synchronized, correctly configured, and on the required software version.
 
-To earn protocol staking rewards directly, you run a provisioner node 24/7 and stake from its wallet.
+1. [Run a provisioner node](/operator/provisioner/).
+2. [Set up its wallet and stake](/operator/guides/node-wallet-setup/).
 
-- Run a node: [Provisioner node](/operator/provisioner)
-- Set up wallet + stake: [Wallet setup](/operator/guides/node-wallet-setup)
+### Use a staking pool
 
-If you are deciding whether to operate infrastructure yourself, read this page first, then move to the operator guide once you are ready to run a node.
+Third-party services and on-chain pools can stake without requiring you to operate a node. Their yield, withdrawal rules, custody model, operator risk, and smart-contract risk are separate from the base protocol.
 
-### 2) Staking pools (no infrastructure)
+Evaluate the provider independently before depositing. Developers building staking pools should see [Stake Abstraction](/learn/hyperstaking/).
 
-Some third-party services and on-chain pools stake on behalf of users. This can let you earn staking yield without running your own node, but it adds operator and smart contract risk.
+## Direct stake lifecycle
 
-- If you're building a pool as a smart contract developer, see: [Stake Abstraction](/learn/hyperstaking)
-- If you're a user, follow the pool/provider's instructions and do your own due diligence.
+### Activation
 
-## Requirements and timing
+A new stake does not participate immediately. It becomes eligible at the start of the epoch after the next epoch boundary.
 
-- **Minimum stake**: 1,000 DUSK
-- **Maturity**: 2 epochs (4,320 blocks), about 12 hours before rewards start
-- **Unstaking**: no penalties or waiting period
+An epoch is 2,160 blocks. Depending on where the staking transaction lands within the current epoch, activation takes between roughly one and two epochs, normally about 6 to 12 hours at the target block time.
 
-:::note[Important]
-New stake only starts earning rewards after the maturity period.
-Operators can verify the `stake active from block` value using `rusk-wallet stake-info`.
-:::
+Check the exact `stake active from block` value with:
 
-## How are rewards determined?
+```sh
+rusk-wallet stake-info
+```
 
-Once your stake is active, rewards are probabilistic and depend on consensus participation and the size of your stake relative to the total active network stake.
+### Rewards
 
-For reward sources and distribution details, see:
+Once active, rewards depend on consensus participation and the stake's size relative to total active stake. They are not a fixed return and may vary between periods.
 
-- [Incentives](/learn/tokenomics#incentives)
-- [Token emission](/learn/tokenomics#token-emission)
+See [Incentives](/learn/tokenomics#incentives) and [Token emission](/learn/tokenomics#token-emission) for how rewards are funded and distributed.
 
-## Slashing
+### Adding to an existing stake
 
-Dusk uses **soft slashing**: stake is not burned, but repeated faults or long downtime can suspend rewards and reduce effective stake.
+- A top-up submitted before the original stake becomes active follows the existing activation schedule.
+- Once the stake is active, 90% of a top-up becomes active immediately and 10% is recorded as locked stake.
+- Locked stake remains yours but does not participate in consensus. Recovering the final locked portion may require fully unstaking the remaining position.
 
-See: [Slashing](/learn/tokenomics#slashing). If you run a provisioner, also read [Slashing prevention and recovery](/operator/guides/slashing-recovery).
+For example, adding 4,000 DUSK to an active stake adds 3,600 DUSK to active stake and 400 DUSK to locked stake.
 
-## Adding to an existing stake
+### Unstaking
 
-You can add to your stake without fully unstaking first.
+There is no protocol waiting period after a successful unstaking transaction. You can fully unstake, or partially unstake while leaving a position that still satisfies the 1,000 DUSK minimum.
 
-- If your stake is already active, **90%** of the additional amount becomes active immediately and starts earning rewards. The remaining **10%** becomes **inactive stake**.
-- Inactive stake does not earn rewards and can only be unlocked by fully unstaking.
-- If you add stake before the original stake becomes active (still in the maturity period), the top-up follows normal maturity and is not subject to the 90%/10% split.
+Unstaking active and locked stake does not automatically withdraw accrued rewards; reward withdrawal is a separate wallet action.
 
-<details>
-<summary><strong>Example</strong></summary>
+## Slashing risk
 
-Suppose you stake **5,000 DUSK**. After the maturity period, your stake becomes active.
+Dusk distinguishes between two classes of consensus penalty:
 
-If you later add **4,000 DUSK**:
+- **Soft penalties** cover failed participation, such as failing to produce a valid candidate. They can suspend eligibility and move part of active stake into locked stake. The locked amount remains owned by the staker.
+- **Hard penalties** cover provably invalid consensus behavior, including invalid votes or signing conflicting proposals or votes. They suspend eligibility and can burn part of the stake.
 
-- **3,600 DUSK (90%)** becomes active immediately.
-- **400 DUSK (10%)** goes to inactive stake.
-
-If you withdraw down to **600 DUSK** active stake, the **400 DUSK** inactive stake remains locked until you fully unstake the remaining active stake.
-
-</details>
+Run only supported software and never run the same consensus key on multiple active nodes. Operators should follow [Slashing prevention and recovery](/operator/guides/slashing-recovery/).
 
 ## Next steps
 
-- Direct staking (run your own node): [Provisioner node](/operator/provisioner), then [Wallet setup](/operator/guides/node-wallet-setup)
-- Operator maintenance after staking: [Maintenance & monitoring](/operator/maintenance-monitoring)
-- Understand rewards and emissions: [Tokenomics](/learn/tokenomics)
-- If you hold ERC20/BEP20 DUSK: [Mainnet migration](/learn/guides/mainnet-migration)
+- [Run a provisioner node](/operator/provisioner/)
+- [Set up a node wallet](/operator/guides/node-wallet-setup/)
+- [Monitor a provisioner](/operator/maintenance-monitoring/)
+- [Understand DUSK tokenomics](/learn/tokenomics/)

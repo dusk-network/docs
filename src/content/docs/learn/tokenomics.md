@@ -5,14 +5,14 @@ description: DUSK token utility, supply, emissions, and staking incentives.
 
 DUSK is the native token used for transaction fees (gas) and staking on the Dusk network.
 
-If you hold ERC20/BEP20 DUSK (on Ethereum/BSC), follow the [mainnet migration guide](/learn/guides/mainnet-migration) to move to native DUSK.
+If you hold ERC20/BEP20 DUSK (on Ethereum/BSC), follow the [mainnet migration guide](/learn/guides/mainnet-migration) to move it to Dusk mainnet.
 
 For economic model rationale and assumptions, see the <a href="https://github.com/dusk-network/audits/blob/main/core-audits/2024-09_protocol-security-review_oak-security.pdf" target="_blank" rel="noreferrer">Economic Protocol Design</a> report.
 
 ## Quick facts
 
 - **Symbol**: DUSK
-- **Decimals (native DUSK)**: 9 (`1 DUSK = 1,000,000,000 LUX`)
+- **Decimals (Dusk mainnet)**: 9 (`1 DUSK = 1,000,000,000 LUX`)
 - **Decimals (ERC20/BEP20 DUSK)**: 18 (see [migration guide](/learn/guides/mainnet-migration))
 - **Supply model**: 500,000,000 initial + 500,000,000 emitted over time (max 1,000,000,000)
 - **Live supply**: see [supply.dusk.network](https://supply.dusk.network/)
@@ -39,8 +39,8 @@ For the user-facing flow, see [Staking on Dusk](/learn/guides/staking-basics).
 
 - **Minimum stake**: 1,000 DUSK
 - **Maximum stake**: no upper bound
-- **Maturity**: 2 epochs (4,320 blocks)
-- **Unstaking**: no penalties or waiting period
+- **Activation**: at the epoch boundary after the next one; between roughly 1 and 2 epochs depending on submission height
+- **Unstaking**: no protocol waiting period; a partial position must retain the minimum stake
 - **Adding to stake (top-ups)**: see [Adding to an existing stake](/learn/guides/staking-basics#adding-to-an-existing-stake)
 
 ## Incentives
@@ -81,13 +81,12 @@ Emissions follow a geometric decay model with reduction rate `r = 0.5` (halving 
 
 ## Slashing
 
-Dusk uses **soft slashing** to discourage repeated faults and long downtime.
-Soft slashing does not burn stake; it reduces a provisioner's effective participation and rewards.
+Dusk distinguishes between soft and hard consensus penalties:
 
-- **Suspension**: stake is suspended for one or more epochs (not eligible for selection; earns no rewards).
-- **Penalization**: a portion of stake is moved to the claimable rewards pool, reducing effective stake used in sortition.
+- **Soft penalties** apply to failed participation. They can suspend the provisioner and move part of active stake into locked stake. Locked stake does not participate but remains owned by the staker.
+- **Hard penalties** apply to provably invalid consensus behavior, such as invalid votes or signing conflicting proposals or votes. They suspend the provisioner and can burn part of its stake.
 
-In practice: run official software, keep it updated and online, and monitor missed duties.
+Run supported software, keep the node synchronized, and never run the same consensus key on multiple active nodes. See [Slashing prevention and recovery](/operator/guides/slashing-recovery/).
 
 ## Token versions and contracts
 

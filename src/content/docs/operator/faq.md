@@ -40,7 +40,7 @@ Yes. You can run a node for syncing, propagation, and APIs without staking, but 
 
 #### When does my stake become active?
 
-After the 4320-block maturity period (about 12 hours). See [/learn/guides/staking-basics](/learn/guides/staking-basics).
+At the epoch boundary after the next one, between roughly 1 and 2 epochs after the staking transaction. Check `stake active from block` with `rusk-wallet stake-info`. See [Staking on Dusk](/learn/guides/staking-basics/).
 
 #### How do I increase stake or compound rewards?
 
