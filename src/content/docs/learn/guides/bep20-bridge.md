@@ -5,7 +5,7 @@ description: How to bridge your native DUSK tokens to BEP20 DUSK on Binance Smar
 
 This guide explains how to bridge **native DUSK** (Dusk mainnet) to **BEP20 DUSK** on Binance Smart Chain (BSC) using the [Web Wallet](https://apps.dusk.network/wallet/).
 
-When bridging, your native DUSK tokens are locked on the Dusk network. Once locked, a mint operation is initiated on Binance Smart Chain, issuing an equivalent amount of BEP20 DUSK to your specified address. The full bridging process typically completes within 15 minutes.
+When bridging, your native DUSK tokens are locked on the Dusk network. Once locked, a mint operation is initiated on Binance Smart Chain, issuing an equivalent amount of BEP20 DUSK to your specified address. The full bridging process typically takes around one hour.
 
 :::note
 Want to **bridge from BEP20 DUSK to native DUSK** instead? Check our [Migration Guide](/learn/guides/mainnet-migration/) for the complete walkthrough.
@@ -28,7 +28,7 @@ The BSC address is provided in the **memo** field. If you omit the memo or provi
 
 ## Expected time and fees
 
-- **Time**: typically ~15 minutes.
+- **Time**: typically around one hour.
 - **Fees**: the bridge charges a flat **1 DUSK** fee per transaction (your minted amount is `sent - 1 DUSK`).
 
 ## Steps
@@ -49,7 +49,7 @@ Your DUSK will be locked on the Dusk network, and an equivalent amount will be m
 ## FAQ
 
 **How long does the bridge process take?**  
-Typically within 15 minutes. Network congestion or confirmations may slightly affect the timing.
+Typically around one hour. Network congestion and confirmation times can affect the timing.
 
 **Where do the BEP20 tokens go?**  
 They are sent to the EVM address specified in the memo field.
@@ -65,6 +65,6 @@ Yes, the bridge charges a flat fee of 1 DUSK per transaction. Your bridged amoun
 
 ## Troubleshooting
 
-- **Nothing arrived on BSC after ~15 minutes**: confirm your Dusk transfer succeeded and double-check the memo contains the correct `0x...` address.
+- **Nothing arrived on BSC after around one hour**: confirm your Dusk transfer succeeded and double-check the memo contains the correct `0x...` address.
 - **I used the wrong memo address**: the bridge can’t mint to an unknown target. This is usually not reversible.
 - **I bridged to an exchange address**: only do this if the exchange explicitly supports BEP20 DUSK deposits and you’re sure the memo address is correct.

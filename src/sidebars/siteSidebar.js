@@ -11,6 +11,7 @@ const siteSidebar = [
           { label: "Market Infrastructure", link: "/learn/market-infrastructure" },
           { label: "Dusk Trade", link: "/learn/dusk-trade" },
           { label: "Core Components", link: "/learn/core-components" },
+          { label: "DuskEVM", link: "/learn/dusk-evm" },
           { label: "Core Values", link: "/learn/core-values" },
           { label: "Native Issuance", link: "/learn/tokenization-comparison" },
           { label: "Ecosystem & Partners", link: "/learn/ecosystem" },
@@ -31,7 +32,7 @@ const siteSidebar = [
         label: "Guides",
         items: [
           { label: "How to Stake", link: "/learn/guides/staking-basics" },
-          { label: "DuskEVM Bridge", link: "/learn/guides/duskevm-bridge" },
+          { label: "Bridge DUSK", link: "/learn/guides/duskevm-bridge" },
           { label: "Mainnet DUSK Migration", link: "/learn/guides/mainnet-migration" },
           { label: "BEP20 Bridge", link: "/learn/guides/bep20-bridge" },
           { label: "Verify Team Account", link: "/learn/verify-team-account" },
@@ -45,7 +46,6 @@ const siteSidebar = [
           { label: "Transaction Models", link: "/learn/deep-dive/duskds-tx-models" },
           { label: "Assets & Regulations", link: "/learn/deep-dive/assets-and-regulations" },
           { label: "DuskVM", link: "/learn/deep-dive/dusk-vm" },
-          { label: "DuskEVM", link: "/learn/deep-dive/dusk-evm" },
           { label: "Additional Resources", link: "/learn/deep-dive/additional-resources" },
         ],
       },
@@ -59,7 +59,8 @@ const siteSidebar = [
       {
         label: "Build on Dusk",
         items: [
-          { label: "Deploy on DuskEVM", link: "/developer/smart-contracts-dusk-evm/deploy-on-evm" },
+          { label: "DuskEVM Quickstart", link: "/developer/duskevm/quickstart" },
+          { label: "DuskEVM Reference", link: "/developer/duskevm/reference" },
           { label: "Smart Contracts on DuskDS", link: "/developer/smart-contracts-duskds" },
           { label: "Stake Abstraction", link: "/learn/hyperstaking" },
           { label: "Digital Identity Protocol", link: "/developer/digital-identity/protocol" },

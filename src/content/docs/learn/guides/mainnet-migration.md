@@ -5,7 +5,7 @@ description: Detailed instructions for migrating your ERC20/BEP20 DUSK tokens to
 
 This guide explains how to migrate **ERC20/BEP20 DUSK** (Ethereum/BSC) to **native DUSK** on Dusk mainnet. The migration flow is handled through the [Web Wallet](https://apps.dusk.network/wallet/) and uses WalletConnect to connect your EVM wallet.
 
-The migration process locks your ERC20/BEP20 DUSK in a smart contract on Ethereum or Binance Smart Chain. Once locked, an event is emitted and native DUSK is issued to your Dusk wallet. The entire process typically takes around 15 minutes.
+The migration process locks your ERC20/BEP20 DUSK in a smart contract on Ethereum or Binance Smart Chain. Once locked, an event is emitted and native DUSK is issued to your Dusk wallet. The entire process typically takes around one hour.
 
 :::note
 Want to bridge **native DUSK to BEP20 DUSK** on BSC instead? See: [Native DUSK to BEP20 Bridge](/learn/guides/bep20-bridge).
@@ -20,12 +20,12 @@ Want to bridge **native DUSK to BEP20 DUSK** on BSC instead? See: [Native DUSK t
 
 - A Dusk wallet (in the Web Wallet) where you want to receive native DUSK.
 - An EVM wallet holding ERC20/BEP20 DUSK that supports WalletConnect.
-- ETH or BNB to pay the Ethereum/BSC transaction fee for the lock transaction.
+- Enough ETH or BNB to pay for two Ethereum/BSC transactions.
 
 ## Expected time and fees
 
-- **Time**: typically ~15 minutes once your Ethereum/BSC transaction is confirmed.
-- **Fees**: you pay the normal Ethereum/BSC network fee to submit the lock transaction.
+- **Time**: typically around one hour once the **Execute migration** transaction is confirmed.
+- **Fees**: you normally pay an Ethereum/BSC network fee once to approve the migration and again to start it.
 
 ## Steps
 
@@ -33,19 +33,27 @@ Want to bridge **native DUSK to BEP20 DUSK** on BSC instead? See: [Native DUSK t
 2. Import an existing wallet or create a new one.
 3. You will be asked to initiate the migration. Review and confirm the process.
 4. Connect your Web3 wallet via WalletConnect.
-5. Confirm the transaction in your Web3 wallet. A migration function will be triggered with your Dusk mainnet wallet address as the target address.
+5. Select **Approve migration** and confirm the request in your Web3 wallet. This gives the migration permission to use the selected amount of DUSK; it does not move the tokens.
+6. Wait for the Web Wallet to report that approval succeeded.
+7. Select **Execute migration** and confirm the second request in your Web3 wallet. This moves the selected DUSK into the migration process and starts the transfer to your Dusk wallet.
 
-Wait for the issuance of your native DUSK tokens. This process can take up to 15 minutes for security reasons.
+If your Web3 wallet has already granted enough permission for the selected amount, the Web Wallet may proceed directly to **Execute migration**.
+
+Wait for the issuance of your native DUSK tokens. This process typically takes around one hour.
 
 ## FAQ
 
 **How long does the migration process take?**
 
-The migration process typically completes within 15 minutes from the time you initiate the transaction. It will depend on network activity on both chains.
+The migration process typically completes around one hour after the **Execute migration** transaction is confirmed. Network activity on both chains can affect the timing.
 
 **How can I track my migration transaction?**
 
-You can track the migration transaction in your Web3 wallet on Ethereum or Binance Smart Chain. Once the migration is complete, the original Ethereum/Binance Smart Chain transaction hash will be included in the memo field of the Dusk transaction for reference.
+Track the second, **Execute migration** transaction in your Web3 wallet on Ethereum or Binance Smart Chain. Once the migration is complete, that transaction hash will be included in the memo field of the Dusk transaction for reference.
+
+**Why does my wallet ask me to confirm twice?**
+
+The first confirmation gives the migration permission to use the selected DUSK. The second confirmation starts the migration. Approving alone does not move any tokens.
 
 **Is there a minimum amount of DUSK I can migrate?**
 
@@ -61,6 +69,7 @@ This rounding behavior ensures that only full LUX amounts are migrated to native
 ## Troubleshooting
 
 - **My migration transaction is pending or failed**: check it in your EVM wallet and ensure you have enough ETH/BNB for gas.
-- **I don’t see native DUSK after ~15 minutes**: confirm the Ethereum/BSC lock transaction is successful and give it a bit more time during congestion.
+- **Approval succeeded but the migration did not start**: return to the Web Wallet and select **Execute migration**. Approval alone does not move any DUSK.
+- **I don’t see native DUSK after around one hour**: confirm the Ethereum/BSC lock transaction is successful and give it more time during congestion.
 - **My migrated amount is smaller than expected**: amounts are rounded down to full `LUX` (see above).
 - **I’m trying to migrate from an exchange**: exchanges usually can’t connect via WalletConnect. Withdraw your DUSK to a self-custody wallet first.

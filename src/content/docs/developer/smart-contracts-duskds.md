@@ -6,7 +6,7 @@ description: Build Rust/WASM smart contracts on DuskDS using the Forge framework
 Dusk offers two paths for smart contract development:
 
 - **DuskDS** (this page) - general-purpose Rust/WASM contracts on Dusk's native execution layer, with access to native transaction models, privacy-aware flows, and the full power of Rust's ecosystem
-- **[DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm)** - An Optimism-based EVM application layer for Solidity/Vyper contracts using familiar tooling (Hardhat, Foundry)
+- **[DuskEVM](/developer/duskevm/quickstart/)** - An Optimism-based EVM application layer for Solidity/Vyper contracts using familiar tooling (Hardhat, Foundry)
 
 Choose DuskDS when you want to build directly with Dusk's native primitives: Rust/WASM execution, protocol-level assets, custom market logic, public and shielded transaction models, or privacy-aware compliance flows. Choose DuskEVM when you want Solidity, EVM wallets, and the broader Ethereum tooling ecosystem.
 

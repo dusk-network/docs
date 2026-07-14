@@ -45,7 +45,7 @@ Some of the functions for the Nocturne Testnet are:
 
 ### How to get testnet tokens
 
-The Dusk Nocturne testnet uses a Discord bot to distribute Nocturne tokens (nDUSK).
+The Dusk Nocturne testnet uses a Discord bot to distribute testnet DUSK. Testnet DUSK has no real-world value.
 
 In order to access it, follow these steps:
 

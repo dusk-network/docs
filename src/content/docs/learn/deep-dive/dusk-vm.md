@@ -10,7 +10,7 @@ description: Learn about DuskVM, the Wasmtime-based VM that executes native smar
 
 Use DuskVM when your application should run as a native Dusk contract: protocol-level assets, Rust/WASM contracts, custom execution, market logic, privacy-aware flows, or zero-knowledge capabilities close to the settlement layer.
 
-Use DuskEVM instead when your application is designed around Solidity, EVM wallets, and Ethereum-compatible tooling. DuskVM is closer to Dusk's native model; DuskEVM is closer to the Ethereum developer ecosystem. See [DuskEVM](/learn/deep-dive/dusk-evm).
+Use DuskEVM instead when your application is designed around Solidity, EVM wallets, and Ethereum-compatible tooling. DuskVM is closer to Dusk's native model; DuskEVM is closer to the Ethereum developer ecosystem. See [DuskEVM](/learn/dusk-evm/).
 
 ## Where DuskVM fits
 

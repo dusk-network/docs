@@ -32,6 +32,8 @@ export default defineConfig({
 		'/developer/integrations/hashing-algorithms': '/developer/integrations/reference',
 		'/developer/integrations/addresses': '/developer/integrations/reference',
 		'/developer/smart-contract/hyperstaking_tech': '/learn/hyperstaking',
+		'/learn/deep-dive/dusk-evm': '/learn/dusk-evm',
+		'/developer/smart-contracts-dusk-evm/deploy-on-evm': '/developer/duskevm/quickstart',
 	},
 	integrations: [
 		starlight({

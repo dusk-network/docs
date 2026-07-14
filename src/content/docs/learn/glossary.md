@@ -31,7 +31,7 @@ DuskDS is the settlement layer of the Dusk architecture: consensus, data availab
 
 #### DuskEVM
 
-[DuskEVM](/learn/deep-dive/dusk-evm) is an EVM execution environment that uses DuskDS as its settlement and data availability layer.
+[DuskEVM](/learn/dusk-evm/) is an EVM execution environment that uses DuskDS as its settlement and data availability layer.
 
 #### DuskVM
 

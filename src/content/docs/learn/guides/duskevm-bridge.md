@@ -1,118 +1,124 @@
 ---
-title: Bridge DUSK from DuskDS to DuskEVM Testnet
-description: How to use the Dusk Web Wallet to move DUSK from the DuskDS testnet to the DuskEVM testnet and interact with the EVM network.
+title: Bridge DUSK between DuskDS and DuskEVM Testnet
+description: Use the Dusk Web Wallet to move testnet DUSK between DuskDS and DuskEVM.
 ---
 
-Bridge testnet DUSK (nDUSK) from DuskDS to DuskEVM using the official Dusk Web Wallet. Once bridged, DUSK is the native gas token on DuskEVM Testnet.
+The Dusk bridge moves DUSK between DuskDS and DuskEVM while keeping one native asset across both environments. On DuskEVM, the bridged DUSK is available in your EVM account and is used to pay gas.
 
-## Fast path
+This guide uses testnet DUSK, which has no real-world value, and the testnet Web Wallet.
 
-1. Get testnet DUSK (nDUSK) in the Web Wallet and **unshield** the amount you want to bridge. See: [How to get testnet tokens](/operator/networks#how-to-get-testnet-tokens).
-2. Open the Web Wallet (testnet): [apps.testnet.dusk.network/wallet](https://apps.testnet.dusk.network/wallet/)
-3. Go to `Dashboard -> Bridge` and connect your Web3 wallet (approve adding/switching to DuskEVM when prompted).
-4. Set **From: DuskDS** and **To: DuskEVM**, enter an amount, and send.
-5. Track status:
-   - DuskDS explorer: [apps.testnet.dusk.network/explorer](https://apps.testnet.dusk.network/explorer/)
-   - DuskEVM explorer: [explorer.testnet.evm.dusk.network](https://explorer.testnet.evm.dusk.network/)
+## Before you start
 
-## 1) Prerequisites
+You need:
 
-- A Dusk Web Wallet account with some **testnet DUSK (nDUSK)** (and the amount you want to bridge **unshielded**). See: [How to get testnet tokens](/operator/networks#how-to-get-testnet-tokens).
-- A Web3 wallet (e.g. MetaMask) installed in your browser.
-- Optional: [DuskEVM deep dive](/learn/deep-dive/dusk-evm/) and [Deploy on DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm/).
+- a Dusk Web Wallet account with unshielded testnet DUSK for deposits and withdrawal actions on DuskDS;
+- an EVM wallet, such as MetaMask, that supports adding a custom network; and
+- enough DUSK in the source account to cover the bridge amount and its transaction fee.
 
-## 2) Open the Web Wallet on DuskDS testnet
+Request DUSK from the [testnet faucet](/operator/networks#how-to-get-testnet-tokens), then unshield the amount you want to bridge.
 
-1. Visit the [Dusk Web Wallet](https://apps.testnet.dusk.network/wallet/).
-2. Unlock your wallet.
-3. Confirm you have enough **unshielded** DUSK for the bridge amount and fees.
+## Deposit into DuskEVM
 
-## 3) Connect a Web3 wallet to DuskEVM Testnet
+### 1. Open the bridge
 
-1. In the Web Wallet sidebar, go to `Dashboard -> Bridge`.
-2. Click **CONNECT WEB3 WALLET** and connect your wallet (MetaMask / WalletConnect, etc.).
-3. When prompted by your wallet, approve:
-   - Adding DuskEVM as a network (if needed).
-   - Switching to the DuskEVM network.
+1. Open the [testnet Web Wallet](https://apps.testnet.dusk.network/wallet/) and unlock your account.
+2. Go to `Dashboard -> Bridge`.
+3. Connect your EVM wallet.
+4. Approve adding or switching to DuskEVM Testnet when your EVM wallet asks.
 
-## 4) Configure the bridge (DuskDS -> DuskEVM)
+Your wallet should be connected to:
 
-On the Bridge page you’ll see a short wizard.
+| Setting | Value |
+|---|---|
+| Network | DuskEVM Testnet |
+| Chain ID | `745` |
+| RPC | `https://rpc.testnet.evm.dusk.network` |
+| Currency symbol | `DUSK` |
 
-### 4.1 Choose origin and destination networks
+### 2. Configure the transfer
 
-- Under **From**, select **DuskDS**.
-- Under **To**, select **DuskEVM**.
+Set:
 
-### 4.2 Enter the amount
+- **From:** DuskDS
+- **To:** DuskEVM
+- **Amount:** the amount of testnet DUSK to deposit
 
-In the **Amount** field, enter how much DUSK you want to bridge. The wallet will prevent you from spending more than your available balance minus fees.
+The destination is the address currently selected in your connected EVM wallet. Check the full address before continuing; an EVM transaction cannot correct a deposit sent to the wrong account.
 
-### 4.3 (Advanced) Adjust gas settings
+### 3. Review and send
 
-If you see a Gas Settings panel, the defaults are usually fine for testnet.
+On the review screen, confirm:
 
-## 5) Review and send the bridge transaction
+- the direction is DuskDS to DuskEVM;
+- the DuskDS source account and EVM destination are correct;
+- the amount and fee are acceptable.
 
-Click Next to move to Step 2 of the wizard (review screen).
+Send the transaction and keep the status screen open until the wallet has recorded it. The originating transaction can also be inspected in the [DuskDS testnet explorer](https://apps.testnet.dusk.network/explorer/).
 
-Here you’ll see:
+### 4. Confirm the deposit
 
-- **Amount** – the DUSK amount that will be bridged.
-- **From** – your DuskDS unshielded address.
-- **To** – your EVM address on DuskEVM (from your connected Web3 wallet).
-- **Gas fee** – shown via the gas fee component.
+After the deposit is processed, the balance of the connected EVM account increases on DuskEVM Testnet. Check it in your EVM wallet or search for the address in the [DuskEVM testnet explorer](https://explorer.testnet.evm.dusk.network/).
 
-Carefully verify:
+The DuskDS transaction and the resulting DuskEVM credit happen on different layers, so they do not necessarily appear at the same moment.
 
-- The **direction** is **From: DuskDS** -> **To: DuskEVM**.
-- The **destination address** matches the EVM address you expect.
-- The **amount** is correct.
+## Withdraw to DuskDS
 
-If everything looks good:
+A withdrawal returns DUSK from your EVM account to DuskDS. Unlike a deposit, it requires three on-chain actions: initiate the withdrawal on DuskEVM, prove it on DuskDS, and finalize it on DuskDS.
 
-1. Click SEND.
-2. The wizard moves to Step 3 (status screen).
-   You’ll see status messages such as "Processing transaction" and "Transaction pending", and a "VIEW ON BLOCK EXPLORER" button for the originating transaction.
+### 1. Submit the withdrawal
+
+1. Open `Dashboard -> Bridge` in the testnet Web Wallet.
+2. Connect the EVM wallet that holds the DUSK.
+3. Set **From** to DuskEVM and **To** to DuskDS.
+4. Enter the amount, review the destination DuskDS account, and send.
+
+The first transaction is submitted on DuskEVM. Keep enough DUSK in the EVM account to pay its gas fee, and retain the withdrawal transaction hash.
+
+### 2. Check the withdrawal status
+
+Open **Withdrawal status** from the bridge. The latest withdrawal made in the current browser is filled in automatically. Otherwise, paste the DuskEVM withdrawal transaction hash and select **Check status**.
+
+The first status is normally **Waiting for output proposal**. No action is required until the network has published an output that covers the withdrawal.
+
+### 3. Prove on DuskDS
+
+When the status changes to **Ready to prove**, select **Prove withdrawal** and confirm the DuskDS transaction in the Web Wallet.
+
+After the proof is submitted, the status changes to **Waiting to finalize** while the proof maturity delay and dispute-game checks complete.
 
 :::note
-Under the hood, this is a DuskDS transaction that triggers a deposit into the bridge, which results in funds being credited to your EVM address on DuskEVM.
+Proof and finalization readiness are determined by network state, not by a timer alone. Use **Check status** rather than calculating readiness from elapsed time.
 :::
 
-## 6) Track the bridge & check explorers
+### 4. Finalize on DuskDS
 
-### 6.1 On DuskDS
+When the status changes to **Ready to finalize**, select **Finalize withdrawal** and confirm the DuskDS transaction that releases the DUSK to your DuskDS account.
 
-Use the "VIEW ON BLOCK EXPLORER" button, or open the [DuskDS Testnet Explorer](https://apps.testnet.dusk.network/explorer/) and search by address/transaction hash.
+Proving and finalizing are separate DuskDS transactions. Keep enough unshielded DUSK on DuskDS to pay both fees. After finalization is confirmed, the returned amount appears in the destination account.
 
-### 6.2 On DuskEVM Testnet
+## Troubleshooting
 
-Once processed (often a couple of minutes), your EVM wallet’s DUSK balance on DuskEVM Testnet will increase. You can inspect this on the [DuskEVM testnet explorer](https://explorer.testnet.evm.dusk.network/) by searching for your EVM address.
+**The EVM wallet shows the wrong network**
 
-## 7) Interacting with DuskEVM after bridging
+Switch to DuskEVM Testnet and confirm that the chain ID is `745` before retrying.
 
-After bridging, you can use DUSK as gas and interact with EVM contracts as usual.
+**The DuskDS deposit succeeded but the EVM balance has not changed**
 
-For developers, next steps:
+The deposit may still be processing between layers. Check the originating DuskDS transaction first, then the destination address in the DuskEVM explorer.
 
-- [Deploy on DuskEVM](/developer/smart-contracts-dusk-evm/deploy-on-evm/)
-- [DuskEVM deep dive](/learn/deep-dive/dusk-evm/)
+**A withdrawal is still pending**
 
-## 8) (Optional) Withdrawing from DuskEVM back to DuskDS
+Pending does not mean failed. Open **Withdrawal status** and select **Check status**. Wait if the status reports **Waiting for output proposal**, **Proof submitted**, or **Waiting to finalize**.
 
-The same Web Wallet bridge UI also supports DuskEVM -> DuskDS withdrawals:
+**The proof cannot be submitted**
 
-1. Go to Dashboard -> Bridge in the Web Wallet.
-2. Make sure your Web3 wallet is connected to DuskEVM.
-3. In the Bridge wizard:
-   - Set **From** to **DuskEVM**.
-   - Set **To** to **DuskDS**.
-4. Enter the amount and follow the same review/send flow.
+Confirm that the status is **Ready to prove**, the correct DuskDS account is unlocked, and the account has enough unshielded DUSK for the proof transaction fee.
 
-After you submit a withdrawal:
+**Finalization cannot be submitted**
 
-- A transaction is sent on DuskEVM calling the standard bridge contract.
-- On the DuskDS side, the withdrawal becomes finalizable after the configured finalization period.
-- The Web Wallet’s Bridge -> Transactions view shows your pending withdrawals:
-  - Once a withdrawal is ready, a "Finalize now" button appears.
-  - Clicking it sends a DuskDS transaction to finalize the withdrawal and release your DUSK back to your DuskDS account.
+Confirm that the status is **Ready to finalize**, the correct DuskDS account is unlocked, and the account has enough unshielded DUSK for the finalization transaction fee. If the Web Wallet offers **Prove withdrawal** again, submit the newer proof before trying to finalize.
+
+## Next steps
+
+- [Understand how DuskEVM works](/learn/dusk-evm/)
+- [Deploy a contract on DuskEVM](/developer/duskevm/quickstart/)
