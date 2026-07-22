@@ -63,7 +63,9 @@ Yes. The node only needs the consensus key file (`consensus.keys`). Export it fr
 Example (adjust user/IP):
 
 ```bash
-scp consensus.keys duskadmin@<node-ip>:/opt/dusk/conf/
+scp consensus.keys duskadmin@<node-ip>:~/consensus.keys
+ssh duskadmin@<node-ip> \
+  'sudo install -o root -g dusk -m 640 ~/consensus.keys /opt/dusk/conf/consensus.keys && rm -f ~/consensus.keys'
 ```
 
 #### What if I lose access to my server or keys?
@@ -80,12 +82,14 @@ rusk-wallet stake --amt 3000
 
 #### How can I recover my node if the state is corrupted?
 
-Reload from a snapshot and restart:
+For a default mainnet or testnet node, reload from a snapshot and restart:
 
 ```bash
-download_state
-service rusk start
+sudo download_state
+sudo systemctl start rusk
 ```
+
+For an archive node that requires complete history, follow the archive-specific [re-sync guidance](/operator/guides/manual-resync/#restore-a-published-state).
 
 #### How can I run a Dusk node on Docker?
 
@@ -111,8 +115,9 @@ Without the node installer, configure `rusk.toml`:
 [kadcast]
 public_address = "<MY_WAN_IPV4>:<NEW_PORT>"
 listen_address = "<MY_LAN_IPV4>:<NEW_PORT>" # Optional
-bootstrapping_nodes = ["165.22.193.63:9000", "167.172.175.19:9000"]
 ```
+
+Retain the bootstrapping nodes supplied for the selected network.
 
 #### How do I change the HTTP API port?
 
@@ -121,27 +126,20 @@ In `rusk.toml`:
 ```toml
 [http]
 listen = true
-listen_address = "0.0.0.0:8080"
+listen_address = "127.0.0.1:8081"
 ```
 
-Or via CLI:
-
-```bash
---http-listen-addr 0.0.0.0:8081
-```
+The installer regenerates `rusk.toml` during upgrades, so review and reapply this setting afterward. Bind an external interface only when required, and restrict public API traffic.
 
 #### How can I get data from testnet or mainnet nodes?
 
 See [/developer/integrations/http-api](/developer/integrations/http-api) and [/developer/integrations/historical_events](/developer/integrations/historical_events).
 
-#### How can I relay my internal port 8080 when using RUES?
-
-```bash
-socat tcp-listen:8081,reuseaddr,fork tcp:localhost:8080
-```
-
 #### How can I perform a liveness check on my node?
 
 - `ruskquery block-height` (should increase over time)
 - `ruskquery peers`
-- `systemctl status rusk`
+- `systemctl is-active rusk`
+- `ruskquery info`
+
+See [Maintain and monitor a node](/operator/maintenance-monitoring/) for network-tip comparison, resources, logs, and alerts.

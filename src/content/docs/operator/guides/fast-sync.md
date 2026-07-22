@@ -1,34 +1,55 @@
 ---
-title: Fast-sync your node
-description:  Speed up your Dusk node synchronization by leveraging pre-available snapshot.
+title: Fast-sync a node
+description: Replace local chain state with a published mainnet or testnet snapshot.
 ---
 
-The node installer comes with an easy to use fast syncing tool. To significantly reduce the time required to sync your node to the latest published state, you can use the `download_state` command. This command stops your node and replaces its current state with the latest published state from one of Dusk's archive nodes.
+The node installer provides `download_state` for mainnet and testnet. It downloads a published state, stops Rusk, replaces the local state and chain database, and leaves the service stopped for operator verification.
 
-## Available states
+:::caution
+Fast sync replaces current chain state under `/opt/dusk/rusk`. It does not replace consensus keys or node configuration, but you should still verify you selected the intended network before confirming.
+:::
 
-To see the available published states, run:
+Fast sync does not backfill archive indexes for blocks before the snapshot. Do not use a state snapshot alone to bootstrap an archive node that promises complete historical data.
+
+## List snapshots
+
+The command detects the network from `/opt/dusk/conf/rusk.toml`:
+
 ```sh
 download_state --list
 ```
 
-## Download state
+Override detection only when necessary:
 
-To install the latest state, simply run:
 ```sh
-download_state
+download_state --network testnet --list
 ```
 
-Once it tells you the operation is complete, run the following command to start your node again:
+## Replace state
+
+Download the latest snapshot:
+
 ```sh
-service rusk start
+sudo download_state
 ```
 
-This process bootstraps your node with the latest available state snapshot, allowing it to sync the remaining blocks much faster than starting from genesis.
+Or select one of the listed block heights:
 
-:::note
-If you are experiencing errors in downloading the state, it might be due to some remnants of previous state syncing. Try to clean up with:
 ```sh
-sudo rm /tmp/state.tar.gz
+sudo download_state <BLOCK_HEIGHT>
 ```
-:::
+
+The tool downloads to a unique temporary file and removes it afterward. A successful command still leaves Rusk stopped.
+
+## Restart and verify
+
+```sh
+sudo systemctl start rusk
+systemctl is-active rusk
+ruskquery peers
+ruskquery block-height
+```
+
+Check the height again after roughly 30 seconds. The node should continue syncing from the snapshot toward the current [network tip](/operator/networks/).
+
+If the service fails, inspect `systemctl status rusk`, `/var/log/rusk.log`, and `/var/log/rusk_recovery.log` before retrying. See [Re-sync a node](/operator/guides/manual-resync/) for the decision process.

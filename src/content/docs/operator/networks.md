@@ -1,6 +1,6 @@
 ---
-title: Choose a Network
-description:  Explore the scope of different Dusk’s environments, including testnet and mainnet.
+title: Choose a network
+description: Compare Dusk mainnet, testnet, and development environments.
 ---
 
 Dusk offers multiple network environments to support different stages of development, testing, and live usage. Each network serves a unique purpose, allowing developers, testers, and users to interact with the Dusk network under various conditions.
@@ -12,8 +12,8 @@ The available networks include:
 
 | Network             | Chain ID | Genesis File(s)              | Public Endpoints                       | Availability   | Blockexplorer |
 |---------------------|----------|-------------------------------|----------------------------------------|----------------|----------------|
-| **[Mainnet](/operator/networks#mainnet)**         | 1        | [Genesis](https://github.com/dusk-network/node-installer/blob/af115a7e4e05099c306bd16221fd4cf2de474e89/conf/mainnet.genesis) | [https://nodes.dusk.network](https://nodes.dusk.network)           | Public         | [Explorer](https://apps.dusk.network/explorer/) |
-| **[Nocturne Testnet](/operator/networks#nocturne-testnet)**| 2        | [Genesis](https://github.com/dusk-network/node-installer/blob/af115a7e4e05099c306bd16221fd4cf2de474e89/conf/testnet.genesis) | [https://testnet.nodes.dusk.network](https://testnet.nodes.dusk.network)   | Public         | [Explorer](https://apps.testnet.dusk.network/explorer/) |
+| **[Mainnet](/operator/networks#mainnet)**         | 1        | [Genesis](https://github.com/dusk-network/node-installer/blob/main/conf/mainnet.genesis) | [https://nodes.dusk.network](https://nodes.dusk.network)           | Public         | [Explorer](https://explorer.dusk.network/) |
+| **[Nocturne Testnet](/operator/networks#nocturne-testnet)**| 2        | [Genesis](https://github.com/dusk-network/node-installer/blob/main/conf/testnet.genesis) | [https://testnet.nodes.dusk.network](https://testnet.nodes.dusk.network)   | Public         | [Explorer](https://apps.testnet.dusk.network/explorer/) |
 | **[Lunare Devnet](/operator/networks#lunare-devnet)**   | 3     | Internal Only                | Internal Only                          | Internal only  | N/A            |
 
 ---

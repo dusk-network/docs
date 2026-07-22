@@ -44,10 +44,12 @@ You will be asked to provide your recovery phrase/mnemonic, **in lowercase**, an
 
 #### Export consensus key
 
-Once you've done so, run the following command to export a **consensus key** for the given wallet:
+Once you've done so, export a **consensus key** for the given wallet to your home directory, then install it with the ownership and permissions expected by Rusk:
 
 ```sh
-rusk-wallet export -d /opt/dusk/conf -n consensus.keys
+rusk-wallet export -d "$HOME" -n consensus.keys
+sudo install -o root -g dusk -m 640 \
+  "$HOME/consensus.keys" /opt/dusk/conf/consensus.keys
 ```
 
 To participate in consensus, Rusk needs your consensus keys. These keys are used to sign and vote for blocks. You will be asked to set an encryption password for the consensus key, make sure to remember it.
@@ -55,7 +57,7 @@ To participate in consensus, Rusk needs your consensus keys. These keys are used
 Now, run the following script and provide the **same password** (for consensus key) from before. This will set the password as an environment variable for Rusk to use.
 
 ```sh
-sh /opt/dusk/bin/setup_consensus_pwd.sh
+sudo sh /opt/dusk/bin/setup_consensus_pwd.sh
 ```
 
 #### Start your node
@@ -66,7 +68,7 @@ If you prefer to sync from genesis (e.g., for auditing or archival purposes), do
 
 Start your node with:
 ```sh
-service rusk start
+sudo systemctl start rusk
 ```
 
 Once the node is running, check its sync progress by running:

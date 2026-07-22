@@ -1,93 +1,87 @@
 ---
 title: Roll back a node update
-description: Learn how to reinstall a previous Dusk node installer release when an update needs to be rolled back.
+description: Reinstall a pinned node-installer release when rollback is supported by the network.
 ---
 
-Rolling back means reinstalling a previous `node-installer` release. This can be useful if a newly installed node release has a problem and the network has not yet activated a protocol change that requires it.
+Rollback installs the Rusk and Rusk Wallet versions pinned by an older node-installer release. Use it only when that software still supports the active network.
 
 :::caution
-Do not roll back across a network upgrade or activation unless the Dusk team explicitly instructs operators to do so. If the chain already requires the newer node version, an older node may stop following the network.
+Do not roll back across a protocol activation unless Dusk explicitly instructs operators to do so. An incompatible node can stop following the network, and an archive database migration may not support downgrade.
 :::
 
-## Before you roll back
+## Before rollback
 
-Check the version currently installed:
+Record the current state and preserve intentional configuration:
 
 ```sh
 ruskquery version
-```
-
-Check whether the node is syncing:
-
-```sh
+ruskquery info | jq '{version, chain_id, kadcast_address}'
+ruskquery peers
 ruskquery block-height
-tail -n 50 /var/log/rusk.log
+systemctl is-active rusk
 ```
 
-If the node is only stuck or behind, try [fast-sync](/operator/guides/fast-sync) or [manual resync](/operator/guides/manual-resync) before rolling back.
+Confirm that the failure is caused by the installed release. A stalled or corrupt state normally requires [re-sync](/operator/guides/manual-resync/), not older software.
 
-## Roll back mainnet
+Rollback regenerates the same managed files as an upgrade, including `rusk.toml` and the systemd unit. It preserves consensus keys, protected service environment files, and chain state, but it does not restore an older database snapshot.
 
-Replace `vX.Y.Z` with the installer release you want to roll back to.
+## Install a pinned release
 
-For example, to roll back to installer release `v1.2.3`, set:
+Set the node-installer release approved for rollback:
 
-```sh
-INSTALLER_VERSION="v1.2.3"
 ```sh
 INSTALLER_VERSION="vX.Y.Z"
+```
 
-sudo service rusk stop
+Use the command matching the node's existing network and role. The installer stages and verifies downloads before stopping Rusk, so do not stop the service first.
 
+### Mainnet provisioner or full node
+
+```sh
 curl --proto '=https' --tlsv1.2 -sSfL \
   "https://github.com/dusk-network/node-installer/releases/download/${INSTALLER_VERSION}/node-installer.sh" \
   | sudo bash
-
-sudo service rusk start
 ```
 
-## Roll back testnet
-
-Use the same pinned installer release, but pass the testnet flag.
+### Mainnet archive node
 
 ```sh
-INSTALLER_VERSION="vX.Y.Z"
+curl --proto '=https' --tlsv1.2 -sSfL \
+  "https://github.com/dusk-network/node-installer/releases/download/${INSTALLER_VERSION}/node-installer.sh" \
+  | sudo bash -s -- --feature archive
+```
 
-sudo service rusk stop
+### Testnet provisioner or full node
 
+```sh
 curl --proto '=https' --tlsv1.2 -sSfL \
   "https://github.com/dusk-network/node-installer/releases/download/${INSTALLER_VERSION}/node-installer.sh" \
   | sudo bash -s -- --network testnet
-
-sudo service rusk start
 ```
 
-## Verify the rollback
-
-Confirm the installed version:
+### Testnet archive node
 
 ```sh
-ruskquery version
+curl --proto '=https' --tlsv1.2 -sSfL \
+  "https://github.com/dusk-network/node-installer/releases/download/${INSTALLER_VERSION}/node-installer.sh" \
+  | sudo bash -s -- --network testnet --feature archive
 ```
 
-Check the service:
+For direct root automation, append `--user <operator-user>`.
+
+## Restart and verify
+
+Review regenerated configuration and reapply only intentional settings that remain valid for the older release. Then start Rusk:
 
 ```sh
-service rusk status
-```
-
-Check whether the node is progressing:
-
-```sh
+sudo systemctl start rusk
+systemctl is-active rusk
+ruskquery info | jq '{version, chain_id, kadcast_address}'
+ruskquery peers
 ruskquery block-height
-tail -F /var/log/rusk.log
+sudo tail -n 50 /var/log/rusk.log
 ```
 
-If block height does not progress, compare your height with the explorer and consider [fast-syncing the node](/operator/guides/fast-sync).
+Confirm that height continues to increase and remains close to the selected network. For an archive, verify required historical queries before returning API traffic.
 
-## Notes
-
-- Use a pinned installer release URL. Do not use `latest` for rollback.
-- Rollback changes the installed node software and service configuration. It does not automatically restore an older chain state.
-- Archive nodes may have database migrations that are not safe to downgrade. If an archive node fails after rollback, update back to the supported version or resync the archive state.
-- If you operate a provisioner, monitor the node after rollback. Downtime or running an incompatible version can affect consensus participation. See [Slashing prevention and recovery](/operator/guides/slashing-recovery).
+If the older release cannot open current state or archive data, reinstall the supported current release. Do not repeatedly alternate versions against the same database.
