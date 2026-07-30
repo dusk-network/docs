@@ -6,14 +6,40 @@ on:
       - main
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v7
         with:
-          node-version: 22.12.0
-      - run: npm ci
-      - run: npm run build
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - name: Validate package release ages
+        run: node scripts/verify-package-release-ages.cjs --days 7
+
+      - name: Pin npm
+        run: npm install --global npm@11.18.0 --ignore-scripts
+        working-directory: ${{ runner.temp }}
+
+      - name: Install dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts
+
+      - name: Verify registry signatures
+        run: npm audit signatures
+
+      - name: Run approved dependency scripts
+        run: npm rebuild esbuild
+
+      - name: Build and validate links
+        run: npm run build
