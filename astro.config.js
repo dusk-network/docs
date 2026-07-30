@@ -1,7 +1,5 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import remarkMath from 'remark-math';
-import rehypeMathjax from 'rehype-mathjax';
 import siteSidebar from "./src/sidebars/siteSidebar";
 import starlightLinksValidator from "starlight-links-validator";
 
@@ -10,10 +8,6 @@ const googleAnalyticsId = 'G-63RJYNDBL1';
 // https://astro.build/config
 export default defineConfig({
 	site: "https://docs.dusk.network",
-	markdown: {
-		remarkPlugins: [remarkMath],
-		rehypePlugins: [rehypeMathjax],
-	},
 	redirects: {
 		'/itn/fast-sync': '/nocturne/fast-sync',
 		'/itn/node-running-guide': '/nocturne/node-running-guide',
