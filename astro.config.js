@@ -8,6 +8,7 @@ const googleAnalyticsId = 'G-63RJYNDBL1';
 // https://astro.build/config
 export default defineConfig({
 	site: "https://docs.dusk.network",
+	compressHTML: true,
 	redirects: {
 		'/itn/fast-sync': '/nocturne/fast-sync',
 		'/itn/node-running-guide': '/nocturne/node-running-guide',
