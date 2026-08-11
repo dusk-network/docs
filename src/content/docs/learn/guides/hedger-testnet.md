@@ -63,6 +63,8 @@ Proof generation happens locally. The recovery phrase and private-vault key are 
 
 The public testnet deployment permits self-registration without manual approval. Other Hedger deployments can disable it and require registration by an issuer.
 
+Before the account first sends or receives a Hedger note, setup can replace an accidentally registered private-vault key. Review the EVM wallet and vault fingerprint carefully before confirming. After the first note, the association is locked because changing the key would make existing encrypted notes inaccessible.
+
 ## Test the DUSK flow
 
 ### Deposit into the private vault
@@ -116,7 +118,7 @@ Select **Register on testnet**, confirm the wallet transaction, and wait for it 
 
 **The local key does not match the registered key**
 
-The browser contains a different Hedger key from the one registered for the connected EVM account. Import the recovery phrase originally used with that account. Do not create another vault for the same account.
+The browser contains a different Hedger key from the one registered for the connected EVM account. If that account has not sent or received a Hedger note, setup offers a correction path. Otherwise, import the recovery phrase originally used with that account. If an issuer revoked access, contact the issuer.
 
 **A recipient cannot receive a payment**
 
@@ -132,6 +134,6 @@ The public EVM wallet must retain enough DUSK for gas, including when withdrawin
 
 ## Developer status
 
-The [Hedger contracts](https://github.com/dusk-network/hedger) and [web application](https://github.com/dusk-network/hedger-webapp) are available for review and testnet experimentation. The current deployment is verified in the [DuskEVM testnet explorer](https://explorer.testnet.evm.dusk.network/address/0xe1Fe5910Cac1214B1252AcFAbce742588ab4A221).
+The [Hedger contracts](https://github.com/dusk-network/hedger) and [web application](https://github.com/dusk-network/hedger-webapp) are available for review and testnet experimentation. The current deployment is verified in the [DuskEVM testnet explorer](https://explorer.testnet.evm.dusk.network/address/0xB40a44fc2D5FF2A4045908963835e765480Bbc0B).
 
 Hedger does not yet expose a stable production SDK or integration contract. Treat its ABI, proving artifacts, deployment addresses, registration model, and storage format as experimental. For general Solidity development, start with the [DuskEVM quickstart](/developer/duskevm/quickstart/).
