@@ -83,6 +83,8 @@ Zedger and Hedger are protocols for issuing and managing regulated assets with b
 - **Zedger** uses DuskVM contracts on the Dusk L1.
 - **Hedger** runs on DuskEVM to offer an EVM-first developer experience.
 
+Hedger is currently available as a testnet preview. See [Try Hedger on DuskEVM Testnet](/learn/guides/hedger-testnet/).
+
 ### Citadel
 
 ![Citadel](../../../assets/citadel.gif)

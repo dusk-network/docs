@@ -49,6 +49,7 @@ const siteSidebar = [
     collapsed: true,
     items: [
       { label: "Overview", link: "/use/overview" },
+      { label: "Try Hedger", link: "/learn/guides/hedger-testnet" },
       {
         label: "Wallets and Explorers",
         collapsed: true,
