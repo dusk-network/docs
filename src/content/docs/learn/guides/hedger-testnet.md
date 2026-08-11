@@ -6,7 +6,7 @@ description: Set up a Hedger private vault and test private DUSK transfers on Du
 [Hedger](https://hedger.dusk.network/) is an experimental privacy application on DuskEVM Testnet. It combines an ordinary EVM wallet with a separate private vault backed by encrypted notes and zero-knowledge proofs.
 
 :::caution
-Hedger is a testnet preview. Use only testnet DUSK, which has no real-world value. The interface, contracts, enrollment process, and stored test data can change or be reset.
+Hedger is a testnet preview. Use only testnet DUSK, which has no real-world value. The interface, contracts, registration process, and stored test data can change or be reset.
 :::
 
 ## What Hedger protects
@@ -15,7 +15,7 @@ Your EVM wallet remains the public account that signs transactions and pays gas.
 
 Hedger does not hide the entire EVM transaction. Wallet addresses, contract calls, deposits, withdrawals, and transaction timing remain visible on DuskEVM. Its current privacy boundary is the value represented by encrypted notes inside the vault. The recipient and Hedger's configured auditor can decrypt transferred values; the general public cannot.
 
-The testnet preview currently requires both the sender and recipient to be enrolled. Enrollment associates an EVM account with its Hedger public key. This is part of the current contract design, not an EVM network allowlist.
+The testnet preview requires both the sender and recipient to register. Registration associates an EVM account with its Hedger public key. This is part of the current contract design, not an EVM network allowlist.
 
 ## Before you start
 
@@ -24,7 +24,7 @@ You need:
 - a supported EVM wallet;
 - testnet DUSK in that wallet on DuskEVM Testnet;
 - a safe place to store the 12-word Hedger recovery phrase; and
-- enrollment for each account that will send or receive through Hedger.
+- registration for each account that will send or receive through Hedger.
 
 The wallet should use:
 
@@ -48,18 +48,20 @@ If the EVM account does not have testnet DUSK yet, [bridge testnet DUSK from the
 
 The password protects the encrypted key stored on the current device. It is not an on-chain password and Dusk cannot reset it. The recovery phrase is the backup for the private-vault key.
 
-Never enter the recovery phrase into an enrollment form, support message, block explorer, or EVM wallet prompt.
+Never enter the recovery phrase into a website form, support message, block explorer, or EVM wallet prompt.
 
-## Complete testnet enrollment
+## Register on testnet
 
-Until public testnet registration replaces the current preview process, Hedger shows a **Complete your setup** panel when the connected account is not enrolled.
+Hedger shows a **Register your private vault** panel when the connected account has not registered.
 
-1. Copy the **Public Wallet Address** shown by Hedger.
-2. Copy the **Private Vault Address** shown by Hedger.
-3. Select the enrollment link in the application and submit those two public addresses.
-4. Return with the same EVM account after enrollment is confirmed.
+1. Select **Register on testnet**.
+2. Wait while the browser creates a zero-value proof for the private-vault key.
+3. Confirm the registration transaction in the connected EVM wallet.
+4. Wait for the transaction to confirm and the setup status to update.
 
-The private-vault address is a public key and can be shared for enrollment. The 12-word recovery phrase and the locally stored private key must remain secret.
+Proof generation happens locally. The recovery phrase and private-vault key are not submitted to the contract. The EVM wallet pays gas for the registration transaction, so keep some testnet DUSK outside the private vault.
+
+The public testnet deployment permits self-registration without manual approval. Other Hedger deployments can disable it and require registration by an issuer.
 
 ## Test the DUSK flow
 
@@ -75,10 +77,10 @@ Leave enough DUSK in the public wallet for later transactions.
 
 ### Send a private payment
 
-The recipient must also be enrolled and must have completed Hedger setup.
+The recipient must also be registered and must have completed Hedger setup.
 
 1. Open **Pay** and select **Send**.
-2. Enter the recipient's enrolled EVM address and the amount.
+2. Enter the recipient's registered EVM address and the amount.
 3. Review the destination carefully and confirm the transaction.
 4. Wait for proof generation and transaction confirmation.
 
@@ -110,7 +112,7 @@ Removing site data before confirming the recovery phrase can make the private ba
 
 **The application says setup is incomplete**
 
-Confirm that the connected EVM account and displayed private-vault address are the same pair submitted for enrollment. Enrollment is specific to that pair.
+Select **Register on testnet**, confirm the wallet transaction, and wait for it to complete. Registration is specific to the connected EVM account and the private-vault key currently loaded in Hedger.
 
 **The local key does not match the registered key**
 
@@ -118,7 +120,7 @@ The browser contains a different Hedger key from the one registered for the conn
 
 **A recipient cannot receive a payment**
 
-Both parties must currently be enrolled. Confirm the recipient supplied the EVM address entered in the payment and completed private-vault setup.
+Both parties must currently be registered. Confirm the recipient supplied the EVM address entered in the payment and completed private-vault setup.
 
 **A balance or activity entry is missing on another device**
 
@@ -130,6 +132,6 @@ The public EVM wallet must retain enough DUSK for gas, including when withdrawin
 
 ## Developer status
 
-The [Hedger contracts](https://github.com/dusk-network/hedger) and [web application](https://github.com/dusk-network/hedger-webapp) are available for review and testnet experimentation. The current deployment is verified in the [DuskEVM testnet explorer](https://explorer.testnet.evm.dusk.network/address/0x9c432f96eac8684F90161B7622f870568A7A6a19).
+The [Hedger contracts](https://github.com/dusk-network/hedger) and [web application](https://github.com/dusk-network/hedger-webapp) are available for review and testnet experimentation. The current deployment is verified in the [DuskEVM testnet explorer](https://explorer.testnet.evm.dusk.network/address/0xe1Fe5910Cac1214B1252AcFAbce742588ab4A221).
 
-Hedger does not yet expose a stable production SDK or integration contract. Treat its ABI, proving artifacts, deployment addresses, enrollment model, and storage format as experimental. For general Solidity development, start with the [DuskEVM quickstart](/developer/duskevm/quickstart/).
+Hedger does not yet expose a stable production SDK or integration contract. Treat its ABI, proving artifacts, deployment addresses, registration model, and storage format as experimental. For general Solidity development, start with the [DuskEVM quickstart](/developer/duskevm/quickstart/).
