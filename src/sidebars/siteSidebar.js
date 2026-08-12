@@ -169,6 +169,14 @@ const siteSidebar = [
       },
     ],
   },
+  {
+    label: "Updates",
+    collapsed: false,
+    items: [
+      { label: "Network Updates", link: "/updates/network" },
+      { label: "Developer Updates", link: "/updates/developer" },
+    ],
+  },
 ];
 
 export default siteSidebar;

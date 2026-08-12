@@ -1,0 +1,32 @@
+---
+title: Network Updates
+description: Follow verified Dusk mainnet and testnet hard-fork activations, their required Rusk versions, and canonical release sources.
+---
+
+Network updates record changes to Dusk protocol behavior on mainnet and testnet. Updates are listed newest first. Operators should follow the instructions in each update and use the linked Rusk release as the canonical software source.
+
+## Hard-Fork Updates
+
+### [Boreas](/updates/network/boreas/)
+
+**Testnet block 3,378,000 · Mainnet restart block 4,414,095 · Rusk 1.7**
+
+Introduced canonical, version-aware transaction handling; fork-aware VM pricing and deployment rules; new state-transition and reverted-event semantics; and the network-specific retirement of Phoenix transactions.
+
+### [Aegis](/updates/network/aegis/)
+
+**Testnet block 2,773,727 · Mainnet block 3,590,904 · Rusk 1.6.0**
+
+Activated PLONK V3, versioned BLS consensus and host-query behavior, and Phoenix refund-address binding, alongside a wider consensus and decoding hardening release.
+
+## Historical Activations
+
+The table includes earlier mainnet protocol activations only when the height, date, and supporting Rusk release can be verified from canonical chain, source, and release records.
+
+| Activation | Height | Date (UTC) | Required Rusk | Release |
+| --- | ---: | --- | --- | --- |
+| PLONK V2 | 3,470,360 | February 17, 2026 | 1.5.0 | [`dusk-rusk-1.5.0`](https://github.com/dusk-network/rusk/releases/tag/dusk-rusk-1.5.0) |
+| Blob transactions | 2,873,420 | December 10, 2025 | 1.4.1 | [`dusk-rusk-1.4.1`](https://github.com/dusk-network/rusk/releases/tag/dusk-rusk-1.4.1) |
+| Public sender ABI | 355,000 | February 17, 2025 | 1.1.0 | [`dusk-rusk-1.1.0`](https://github.com/dusk-network/rusk/releases/tag/dusk-rusk-1.1.0) |
+
+Activation heights are defined in Rusk's [mainnet configuration](https://github.com/dusk-network/rusk/blob/311cc64df1018a9960babd19bc2b6d2e7bc3d4f3/rusk/src/lib/node/vm/config/known.rs). Dates correspond to the timestamps of the activation blocks. Entries without sufficient canonical evidence are intentionally omitted.
