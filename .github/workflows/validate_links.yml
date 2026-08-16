@@ -41,5 +41,5 @@ jobs:
       - name: Run approved dependency scripts
         run: npm rebuild esbuild
 
-      - name: Build and validate links
-        run: npm run build
+      - name: Build, test, and validate links
+        run: npm run verify

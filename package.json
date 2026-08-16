@@ -13,7 +13,9 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "test": "node --test",
+    "build": "astro build && node scripts/create-sitemap-alias.mjs",
+    "verify": "npm run build && node --test",
     "preview": "astro preview",
     "astro": "astro"
   },

@@ -65,6 +65,34 @@ export default defineConfig({
 			sidebar: siteSidebar,
 			plugins: [starlightLinksValidator()],
 			head: [
+				{
+					tag: "meta",
+					attrs: {
+						property: "og:image",
+						content: "https://dusk.network/images/social/dusk-social-preview-og.png",
+					},
+				},
+				{
+					tag: "meta",
+					attrs: {
+						property: "og:image:alt",
+						content: "Dusk - Regulated markets, settled on-chain",
+					},
+				},
+				{
+					tag: "meta",
+					attrs: {
+						name: "twitter:image",
+						content: "https://dusk.network/images/social/dusk-social-preview-twitter.png",
+					},
+				},
+				{
+					tag: "meta",
+					attrs: {
+						name: "twitter:image:alt",
+						content: "Dusk - Regulated markets, settled on-chain",
+					},
+				},
 				// Adding google analytics
 				{
 					tag: 'script',
