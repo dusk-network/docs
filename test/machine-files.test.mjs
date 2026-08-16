@@ -17,14 +17,18 @@ test("robots.txt permits crawling and advertises the generated sitemap index", a
   assert.doesNotMatch(robots, /^Disallow: \/$/m);
 });
 
-test("the conventional sitemap URL points agents to Astro's generated child sitemap", async () => {
-  const sitemap = await readPublicFile("sitemap.xml");
-
-  assert.match(sitemap, /<sitemapindex\b/);
-  assert.match(
-    sitemap,
-    /<loc>https:\/\/docs\.dusk\.network\/sitemap-0\.xml<\/loc>/,
+test("the conventional sitemap URL mirrors Astro's generated sitemap index", async () => {
+  const generatedIndex = await readFile(
+    new URL("../dist/sitemap-index.xml", import.meta.url),
+    "utf8",
   );
+  const conventionalAlias = await readFile(
+    new URL("../dist/sitemap.xml", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(generatedIndex, /<sitemapindex\b/);
+  assert.equal(conventionalAlias, generatedIndex);
 });
 
 test("documentation pages declare a complete default social preview image", async () => {
