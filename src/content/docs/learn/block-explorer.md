@@ -16,7 +16,7 @@ Explorers let you inspect public network data such as blocks, transactions, cont
 
 ## Community explorers
 
-[DuskExplorer.com](https://duskexplorer.com/), also known as **The DUDE**, is a community-operated mainnet explorer. It is not operated by Dusk. Community explorers may expose different indexes, labels, statistics, or wallet integrations, so verify important information against an official endpoint when needed.
+[DuskScan](https://duskscan.net/) is a community-operated mainnet explorer. It is not operated by Dusk. Community explorers may expose different indexes, labels, statistics, or wallet integrations, so verify important information against an official endpoint when needed.
 
 ## What explorers can show
 
