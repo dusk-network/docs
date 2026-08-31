@@ -7,13 +7,31 @@ The Dusk network uses a modular architecture built for regulated finance: privac
 
 At a high level:
 
-| Component | Role | Where to go next |
-|---|---|---|
-| **DuskDS** | Settlement and data-availability foundation: consensus, finality, and Dusk transaction models | [Transaction Models](/learn/deep-dive/duskds-tx-models), [Run a node](/operator/overview) |
-| **Rusk** | The Rust node implementation for the Dusk L1 | [HTTP API](/developer/integrations/http-api/), <a href="https://github.com/dusk-network/rusk/" target="_blank" rel="noreferrer">GitHub</a> |
-| **DuskVM** | Rust/WASM smart-contract execution directly on the Dusk L1 | [DuskVM deep dive](/learn/deep-dive/dusk-vm/), [DuskVM contracts](/developer/duskvm/overview/) |
-| **DuskEVM** | OP Stack-based EVM execution settled through DuskDS | [DuskEVM overview](/learn/dusk-evm/), [DuskEVM quickstart](/developer/duskevm/quickstart/) |
-| **Citadel** | Identity and access primitives (selective disclosure) | [Digital Identity protocol](/developer/digital-identity/protocol/) |
+| Component | Role | Availability | Where to go next |
+|---|---|---|---|
+| **DuskDS** | Settlement and data-availability foundation: consensus, finality, and Dusk transaction models | Live on mainnet | [Transaction Models](/learn/deep-dive/duskds-tx-models), [Run a node](/operator/overview) |
+| **Rusk** | The Rust node implementation for the Dusk L1 | Live on mainnet | [HTTP API](/developer/integrations/http-api/), <a href="https://github.com/dusk-network/rusk/" target="_blank" rel="noreferrer">GitHub</a> |
+| **DuskVM** | Rust/WASM smart-contract execution directly on the Dusk L1 | Live on mainnet | [DuskVM deep dive](/learn/deep-dive/dusk-vm/), [DuskVM contracts](/developer/duskvm/overview/) |
+| **DuskEVM** | OP Stack-based EVM execution settled through DuskDS | Live on public testnet | [DuskEVM overview](/learn/dusk-evm/), [DuskEVM quickstart](/developer/duskevm/quickstart/) |
+| **Citadel 2** | Identity and access primitives for selective disclosure | Live and usable | [Digital Identity protocol](/developer/digital-identity/protocol/) |
+
+## Capability and product status
+
+This status map separates available protocol capabilities from products that are still being built. “Live” does not imply mainnet when a row explicitly says testnet.
+
+| Capability or product | Current status |
+| --- | --- |
+| **Moonlight** | Live public account and transaction model on Dusk mainnet |
+| **Phoenix** | Live shielded transaction technology; admission of new Phoenix transactions is temporarily paused pending a follow-up upgrade |
+| **Hyperstaking** | Live, permissionless stake-abstraction capability; any developer can deploy a contract that uses it |
+| **W3sper** | Live and usable JavaScript SDK for direct Rusk access and Dusk application integrations |
+| **Forge** | Live and usable DuskVM contract framework and code-generation tool |
+| **Hedger** | Live on the public DuskEVM testnet |
+| **Zedger** | Paused in favor of Hedger |
+| **Citadel 2** | Live and usable identity and selective-disclosure protocol |
+| **XSC** | Live confidential security-contract technology on the Dusk L1 |
+| **Delivery versus payment (DvP)** | Live Dusk L1 contract capability for coordinating asset and payment legs |
+| **Dusk Trade** | Being built |
 
 ## DuskDS
 
@@ -21,7 +39,7 @@ DuskDS is the Dusk Data Availability and Settlement layer. It is the consensus, 
 
 DuskDS is not a name for the complete Dusk network. The Dusk L1 also includes DuskVM smart-contract execution, while DuskEVM is an EVM-compatible execution layer that settles and publishes data through DuskDS.
 
-DuskDS supports two transaction models: **Moonlight** for transparent public accounts and **Phoenix** for confidential shielded transfers. See: [Transaction Models on Dusk](/learn/deep-dive/duskds-tx-models/).
+DuskDS supports two transaction models: **Moonlight** for transparent public accounts and **Phoenix** for confidential shielded transfers. Moonlight is available for new public transactions. Phoenix remains live protocol technology, while admission of new Phoenix transactions is temporarily paused pending a follow-up upgrade. See: [Transaction Models on Dusk](/learn/deep-dive/duskds-tx-models/) and [Privacy on Dusk](/learn/privacy-on-dusk/).
 
 ### Rusk
 
@@ -53,7 +71,13 @@ Dusk provides two smart-contract environments at different layers of the archite
 [DuskVM](/learn/deep-dive/dusk-vm) is the Wasmtime-based execution environment for Rust/WASM contracts that run directly on the Dusk L1. It is the path for contracts that need direct access to L1 assets, transaction models, privacy, or zero-knowledge capabilities.
 
 ### DuskEVM
-[DuskEVM](/learn/dusk-evm/) is an OP Stack-based EVM-equivalent execution environment. It lets you deploy Solidity contracts using standard EVM tooling while using DuskDS for settlement and data availability.
+[DuskEVM](/learn/dusk-evm/) is a live OP Stack-based EVM-equivalent execution environment on the public DuskEVM testnet. It lets you deploy Solidity contracts using standard EVM tooling while using DuskDS for settlement and data availability.
+
+## Developer tooling and programmable staking
+
+- [**W3sper**](/developer/integrations/w3sper/) is the live JavaScript SDK for direct node queries, account and shielded-state synchronization, contract data drivers, and lower-level application integration.
+- [**Forge**](https://github.com/dusk-network/forge) is the live DuskVM contract framework and code-generation tool for Rust/WASM contracts.
+- [**Hyperstaking**](/learn/hyperstaking/) is a live, permissionless capability that lets smart contracts stake DUSK and implement pools, reward distribution, and other programmable staking logic.
 
 ## Network Layer: Kadcast
 
@@ -74,19 +98,25 @@ On top of the base protocol, Dusk supports application-layer protocols and tools
 
 ### Dusk Trade
 
-[Dusk Trade](/learn/dusk-trade) is the application layer for tokenized financial assets on Dusk. It is being built around real market workflows: investor onboarding, wallet binding, controlled transfers, payment coordination, and compliant settlement.
+[Dusk Trade](/learn/dusk-trade) is being built as the application layer for tokenized financial assets on Dusk. It is designed around real market workflows: investor onboarding, wallet binding, controlled transfers, payment coordination, and compliant settlement.
 
 ### Zedger / Hedger
 
 Zedger and Hedger are protocols for issuing and managing regulated assets with built-in compliance and privacy constraints.
 
-- **Zedger** uses DuskVM contracts on the Dusk L1.
-- **Hedger** runs on DuskEVM to offer an EVM-first developer experience.
+- **Zedger** uses DuskVM contracts on the Dusk L1 and is currently paused in favor of Hedger.
+- **Hedger** is live on the public DuskEVM testnet and offers an EVM-first developer experience.
 
 ### Citadel
 
 ![Citadel](../../../assets/citadel.gif)
 
-Citadel is Dusk’s identity and access layer. It supports selective disclosure so users can prove attributes (e.g. residency, age bracket, accreditation) without revealing more than necessary.
+Citadel 2 is Dusk’s live identity and access protocol. It supports selective disclosure so users can prove attributes (e.g. residency, age bracket, accreditation) without revealing more than necessary.
 
 [Deep dive into Citadel](/developer/digital-identity/protocol) 
+
+### XSC and delivery versus payment
+
+The **Confidential Security Contract Standard (XSC)** is live Dusk L1 technology for smart contracts whose privacy and eligibility rules can be adapted to regulated-asset requirements.
+
+**Delivery versus payment (DvP)** is a live Dusk L1 contract capability for coordinating the asset and payment legs of settlement. The public [Dusk DvP example](https://github.com/dusk-network/dvp-demo) demonstrates the contract and application pattern.

@@ -5,6 +5,8 @@ description: Build Ethereum-compatible applications on an execution layer settle
 
 DuskEVM brings Solidity, EVM wallets, and Ethereum tooling to Dusk. Existing EVM applications can target DuskEVM with familiar contracts and workflows while using DUSK for gas and DuskDS for settlement and data availability.
 
+**Current availability:** DuskEVM is live and usable on its public testnet. Network-specific guides continue to say “testnet” so live availability is not mistaken for DuskEVM mainnet.
+
 ## Why DuskEVM
 
 - **Start with the EVM stack.** Use Solidity or Vyper with Foundry, Hardhat, viem, ethers, and standard EVM wallets.

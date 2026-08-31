@@ -19,6 +19,7 @@ const siteSidebar = [
         label: "Architecture",
         collapsed: true,
         items: [
+          { label: "Privacy on Dusk", link: "/learn/privacy-on-dusk" },
           { label: "Core Components", link: "/learn/core-components" },
           { label: "Transaction Models", link: "/learn/deep-dive/duskds-tx-models" },
           { label: "DuskVM", link: "/learn/deep-dive/dusk-vm" },

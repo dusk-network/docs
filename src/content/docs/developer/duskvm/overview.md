@@ -5,6 +5,8 @@ description: Build Rust and WebAssembly smart contracts that execute directly on
 
 DuskVM contracts are written in Rust, compiled to WebAssembly (WASM), and executed directly on the Dusk L1. They use the Dusk contract ABI and can integrate with L1 protocol contracts and transaction models.
 
+**Current availability:** DuskVM and Forge are live and usable. Forge can scaffold and generate the artifacts needed for DuskVM contract development.
+
 This path gives contracts direct access to Dusk's L1 execution model, but uses Dusk-specific tooling rather than the Ethereum toolchain.
 
 ## Choose an execution environment

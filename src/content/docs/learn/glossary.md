@@ -19,7 +19,11 @@ An [archive node](/operator/archive-node) stores the full historical record of t
 
 #### Confidential Security Contract Standard (XSC)
 
-A standard for confidential smart contracts that can be adapted to business requirements (for example, privacy constraints and compliance rules).
+Live Dusk L1 technology for confidential smart contracts that can be adapted to business requirements such as privacy constraints and eligibility rules.
+
+#### Delivery versus payment (DvP)
+
+A live Dusk L1 contract capability that coordinates the asset and payment legs of settlement so one leg does not complete without the other. See the public [Dusk DvP example](https://github.com/dusk-network/dvp-demo).
 
 #### Dusk
 
@@ -35,7 +39,7 @@ DuskDS is the Dusk Data Availability and Settlement layer: the consensus, finali
 
 #### DuskEVM
 
-[DuskEVM](/learn/dusk-evm/) is an EVM execution environment that uses DuskDS as its settlement and data availability layer.
+[DuskEVM](/learn/dusk-evm/) is a live EVM execution environment on the public DuskEVM testnet. It uses DuskDS as its settlement and data availability layer.
 
 #### DuskVM
 
@@ -43,11 +47,15 @@ DuskDS is the Dusk Data Availability and Settlement layer: the consensus, finali
 
 #### Hedger
 
-Hedger is the evolution of Zedger, built on DuskEVM.
+Hedger is the live evolution of Zedger, available on the public DuskEVM testnet.
+
+#### Forge
+
+[Forge](https://github.com/dusk-network/forge) is the live DuskVM contract framework and code-generation tool for Rust/WASM contracts.
 
 #### Stake Abstraction (Hyperstaking)
 
-Stake abstraction (also called hyperstaking) lets smart contracts participate in staking and manage rewards with on-chain logic.
+Stake abstraction (also called hyperstaking) is a live, permissionless capability that lets smart contracts participate in staking and manage rewards with on-chain logic.
 
 See: [Stake Abstraction](/learn/hyperstaking).
 
@@ -67,7 +75,7 @@ The smallest denomination of DUSK.
 
 #### Phoenix
 
-[Phoenix](/learn/deep-dive/duskds-tx-models) is Dusk's shielded, UTXO-based transaction model.
+[Phoenix](/learn/deep-dive/duskds-tx-models) is Dusk's live shielded, UTXO-based transaction model. Admission of new Phoenix transactions is temporarily paused pending a follow-up upgrade; Phoenix is not retired.
 
 #### Profile
 
@@ -109,7 +117,7 @@ Succinct Attestation is Dusk's proof-of-stake consensus protocol.
 
 #### W3sper SDK
 
-[W3sper](/developer/integrations/w3sper) is a JavaScript library for integrating with the Dusk ecosystem.
+[W3sper](/developer/integrations/w3sper) is the live JavaScript SDK for direct Rusk access and Dusk application integrations.
 
 #### Web Wallet
 
@@ -117,4 +125,4 @@ The [Web Wallet](/use/wallets#web-wallet) is Dusk's official hosted browser wall
 
 #### Zedger
 
-[Zedger](/learn/core-components#zedger--hedger) is a protocol for private, compliant issuance and management of regulated assets.
+[Zedger](/learn/core-components#zedger--hedger) is a protocol for private, compliant issuance and management of regulated assets. It is currently paused in favor of Hedger.
