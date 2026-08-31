@@ -5,6 +5,8 @@ description: Stake Abstraction (Hyperstaking) lets smart contracts stake DUSK. T
 
 Stake Abstraction (Hyperstaking) lets **smart contracts** participate in staking on Dusk. This enables on-chain staking pools and other programmable staking logic.
 
+**Current availability:** Hyperstaking is live and permissionless. Any developer can deploy a Dusk smart contract that uses the capability. [Sozu](https://x.com/sozu_dusk) is one live example.
+
 ## When you need it
 
 Use stake abstraction if a **contract** needs to own/manage stake and rewards, for example:
@@ -21,7 +23,7 @@ If you are staking as an individual from a wallet, you do not need this page. Us
 
 A contract can accept deposits, stake on behalf of depositors, and distribute (or reinvest) rewards according to its own rules.
 
-Example: <a href="https://x.com/sozu_dusk" target="_blank" rel="noreferrer">Sozu</a> runs an automated staking pool so users can stake without operating their own node.
+Example: <a href="https://x.com/sozu_dusk" target="_blank" rel="noreferrer">Sozu</a> uses Hyperstaking for an automated staking pool so users can stake without operating their own node.
 
 ### Referral / affiliate staking
 

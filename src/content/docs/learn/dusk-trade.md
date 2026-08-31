@@ -3,7 +3,9 @@ title: Dusk Trade
 description: Where Dusk Trade fits in the Dusk stack and how it turns market infrastructure into tokenized asset workflows.
 ---
 
-Dusk Trade is the application layer for tokenized financial assets on Dusk.
+Dusk Trade is being built as the application layer for tokenized financial assets on Dusk.
+
+**Current availability:** Dusk Trade is in development; it is not presented as a live product in these docs.
 
 It sits above the base protocol and turns Dusk's market-infrastructure primitives into user-facing workflows: asset discovery, investor onboarding, wallet connection, payment coordination, trading actions, and settlement.
 

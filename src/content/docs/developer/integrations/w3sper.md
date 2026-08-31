@@ -5,6 +5,8 @@ description: Query Rusk nodes and use lower-level Dusk profile, synchronization,
 
 W3sper (`@dusk/w3sper`) is the JavaScript client for direct access to Rusk nodes. It covers node queries, account and shielded-state synchronization, data-driver based contract reads, and the lower-level primitives used by applications that manage their own wallet state.
 
+**Current availability:** W3sper is live and usable. The examples below describe the current integration boundary; applications that sign transactions must still implement the key-storage and synchronized-state responsibilities called out on this page.
+
 Use [Dusk Connect](/developer/integrations/dusk-connect/) instead when a browser dApp should discover a wallet extension and ask the user to approve access or transactions. Use the [HTTP API and RUES reference](/developer/integrations/http-api/) for raw or non-JavaScript integrations.
 
 ## Install
