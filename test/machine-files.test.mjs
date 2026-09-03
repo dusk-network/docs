@@ -39,3 +39,12 @@ test("documentation pages declare a complete default social preview image", asyn
   assert.match(config, /dusk-social-preview-og\.png/);
   assert.match(config, /dusk-social-preview-twitter\.png/);
 });
+
+test("the legacy transaction guide redirects to the current DuskDS model page", async () => {
+  const config = await readFile(new URL("../astro.config.js", import.meta.url), "utf8");
+
+  assert.match(
+    config,
+    /['"]\/learn\/transactions['"]:\s*['"]\/learn\/deep-dive\/duskds-tx-models['"]/,
+  );
+});

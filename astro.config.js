@@ -28,6 +28,7 @@ export default defineConfig({
 		'/developer/integrations/addresses': '/developer/integrations/reference',
 		'/developer/smart-contract/hyperstaking_tech': '/learn/hyperstaking',
 		'/learn/deep-dive/dusk-evm': '/learn/dusk-evm',
+		'/learn/transactions': '/learn/deep-dive/duskds-tx-models',
 		'/developer/smart-contracts-dusk-evm/deploy-on-evm': '/developer/duskevm/quickstart',
 		'/developer/smart-contracts-duskds': '/developer/duskvm/overview',
 		'/developer/duskds': '/developer/duskvm/overview',
