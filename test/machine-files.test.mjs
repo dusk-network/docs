@@ -48,11 +48,11 @@ test("the static build provides a canonical noindex fallback for the legacy tran
 
   assert.match(
     redirectPage,
-    /<meta http-equiv="refresh" content="0;url=\/learn\/deep-dive\/duskds-tx-models">/,
+    /<meta http-equiv="refresh" content="0;url=\/learn\/deep-dive\/duskds-tx-models\/">/,
   );
   assert.match(redirectPage, /<meta name="robots" content="noindex">/);
   assert.match(
     redirectPage,
-    /<link rel="canonical" href="https:\/\/docs\.dusk\.network\/learn\/deep-dive\/duskds-tx-models">/,
+    /<link rel="canonical" href="https:\/\/docs\.dusk\.network\/learn\/deep-dive\/duskds-tx-models\/">/,
   );
 });
