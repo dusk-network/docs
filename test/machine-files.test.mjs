@@ -40,11 +40,19 @@ test("documentation pages declare a complete default social preview image", asyn
   assert.match(config, /dusk-social-preview-twitter\.png/);
 });
 
-test("the legacy transaction guide redirects to the current DuskDS model page", async () => {
-  const config = await readFile(new URL("../astro.config.js", import.meta.url), "utf8");
+test("the static build provides a canonical noindex fallback for the legacy transaction guide", async () => {
+  const redirectPage = await readFile(
+    new URL("../dist/learn/transactions/index.html", import.meta.url),
+    "utf8",
+  );
 
   assert.match(
-    config,
-    /['"]\/learn\/transactions['"]:\s*['"]\/learn\/deep-dive\/duskds-tx-models['"]/,
+    redirectPage,
+    /<meta http-equiv="refresh" content="0;url=\/learn\/deep-dive\/duskds-tx-models">/,
+  );
+  assert.match(redirectPage, /<meta name="robots" content="noindex">/);
+  assert.match(
+    redirectPage,
+    /<link rel="canonical" href="https:\/\/docs\.dusk\.network\/learn\/deep-dive\/duskds-tx-models">/,
   );
 });
