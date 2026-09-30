@@ -17,6 +17,36 @@ test("robots.txt permits crawling and advertises the generated sitemap index", a
   assert.doesNotMatch(robots, /^Disallow: \/$/m);
 });
 
+test("robots.txt explicitly permits search, AI input, and AI training", async () => {
+  const sourceRobots = await readPublicFile("robots.txt");
+  const builtRobots = await readFile(
+    new URL("../dist/robots.txt", import.meta.url),
+    "utf8",
+  );
+  const contentSignal = builtRobots
+    .split(/\r?\n/)
+    .find((line) => line.toLowerCase().startsWith("content-signal:"));
+
+  assert.equal(builtRobots, sourceRobots);
+  assert.ok(contentSignal, "robots.txt must include a Content-Signal directive");
+
+  const preferences = Object.fromEntries(
+    contentSignal
+      .slice(contentSignal.indexOf(":") + 1)
+      .split(",")
+      .map((preference) => {
+        const [name, value] = preference.trim().split("=");
+        return [name, value];
+      }),
+  );
+
+  assert.deepEqual(preferences, {
+    search: "yes",
+    "ai-input": "yes",
+    "ai-train": "yes",
+  });
+});
+
 test("the conventional sitemap URL mirrors Astro's generated sitemap index", async () => {
   const generatedIndex = await readFile(
     new URL("../dist/sitemap-index.xml", import.meta.url),
