@@ -5,6 +5,10 @@ description: Move DUSK from Dusk mainnet to BEP20 DUSK on BNB Smart Chain.
 
 Send DUSK to the official bridge account through the Web Wallet to receive BEP20 DUSK at a specified BNB Smart Chain (BSC) address.
 
+:::note[Temporarily longer processing time]
+As a temporary security measure, bridge transfers currently take around 10 hours to process instead of the usual one hour.
+:::
+
 ## At a glance
 
 | | |
@@ -12,7 +16,7 @@ Send DUSK to the official bridge account through the Web Wallet to receive BEP20
 | Direction | Dusk mainnet to BSC |
 | Interface | [Mainnet Web Wallet](https://apps.dusk.network/wallet/) |
 | Destination asset | BEP20 DUSK |
-| Typical time | Around one hour |
+| Typical time | Around one hour (temporarily ~10 hours) |
 | Cost | Dusk transaction fee plus a 1 DUSK bridge fee |
 
 To move ERC20 or BEP20 DUSK in the other direction, use the [mainnet migration guide](/learn/guides/mainnet-migration/).
@@ -50,11 +54,11 @@ The Web Wallet detects the bridge account and requires an EVM-formatted memo, bu
 
 First confirm that the transfer succeeded in the [Dusk mainnet explorer](https://apps.dusk.network/explorer/). The BEP20 DUSK should then appear at the memo address on BSC. The amount received is the amount sent minus the 1 DUSK bridge fee.
 
-Processing normally takes around one hour. Network or operator conditions can extend that time.
+Processing currently takes around 10 hours while the temporary security measure is in place. It normally takes around one hour. Network or operator conditions can extend that time.
 
 ## Troubleshooting
 
-**Nothing arrived after around one hour**
+**Nothing arrived after around 10 hours**
 
 Confirm that the Dusk transaction succeeded and that its memo contains the intended BSC address. Retain the Dusk transaction hash when seeking support.
 
