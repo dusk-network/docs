@@ -16,9 +16,8 @@ Rerun the installer with the **same network and feature flags** as your current 
 So you can confirm the node recovers afterwards, record where it is now:
 
 ```sh
-ruskquery version
-ruskquery block-height
-systemctl is-active rusk
+ruskquery info           # running Rusk version and chain
+ruskquery block-height   # current height
 ```
 
 ## 2. Run the installer for your node
@@ -78,17 +77,19 @@ The installer regenerates `rusk.toml`. If you had intentional changes there, rea
 sudo systemctl start rusk
 ```
 
-Check that the version updated and the node is back in sync:
+Give it a few seconds, then check the node with `ruskquery` rather than digging through logs:
 
 ```sh
-ruskquery version
+ruskquery info           # new Rusk version and chain
+ruskquery peers          # should be non-zero
 ruskquery block-height   # run it a few times, about 10 seconds apart
-tail -n 50 /var/log/rusk.log
 ```
 
-**You're back up when the block height keeps increasing and the log shows new blocks being accepted.** After about 30 seconds, compare your height with the [network explorer](/operator/networks/). On an archive node, also run an archive GraphQL query before sending API traffic back to it.
+**You're back up when `ruskquery peers` is non-zero and the block height keeps climbing.** `ruskquery info` should show the new Rusk version. After about 30 seconds, compare your height with the [network explorer](/operator/networks/). On an archive node, also run an archive GraphQL query before sending API traffic back to it.
 
 ## If Rusk doesn't start
+
+`ruskquery` talks to a running node, so when Rusk is down it has nothing to answer. Read the service and its logs directly instead:
 
 ```sh
 sudo systemctl status rusk --no-pager
