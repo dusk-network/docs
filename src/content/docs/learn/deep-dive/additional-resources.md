@@ -14,7 +14,7 @@ description: Explore resources and links related to Dusk’s scientific research
 - [Simulation extractable versions of Groth’s zk-SNARK revisited](https://link.springer.com/article/10.1007/s10207-023-00750-7)
 - [FORT: Right-Proving and Attribute-Blinding Self-Sovereign Authentication](https://www.mdpi.com/2227-7390/10/4/617)
 - [The Legendre Symbol and the Modulo-2 Operator in Symmetric Schemes over (F_p)^n](https://eprint.iacr.org/2021/1533)
-- [Full privacy in account-based cryptocurrencies v 0.12](https://dusk-cms.ams3.digitaloceanspaces.com/Dmitry_Khovratovich_Mikhail_Vladimirov_Full_privacy_in_account_based_cryptocurrencies_v0_12_2_618fa83056.pdf)
+- [Full privacy in account-based cryptocurrencies v 0.12](https://dusk.network/media/Dmitry_Khovratovich_Mikhail_Vladimirov_Full_privacy_in_account_based_cryptocurrencies_v0_12_2_618fa83056.pdf)
 
 
 ## Technical Blogs

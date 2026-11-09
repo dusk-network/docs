@@ -6,7 +6,7 @@ description: The main cryptographic building blocks behind Dusk’s privacy and 
 Dusk uses zero-knowledge proofs and elliptic curve cryptography to enable confidential transactions and selective disclosure.
 This page is a high-level map of the primitives you’ll see referenced across the docs.
 
-For protocol-level details and formal security arguments, refer to the [Dusk whitepaper](https://dusk-cms.ams3.digitaloceanspaces.com/Dusk_Whitepaper_2024_4db72f92a1.pdf) and the papers listed in [Additional Resources](/learn/deep-dive/additional-resources).
+For protocol-level details and formal security arguments, refer to the [Dusk whitepaper](https://dusk.network/media/Dusk_Whitepaper_2024_4db72f92a1.pdf) and the papers listed in [Additional Resources](/learn/deep-dive/additional-resources).
 
 ## Primitives used in Dusk
 
