@@ -19,7 +19,7 @@ The DuskDS protocol includes two native transaction models:
 
 Both ultimately settle on the same chain, but they expose different information to observers.
 
-For the complete implementation details you can refer to the [Whitepaper](https://dusk-cms.ams3.digitaloceanspaces.com/Dusk_Whitepaper_2024_4db72f92a1.pdf).
+For the complete implementation details you can refer to the [Whitepaper](https://dusk.network/media/Dusk_Whitepaper_2024_4db72f92a1.pdf).
 
 ### Moonlight – public balances
 

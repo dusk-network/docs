@@ -54,7 +54,7 @@ At a high level, each round goes through three steps:
 - **Validation** – a committee checks the block’s validity.
 - **Ratification** – another committee confirms the validation outcome and finalizes the block.
 
-For the full protocol specification and security analysis (including committee selection, finality, and slashing), see Section 3 “Consensus mechanism” of the [Dusk Whitepaper (2024)](https://dusk-cms.ams3.digitaloceanspaces.com/Dusk_Whitepaper_2024_4db72f92a1.pdf).
+For the full protocol specification and security analysis (including committee selection, finality, and slashing), see Section 3 “Consensus mechanism” of the [Dusk Whitepaper (2024)](https://dusk.network/media/Dusk_Whitepaper_2024_4db72f92a1.pdf).
 
 ### Transactions in DuskDS
 
