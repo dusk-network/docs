@@ -10,8 +10,6 @@ Dusk has a two-layer architecture:
 
 This page describes the transaction models on DuskDS. It’s background for people who want to understand how settlement and privacy work under the hood. If you are building dApps on DuskEVM, you’ll mostly interact with Hedger and EVM contracts instead.
 
-**Current availability:** Moonlight is live for public transactions. Phoenix remains a live part of the Dusk protocol, but admission of new Phoenix transactions is temporarily paused pending a follow-up upgrade. Phoenix is not retired, and its historical state and transaction logic remain part of the network.
-
 ## Phoenix vs Moonlight (on DuskDS)
 
 The DuskDS protocol includes two native transaction models:
@@ -44,7 +42,7 @@ Phoenix is the privacy-preserving model:
   - between which specific notes.
 - Users can selectively reveal information via viewing keys where regulation or auditing requires it.
 
-Phoenix is the underlying mechanism for shielded balances and private transfers on Dusk. New Phoenix transaction admission is temporarily paused, while the model remains part of the live protocol and is intended to reopen in a follow-up upgrade.
+Phoenix is the underlying mechanism for shielded balances and private transfers on Dusk.
 
 ## The Transfer Contract
 

@@ -75,7 +75,7 @@ The smallest denomination of DUSK.
 
 #### Phoenix
 
-[Phoenix](/learn/deep-dive/duskds-tx-models) is Dusk's live shielded, UTXO-based transaction model. Admission of new Phoenix transactions is temporarily paused pending a follow-up upgrade; Phoenix is not retired.
+[Phoenix](/learn/deep-dive/duskds-tx-models) is Dusk's shielded, UTXO-based transaction model.
 
 #### Profile
 

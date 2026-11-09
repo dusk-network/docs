@@ -22,7 +22,6 @@ This status map separates available protocol capabilities from products that are
 | Capability or product | Current status |
 | --- | --- |
 | **Moonlight** | Live public account and transaction model on Dusk mainnet |
-| **Phoenix** | Live shielded transaction technology; admission of new Phoenix transactions is temporarily paused pending a follow-up upgrade |
 | **Hyperstaking** | Live, permissionless stake-abstraction capability; any developer can deploy a contract that uses it |
 | **W3sper** | Live and usable JavaScript SDK for direct Rusk access and Dusk application integrations |
 | **Forge** | Live and usable DuskVM contract framework and code-generation tool |
@@ -39,7 +38,7 @@ DuskDS is the Dusk Data Availability and Settlement layer. It is the consensus, 
 
 DuskDS is not a name for the complete Dusk network. The Dusk L1 also includes DuskVM smart-contract execution, while DuskEVM is an EVM-compatible execution layer that settles and publishes data through DuskDS.
 
-DuskDS supports two transaction models: **Moonlight** for transparent public accounts and **Phoenix** for confidential shielded transfers. Moonlight is available for new public transactions. Phoenix remains live protocol technology, while admission of new Phoenix transactions is temporarily paused pending a follow-up upgrade. See: [Transaction Models on Dusk](/learn/deep-dive/duskds-tx-models/) and [Privacy on Dusk](/learn/privacy-on-dusk/).
+DuskDS supports two transaction models: **Moonlight** for transparent public accounts and **Phoenix** for confidential shielded transfers. See: [Transaction Models on Dusk](/learn/deep-dive/duskds-tx-models/) and [Privacy on Dusk](/learn/privacy-on-dusk/).
 
 ### Rusk
 
