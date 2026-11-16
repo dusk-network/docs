@@ -10,7 +10,7 @@ Dusk provides privacy-preserving infrastructure for regulated onchain finance. I
 | Component | What it provides |
 | --- | --- |
 | [Phoenix](/learn/deep-dive/duskds-tx-models/) | Shielded DUSK balances and transfers, using encrypted notes and zero-knowledge proofs to verify transactions without exposing private transfer details. |
-| [Hedger](https://dusk.network/news/hedger-confidential-duskevm) | Confidential asset ownership, balances, and transfer amounts for DuskEVM applications, with support for authorized auditing. |
+| [Hedger](https://dusk.network/news/hedger-confidential-duskevm) | Confidential balances and transfer amounts for DuskEVM applications, with support for authorized auditing. |
 | [Citadel 2](/developer/digital-identity/protocol/) | Private credentials that let users prove possession of a valid license without publishing personal attributes or revealing which license they used. |
 | [XSC](https://dusk.network/use-cases/confidential-security-tokens) | A confidential security-contract standard for tokenized securities, combining privacy with asset-specific eligibility and transfer rules. |
 
