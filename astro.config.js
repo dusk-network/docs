@@ -12,7 +12,9 @@ export default defineConfig({
 	redirects: {
 		'/itn/fast-sync': '/nocturne/fast-sync',
 		'/itn/node-running-guide': '/nocturne/node-running-guide',
-		'/itn/testnet-faucet': '/nocturne/testnet-faucet',
+		'/itn/testnet-faucet': '/developer/faucet',
+		'/nocturne/testnet-faucet': '/developer/faucet',
+		'/operator/guides/nocturne-faucet': '/developer/faucet',
 		'/itn/upgrade-node': '/nocturne/upgrade-node',
         '/operator/guides/archive-node': '/operator/archive-node',
         '/operator/guides/provisioner-node': '/operator/provisioner',

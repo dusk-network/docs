@@ -1,0 +1,63 @@
+---
+title: Faucet
+description: Request free testnet DUSK from the Dusk faucet on Discord to test transfers, staking, bridging, and smart contracts on the Dusk testnet.
+---
+
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+The Dusk testnet faucet sends free testnet DUSK to your wallet on the [Nocturne testnet](/operator/networks/#nocturne-testnet). Use it to try transfers, stake on a testnet node, bridge to DuskEVM Testnet, or deploy smart contracts. Testnet DUSK has no real-world value.
+
+:::note[What you need]
+- A Discord account that has joined the [Dusk Discord server](https://discord.gg/dusk-official).
+- A Dusk testnet wallet address. Create one in the [testnet Web Wallet](https://apps.testnet.dusk.network/wallet/), or set up [Rusk Wallet](/use/wallets/#rusk-wallet) for testnet.
+:::
+
+## Request testnet DUSK
+
+1. Open the [Dusk Discord server](https://discord.gg/dusk-official).
+2. In the member list, find the bot **Dusk Testnet Faucet** among the team members.
+3. Right-click the bot and select **Message**.
+4. Send this command:
+
+   ```text
+   !dusk
+   ```
+
+5. When the bot asks for your address, reply with your testnet wallet address.
+6. Check the balance in your wallet on testnet.
+
+Each request sends 5,000 testnet DUSK, and you can make 1 request per Discord user and wallet every 24 hours. The bot queues your transaction. It usually reaches your wallet within a few minutes, and can take longer when many people are using the faucet. If it still hasn't arrived, see [Troubleshooting](#troubleshooting).
+
+## Troubleshooting
+
+| Problem | What to do |
+|---|---|
+| A second request in the same day doesn't go through | Wait until 24 hours have passed since your last request, then try again. |
+| The DUSK hasn't arrived | Check that you sent a **testnet** address and that your wallet is set to testnet. During busy periods, the queue takes longer. |
+| You need DUSK in more than one wallet | Send part of your balance from the first wallet to the second, or request again for the other wallet after 24 hours. |
+| Something else went wrong | Ask in the [official Dusk community channels](/learn/community/). |
+
+## Next steps
+
+<CardGrid>
+  <LinkCard
+    title="Stake on testnet"
+    href="/operator/guides/node-wallet-setup"
+    description="Set up a node wallet and stake testnet DUSK. The minimum testnet stake is 1,000 DUSK."
+  />
+  <LinkCard
+    title="Bridge to DuskEVM"
+    href="/learn/guides/duskevm-bridge"
+    description="Move testnet DUSK to DuskEVM Testnet to pay gas there."
+  />
+  <LinkCard
+    title="DuskVM Quickstart"
+    href="/developer/duskvm/quickstart"
+    description="Build and deploy a Rust smart contract on the Dusk L1 testnet."
+  />
+  <LinkCard
+    title="DuskEVM Quickstart"
+    href="/developer/duskevm/quickstart"
+    description="Deploy a Solidity contract to DuskEVM Testnet."
+  />
+</CardGrid>

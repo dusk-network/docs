@@ -31,7 +31,7 @@ You need:
 - an EVM wallet, such as MetaMask, that supports custom networks; and
 - enough DUSK on the source side to cover the amount and transaction fee.
 
-Request DUSK from the [testnet faucet](/operator/networks#how-to-get-testnet-tokens), then unshield the amount needed for Dusk L1 bridge actions.
+Request DUSK from the [testnet faucet](/developer/faucet/), then unshield the amount needed for Dusk L1 bridge actions.
 
 The Web Wallet should add or select this network:
 

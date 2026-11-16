@@ -81,7 +81,7 @@ Compare your node's block height to the [block explorer](https://explorer.dusk.n
 
 ## Testnet Faucet
 
-You can request 5,000 testnet DUSK from our [Discord faucet](/operator/networks#how-to-get-testnet-tokens). The minimum testnet stake is 1,000 DUSK.
+You can request 5,000 testnet DUSK from our [Discord faucet](/developer/faucet/). The minimum testnet stake is 1,000 DUSK.
 
 ## Stake your DUSK
 
