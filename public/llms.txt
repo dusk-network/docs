@@ -27,6 +27,7 @@
 - [HTTP API](https://docs.dusk.network/developer/integrations/http-api/): integrate with Dusk APIs.
 - [Historical Events](https://docs.dusk.network/developer/integrations/historical_events/): query finalized public transfer history from archive infrastructure.
 - [W3sper SDK](https://docs.dusk.network/developer/integrations/w3sper/): SDK integration.
+- [Testnet Faucet](https://docs.dusk.network/developer/faucet/): request free testnet DUSK from the Discord faucet bot.
 
 ## Learn
 

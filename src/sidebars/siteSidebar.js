@@ -130,6 +130,7 @@ const siteSidebar = [
           { label: "Grants Program", link: "/developer/contribute/grants" },
         ],
       },
+      { label: "Faucet", link: "/developer/faucet" },
     ],
   },
   {
