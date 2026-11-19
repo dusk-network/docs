@@ -72,7 +72,7 @@ const siteSidebar = [
         label: "Trust and Community",
         collapsed: true,
         items: [
-          { label: "Verify Team Accounts", link: "/learn/verify-team-account" },
+          { label: "Stay Safe", link: "/learn/stay-safe" },
           { label: "Community", link: "/learn/community" },
         ],
       },

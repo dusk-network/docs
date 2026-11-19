@@ -26,6 +26,7 @@ export default defineConfig({
 		'/learn/deep-dive/assets-and-regulations/dematerialization': '/learn/deep-dive/assets-and-regulations',
 		'/learn/deep-dive/economic-protocol': '/learn/tokenomics',
 		'/learn/wallet-terminology': '/learn/glossary',
+		'/learn/verify-team-account': '/learn/stay-safe/',
 		'/developer/integrations/hashing-algorithms': '/developer/integrations/reference',
 		'/developer/integrations/addresses': '/developer/integrations/reference',
 		'/developer/smart-contract/hyperstaking_tech': '/learn/hyperstaking',
