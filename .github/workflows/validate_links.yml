@@ -38,8 +38,5 @@ jobs:
       - name: Verify registry signatures
         run: npm audit signatures
 
-      - name: Run approved dependency scripts
-        run: npm rebuild esbuild
-
       - name: Build, test, and validate links
         run: npm run verify
