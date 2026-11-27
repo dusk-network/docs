@@ -52,7 +52,7 @@ The Web Wallet detects the bridge account and requires an EVM-formatted memo, bu
 
 ## Verify the bridge
 
-First confirm that the transfer succeeded in the [Dusk mainnet explorer](https://apps.dusk.network/explorer/). The BEP20 DUSK should then appear at the memo address on BSC. The amount received is the amount sent minus the 1 DUSK bridge fee.
+First confirm that the transfer succeeded in the [Dusk mainnet explorer](https://explorer.dusk.network/). The BEP20 DUSK should then appear at the memo address on BSC. The amount received is the amount sent minus the 1 DUSK bridge fee.
 
 Processing currently takes around 10 hours while the temporary security measure is in place. It normally takes around one hour. Network or operator conditions can extend that time.
 

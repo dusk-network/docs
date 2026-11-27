@@ -123,6 +123,7 @@ Relevant docs:
 - Use Dusk Overview: https://docs.dusk.network/use/overview/
 - Wallets: https://docs.dusk.network/use/wallets/
 - Explorers: https://docs.dusk.network/learn/block-explorer/
+- Stay Safe, with the official addresses of Dusk's apps and channels: https://docs.dusk.network/learn/stay-safe/
 - Staking: https://docs.dusk.network/learn/guides/staking-basics/
 - DuskEVM Bridge: https://docs.dusk.network/learn/guides/duskevm-bridge/
 - Mainnet Migration: https://docs.dusk.network/learn/guides/mainnet-migration/
