@@ -10,9 +10,9 @@ Explorers let you inspect public network data such as blocks, transactions, cont
 | Network | Explorer |
 |---|---|
 | Dusk mainnet | [explorer.dusk.network](https://explorer.dusk.network/) |
-| Dusk testnet | [apps.testnet.dusk.network/explorer](https://apps.testnet.dusk.network/explorer/) |
+| Dusk testnet | [explorer.testnet.dusk.network](https://explorer.testnet.dusk.network/) |
 
-`explorer.dusk.network` is the canonical mainnet address and redirects to the explorer hosted under `apps.dusk.network`.
+The explorer used to live at `apps.dusk.network/explorer` and `apps.testnet.dusk.network/explorer`. Those addresses now redirect to `explorer.dusk.network` and `explorer.testnet.dusk.network`.
 
 ## Community explorers
 
